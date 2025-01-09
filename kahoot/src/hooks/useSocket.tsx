@@ -1,26 +1,5 @@
-"use client"
-// import { useEffect, useState } from 'react';
-// import io from 'socket.io-client';
+"use client";
 
-// const useSocket = () => {
-//   const [socket, setSocket] = useState(null);
-
-//   useEffect(() => {
-//     const socketIo = io('http://localhost:8000');
-//     setSocket(socketIo);
-
-//     return () => {
-//       socketIo.disconnect();
-//     };
-//   }, []);
-
-//   return socket;
-// };
-
-// export default useSocket;
-
-
-// SocketContext.js
 import { createContext, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 
@@ -34,7 +13,7 @@ export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:8000"); // Update with your server URL
+    const newSocket = io("http://localhost:8000");
     setSocket(newSocket);
 
     return () => newSocket.close();

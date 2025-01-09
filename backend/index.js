@@ -35,11 +35,41 @@ const demoData = [
         showQuestionDuration: 2000,
         type: "quiz",
         media: "",
-        maximumMarks: 100,
+        maximumMarks: 1000,
         question:
           "What is the name of the programming language that is used for web development?",
         options: ["Java", "Python", "JavaScript", "C++"],
         answerIndex: [2], // index start with 0,
+        attemptStudents:[],
+        results: [],
+      },
+      {
+        _id: 2,
+        duration: 4000,
+        showQuestionDuration: 2000,
+        type: "quiz",
+        media: "",
+        maximumMarks: 1000,
+        question:
+          "What is the name of the programming language that is used for web development?",
+        options: ["Java", "pp", "JavaScript", "C++"],
+        answerIndex: [2], // index start with 0,
+        attemptStudents:[],
+        results: [],
+      },
+      {
+        _id: 3,
+        duration: 4000,
+        showQuestionDuration: 2000,
+        type: "quiz",
+        media: "",
+        maximumMarks: 1000,
+        question:
+          "What is the name of the programming language that is used for web development?",
+        options: ["hello", "new", "JavaScript", "C++"],
+        answerIndex: [2], // index start with 0,
+        attemptStudents:[],
+        results: [],
       },
     ],
   },
@@ -57,18 +87,27 @@ io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
   socket.on("createRoom", ({ quizId, teacherId }) => {
+    console.log(rooms)
     const roomId = `${teacherId}-${quizId}`;
+    // if (rooms[roomId]) {
+    //   socket.emit("roomCreated", { roomId,pin:rooms[roomId].pin,data:rooms[roomId] });
+    //   socket.emit("error", { message: "Room already exists" });
+    //   return;
+    // }
+ 
     const pin = generatePin();
     rooms[roomId] = {
       teacherId,
+      hostId:socket.id,
       quizId,
-      kahoot: { ...demoData[0], students: [], results: [] },
+      kahoot: { ...demoData.filter(d => d._id == quizId)[0], students: [], results: [] },
       students: [],
       pin,
     };
     roomPins[pin] = roomId; // Map pin to roomId
-
+   io.to(roomId).emit("recreation", { roomId, pin:rooms[roomId].pin,data:rooms[roomId] });
     socket.join(roomId);
+    console.log(rooms)
     socket.emit("roomCreated", { roomId, pin,data:rooms[roomId] });
     console.log(`Room created: ${roomId} with PIN: ${pin}`);
   });
@@ -95,7 +134,7 @@ io.on("connection", (socket) => {
       }
 
       // Add student to the room if the nickname////// is unique
-      const student = { id: studentId, nickname };
+      const student = { _id: studentId, nickname,totalQuestions: [], attemptQuestions: [],rank:0,score:0,activeQuestion:null };
       rooms[roomId].students.push(student);
       rooms[roomId].kahoot = {
         ...rooms[roomId].kahoot,status:'waiting',
@@ -124,6 +163,80 @@ io.on("connection", (socket) => {
     rooms[roomId].status = 'started';
     io.to(roomId).emit('started', {data:rooms[roomId]});
   })
+  socket.on("question_playing",(data) => {
+    io.to(data.roomId).emit('question_playing_student_process', data); 
+  })
+  socket.on("request_question_options_waiting",(data) => {
+    console.log("request_question_options_waiting kkkkk",data)
+    io.to(data.roomId).emit('question_options_waiting',data); 
+  })
+  socket.on("request_question_options_stop_waiting",(data) => {
+    console.log("request_question_options_stop_waiting",data)
+    io.to(data.roomId).emit('question_options_stop_waiting',data);
+  }
+)
+socket.on("ranking_redirection",(data) => {
+io.to(data.roomId).emit('ranking_redirection_student_process');
+})
+
+socket.on("submit_question_answer",(data) => {
+  const optionArray = data.question.question.options;
+  const answerIndex = data.answer ? optionArray.findIndex((option) => option === data.answer):null
+  if (!rooms[data.question.roomId]){
+    return socket.emit("error",{message:"Room not found"});
+  }
+  if (!rooms[data.question.roomId].kahoot.students.find(s => s._id === data.studentId)){
+    return socket.emit("error",{message:"Student not found in room"});
+  }
+  if (rooms[data.question.roomId].kahoot.questions.find(q => q._id === data.question.question._id).attemptStudents.includes(data.studentId)){
+    return socket.emit("error",{message:"Student already attempted this question"});
+  }
+  console.log(rooms[data.question.roomId])
+  const scorePerSecond = data.question.question.maximumMarks / data.duration;
+  const score = scorePerSecond * data.timeTaken;
+ if (data.question.question.answerIndex.includes(answerIndex)){
+  
+  rooms[data.question.roomId].kahoot.students.find(
+    (student) => student._id === data.studentId
+  ).score += score;
+  rooms[data.question.roomId].students.find(
+    (student) => student._id === data.studentId
+  ).score += score;
+  rooms[data.question.roomId].kahoot.questions.find(
+    (question) => question._id === data.question.question._id
+  ).attemptStudents.push(data.studentId);
+  rooms[data.question.roomId].kahoot.questions.find(q => q._id === data.question.question._id).results.push({
+    studentId: data.studentId,
+    questionId: data.question.question._id,
+    score: score,
+    answerIndex: answerIndex,
+    timeTaken: data.timeTaken,
+
+  })
+
+ }else {
+
+ }
+ const results = rooms[data.question.roomId].kahoot.questions.find(q => q._id === data.question.question._id).results;
+const sortedResults = [...results].sort((a, b) => b.score - a.score);
+const studentPosition = sortedResults.findIndex(
+  (result) => result.studentId === data.studentId
+);
+const studentRank = studentPosition + 1;
+
+ const currentStudent = rooms[data.question.roomId].students.find(student => student._id === data.studentId);
+ const resultStatus = data.answer === null?"Time's up":data.question.question.answerIndex.includes(answerIndex) ? 'correct' : 'incorrect';
+  socket.emit('results', {question:{...data.question.question,resultStatus,studentRank,studentTakenMarks:score.toFixed(0),questionIndex:rooms[data.question.roomId].kahoot.questions.findIndex(q => q._id === data.question.question._id)},student:currentStudent});
+  io.to(data.question.roomId).emit('resultsData', {data:rooms[data.question.roomId],question:data.question.question,student:rooms[data.question.roomId].students.find(student => student._id === data.studentId)});
+})
+socket.on("student_waiting",() => {
+  // console.log("student_waiting")
+  io.emit('student_waiting');
+})
+
+socket.on("next_question_redirect",(data) => {
+io.to(data.roomId).emit("next_question_redirection")
+})
 
   socket.on("checkUserInRoom", ({ roomId, studentData }) => {
     // console.log(st)
@@ -145,12 +258,23 @@ io.on("connection", (socket) => {
     console.log("Client disconnected:", socket.id);
 
     // Remove the student from the room they were in
+    
     for (const roomId in rooms) {
+      if (rooms[roomId].hostId === socket.id) {
+        delete rooms[roomId];
+        // delete roomPins[rooms[roomId].pin];
+        // console.log(`Room deleted: ${roomId}`);
+        // console.log(rooms)
+        io.to(roomId).emit("roomDeleted",{roomId});
+        return;
+      }
       const students = rooms[roomId].students;
-      const index = students.findIndex((student) => student.id === socket.id);
+      const index = students.findIndex((student) => student._id === socket.id);
       if (index !== -1) {
         students.splice(index, 1);
         io.to(roomId).emit("studentJoined", { students });
+        rooms[roomId].kahoot.students = rooms[roomId].kahoot.students.filter(s => s._id!== socket.id);
+        // room
         console.log(`Student removed from room: ${roomId}`);
       }
     }

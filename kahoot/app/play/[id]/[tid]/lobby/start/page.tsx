@@ -21,27 +21,20 @@ const Page: React.FC = () => {
   const [counter, setCounter] = useState(5);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    if (counter === 0) {
+      navigation.push(
+        `/play/${teacher.quizId}/${teacher.teacherId}/lobby/gameBlock`
+      );
+    } else {
       const interval = setInterval(() => {
-        setCounter((prev) => {
-          if (prev === 0) {
-            clearInterval(interval);
-            navigation.push(
-              `/play/${teacher.quizId}/${teacher.teacherId}/lobby/gameBlock`
-            );
-            return prev;
-          }
-          setRotate((prevRotate) => prevRotate + 45/2); // Update the rotation by 90 degrees
-          return prev - 1;
-        });
-      }, 3000);
+        setCounter((prev) => prev - 1);
+        setRotate((prevRotate) => prevRotate + 22.5); // Update the rotation incrementally
+      }, 1000);
 
       return () => clearInterval(interval);
-    }, 1000);
+    }
+  }, [counter, navigation, teacher.quizId, teacher.teacherId]);
 
-    return () => clearTimeout(timeout);
-  }, [teacher.quizId, teacher.teacherId, navigation]);
-console.log(rotate)
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       {isVisible ? (

@@ -1,23 +1,28 @@
-
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentGame:null,
+  currentGame: null,
 };
 
 const studentSlice = createSlice({
-  name: 'student',
+  name: "student",
   initialState,
   reducers: {
-    join (state,actions){
-        state.currentGame = actions.payload
+    join(state, actions) {
+      state.currentGame = actions.payload;
     },
-    disconnect(state){
-        state.currentGame = null;
-    }
+    update(state, actions) {
+      // console.log(actions.payload)
+      state.currentGame = { ...state.currentGame, ...actions.payload };
+      // state.currentGame.student = {...actions.payload}
+      // console.log(state.currentGame)
+    },
+    disconnect(state) {
+      state.currentGame = null;
+    },
   },
 });
 
-export const { join,disconnect } = studentSlice.actions;
+export const { join, disconnect, update } = studentSlice.actions;
 
 export default studentSlice.reducer;

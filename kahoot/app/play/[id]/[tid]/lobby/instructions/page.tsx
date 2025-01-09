@@ -1,17 +1,19 @@
 "use client";
 import Loader from "@/src/components/Loader";
 import { useSocket } from "@/src/hooks/useSocket";
+import { disconnect } from "@/src/redux/schema/student";
 import { RootState } from "@/src/redux/store";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { PixelArtCard } from "react-pixelart-face-card";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Page = () => {
   const socket = useSocket();
   const navigation = useRouter();
   const [loading, setLoading] = useState(true);
-  const student = useSelector((root: RootState) => root.student.currentGame); 
+  const student = useSelector((root: RootState) => root.student.currentGame);
+  const dispatch = useDispatch() 
 
   const getQuizIdFromRoomId = (roomId,get) => {
     if (get === "teacher"){
@@ -36,10 +38,19 @@ const Page = () => {
       }
     };
 
+    socket?.on("started",() =>{
+      navigation.push(`/play/${getQuizIdFromRoomId(student.roomId,'quiz')}/${getQuizIdFromRoomId(student.roomId,'teacher')}/lobby/instructions/start`);
+    })
+
     socket?.on("studentJoined", handleStudentJoined);
     socket?.emit("checkUserInRoom", {roomId:student.roomId,studentData:student.student });
     socket?.on("userInRoom", handleUserInRoom);
-
+    socket?.on('recreation',() =>{
+          navigation.push(`/play/${getQuizIdFromRoomId(student.roomId,'quiz')}/${getQuizIdFromRoomId(student.roomId,'teacher')}/lobby`)
+         setTimeout(() => {
+          dispatch(disconnect());
+         }, 2000);
+        })
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -65,7 +76,7 @@ const Page = () => {
         <Loader h={100} w={100} />
       ) : (
         <PixelArtCard
-          key={student.student.id}
+          key={student.student._id}
           random={true}
           size={100}
           tags={["human-female", "human-male"]}
