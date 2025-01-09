@@ -456,7 +456,7 @@ io.to(data.roomId).emit("next_question_redirection")
   });
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 9000;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
