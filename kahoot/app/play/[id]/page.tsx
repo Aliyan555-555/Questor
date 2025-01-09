@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { MdFullscreen } from "react-icons/md";
 import { MemberIcon } from "@/src/lib/svg";
 import QRCode from "react-qr-code";
@@ -14,14 +14,14 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { created, disconnect, update } from "@/src/redux/schema/teacher";
 import { RootState } from "@/src/redux/store";
-import AnimatedCharacter from "@/src/components/animated/animatedStudent";
+// import AnimatedCharacter from "@/src/components/animated/animatedStudent";
 
 const Teacher = () => {
   const socket = useSocket();
   const [loading, setLoading] = useState(true);
   const game = useSelector((root: RootState) => root.teacher.currentGame);
   const params = useParams();
-  const url = usePathname();
+  // const url = usePathname();
   const navigation = useRouter();
   const quizId = params.id;
   const teacherId = "1";
@@ -29,23 +29,22 @@ const Teacher = () => {
   const dispatch = useDispatch();
   const [QRUrl, setQRUrl] = useState("");
   const [roomId, setRoomId] = useState("");
-  const [students, setStudents] = useState([]);
-  console.log(game);
   useEffect(() => {
-    console.log(socket);
+    // console.log(socket);
     if (socket) {
       socket.on("studentJoined", ({ students, data }) => {
-        setStudents(students);
-        console.log(data);
-        console.log(game);
-        dispatch(update(data));
-        console.log(game)
+       
+        dispatch(update({...data}));
+        console.log('data',students)
+
+        console.log('game',game)
+  
       });
 
       socket.on("roomCreated", ({ roomId, pin, data }) => {
         setRoomId(roomId);
         setPin(pin);
-        console.log(data)
+        // console.log(data)
         dispatch(created(data));
       });
       socket.on("started", (data) => {
@@ -55,7 +54,7 @@ const Teacher = () => {
       socket.on("error",(data) => {
         toast.error(data.message);
       })
-      socket.on("roomDeleted",({roomId}) =>{
+      socket.on("roomDeleted",() =>{
         dispatch(disconnect())
       })
       return () => {
@@ -69,52 +68,51 @@ const Teacher = () => {
   }, [socket]);
 
   const createRoom = () => {
-    socket.emit("createRoom", { quizId, teacherId });
+    socket?.emit("createRoom", { quizId, teacherId });
   };
-  console.log(url);
+  // console.log(url);
 
   useEffect(() => {
     if (socket) {
       createRoom();
     }
   }, [socket]);
-  const enterFullscreen = () => {
-    const element = document.documentElement; // Fullscreen the entire page
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      // Firefox
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      // Chrome, Safari and Opera
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      // IE/Edge
-      element.msRequestFullscreen();
-    }
-  };
+const enterFullscreen = () => {
+  const element = document.documentElement; // Fullscreen the entire page
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } 
+  // else if (element.webkitRequestFullscreen) {
+  //   // For Chrome, Safari, and Opera
+  //   element?.webkitRequestFullscreen();
+  // } else if (element.msRequestFullscreen) {
+  //   // For IE/Edge
+  //   element.msRequestFullscreen();
+  // }
+};
 
   const exitFullscreen = () => {
     if (document.exitFullscreen) {
       document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      // Firefox
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      // Chrome, Safari and Opera
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      // IE/Edge
-      document.msExitFullscreen();
-    }
+    } 
+    // else if (document.mozCancelFullScreen) {
+    //   // Firefox
+    //   document.mozCancelFullScreen();
+    // } else if (document.webkitExitFullscreen) {
+    //   // Chrome, Safari and Opera
+    //   document.webkitExitFullscreen();
+    // } else if (document.msExitFullscreen) {
+    //   // IE/Edge
+    //   document.msExitFullscreen();
+    // }
   };
 
   const toggleFullscreen = () => {
     if (
-      !document.fullscreenElement &&
-      !document.mozFullScreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement
+      !document.fullscreenElement
+      // !document.mozFullScreenElement &&
+      // !document.webkitFullscreenElement &&
+      // !document.msFullscreenElement
     ) {
       enterFullscreen();
     } else {
@@ -194,13 +192,13 @@ const Teacher = () => {
         </Button>
       </div>
       <div className="w-screen  ">
-        {students.length === 0 ? (
+        {game?.students.length === 0 ? (
           <div className="text-6xl text-center font-semibold text-white">
             Waiting for players…
           </div>
         ) : (
           <div className=" w-full flex-wrap flex items-center justify-center gap-2">
-            {students.map((student, i) => (
+            {game?.students.map((student, i) => (
               <div
                 key={i}
                 className="px-3 py-2  flex items-center gap-2 text-2xl font-semibold rounded-lg bg-[#0000009a] text-white"
@@ -220,7 +218,7 @@ const Teacher = () => {
       <div className="absolute bottom-2 w-screen left-0 flex items-center justify-end gap-2">
         <div className="bg-[#0000009a] flex w-[90px] rounded-lg px-1 py-[8px]  text-3xl text-white font-bold">
           <MemberIcon />
-          {students.length}
+          {game?.students.length}
         </div>
         <div
           onClick={toggleFullscreen}

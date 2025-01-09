@@ -1,8 +1,9 @@
 
+import { Teacher } from '@/src/types';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentGame:null,
+  currentGame:null as Teacher | null,
 };
 
 const teacherSlice = createSlice({

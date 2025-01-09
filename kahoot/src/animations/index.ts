@@ -1,4 +1,4 @@
-import { TargetAndTransition, Transition, Variant } from "framer-motion";
+// import { TargetAndTransition, Transition, Variant } from "framer-motion";
 export const bounceScaleAnimation = {
   scale: 1,
 };
@@ -15,16 +15,16 @@ export const bounceInitialScale = {
   scale: 2,
 };
 
-export const CounterRoundInitial: Variant = {
+export const CounterRoundInitial = {
     scale: 1,
     rotate: 0,
   };
   
-  export const CounterRoundAnimation: TargetAndTransition = {
+  export const CounterRoundAnimation = {
     rotate: 0, 
   };
   
-  export const CounterRoundTransition: Transition = {
+  export const CounterRoundTransition = {
     delay: 0,
     duration: 0.1,
     repeat: 0,

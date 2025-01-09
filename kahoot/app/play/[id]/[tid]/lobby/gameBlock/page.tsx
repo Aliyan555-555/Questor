@@ -13,15 +13,28 @@ import {
 } from "@/src/lib/svg";
 import { RootState } from "@/src/redux/store";
 import { useConfetti } from "@stevent-team/react-party";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { PixelArtCard } from "react-pixelart-face-card";
-// import { div } from "framer-motion/client";
 import { useSocket } from "@/src/hooks/useSocket";
 import { update } from "@/src/redux/schema/teacher";
+import { Socket } from "socket.io-client";
+import { Question, Student, Teacher } from "@/src/types";
 
-const QuestionSection = ({ question, roomId, questionData, socket,questionIndex }) => {
+const QuestionSection = ({
+  question,
+  roomId,
+  questionData,
+  socket,
+  questionIndex,
+}: {
+  question: string | undefined;
+  roomId: string;
+  questionData: Question | undefined;
+  socket: Socket | null;
+  questionIndex: string;
+}) => {
   useEffect(() => {
     socket?.on("student_waiting", () => {
       socket?.emit("request_question_options_waiting", {
@@ -95,13 +108,21 @@ const QuestionSection = ({ question, roomId, questionData, socket,questionIndex 
   );
 };
 
-const OptionsSection = ({ data, currentQuestionIndex, setStage }) => {
-  const question = data.kahoot.questions[currentQuestionIndex];
+const OptionsSection = ({
+  data,
+  currentQuestionIndex,
+  setStage,
+}: {
+  data: Teacher | null;
+  currentQuestionIndex: number;
+  setStage: React.Dispatch<React.SetStateAction<number>>;
+}) => {
+  const question = data?.kahoot.questions[currentQuestionIndex];
   const icons = [
-    { icon: <TriangleIcon /> },
-    { icon: <DiamondIcon /> },
-    { icon: <CircleIcon /> },
-    { icon: <SquareIcon /> },
+    { icon: <TriangleIcon width={50} height={50} /> },
+    { icon: <DiamondIcon  width={50} height={50}  /> },
+    { icon: <CircleIcon  width={50} height={50} /> },
+    { icon: <SquareIcon  width={50} height={50} /> },
   ];
   const colors = ["red", "blue", "#C79200", "green"];
   const [duration, setDuration] = useState(30);
@@ -132,22 +153,25 @@ const OptionsSection = ({ data, currentQuestionIndex, setStage }) => {
         }}
         className="px-6 py-2 text-lg font-black bg-white absolute right-4 top-4"
       >
-        {data.students.length === question.attemptStudents.length ?"Next":duration === 0 ? "Next" : "Skip"}
+        {data?.students.length === question?.attemptStudents.length
+          ? "Next"
+          : duration === 0
+          ? "Next"
+          : "Skip"}
       </button>
       <div className="w-[80%] text-wrap px-4 py-3 text-4xl leading-[60px] font-bold text-center text-black bg-white">
-        {question.question}
+        {question?.question}
       </div>
       <div className="w-full flex justify-between">
         <div className="w-[100px] h-[100px] flex items-center justify-center bg-white text-black rounded-full text-4xl font-bold">
           <span>{duration}</span>
         </div>
         <div className="w-[100px] h-[100px] flex items-center justify-center bg-white text-black rounded-full text-4xl font-bold">
-          <span>{question.attemptStudents.length}</span>
+          <span>{question?.attemptStudents.length}</span>
         </div>
-
       </div>
       <div className="w-full flex gap-2 flex-wrap">
-        {question.options.map((option, i) => (
+        {question?.options.map((option, i) => (
           <button
             key={i}
             disabled={duration === 0 && i !== question.answerIndex[0]}
@@ -171,7 +195,13 @@ const OptionsSection = ({ data, currentQuestionIndex, setStage }) => {
   );
 };
 
-const ScoreBoard = ({ data, nextQuestion }) => {
+const ScoreBoard = ({
+  data,
+  nextQuestion,
+}: {
+  data: Teacher | null;
+  nextQuestion: () => void;
+}) => {
   return (
     <div className="w-full p-4 flex flex-col items-center h-full relative">
       <button
@@ -184,14 +214,14 @@ const ScoreBoard = ({ data, nextQuestion }) => {
         Scoreboard
       </div>
       <div className="flex w-full flex-col items-center gap-3 justify-center flex-1">
-        {data.kahoot.students.map((student, i) => (
+        {data?.kahoot.students.map((student) => (
           <div
-            key={student.id}
+            key={student._id}
             className="bg-white rounded-xl text-2xl flex items-center justify-between font-semibold text-black w-[70%] p-1"
           >
             <div className="flex items-center">
               <PixelArtCard
-                key={student.id + i}
+                key={student._id}
                 random={true}
                 size={60}
                 tags={["human-female", "human-male"]}
@@ -205,29 +235,56 @@ const ScoreBoard = ({ data, nextQuestion }) => {
     </div>
   );
 };
-const RankSection = ({ data }) => {
+const RankSection = ({
+  data,
+  socket,
+}: {
+  data: Teacher | null;
+  socket: Socket | null;
+}) => {
   const { createConfetti, canvasProps } = useConfetti({
     count: 300,
     gravity: 11,
     speed: 1.9,
   });
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [students, setStudents] = useState<Student[]>([]);
+  useEffect(() => {
+    socket?.emit("calculate_ranks", {
+      roomId: `${data?.teacherId}-${data?.quizId}`,
+    });
+    socket?.on("calculate_ranks_student", (data) => {
+      setStudents(data.students);
+    });
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
       createConfetti();
     }, 12000);
-  }, []);
+  }, [createConfetti]);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center  text-white">
-      <canvas {...canvasProps} />
+      <canvas
+        // Use the ref directly here
+        {...canvasProps} ref={canvasRef} // Spread the rest of the canvasProps (without ref)
+        style={{
+          display: "block",
+          position: "absolute",
+          pointerEvents: "none",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      />
       <motion.div
         initial={{ translateY: "200px", scale: 1.1 }}
         animate={{ translateY: "-100px", scale: 1 }}
         transition={{ duration: 0.5, ease: "easeIn" }}
         className="w-fit scale-150 bg-white text-black px-10 py-4 text-4xl font-bold "
       >
-        {data.kahoot.name}
+        {data?.kahoot.name}
       </motion.div>
 
       <div className="flex">
@@ -257,8 +314,12 @@ const RankSection = ({ data }) => {
           className="w-[300px] h-[400px] z-[100] bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
         >
           <SecondRankIcon />
-          <h3 className="text-4xl font-bold">{"aliyan"}</h3>
-          <p className="text-2xl font-semibold py-4">0</p>
+          <h3 className="text-4xl font-bold">
+            {students.length >= 2 && students[1].nickname}
+          </h3>
+          <p className="text-2xl font-semibold py-4">
+            {students.length >= 2 && students[1].score.toFixed(0)}
+          </p>
         </motion.div>{" "}
         <motion.div
           style={{
@@ -276,8 +337,12 @@ const RankSection = ({ data }) => {
           className="w-[300px] z-[1000] h-[400px] bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
         >
           <FirstRankIcon />
-          <h3 className="text-4xl font-bold">{"aliyan"}</h3>
-          <p className="text-2xl font-semibold py-4">0</p>
+          <h3 className="text-4xl font-bold">
+            {students.length >= 1 && students[0].nickname}
+          </h3>
+          <p className="text-2xl font-semibold py-4">
+            {students.length >= 1 && students[0].score.toFixed(0)}
+          </p>
         </motion.div>
         <motion.div
           style={{
@@ -305,8 +370,12 @@ const RankSection = ({ data }) => {
           className="w-[300px] h-[400px] bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
         >
           <ThirdRankIcon />
-          <h3 className="text-4xl font-bold">{"Aliyan"}</h3>
-          <p className="text-2xl font-semibold py-4">0</p>
+          <h3 className="text-4xl font-bold">
+            {students.length >= 3 && students[2].nickname}
+          </h3>
+          <p className="text-2xl font-semibold py-4">
+            {students.length >= 3 && students[2].score.toFixed(0)}
+          </p>
         </motion.div>
       </div>
     </div>
@@ -320,11 +389,11 @@ const Page = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const teacher = useSelector((root: RootState) => root.teacher.currentGame);
   useEffect(() => {
-    const url = `/play/${teacher.quizId}/${teacher.teacherId}/lobby/instructions/get-ready`;
+    const url = `/play/${teacher?.quizId}/${teacher?.teacherId}/lobby/instructions/get-ready`;
     socket?.emit("question_playing", {
       currentQuestionIndex: currentQuestionIndex,
       url,
-      roomId: `${teacher.teacherId}-${teacher.quizId}`,
+      roomId: `${teacher?.teacherId}-${teacher?.quizId}`,
     });
 
     return () => {
@@ -332,18 +401,22 @@ const Page = () => {
     };
   }, [socket]);
   useEffect(() => {
-    socket?.on("resultsData",(data) => {
+    socket?.on("resultsData", (data) => {
       dispatch(update(data.data));
     });
   }, []);
   const nextQuestion = () => {
-    if (currentQuestionIndex + 1 === teacher.kahoot.questions.length) {
+    if (currentQuestionIndex + 1 === teacher?.kahoot.questions.length) {
       setStage(4);
-      socket?.emit("ranking_redirection",{roomId:`${teacher.teacherId}-${teacher.quizId}`});
+      socket?.emit("ranking_redirection", {
+        roomId: `${teacher.teacherId}-${teacher.quizId}`,
+      });
     } else {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setStage(1);
-      socket?.emit("next_question_redirect",{roomId:`${teacher.teacherId}-${teacher.quizId}`});
+      socket?.emit("next_question_redirect", {
+        roomId: `${teacher?.teacherId}-${teacher?.quizId}`,
+      });
     }
   };
   useEffect(() => {
@@ -356,23 +429,22 @@ const Page = () => {
     <div className="w-screen h-screen">
       {stage === 1 && (
         <QuestionSection
-          questionData={teacher.kahoot.questions[currentQuestionIndex]}
-          roomId={`${teacher.teacherId}-${teacher.quizId}`}
-          questionIndex={currentQuestionIndex + 1}
-          question={teacher.kahoot.questions[currentQuestionIndex].question}
+          question={teacher?.kahoot.questions[currentQuestionIndex].question}
+          roomId={`${teacher?.teacherId}-${teacher?.quizId}`}
+          questionData={teacher?.kahoot.questions[currentQuestionIndex]}
           socket={socket}
+          questionIndex={`${currentQuestionIndex}`}
         />
       )}
       {stage === 2 && (
         <OptionsSection
           data={teacher}
-          // socket={socket}
           currentQuestionIndex={currentQuestionIndex}
           setStage={setStage}
         />
       )}
       {stage === 3 && <ScoreBoard data={teacher} nextQuestion={nextQuestion} />}
-      {stage === 4 && <RankSection data={teacher} />}
+      {stage === 4 && <RankSection data={teacher} socket={socket} />}
     </div>
   );
 };

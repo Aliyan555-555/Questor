@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { join } from "@/src/redux/schema/student";
 import { useSocket } from "@/src/hooks/useSocket";
+import { Student as StudentDate} from "@/src/types";
 
 const Student = () => {
   const params = useParams();
@@ -46,16 +47,22 @@ const Student = () => {
 
   useEffect(() => {
     if (socket) {
-      const handleJoinedRoom = ({ roomId, student }) => {
+      const handleJoinedRoom = ({
+        roomId,
+        student,
+      }: {
+        roomId: string;
+        student: StudentDate;
+      }) => {
         dispatch(join({ roomId, student }));
         router.push(`/play/${id}/${tid}/lobby/instructions`);
       };
 
-      const handleNicknameError = (error) => {
+      const handleNicknameError = (error: { message: string }) => {
         toast.error(error.message);
       };
 
-      const handlePinVerified = (data) => {
+      const handlePinVerified = (data: { status: boolean }) => {
         if (data.status) {
           setPinVerified(true);
         } else {

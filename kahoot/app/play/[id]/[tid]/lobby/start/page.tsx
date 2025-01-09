@@ -7,13 +7,12 @@ import {
   bounceInitialScale,
   bounceScaleAnimation,
   bounceTransition,
-  CounterRoundAnimation,
   CounterRoundInitial,
   CounterRoundTransition,
 } from "@/src/animations";
 import { useRouter } from "next/navigation";
 
-const Page: React.FC = () => {
+const Start: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const navigation = useRouter();
   const [rotate, setRotate] = useState(0);
@@ -23,7 +22,7 @@ const Page: React.FC = () => {
   useEffect(() => {
     if (counter === 0) {
       navigation.push(
-        `/play/${teacher.quizId}/${teacher.teacherId}/lobby/gameBlock`
+        `/play/${teacher?.quizId}/${teacher?.teacherId}/lobby/gameBlock`
       );
     } else {
       const interval = setInterval(() => {
@@ -33,7 +32,7 @@ const Page: React.FC = () => {
 
       return () => clearInterval(interval);
     }
-  }, [counter, navigation, teacher.quizId, teacher.teacherId]);
+  }, [counter, navigation, teacher?.quizId, teacher?.teacherId]);
 
   return (
     <div className="w-screen h-screen flex items-center justify-center">
@@ -45,7 +44,7 @@ const Page: React.FC = () => {
           onAnimationComplete={() => setIsVisible(false)}
           className="w-screen bg-white py-4 text-center text-black text-5xl font-bold"
         >
-          {teacher.kahoot.name}
+          {teacher?.kahoot.name}
         </motion.div>
       ) : (
         <div className="text-white w-[150px] h-[150px] flex items-center justify-center relative text-6xl font-bold">
@@ -63,4 +62,4 @@ const Page: React.FC = () => {
   );
 };
 
-export default Page;
+export default Start;

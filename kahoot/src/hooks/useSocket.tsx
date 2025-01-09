@@ -1,25 +1,28 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import io from "socket.io-client";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import io, { Socket } from "socket.io-client";
 
-const SocketContext = createContext(null);
+// Define the context with a type for socket, initially null
+const SocketContext = createContext<Socket | null>(null);
 
-export const useSocket = () => {
+export const useSocket = (): Socket | null => {
   return useContext(SocketContext);
 };
 
-export const SocketProvider = ({ children }) => {
-  const [socket, setSocket] = useState(null);
+export const SocketProvider = ({ children }: { children: ReactNode }) => {
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:8000");
+    const newSocket: Socket = io(process.env.NEXT_PUBLIC_SERVER as string);
     setSocket(newSocket);
-
-    return () => newSocket.close();
+    return () => {
+      newSocket.close();
+    };
   }, []);
-
   return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+    <SocketContext.Provider value={socket}>
+      {children}
+    </SocketContext.Provider>
   );
 };
