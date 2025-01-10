@@ -29,62 +29,62 @@ const demoData = [
     _id: 22,
     name: "Programming Languages",
     questions: [
-      // {
-      //   _id: 1,
-      //   duration: 4000,
-      //   showQuestionDuration: 2000,
-      //   type: "quiz",
-      //   media: "",
-      //   maximumMarks: 1000,
-      //   question:
-      //     "What is the name of the programming language that is used for web development?",
-      //   options: ["Java", "Python", "JavaScript", "C++"],
-      //   answerIndex: [2], // index start with 0
-      //   attemptStudents: [],
-      //   results: [],
-      // },
-      // {
-      //   _id: 2,
-      //   duration: 4000,
-      //   showQuestionDuration: 2000,
-      //   type: "quiz",
-      //   media: "",
-      //   maximumMarks: 1000,
-      //   question:
-      //     "Which language is primarily used for statistical computing and graphics?",
-      //   options: ["Java", "R", "Python", "C++"],
-      //   answerIndex: [1], // index start with 0
-      //   attemptStudents: [],
-      //   results: [],
-      // },
-      // {
-      //   _id: 3,
-      //   duration: 4000,
-      //   showQuestionDuration: 2000,
-      //   type: "quiz",
-      //   media: "",
-      //   maximumMarks: 1000,
-      //   question:
-      //     "Which programming language is known as the backbone of web development?",
-      //   options: ["Ruby", "JavaScript", "C#", "Java"],
-      //   answerIndex: [1], // index start with 0
-      //   attemptStudents: [],
-      //   results: [],
-      // },
-      // {
-      //   _id: 4,
-      //   duration: 4000,
-      //   showQuestionDuration: 2000,
-      //   type: "quiz",
-      //   media: "",
-      //   maximumMarks: 1000,
-      //   question:
-      //     "Which programming language is used for Android app development?",
-      //   options: ["C#", "Swift", "Kotlin", "Java"],
-      //   answerIndex: [2], // index start with 0
-      //   attemptStudents: [],
-      //   results: [],
-      // },
+      {
+        _id: 1,
+        duration: 4000,
+        showQuestionDuration: 2000,
+        type: "quiz",
+        media: "",
+        maximumMarks: 1000,
+        question:
+          "What is the name of the programming language that is used for web development?",
+        options: ["Java", "Python", "JavaScript", "C++"],
+        answerIndex: [2], // index start with 0
+        attemptStudents: [],
+        results: [],
+      },
+      {
+        _id: 2,
+        duration: 4000,
+        showQuestionDuration: 2000,
+        type: "quiz",
+        media: "",
+        maximumMarks: 1000,
+        question:
+          "Which language is primarily used for statistical computing and graphics?",
+        options: ["Java", "R", "Python", "C++"],
+        answerIndex: [1], // index start with 0
+        attemptStudents: [],
+        results: [],
+      },
+      {
+        _id: 3,
+        duration: 4000,
+        showQuestionDuration: 2000,
+        type: "quiz",
+        media: "",
+        maximumMarks: 1000,
+        question:
+          "Which programming language is known as the backbone of web development?",
+        options: ["Ruby", "JavaScript", "C#", "Java"],
+        answerIndex: [1], // index start with 0
+        attemptStudents: [],
+        results: [],
+      },
+      {
+        _id: 4,
+        duration: 4000,
+        showQuestionDuration: 2000,
+        type: "quiz",
+        media: "",
+        maximumMarks: 1000,
+        question:
+          "Which programming language is used for Android app development?",
+        options: ["C#", "Swift", "Kotlin", "Java"],
+        answerIndex: [2], // index start with 0
+        attemptStudents: [],
+        results: [],
+      },
       {
         _id: 5,
         duration: 4000,

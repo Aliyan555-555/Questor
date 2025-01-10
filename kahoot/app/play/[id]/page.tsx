@@ -25,7 +25,7 @@ const Teacher = () => {
   // const url = usePathname();
   const navigation = useRouter();
   const quizId = params.id;
-  const teacherId = "1";
+  const teacherId = "1233";
   const [pin, setPin] = useState("");
   const dispatch = useDispatch();
   const [QRUrl, setQRUrl] = useState("");

@@ -54,7 +54,7 @@ const Ranking = () => {
         <h2 className="drop-shadow-2xl text-3xl">{studentResult?.nickname}</h2>
         {/* {studentResult?.rank === 1 && <StudentFirstPosition />} */}
         <h3 className="drop-shadow-2xl text-xl">Rank: {studentResult?.rank}</h3>
-        <h3 className="drop-shadow-2xl text-xl">Score: {studentResult?.score}</h3>
+        <h3 className="drop-shadow-2xl text-xl">Score: {studentResult?.score.toFixed(0)}</h3>
         {studentResult?.rank === 1 && (
           <p className="drop-shadow-2xl text-xl">Remarkable win</p>
         )}
