@@ -136,7 +136,7 @@ const OptionsSection = ({
       audioRef.current.src = `/audios/${fileName}`;
       audioRef.current.loop = loop;
       audioRef.current.play().catch((err) => {
-        console.error("Audio play error:", err);
+        console.log("Audio play error:", err);
       });
     }
   };
