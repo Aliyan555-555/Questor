@@ -8,30 +8,42 @@ interface AudioPlayerProps {
 }
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ fileName }) => {
-  const audioRef = useRef<HTMLAudioElement | null>(null); // Specify type for audioRef
-  //   const [isHovered, setIsHovered] = useState(false);
-  const [volume, setVolume] = useState(1); // default volume is 100%
-  const [isClicked, setIsClicked] = useState(false); // New state to track button click
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [volume, setVolume] = useState(1);
+  const [isClicked, setIsClicked] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  // Function to handle volume change
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseFloat(e.target.value) / 100; // Convert to percentage
+    const newVolume = parseFloat(e.target.value) / 100;
     setVolume(newVolume);
     if (audioRef.current) {
       audioRef.current.volume = newVolume;
     }
   };
 
-  // Trigger play when the user clicks the button
   const handlePlay = () => {
-    if (audioRef.current) {
+    if (audioRef.current && !isPlaying) {
+      audioRef.current.volume = 0;
+     
       audioRef.current.play().catch((err) => {
         console.error("Audio play error:", err);
       });
+      let currentVolume = 0;
+      const volumeInterval = setInterval(() => {
+        if (currentVolume < 1) {
+          currentVolume += 0.05;
+         if (audioRef.current){
+          audioRef.current.volume = currentVolume;
+         }
+        } else {
+          clearInterval(volumeInterval);
+        }
+      }, 100);
+
+      setIsPlaying(true);
     }
   };
 
-  // Determine the icon based on volume
   const getVolumeIcon = () => {
     if (volume === 0) {
       return <FaVolumeMute />;
@@ -44,40 +56,49 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ fileName }) => {
 
   const handleClick = () => {
     setIsClicked(!isClicked);
-    handlePlay();
+    handlePlay(); 
   };
+
+
   useEffect(() => {
-    window.addEventListener("click", handleClick);
+    if (audioRef.current) {
+      audioRef.current.load();
+    }
   }, []);
+
+  useEffect(() => {
+
+    if (audioRef.current && !isPlaying) {
+      handlePlay(); 
+    }
+  }, [isPlaying]);
 
   return (
     <button
       className="bg-[#0000009a] flex w-fit items-center rounded-lg px-3 gap-2 py-3 justify-center text-3xl text-white font-bold"
-      //   onMouseEnter={() => setIsHovered(true)}
-      //   onMouseLeave={() => setIsHovered(false)}
-      onClick={handleClick} // Trigger the click event here
+      onClick={handleClick} 
     >
-      <audio hidden ref={audioRef} loop controls>
+      <audio hidden ref={audioRef} controls loop>
         <source src={`/audios/${fileName}`} type="audio/webm" />
       </audio>
 
       {getVolumeIcon()}
 
-      {/* Trigger animation on button click */}
+
       <motion.div
-        initial={{ width: 0, opacity: 0 }} // Start width from 5
+        initial={{ width: 0, opacity: 0 }}
         animate={{
           width: isClicked ? "100px" : "0",
           opacity: isClicked ? 1 : 0,
-        }} // Animate to full width on click
-        transition={{ duration: 0.6 }} // Duration for the animation
+        }}
+        transition={{ duration: 0.6 }}
         className="w-[50px] h-full flex items-center"
       >
         <input
           type="range"
           min="0"
           max="100"
-          value={volume * 100} // Convert back to percentage
+          value={volume * 100}
           onChange={handleVolumeChange}
           className="w-full pro"
         />

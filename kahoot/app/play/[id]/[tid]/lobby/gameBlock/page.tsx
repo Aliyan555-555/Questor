@@ -21,6 +21,7 @@ import { useSocket } from "@/src/hooks/useSocket";
 import { update } from "@/src/redux/schema/teacher";
 import { Socket } from "socket.io-client";
 import { Question, Student, Teacher } from "@/src/types";
+import { MdFullscreen } from "react-icons/md";
 
 const QuestionSection = ({
   question,
@@ -120,16 +121,28 @@ const OptionsSection = ({
   const question = data?.kahoot.questions[currentQuestionIndex];
   const icons = [
     { icon: <TriangleIcon width={50} height={50} /> },
-    { icon: <DiamondIcon  width={50} height={50}  /> },
-    { icon: <CircleIcon  width={50} height={50} /> },
-    { icon: <SquareIcon  width={50} height={50} /> },
+    { icon: <DiamondIcon width={50} height={50} /> },
+    { icon: <CircleIcon width={50} height={50} /> },
+    { icon: <SquareIcon width={50} height={50} /> },
   ];
   const colors = ["red", "blue", "#C79200", "green"];
   const [duration, setDuration] = useState(30);
-  const [isTimesUp,setIsTimesUp] = useState(false)
+  const [isTimesUp, setIsTimesUp] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null); // Ref for audio element
 
+  // Function to play the audio based on the state
+  const playAudio = (fileName: string, loop: boolean) => {
+    if (audioRef.current) {
+      audioRef.current.src = `/audios/${fileName}`;
+      audioRef.current.loop = loop;
+      audioRef.current.play().catch((err) => {
+        console.error("Audio play error:", err);
+      });
+    }
+  };
+
+  // Handle timer countdown
   useEffect(() => {
-    // socket?.emit("request_question_options_waiting",question);
     const timer = setInterval(() => {
       setDuration((prev) => {
         if (prev === 0) {
@@ -143,32 +156,40 @@ const OptionsSection = ({
     return () => clearInterval(timer);
   }, []);
 
+  // Check if all students have attempted the question
   useEffect(() => {
-    // console.log(data?.students)
-    console.log("question attempt students", question?.attemptStudents)
-    if (data?.kahoot.students.length === question?.attemptStudents.length){
+    if (data?.kahoot.students.length === question?.attemptStudents.length) {
       setIsTimesUp(true);
-      
     }
-  },[])
+  }, [data, question?.attemptStudents.length]);
+
+  // Effect to control audio based on time
+  useEffect(() => {
+    if (isTimesUp) {
+      playAudio("GameOver.mp3", false); // Play Game Over audio when time is up
+    } else {
+      playAudio("lobby-halloween.webm", true); // Play lobby music when the timer is running
+    }
+  }, [isTimesUp]);
 
   return (
     <div
       className={`w-full h-full fixed top-0 left-0 ${
         isTimesUp && " bg-[#000a]"
-      } p-4 flex-col flex items-center justify-between`}
+      } p-2 md:p-4 flex-col flex relative items-center justify-between`}
     >
       <button
         onClick={() => {
           setStage(3);
         }}
-        className="px-6 py-2 text-lg font-black bg-white absolute right-4 top-4"
+        disabled={!isTimesUp}
+        className="px-6 py-2 disabled:bg-slate-100 text-lg font-black bg-white absolute right-4 top-4"
       >
-        {data?.students.length === question?.attemptStudents.length
+        {data?.kahoot.students.length === question?.attemptStudents.length
           ? "Next"
           : duration === 0
           ? "Next"
-          : "Skip"}
+          : "Next"}
       </button>
       <div className="w-[80%] text-wrap px-4 py-3 text-4xl leading-[60px] font-bold text-center text-black bg-white">
         {question?.question}
@@ -181,7 +202,7 @@ const OptionsSection = ({
           <span>{question?.attemptStudents.length}</span>
         </div>
       </div>
-      <div className="w-full flex gap-2 flex-wrap">
+      <div className="w-full flex gap-2 mb-16 flex-wrap">
         {question?.options.map((option, i) => (
           <button
             key={i}
@@ -202,6 +223,14 @@ const OptionsSection = ({
           </button>
         ))}
       </div>
+      <div className="absolute bottom-2 w-screen left-0 flex items-center justify-end gap-2">
+        <div className="bg-[#0000009a] flex mr-2 rounded-lg px-1 p-[6px] text-3xl text-white font-black">
+          <MdFullscreen fontSize={40} />
+        </div>
+      </div>
+
+      {/* Audio element */}
+      <audio ref={audioRef} hidden />
     </div>
   );
 };

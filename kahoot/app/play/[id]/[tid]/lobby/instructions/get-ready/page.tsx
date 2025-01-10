@@ -97,6 +97,7 @@ const Page = () => {
   }, [socket]);
 
   useEffect(() => {
+  if (!loading){
     const timer = setInterval(() => {
       setTimeCount((prev) => {
         if (prev === 0) {
@@ -107,7 +108,8 @@ const Page = () => {
       });
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }
+  });
 
   const handleSubmitQuestionAnswer = (answer:string) => {
     socket?.emit("submit_question_answer", {
@@ -119,11 +121,20 @@ const Page = () => {
     });
   };
 
+  useEffect(() => {
+    if (timeCount === 0){
+      // handleSubmitQuestionAnswer('wrong');
+      navigation.push(`/play/${quizId}/${teacherId}/lobby/instructions/get-ready/answer/result?action=timeUp&r=${encodeURIComponent(
+        JSON.stringify({...currentQuestion,resultStatus:"Time's up",studentRank:0,studentTakenMarks:0})
+      )}`);
+    }
+  })
+
   return (
     <div className="w-screen h-screen flex flex-col relative">
       <div className="w-full flex px-[10px] relative justify-center p-3">
         <div className="bg-white absolute flex items-center left-3 justify-center rounded-full w-[40px] h-[40px] text-xl">
-          <p>{questionIndex}</p>
+          <p>{timeCount}</p>
         </div>
         <div className="bg-white  rounded-[50px] w-[120px] flex items-center px-2 h-[40px] text-xl">
           <KahootIcon w={30} h={30} />

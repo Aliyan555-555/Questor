@@ -15,6 +15,8 @@ const Results = () => {
   const student = useSelector((root: RootState) => root.student.currentGame);
   const query = useSearchParams();
   const decoded = JSON.parse(query.get("r") ?? "");
+  // const action = query.get("action");
+  // const isAction = action === 'timeUp'?true:false;
   console.log({ ...decoded });
 
   useEffect(() => {
@@ -45,7 +47,45 @@ const Results = () => {
         <h2 className="text-4xl text-white drop-shadow-xl [text-shadow:_0_2px_4px_rgb(99_102_241_/_0.8)] font-bold capitalize">
           {decoded.resultStatus}
         </h2>
-        {decoded.resultStatus === "correct" ? (
+        {decoded.resultStatus === "Time's up" ? (
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="80"
+            height="80"
+            viewBox="0 0 80 80"
+          >
+            <g fill="none" fillRule="evenodd">
+              <g>
+                <g>
+                  <g>
+                    <g transform="translate(-257 -1827) translate(90 1581) translate(47 190) translate(120 56)">
+                      <circle
+                        cx="40"
+                        cy="40"
+                        r="37.895"
+                        fill="#F35"
+                        stroke="#FFF"
+                        strokeWidth="4.211"
+                      ></circle>
+                      <g
+                        fill="#FFF"
+                        fillRule="nonzero"
+                        stroke="#000"
+                        strokeOpacity="0.15"
+                        strokeWidth="2.105"
+                      >
+                        <path
+                          d="M39.99 12.621v14.736l14.736.001V39.99H39.99v14.736H27.359V39.99H12.62V27.359h14.736l.001-14.737H39.99z"
+                          transform="translate(6.316 6.316) rotate(-135 33.674 33.674)"
+                        ></path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        ) : decoded.resultStatus === "correct" ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="80"

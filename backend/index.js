@@ -526,10 +526,11 @@ io.on("connection", (socket) => {
     // Remove the student from the room they were in
 
     for (const roomId in rooms) {
+      console.log(rooms[roomId].hostId ,socket.id)
       if (rooms[roomId].hostId === socket.id) {
         delete rooms[roomId];
         // delete roomPins[rooms[roomId].pin];
-        // console.log(`Room deleted: ${roomId}`);
+        console.log(`Room deleted: ${roomId}`);
         // console.log(rooms)
         io.to(roomId).emit("roomDeleted", { roomId });
         return;
