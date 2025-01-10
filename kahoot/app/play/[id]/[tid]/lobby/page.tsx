@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { join } from "@/src/redux/schema/student";
 import { useSocket } from "@/src/hooks/useSocket";
 import { Student as StudentDate} from "@/src/types";
+import Image from "next/image";
 
 const Student = () => {
   const params = useParams();
@@ -19,6 +20,7 @@ const Student = () => {
   const { tid, id } = params;
   const [roomId] = useState(`${tid}-${id}`);
   const [nickname, setNickname] = useState("");
+  const isQR = query.get('qr');
   const [pin, setPin] = useState(query.get("pin") || "");
   const [pinVerified, setPinVerified] = useState(false);
 
@@ -84,13 +86,21 @@ const Student = () => {
     }
   }, [socket, dispatch, id, tid, router, roomId]);
 
+  useEffect(() => {
+    if (isQR && pin != ""){
+      verifyPin()
+    
+    }
+  });
+
   return (
     <div
-      className="w-screen h-screen flex-col bg-cover bg-center bg-no-repeat flex items-center justify-center gap-10"
-      style={{ backgroundImage: "url(/images/NKbg.png)" }}
+      className="w-screen h-screen relative flex-col bg-cover bg-center bg-no-repeat flex items-center justify-center gap-10"
+      // style={{ backgroundImage: "url()" }}
     >
-      <h2 className="text-3xl font-black text-white">Kahoot</h2>
-      <div className="w-[400px] flex flex-col p-4 gap-2 bg-white">
+      <Image src={'/images/NKbg.png'} alt="bg" width={1000} height={1000} className="absolute z-0 object-cover object-center top-0 left-0 w-screen h-screen" />
+      <h2 className="text-3xl relative z-10 font-black text-white">Kahoot</h2>
+      <div className="md:w-[400px]  relative z-10 flex flex-col p-4 gap-2 bg-white">
         {pinVerified ? (
           <>
             <input

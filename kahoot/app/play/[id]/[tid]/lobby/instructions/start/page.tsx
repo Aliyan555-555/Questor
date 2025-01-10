@@ -16,9 +16,9 @@ const Page = () => {
   }, []);
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center ">
-      <h3 className="text-7xl font-black text-white mb-6">Get Ready!</h3>
+      <h3 className="text-4xl md:text-7xl font-black text-white mb-6">Get Ready!</h3>
       <svg
-        className="animate-spin w-48 h-48"
+        className="animate-spin w-32 h-32"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"

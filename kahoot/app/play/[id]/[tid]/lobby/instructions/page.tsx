@@ -96,8 +96,8 @@ const Page = () => {
           tags={["human-female", "human-male"]}
         />
       )}
-      {student?.student.nickname}
-      <p className="text-center">You&lsquo;re in! See your nickname on screen?</p>
+      <h3 className="mb-2 drop-shadow-2xl">{student?.student.nickname}</h3>
+      <p className="text-center text-3xl md:text-4xl">You&lsquo;re in! See your nickname on screen?</p>
     </div>
   );
 };

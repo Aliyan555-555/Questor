@@ -134,7 +134,7 @@ const Page = () => {
         {loading ? (
           <div className="w-full flex items-center flex-col justify-center gap-5 ">
             <h3 className="text-4xl font-bold text-white">
-              Question {questionIndex}
+              Question {Number(questionIndex) +1}
             </h3>
             <svg
               className="animate-spin w-32 h-32"

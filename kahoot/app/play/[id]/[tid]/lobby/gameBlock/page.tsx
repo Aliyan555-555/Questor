@@ -126,12 +126,14 @@ const OptionsSection = ({
   ];
   const colors = ["red", "blue", "#C79200", "green"];
   const [duration, setDuration] = useState(30);
+  const [isTimesUp,setIsTimesUp] = useState(false)
 
   useEffect(() => {
     // socket?.emit("request_question_options_waiting",question);
     const timer = setInterval(() => {
       setDuration((prev) => {
         if (prev === 0) {
+          setIsTimesUp(true);
           clearInterval(timer);
           return 0;
         }
@@ -141,10 +143,19 @@ const OptionsSection = ({
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    // console.log(data?.students)
+    console.log("question attempt students", question?.attemptStudents)
+    if (data?.kahoot.students.length === question?.attemptStudents.length){
+      setIsTimesUp(true);
+      
+    }
+  },[])
+
   return (
     <div
       className={`w-full h-full fixed top-0 left-0 ${
-        duration === 0 && " bg-[#000a]"
+        isTimesUp && " bg-[#000a]"
       } p-4 flex-col flex items-center justify-between`}
     >
       <button
@@ -174,7 +185,7 @@ const OptionsSection = ({
         {question?.options.map((option, i) => (
           <button
             key={i}
-            disabled={duration === 0 && i !== question.answerIndex[0]}
+            disabled={isTimesUp && i !== question.answerIndex[0]}
             style={{ background: colors[i] }}
             className="w-[49%] cursor-pointer disabled:opacity-35 flex p-5 text-3xl items-center justify-between gap-4 font-semibold text-white"
           >
@@ -182,7 +193,7 @@ const OptionsSection = ({
               <span>{icons[i].icon}</span>
               <p>{option}</p>
             </div>
-            {duration === 0 &&
+            {isTimesUp &&
               (i === question.answerIndex[0] ? (
                 <CorrectIcon />
               ) : (
@@ -391,7 +402,7 @@ const Page = () => {
   useEffect(() => {
     const url = `/play/${teacher?.quizId}/${teacher?.teacherId}/lobby/instructions/get-ready`;
     socket?.emit("question_playing", {
-      currentQuestionIndex: currentQuestionIndex,
+      currentQuestionIndex: currentQuestionIndex + 1,
       url,
       roomId: `${teacher?.teacherId}-${teacher?.quizId}`,
     });
@@ -405,6 +416,7 @@ const Page = () => {
       dispatch(update(data.data));
     });
   }, []);
+  console.log(teacher)
   const nextQuestion = () => {
     if (currentQuestionIndex + 1 === teacher?.kahoot.questions.length) {
       setStage(4);

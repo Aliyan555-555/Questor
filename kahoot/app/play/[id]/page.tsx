@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { created, disconnect, update } from "@/src/redux/schema/teacher";
 import { RootState } from "@/src/redux/store";
+import AudioPlayer from "@/src/components/audios/audioPlayer";
 // import AnimatedCharacter from "@/src/components/animated/animatedStudent";
 
 const Teacher = () => {
@@ -30,7 +31,7 @@ const Teacher = () => {
   const [QRUrl, setQRUrl] = useState("");
   const [roomId, setRoomId] = useState("");
   useEffect(() => {
-    // console.log(socket);
+
     if (socket) {
       socket.on("studentJoined", ({ students, data }) => {
        
@@ -123,7 +124,7 @@ const enterFullscreen = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       setQRUrl(
-        `${window.location.origin}/play/${quizId}/${teacherId}/lobby?pin=${pin}`
+        `${window.location.origin}/play/${quizId}/${teacherId}/lobby?pin=${pin}&qr=true`
       );
       setLoading(false);
     }
@@ -216,6 +217,7 @@ const enterFullscreen = () => {
         )}
       </div>
       <div className="absolute bottom-2 w-screen left-0 flex items-center justify-end gap-2">
+        <AudioPlayer fileName={'lobby-classic-game.webm'}/>
         <div className="bg-[#0000009a] flex w-[90px] rounded-lg px-1 py-[8px]  text-3xl text-white font-bold">
           <MemberIcon />
           {game?.students.length}
