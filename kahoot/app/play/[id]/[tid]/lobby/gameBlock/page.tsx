@@ -242,6 +242,7 @@ const ScoreBoard = ({
   data: Teacher | null;
   nextQuestion: () => void;
 }) => {
+  
   return (
     <div className="w-full p-4 flex flex-col items-center h-full relative">
       <button
@@ -254,23 +255,26 @@ const ScoreBoard = ({
         Scoreboard
       </div>
       <div className="flex w-full flex-col items-center gap-3 justify-center flex-1">
-        {data?.kahoot.students.map((student) => (
-          <div
-            key={student._id}
-            className="bg-white rounded-xl text-2xl flex items-center justify-between font-semibold text-black w-[70%] p-1"
-          >
-            <div className="flex items-center">
-              <PixelArtCard
-                key={student._id}
-                random={true}
-                size={60}
-                tags={["human-female", "human-male"]}
-              />
-              <p className="px-2"> {student.nickname}</p>
-            </div>
-            <p className="px-4"> {student.score.toFixed(0)}</p>
-          </div>
-        ))}
+      {data?.kahoot.students
+  .sort((a, b) => b.score - a.score) // Sort by score, descending order
+  .map((student) => (
+    <div
+      key={student._id}
+      className="bg-white rounded-xl text-2xl flex items-center justify-between font-semibold text-black w-[70%] p-1"
+    >
+      <div className="flex items-center">
+        <PixelArtCard
+          key={student._id}
+          random={true}
+          size={60}
+          tags={["human-female", "human-male"]}
+        />
+        <p className="px-2"> {student.nickname}</p>
+      </div>
+      <p className="px-4"> {student.score.toFixed(0)}</p>
+    </div>
+  ))}
+
       </div>
     </div>
   );
@@ -303,6 +307,10 @@ const RankSection = ({
       createConfetti();
     }, 12000);
   }, [createConfetti]);
+
+  
+
+
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center  text-white">

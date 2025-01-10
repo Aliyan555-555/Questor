@@ -174,13 +174,13 @@ const Page = () => {
             </svg>
           </div>
         ) : (
-          <div className="w-full pb-16 px-6 h-full grid grid-cols-2 grid-rows-2 gap-2">
+          <div className="w-full pb-14 md:pb-16 px-2 md:px-6 h-full grid grid-cols-2 grid-rows-2 gap-2">
             {currentQuestion?.question.options.map((answer, index) => (
               <button
                 key={index}
                 onClick={() => handleSubmitQuestionAnswer(answer)}
                 style={{ backgroundColor: colors[index] }}
-                className="flex items-center border-b-8 border-l-4 border-r-8 border-t-4  border-[#0000003e] justify-center w-full h-full"
+                className="flex items-center border-b-8 border-l-4 border-r-8 border-t-4  border-[#0000003e] justify-center w-full h-[99%] md:h-full"
               >
                 {icons[index]?.icon}
               </button>

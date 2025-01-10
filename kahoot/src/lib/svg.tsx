@@ -509,3 +509,8 @@ export const ThirdRankIcon = () => (
     </g>
   </svg>
 );
+
+
+export const StudentFirstPosition = () => (
+  <svg width="240" height="76" viewBox="0 0 240 76" fill="none" xmlns="http://www.w3.org/2000/svg" className="ribbon__RibbonFront-sc-8lg0qe-2 hCQCee"><g clip-path="url(#clip1_2702_31773)"><path d="M208 67.4871C149.851 78.8376 90.1489 78.8376 32 67.4871L40 20C92.3729 30.2264 147.627 30.2264 200 20C202.943 35.8399 205.089 51.6635 208 67.4871Z" fill="#46178f" className="ribbon-svg__Front-sc-goy6y-0 jhLqEc"></path></g><defs><clipPath id="clip1_2702_31773"><rect width="176" height="56" fill="white" transform="translate(32 20)"></rect></clipPath><filter id="brighter"><feComponentTransfer><feFuncR type="linear" slope="1.2"></feFuncR><feFuncG type="linear" slope="1.2"></feFuncG><feFuncB type="linear" slope="1.2"></feFuncB></feComponentTransfer></filter></defs></svg>
+)
