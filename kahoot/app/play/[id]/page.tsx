@@ -135,17 +135,46 @@ const enterFullscreen = () => {
   });
 
   const handleCopyClick = () => {
-    const textToCopy = pin; // Replace with the actual text you want to copy
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        toast.success("Text copied to clipboard!");
-      })
-      .catch((err) => {
-        console.error("Failed to copy text: ", err);
-      });
+    if (!pin) {
+      toast.error("No PIN to copy!");
+      return;
+    }
+  
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      navigator.clipboard
+        .writeText(pin)
+        .then(() => {
+          toast.success("PIN copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy PIN: ", err);
+          toast.error("Failed to copy PIN. Please try again.");
+        });
+    } else {
+      // Fallback for older browsers
+      try {
+        const textArea = document.createElement("textarea");
+        textArea.value = pin;
+        textArea.style.position = "fixed"; // Prevents scrolling to bottom
+        textArea.style.opacity = "0"; // Makes it invisible
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+  
+        const successful = document.execCommand("copy");
+        if (successful) {
+          toast.success("PIN copied to clipboard!");
+        } else {
+          throw new Error("Fallback copy failed");
+        }
+        document.body.removeChild(textArea);
+      } catch (err) {
+        console.error("Fallback copy failed: ", err);
+        toast.error("Failed to copy PIN. Please try again.");
+      }
+    }
   };
-
+  
   const handleStart = () => {
     if (socket) {
       socket.emit("start", roomId);
