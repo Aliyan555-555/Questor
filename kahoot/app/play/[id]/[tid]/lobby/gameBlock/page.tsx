@@ -16,12 +16,12 @@ import { useConfetti } from "@stevent-team/react-party";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { PixelArtCard } from "react-pixelart-face-card";
 import { useSocket } from "@/src/hooks/useSocket";
 import { update } from "@/src/redux/schema/teacher";
 import { Socket } from "socket.io-client";
 import { Question, Student, Teacher } from "@/src/types";
 import { MdFullscreen } from "react-icons/md";
+import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 
 const QuestionSection = ({
   question,
@@ -242,7 +242,6 @@ const ScoreBoard = ({
   data: Teacher | null;
   nextQuestion: () => void;
 }) => {
-  
   return (
     <div className="w-full p-4 flex flex-col items-center h-full relative">
       <button
@@ -255,26 +254,25 @@ const ScoreBoard = ({
         Scoreboard
       </div>
       <div className="flex w-full flex-col items-center gap-3 justify-center flex-1">
-      {data?.kahoot.students
-  .sort((a, b) => b.score - a.score) // Sort by score, descending order
-  .map((student) => (
-    <div
-      key={student._id}
-      className="bg-white rounded-xl text-2xl flex items-center justify-between font-semibold text-black w-[70%] p-1"
-    >
-      <div className="flex items-center">
-        <PixelArtCard
-          key={student._id}
-          random={true}
-          size={60}
-          tags={["human-female", "human-male"]}
-        />
-        <p className="px-2"> {student.nickname}</p>
-      </div>
-      <p className="px-4"> {student.score.toFixed(0)}</p>
-    </div>
-  ))}
-
+        {data?.kahoot.students
+          // .sort((a, b) => b.score - a.score) // Sort by score, descending order
+          .map((student) => (
+            <div
+              key={student._id}
+              className="bg-white rounded-xl text-2xl flex items-center justify-between font-semibold text-black w-[70%] p-1"
+            >
+              <div className="flex items-center">
+                <AnimatedAvatar
+                  avatarData={student.avatar}
+                  avatarItems={student.item}
+                  w="50px"
+                  h="50px"
+                />
+                <p className="px-2"> {student.nickname}</p>
+              </div>
+              <p className="px-4"> {student.score.toFixed(0)}</p>
+            </div>
+          ))}
       </div>
     </div>
   );
@@ -308,15 +306,12 @@ const RankSection = ({
     }, 12000);
   }, [createConfetti]);
 
-  
-
-
-
   return (
     <div className="w-full h-full flex flex-col items-center justify-center  text-white">
       <canvas
         // Use the ref directly here
-        {...canvasProps} ref={canvasRef} // Spread the rest of the canvasProps (without ref)
+        {...canvasProps}
+        ref={canvasRef} // Spread the rest of the canvasProps (without ref)
         style={{
           display: "block",
           position: "absolute",
@@ -359,8 +354,22 @@ const RankSection = ({
             times: [0, 0.3, 0.6, 1],
             ease: "easeInOut",
           }}
-          className="w-[300px] h-[400px] z-[100] bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
+          className="w-[300px] h-[400px] z-[100] relative bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
         >
+          <motion.div
+           initial={{ opacity: 0, translateY: 20 }}
+           className="absolute top-0 "
+           animate={{ translateY: -125, opacity: 1 }}
+           transition={{ delay: 7.5, duration: 0.8 }}
+          >
+            {students.length >= 2 && (
+              <AnimatedAvatar
+                avatarData={students[1].avatar}
+                avatarItems={students[1].item}
+                bg="#0000"
+              />
+            )}
+          </motion.div>
           <SecondRankIcon />
           <h3 className="text-4xl font-bold">
             {students.length >= 2 && students[1].nickname}
@@ -382,8 +391,25 @@ const RankSection = ({
           }}
           animate={{ translateY: ["600px", "150px", "150px", "150px"] }}
           transition={{ delay: 10, duration: 5, ease: "easeInOut" }}
-          className="w-[300px] z-[1000] h-[400px] bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
+          className="w-[300px] z-[1000] h-[400px] relative bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
         >
+          <motion.div
+            initial={{ opacity: 0, translateY: 20 }}
+            className="absolute top-0 "
+            animate={{ translateY: -150, opacity: 1 }}
+            transition={{ delay: 11, duration: 0.8 }}
+          >
+            {students.length >= 1 && (
+              <AnimatedAvatar
+                avatarData={students[0].avatar}
+                avatarItems={students[0].item}
+                bg="#0000"
+                w="150px"
+                chin={true}
+                h="150px"
+              />
+            )}
+          </motion.div>
           <FirstRankIcon />
           <h3 className="text-4xl font-bold">
             {students.length >= 1 && students[0].nickname}
@@ -415,9 +441,23 @@ const RankSection = ({
             times: [0, 0.3, 0.6, 1], // Corrected to match keyframes
             ease: "easeInOut",
           }}
-          className="w-[300px] h-[400px] bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
+          className="w-[300px] h-[400px] relative bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
         >
           <ThirdRankIcon />
+          <motion.div
+           initial={{ opacity: 0, translateY: 20 }}
+           className="absolute top-0 "
+           animate={{ translateY: -125, opacity: 1 }}
+           transition={{ delay: 2, duration: 0.8 }}
+          >
+            {students.length >= 3 && (
+              <AnimatedAvatar
+                avatarData={students[2].avatar}
+                avatarItems={students[2].item}
+                bg="#0000"
+              />
+            )}
+          </motion.div>
           <h3 className="text-4xl font-bold">
             {students.length >= 3 && students[2].nickname}
           </h3>
@@ -453,7 +493,7 @@ const Page = () => {
       dispatch(update(data.data));
     });
   }, []);
-  console.log(teacher)
+  console.log(teacher);
   const nextQuestion = () => {
     if (currentQuestionIndex + 1 === teacher?.kahoot.questions.length) {
       setStage(4);
@@ -475,7 +515,7 @@ const Page = () => {
   }, [stage]);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen overflow-hidden">
       {stage === 1 && (
         <QuestionSection
           question={teacher?.kahoot.questions[currentQuestionIndex].question}

@@ -1,4 +1,5 @@
 "use client";
+import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 import { useSocket } from "@/src/hooks/useSocket";
 // import { StudentFirstPosition } from "@/src/lib/svg";
 import { RootState } from "@/src/redux/store";
@@ -53,6 +54,7 @@ const Ranking = () => {
       <div className="flex flex-col items-center">
         <h2 className="drop-shadow-2xl text-3xl">{studentResult?.nickname}</h2>
         {/* {studentResult?.rank === 1 && <StudentFirstPosition />} */}
+        {student?.student && <AnimatedAvatar avatarData={student.student.avatar} avatarItems={student.student.item} bg="#0000" />}
         <h3 className="drop-shadow-2xl text-xl">Rank: {studentResult?.rank}</h3>
         <h3 className="drop-shadow-2xl text-xl">Score: {studentResult?.score.toFixed(0)}</h3>
         {studentResult?.rank === 1 && (

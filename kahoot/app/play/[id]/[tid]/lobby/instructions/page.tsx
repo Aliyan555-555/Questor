@@ -1,28 +1,62 @@
 "use client";
+import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 import Loader from "@/src/components/Loader";
 import { useSocket } from "@/src/hooks/useSocket";
-import { disconnect } from "@/src/redux/schema/student";
+import {
+  changeCharacterAccessories,
+  changeCharacters,
+  disconnect,
+  setAccessories,
+  setAvatars,
+} from "@/src/redux/schema/student";
 import { RootState } from "@/src/redux/store";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { PixelArtCard } from "react-pixelart-face-card";
+import { GrEdit } from "react-icons/gr";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { fetchAvatars } from "@/src/redux/api";
+import { toast } from "react-toastify";
+import Image from "next/image";
 
 const Page = () => {
-  const socket = useSocket(); 
+  const characters = useSelector((root: RootState) => root.student.avatars);
+  const accessories = useSelector(
+    (root: RootState) => root.student.accessories
+  );
+  const [drawerIsActive, setDrawerIsActive] = useState(false);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const socket = useSocket();
   const navigation = useRouter();
   const [loading, setLoading] = useState(true);
-  const student = useSelector((state: RootState) => state.student.currentGame); // Type the root state here
+  const student = useSelector((state: RootState) => state.student.currentGame);
   const dispatch = useDispatch();
+  const params = useParams();
+  const { tid, id } = params;
+  const teacherId = tid;
+  const quizId = id;
+  const [isCharacter, setIsCharacter] = useState(true);
 
-  const getQuizIdFromRoomId = (roomId: string, get: string): string => {
-    const [teacherId, quizId] = roomId.split("-");
-    if (get === "teacher") {
-      return teacherId;
-    } else {
-      return quizId;
-    }
-  };
+  const getQuizIdFromRoomId = useCallback(
+    (roomId: string, get: string): string => {
+      const [teacherId, quizId] = roomId.split("-");
+      return get === "teacher" ? teacherId : quizId;
+    },
+    []
+  );
+  const closeDrawerOnOutsideClick = useCallback(
+    (e: MouseEvent) => {
+      if (
+        drawerRef.current &&
+        drawerRef.current.contains(e.target as Node) &&
+        drawerIsActive
+      ) {
+        setDrawerIsActive(false);
+      }
+    },
+    [drawerIsActive]
+  );
 
   useEffect(() => {
     const handleStudentJoined = (students: string) => {
@@ -30,20 +64,17 @@ const Page = () => {
     };
 
     const handleUserInRoom = (status: boolean) => {
-      console.log(status);
       if (!status) {
-        navigation.push(
-          `/play/${getQuizIdFromRoomId(student?.roomId ?? "", "quiz")}/${getQuizIdFromRoomId(
-            student?.roomId ?? "",
-            "teacher"
-          )}/lobby`
-        );
+        navigation.push(`/play/${quizId}/${teacherId}/lobby`);
       }
     };
 
     socket?.on("started", () => {
       navigation.push(
-        `/play/${getQuizIdFromRoomId(student?.roomId ?? "", "quiz")}/${getQuizIdFromRoomId(
+        `/play/${getQuizIdFromRoomId(
+          student?.roomId ?? "",
+          "quiz"
+        )}/${getQuizIdFromRoomId(
           student?.roomId ?? "",
           "teacher"
         )}/lobby/instructions/start`
@@ -51,53 +82,198 @@ const Page = () => {
     });
 
     socket?.on("studentJoined", handleStudentJoined);
-    socket?.emit("checkUserInRoom", { roomId: student?.roomId, studentData: student });
+    socket?.emit("checkUserInRoom", {
+      roomId: student?.roomId,
+      studentData: student,
+    });
+
+    socket?.on("changedYourCharacter", (data) => {
+      dispatch(changeCharacters({ ...data.student.avatar }));
+    });
+
+    socket?.on("changedYourCharacterAccessories", (data) => {
+      dispatch(changeCharacterAccessories({ ...data.student.item }));
+    });
+
     socket?.on("userInRoom", handleUserInRoom);
     socket?.on("recreation", () => {
       navigation.push(
-        `/play/${getQuizIdFromRoomId(student?.roomId ?? "", "quiz")}/${getQuizIdFromRoomId(
+        `/play/${getQuizIdFromRoomId(
           student?.roomId ?? "",
-          "teacher"
-        )}/lobby`
+          "quiz"
+        )}/${getQuizIdFromRoomId(student?.roomId ?? "", "teacher")}/lobby`
       );
       setTimeout(() => {
         dispatch(disconnect());
       }, 2000);
     });
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    setTimeout(() => setLoading(false), 1000);
 
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      const message = "Are you sure you want to leave? Any unsaved progress might be lost.";
-      event.returnValue = message; // Required for some browsers
-      return message; // Show the confirmation dialog
-    };
+    // const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    //   const message =
+    //     "Are you sure you want to leave? Any unsaved progress might be lost.";
+    //   event.returnValue = message;
+    //   return message;
+    // };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    // window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("mousedown", closeDrawerOnOutsideClick);
 
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      // window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("mousedown", closeDrawerOnOutsideClick);
       socket?.off("studentJoined", handleStudentJoined);
       socket?.off("userInRoom", handleUserInRoom);
     };
-  }, [socket, navigation, student, dispatch]);
+  }, [
+    socket,
+    navigation,
+    student,
+    dispatch,
+    drawerIsActive,
+    getQuizIdFromRoomId,
+  ]);
+
+  const fetch = async () => {
+    try {
+      const res = await fetchAvatars();
+      if (res?.data.status) {
+        dispatch(setAvatars(res?.data.avatars));
+        dispatch(setAccessories(res?.data.items));
+      }
+    } catch (error) {
+      toast.error("Error");
+      console.log(error)
+    }
+  };
+
+  const handleChangeCharacter = useCallback(
+    (selectedAvatar: string) => {
+      socket?.emit("changeCharacter", {
+        roomId: student?.roomId,
+        selectedAvatarId: selectedAvatar,
+        student: student?.student,
+      });
+    },
+    [socket, student]
+  );
+
+  const handleChangeCharacterAccessories = useCallback(
+    (selectedAvatarAccessories: string) => {
+      socket?.emit("changeCharacterAccessories", {
+        roomId: student?.roomId,
+        selectedAccessoriesId: selectedAvatarAccessories,
+        student: student?.student,
+      });
+    },
+    [socket, student]
+  );
+
+  useEffect(() => {
+    fetch();
+  }, []);
 
   return (
-    <div className="w-screen flex-col text-4xl font-semibold text-white h-screen flex items-center justify-center">
+    <div className="w-screen overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
       {loading ? (
         <Loader h={100} w={100} />
       ) : (
-        <PixelArtCard
-          key={student?.student._id}
-          random={true}
-          size={100}
-          tags={["human-female", "human-male"]}
-        />
+        <motion.div
+          animate={{ translateY: drawerIsActive ? "-210px" : "0" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          onClick={() => setDrawerIsActive(!drawerIsActive)}
+          className="relative w-fit h-fit"
+        >
+          <div className="absolute z-[1000000] top-[-20px] text-black right-[-20px] p-2 rounded-full bg-white">
+            <GrEdit size={25} />
+          </div>
+          {student?.student && (
+            <AnimatedAvatar
+              avatarData={student.student.avatar}
+              avatarItems={student.student.item}
+              w={"128px"}
+              h={"128px"}
+              // chin={true}
+            />
+          )}
+        </motion.div>
       )}
       <h3 className="mb-2 drop-shadow-2xl">{student?.student.nickname}</h3>
-      <p className="text-center text-3xl md:text-4xl">You&lsquo;re in! See your nickname on screen?</p>
+      <p className="text-center text-3xl md:text-4xl">
+        You&lsquo;re in! See your nickname on screen?
+      </p>
+      <motion.div
+        ref={drawerRef}
+        initial={{ translateY: "110%" }}
+        animate={{ translateY: drawerIsActive ? "20%" : "110%" }}
+        transition={{ duration: 0.5, ease: "easeIn" }}
+        className="md:w-[70vw] pb-10 rounded-lg bg-white h-[85vh] z-[10000000000000000] absolute"
+      >
+        <div className="flex items-center justify-center py-4 text-gray-600">
+          <button
+            onClick={() => setIsCharacter(true)}
+            className={`border-y-2 rounded-tl-lg rounded-bl-lg w-[200px] border-l-2 border-r-2 border-gray-600 px-8 py-3 text-xl ${
+              isCharacter ? "bg-white" : "bg-slate-100"
+            }`}
+          >
+            Character
+          </button>
+          <button
+            onClick={() => setIsCharacter(false)}
+            className={`border-y-2 border-r-2 w-[200px] rounded-tr-lg rounded-br-lg border-gray-600 px-8 py-3 text-xl ${
+              isCharacter ? "bg-slate-100" : "bg-white"
+            }`}
+          >
+            Accessories
+          </button>
+        </div>
+        <div className="w-full overflow-y-auto scroll-smooth h-[85%] flex flex-wrap items-center justify-between gap-6 p-6">
+          {isCharacter ? (
+           
+              characters.map((c) => (
+                <div
+                  key={c.id}
+                  className="w-fit h-fit"
+                  onClick={() => handleChangeCharacter(c.id)}
+                >
+                  <AnimatedAvatar
+                    avatarData={c}
+                    w={"128px"}
+                    h={"128px"}
+                    bg={"#F2F2F2"}
+
+                  />
+                </div>
+              ))
+            
+          ) : (
+            accessories.map((a) => (
+              <div
+                key={a.id}
+                onClick={() => handleChangeCharacterAccessories(a.id)}
+                className="w-[128px] bg-slate-100 rounded-lg h-[128px] relative"
+              >
+                <Image
+                  src={"/images/AvatarPrototype.svg"}
+                  alt="AvatarPrototype"
+                  width={128}
+                  height={128}
+                  className=" bg-cover"
+                />
+                <Image
+                  src={a.resource}
+                  loading="lazy"
+                  alt="AvatarAccessory"
+                  width={128}
+                  height={128}
+                  className="absolute top-0 left-0"
+                />
+              </div>
+            ))
+          )}
+        </div>
+      </motion.div>
     </div>
   );
 };

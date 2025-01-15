@@ -2,6 +2,25 @@ export interface Student {
   _id: string;
   nickname: string;
   score: number;
+  item:{
+    id:string;
+    resource:string
+  },
+  avatar: {
+    id: string;
+  resource: string;
+  colors: {
+    chinColor: string;
+    mouthColor: string;
+    tongueColor: string;
+    teethColor: string;
+    eyeBorderColor:string;
+    pupilColor:string;
+    eyeballColor:string;
+    eyebrowColor:string;
+    bodyColor:string;
+  };
+  };
 }
 
 export interface Teacher {

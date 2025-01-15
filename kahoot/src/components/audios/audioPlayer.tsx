@@ -23,24 +23,12 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ fileName }) => {
 
   const handlePlay = () => {
     if (audioRef.current && !isPlaying) {
-      audioRef.current.volume = 0;
-     
-      audioRef.current.play().catch((err) => {
-        console.error("Audio play error:", err);
-      });
-      let currentVolume = 0;
-      const volumeInterval = setInterval(() => {
-        if (currentVolume < 1) {
-          currentVolume += 0.05;
-         if (audioRef.current){
-          audioRef.current.volume = currentVolume;
-         }
-        } else {
-          clearInterval(volumeInterval);
-        }
-      }, 100);
 
-      setIsPlaying(true);
+  
+      audioRef.current.play().then(() =>setIsPlaying(true)).catch((err) => {
+        console.log("Audio play error:", err);
+      });
+      // setIsPlaying(true);
     }
   };
 
@@ -67,11 +55,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ fileName }) => {
   }, []);
 
   useEffect(() => {
-
-    if (audioRef.current && !isPlaying) {
-      handlePlay(); 
-    }
-  }, [isPlaying]);
+   handlePlay();
+  });
 
   return (
     <button

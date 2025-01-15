@@ -6,17 +6,15 @@ import { useParams, useRouter } from "next/navigation";
 import { MdFullscreen } from "react-icons/md";
 import { MemberIcon } from "@/src/lib/svg";
 import QRCode from "react-qr-code";
-import { PixelArtCard } from "react-pixelart-face-card";
 import Loader from "@/src/components/Loader";
 import { Button } from "@mui/material";
 import { useSocket } from "@/src/hooks/useSocket";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { created, disconnect, update } from "@/src/redux/schema/teacher";
+import { created, disconnect, update,setStudents, changeStudentCharacter, changeStudentCharacterAccessories } from "@/src/redux/schema/teacher";
 import { RootState } from "@/src/redux/store";
 import AudioPlayer from "@/src/components/audios/audioPlayer";
-// import AnimatedCharacter from "@/src/components/animated/animatedStudent";
-
+import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 const Teacher = () => {
   const socket = useSocket();
   const [loading, setLoading] = useState(true);
@@ -36,8 +34,8 @@ const Teacher = () => {
       socket.on("studentJoined", ({ students, data }) => {
        
         dispatch(update({...data}));
+        dispatch(setStudents(students))
         console.log('data',students)
-
         console.log('game',game)
   
       });
@@ -48,6 +46,12 @@ const Teacher = () => {
         // console.log(data)
         dispatch(created(data));
       });
+      socket.on("changedStudentCharacter",(data) => {
+        dispatch(changeStudentCharacter(data.student))
+      })
+      socket.on("changedStudentCharacterAccessories",(data) => {
+        dispatch(changeStudentCharacterAccessories(data.student))
+      })
       socket.on("started", (data) => {
         dispatch(update(data));
         toast.success("Quiz started!");
@@ -193,6 +197,7 @@ const enterFullscreen = () => {
         </Button>
       </div>
       <div className="w-screen  ">
+      {/* <AnimatedAvatar /> */}
         {game?.students.length === 0 ? (
           <div className="text-6xl text-center font-semibold text-white">
             Waiting for players…
@@ -204,12 +209,14 @@ const enterFullscreen = () => {
                 key={i}
                 className="px-3 py-2  flex items-center gap-2 text-2xl font-semibold rounded-lg bg-[#0000009a] text-white"
               >
-                <PixelArtCard
+                {/* <PixelArtCard
                   key={i}
                   random={true}
                   size={60}
                   tags={["human-female", "human-male"]}
-                />
+                /> */}
+
+                <AnimatedAvatar w={'70px'} h={'70px'} avatarData={student.avatar} avatarItems={student.item}/>
                 <p> {student.nickname}</p>
               </div>
             ))}
@@ -217,7 +224,9 @@ const enterFullscreen = () => {
         )}
       </div>
       <div className="absolute bottom-2 w-screen left-0 flex items-center justify-end gap-2">
-        <AudioPlayer fileName={'lobby-classic-game.webm'}/>
+      {
+        pin !== "" &&   <AudioPlayer fileName={'lobby-classic-game.webm'}/>
+      }
         <div className="bg-[#0000009a] flex w-[90px] rounded-lg px-1 py-[8px]  text-3xl text-white font-bold">
           <MemberIcon />
           {game?.students.length}

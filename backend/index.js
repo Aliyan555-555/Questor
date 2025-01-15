@@ -1,27 +1,67 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import bodyParser from "body-parser";
 import cors from "cors";
+import axios from "axios";
+import AuthRouter from "./routers/auth.route.js";
+import connectToMongodb from "./database/index.js";
+import dotenv from 'dotenv';
 
+dotenv.config()
 const app = express();
+connectToMongodb()
+const allowedOrigins = [
+  "http://localhost:3000",
+  process.env.FRONTEND_URL, // Ensure you have this environment variable set
+];
 
-app.use(cors());
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true,
+};
 
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
 app.use(express.json());
 
 const server = http.createServer(app);
-
 const io = new Server(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
+    origin: [process.env.FRONTEND_BASE_URL],
+    methods: ["GET", "POST","PUT","DELETE"],
   },
 });
 
-app.get("/api/v1", (req, res) => {
-  res.send("Hello from Express with Socket.io!");
-});
+const getAvatars = async () => {
+  try {
+    const res = await axios.get(
+      "https://apis.kahoot.it/game-reward-service/api/v1/config/avatar"
+    );
+    return res.data;
+  } catch (error) {
+    console.log("Error fetching avatars:", error);
+    return { avatars: [], items: [] }; // Return empty arrays on error to avoid breaking the code
+  }
+};
 
+app.get("/api/v1/avatars", async (req, res) => {
+  try {
+  const response = await getAvatars();
+  res.status(200).json({...response,status:true});
+  } catch (error) {
+    res.status(500).json({message: "Error fetching avatars",error,status:false})
+  }
+});
+app.use('/api/v1/auth',AuthRouter)
 const rooms = {};
 const roomPins = {};
 const demoData = [
@@ -254,6 +294,9 @@ const demoData = [
   },
 ];
 
+// const avatar = getAvatars().avatars;
+// const items = getAvatars().items;
+
 const generatePin = () => {
   let pin;
   do {
@@ -261,7 +304,6 @@ const generatePin = () => {
   } while (roomPins[pin]); // Ensure the pin is unique
   return pin;
 };
-
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
@@ -283,6 +325,7 @@ io.on("connection", (socket) => {
       teacherId,
       hostId: socket.id,
       quizId,
+      status: "waiting",
       kahoot: {
         ...demoData.filter((d) => d._id == quizId)[0],
         questions: demoData
@@ -292,6 +335,13 @@ io.on("connection", (socket) => {
           }),
         students: [],
         results: [],
+      },
+      currentStage:{
+        status:'waiting',
+        quizId:quizId,
+        currentQuestionIndex:0,
+        currentQuestionStage:1,
+        
       },
       students: [],
       pin,
@@ -308,8 +358,9 @@ io.on("connection", (socket) => {
     console.log(`Room created: ${roomId} with PIN: ${pin}`);
   });
 
-  socket.on("joinRoom", ({ pin, studentId, nickname }) => {
-    const roomId = roomPins[pin]; // Get roomId using the pin
+  socket.on("joinRoom", async ({ pin, studentId, nickname }) => {
+    const roomId = roomPins[pin];
+    console.log(rooms[roomId]);
     if (rooms[roomId].status === "started") {
       socket.emit("nickname_error", {
         message: "The room has already started. You cannot join.",
@@ -328,18 +379,38 @@ io.on("connection", (socket) => {
         });
         return;
       }
+      const { avatars, items } = await getAvatars();
+      const assignedAvatarIds = rooms[roomId].students.map((s) => s.avatar?.id);
 
-      // Add student to the room if the nickname////// is unique
+      // Filter out already assigned avatars
+      const availableAvatars = avatars.filter(
+        (avatar) => !assignedAvatarIds.includes(avatar.id)
+      );
+
+      if (availableAvatars.length === 0) {
+        socket.emit("error", { message: "No avatars available." });
+        return;
+      }
+
+      // Randomly select an avatar and item
+      // console.log(items);
+      const randomAvatar =
+        availableAvatars[Math.floor(Math.random() * availableAvatars.length)];
+      const randomItem = items.length > 0 ? await items[2] : null;
+
+      // Add student to the room
       const student = {
         _id: studentId,
         nickname,
+        avatar: randomAvatar || null,
+        item: randomItem || null,
         totalQuestions: [],
         attemptQuestions: [],
         rank: 0,
         score: 0,
         activeQuestion: null,
       };
-      rooms[roomId].students = [...rooms[roomId].students,student]
+      rooms[roomId].students = [...rooms[roomId].students, student];
       rooms[roomId].kahoot = {
         ...rooms[roomId].kahoot,
         status: "waiting",
@@ -375,7 +446,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("calculate_ranks", (data) => {
-    const sortedStudents = [...rooms[data.roomId].kahoot.students].sort(
+    const sortedStudents = [...rooms[data.roomId].students].sort(
       (a, b) => b.score - a.score
     );
     sortedStudents.forEach((student, index) => {
@@ -441,7 +512,7 @@ io.on("connection", (socket) => {
       rooms[data.question.roomId].students.find(
         (student) => student._id === data.studentId
       ).score += score;
-      
+
       console.log("question", data.question.question._id);
       rooms[data.question.roomId].kahoot.questions
         .find((q) => q._id === data.question.question._id)
@@ -455,8 +526,8 @@ io.on("connection", (socket) => {
     } else {
     }
     rooms[data.question.roomId].kahoot.questions
-        .find((question) => question._id === data.question.question._id)
-        .attemptStudents.push(data.studentId);
+      .find((question) => question._id === data.question.question._id)
+      .attemptStudents.push(data.studentId);
     const results = rooms[data.question.roomId].kahoot.questions.find(
       (q) => q._id === data.question.question._id
     ).results;
@@ -520,17 +591,81 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("changeCharacter", async (data) => {
+    const { avatars, items } = await getAvatars();
+    const room = rooms[data.roomId];
+    if (!room) {
+      console.error(`Room with ID ${data.roomId} not found.`);
+      return;
+    }
+    // console.log(avatars)
+    const selectedAvatar = avatars.filter((a) => a.id === data.selectedAvatarId)[0]
+    if (!selectedAvatar) {
+      console.error(`Avatar with ID ${data.selectedAvatarId} not found.`);
+      return;
+    }
+    const studentIndex = room.students.findIndex((s) => s._id === data.student._id);
+    const studentKahootIndex = room.kahoot.students.findIndex((s) => s._id === data.student._id);
+    if (studentIndex === -1) {
+      console.error(`Student with ID ${data.student._id} not found in room ${data.roomId}.`);
+      return;
+    }
+    room.kahoot.students[studentKahootIndex] = {
+      ...room.kahoot.students[studentKahootIndex],
+      avatar:selectedAvatar
+    }
+    room.students[studentIndex] = {
+      ...room.students[studentIndex],
+      avatar: selectedAvatar,
+    };
+    io.to(data.roomId).emit('changedStudentCharacter',{students: room.students,room,student:room.students[studentIndex]});
+    socket.emit('changedYourCharacter',{student:room.students[studentIndex],room});
+  });
+  
+  socket.on("changeCharacterAccessories", async (data) => {
+    const { avatars, items } = await getAvatars();
+    const room = rooms[data.roomId];
+    if (!room) {
+      console.error(`Room with ID ${data.roomId} not found.`);
+      return;
+    }
+    // console.log(avatars)
+    const selectedAccessories = items.filter((a) => a.id === data.selectedAccessoriesId)[0]
+    if (!selectedAccessories) {
+      console.error(`Accessories with ID ${data.selectedAvatarId} not found.`);
+      return;
+    }
+    const studentIndex = room.students.findIndex((s) => s._id === data.student._id);
+    const studentKahootIndex = room.kahoot.students.findIndex((s) => s._id === data.student._id);
+    if (studentIndex === -1) {
+      console.error(`Student with ID ${data.student._id} not found in room ${data.roomId}.`);
+      return;
+    }
+    room.kahoot.students[studentKahootIndex] = {
+      ...room.kahoot.students[studentKahootIndex],
+      item:selectedAccessories
+    }
+    room.students[studentIndex] = {
+      ...room.students[studentIndex],
+      item:selectedAccessories
+    };
+    io.to(data.roomId).emit('changedStudentCharacterAccessories',{students: room.students,room,student:room.students[studentIndex]});
+    socket.emit('changedYourCharacterAccessories',{student:room.students[studentIndex],room});
+  });
+
+  
+
   socket.on("disconnect", () => {
     console.log("Client disconnected:", socket.id);
 
     // Remove the student from the room they were in
 
     for (const roomId in rooms) {
-      console.log(rooms[roomId].hostId ,socket.id)
+      console.log(rooms[roomId].hostId, socket.id);
       if (rooms[roomId].hostId === socket.id) {
         delete rooms[roomId];
         // delete roomPins[rooms[roomId].pin];
-        console.log(`Room deleted: ${roomId}`);
+        // console.log(`Room deleted: ${roomId}`);
         // console.log(rooms)
         io.to(roomId).emit("roomDeleted", { roomId });
         return;
