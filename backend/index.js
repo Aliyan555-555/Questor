@@ -11,32 +11,36 @@ import dotenv from 'dotenv';
 dotenv.config()
 const app = express();
 connectToMongodb()
-const allowedOrigins = [
-  "http://localhost:3000",
-  process.env.FRONTEND_URL, // Ensure you have this environment variable set
-];
+// const allowedOrigins = [
+//   "http://localhost:3000",
+//   "http://dev.meteoricsolutions.com:8000",
+//   "http://dev.meteoricsolutions.com:9000",
+//   process.env.FRONTEND_URL, // Ensure you have this environment variable set
+// ];
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type"],
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   allowedHeaders: ["Content-Type"],
+//   credentials: true,
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: [process.env.FRONTEND_BASE_URL],
+    origin: '*',
+    // origin: [process.env.FRONTEND_BASE_URL],
     methods: ["GET", "POST","PUT","DELETE"],
   },
 });
