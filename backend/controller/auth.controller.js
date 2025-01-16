@@ -4,44 +4,31 @@ import jwt from "jsonwebtoken";
 export const SocialAuth = async (req, res) => {
   try {
     const user = req.body;
-
-    // Check if the user already exists
-    const userExists = await userModel.findOne({ email: user.email });
-    if (userExists) {
-      return res.status(409).json({ status: false, message: "User already exists" });
+    let existingUser = await userModel.findOne({ email: user.email });
+    if (!existingUser) {
+      existingUser = await userModel.create(user);
     }
 
-    // Create a new user
-    const newUser = await userModel.create(user);
-
-    // Generate a JWT token
     const token = jwt.sign(
-      { email: newUser.email, providerId: newUser.providerId },
-      "helloDev", // Use a secure key in a real environment, stored in an environment variable
-      { expiresIn: "1d" } // Token expiration
+      { email: existingUser.email, providerId: existingUser.providerId },
+      "helloDev", 
+      { expiresIn: "1d" }
     );
 
-    // Set the token as a cookie
     res.cookie("session", token, {
-      httpOnly: true, // Prevents JavaScript from accessing the cookie
-      secure: process.env.NODE_ENV === "production", // Ensures cookies are sent over HTTPS in production
-      sameSite: "lax", // Helps with CSRF protection
-      maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000, 
     });
-
-    // Respond with success
-    res.status(201).json({
+    res.status(200).json({
       status: true,
-      message: "User created successfully",
-      user: {
-        id: newUser._id,
-        email: newUser.email,
-        name: newUser.name, // Assuming your model has a `name` field
-        providerId: newUser.providerId,
+      message: existingUser.isNew ? "User created and logged in successfully" : "User logged in successfully",
+      data: {
+        ...existingUser._doc
       },
     });
   } catch (error) {
-    // Handle server errors
     res.status(500).json({ status: false, message: error.message });
   }
 };

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { MdFullscreen } from "react-icons/md";
 import { MemberIcon } from "@/src/lib/svg";
 import QRCode from "react-qr-code";
@@ -16,19 +16,25 @@ import { RootState } from "@/src/redux/store";
 import AudioPlayer from "@/src/components/audios/audioPlayer";
 import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 const Teacher = () => {
+  const user = useSelector((root:RootState) =>root.student)
   const socket = useSocket();
+  const path = usePathname()
   const [loading, setLoading] = useState(true);
   const game = useSelector((root: RootState) => root.teacher.currentGame);
   const params = useParams();
   // const url = usePathname();
   const navigation = useRouter();
   const quizId = params.id;
-  const teacherId = "1";
+  const teacherId = user.user?._id ?? '1';
   const [pin, setPin] = useState("");
   const dispatch = useDispatch();
   const [QRUrl, setQRUrl] = useState("");
   const [roomId, setRoomId] = useState("");
   useEffect(() => {
+    if (!user.isAuthenticated){
+      navigation.push(`/auth/login?redirect=true&redirect_url=${window.location.origin}${path}`);
+      return
+    }
 
     if (socket) {
       socket.on("studentJoined", ({ students, data }) => {

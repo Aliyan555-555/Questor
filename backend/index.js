@@ -7,32 +7,34 @@ import axios from "axios";
 import AuthRouter from "./routers/auth.route.js";
 import connectToMongodb from "./database/index.js";
 import dotenv from 'dotenv';
+import quizModel from "./model/quiz.model.js";
 
 dotenv.config()
 const app = express();
 connectToMongodb()
-// const allowedOrigins = [
-//   "http://localhost:3000",
-//   "http://dev.meteoricsolutions.com:8000",
-//   "http://dev.meteoricsolutions.com:9000",
-//   process.env.FRONTEND_URL, // Ensure you have this environment variable set
-// ];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:8000",
+  "http://dev.meteoricsolutions.com:8000",
+  "http://dev.meteoricsolutions.com:9000",
+  process.env.FRONTEND_URL, // Ensure you have this environment variable set
+];
 
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   allowedHeaders: ["Content-Type"],
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true,
+};
 
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
+// app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -298,8 +300,7 @@ const demoData = [
   },
 ];
 
-// const avatar = getAvatars().avatars;
-// const items = getAvatars().items;
+
 
 const generatePin = () => {
   let pin;
@@ -332,6 +333,7 @@ io.on("connection", (socket) => {
       status: "waiting",
       kahoot: {
         ...demoData.filter((d) => d._id == quizId)[0],
+        // ...quizModel.findOne({_id:quizId}).filter((d) => d._id == quizId)[0],
         questions: demoData
           .filter((d) => d._id == quizId)[0]
           .questions.map((q) => {

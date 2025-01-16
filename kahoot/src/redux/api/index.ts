@@ -4,6 +4,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase";
 import { AppDispatch } from "../store";
 import { login } from "../schema/student";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const API_DOMAIN = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER,
@@ -35,7 +36,7 @@ export const SocialLogin = async (data:{
     console.log(error)
   }
 };
-export const LoginWithGoogle = async (dispatch: AppDispatch) => {
+export const LoginWithGoogle = async (dispatch: AppDispatch,navigation:AppRouterInstance,redirect:boolean,redirectUrl:string | null) => {
   const res = await signInWithPopup(auth, googleProvider);
   const user = res.user;
   const response = await SocialLogin({
@@ -47,7 +48,14 @@ export const LoginWithGoogle = async (dispatch: AppDispatch) => {
   });
   if (response?.status) {
     dispatch(login(response.data));
+    if (redirect && redirectUrl) {
+      navigation.push(redirectUrl);
+    } else {
+      navigation.push("/");
+    }
+    // navigation.push("/");
+
   } else {
-    toast.error("Failed to login");
+    toast.error("Failed to login try again");
   }
 };
