@@ -4,7 +4,7 @@ import { useSocket } from "@/src/hooks/useSocket";
 // import { StudentFirstPosition } from "@/src/lib/svg";
 import { RootState } from "@/src/redux/store";
 import { Student } from "@/src/types";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -12,7 +12,7 @@ const Ranking = () => {
   const params = useParams();
   const teacherId = params.tid;
   const quizId = params.id;
-  
+  const navigation = useRouter();
   const student = useSelector((root: RootState) => root.student.currentGame);
   const socket = useSocket();
   
@@ -42,9 +42,25 @@ const Ranking = () => {
         }
       });
     }
+
+    socket?.emit("checkUserInRoom", {
+      roomId: student?.roomId,
+      studentData: student,
+    });
+
+    const handleUserInRoom = (status: boolean) => {
+      if (!status) {
+        navigation.push(`/play/connect/to/game`);
+      }
+    };
+
+    socket?.on("userInRoom", handleUserInRoom);
     
     // Clean up socket listener
     return () => {
+      socket?.off("userInRoom");
+      socket?.off("calculate_ranks");
+      
       socket?.off("calculate_ranks_student");
     };
   }, [socket, student?.student.nickname, teacherId, quizId]);

@@ -30,6 +30,25 @@ const Results = () => {
         `/play/${quizId}/${teacherId}/lobby/instructions/get-ready/ranking`
       );
     });
+
+
+    // socket?.emit("checkUserInRoom", {
+    //   roomId: student?.roomId,
+    //   studentData: student,
+    // });
+
+    // const handleUserInRoom = (status: boolean) => {
+    //   if (!status) {
+    //     navigation.push(`/play/connect/to/game`);
+    //   }
+    // };
+
+    // socket?.on("userInRoom", handleUserInRoom);
+    return () =>{
+      socket?.off("userInRoom");
+      socket?.off("next_question_redirection");
+      socket?.off("ranking_redirection_student_process");
+    }
   }, []);
   console.log(student);
   return (

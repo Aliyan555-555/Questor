@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import {  useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import { Student as StudentDate } from "@/src/types";
 import Image from "next/image";
 
 const Student = () => {
-  const params = useParams();
+  // const params = useParams();
   const query = useSearchParams();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -20,8 +20,13 @@ const Student = () => {
     const parts = inputString.split("-");
     return parts[0];
   }
+  function getQuizId(inputString: string) {
+    const parts = inputString.split("-");
+    // console.log(parts[0], parts[1])
+    return parts[1];
+  }
 
-  const { id } = params;
+  // const { id } = params;
   const [roomId, setRoomId] = useState<null | string>(null);
   const [nickname, setNickname] = useState("");
   const isQR = query.get("qr");
@@ -53,6 +58,7 @@ const Student = () => {
 
   useEffect(() => {
     if (socket) {
+      console.log("connected");
 
 
       const handleJoinedRoom = ({
@@ -63,7 +69,7 @@ const Student = () => {
         student: StudentDate;
       }) => {
         dispatch(join({ roomId, student }));
-        router.push(`/play/${id}/${getTeacherId(roomId)}/lobby/instructions`);
+        router.push(`/play/${getQuizId(roomId)}/${getTeacherId(roomId)}/lobby/instructions`);
       };
 
       const handleNicknameError = (error: { message: string }) => {
@@ -91,7 +97,7 @@ const Student = () => {
         socket.off("pinVerified", handlePinVerified);
       };
     }
-  }, [socket, dispatch, id, router, roomId]);
+  });
 
   useEffect(() => {
     if (isQR && pin != "") {

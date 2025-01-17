@@ -134,7 +134,7 @@ const enterFullscreen = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       setQRUrl(
-        `${window.location.origin}/play/${quizId}/${teacherId}/lobby?pin=${pin}&qr=true`
+        `${window.location.origin}/play/connect/to/game?pin=${pin}&qr=true`
       );
       setLoading(false);
     }

@@ -285,11 +285,10 @@ const RankSection = ({
   socket: Socket | null;
 }) => {
   const { createConfetti, canvasProps } = useConfetti({
-    count: 300,
+    count: 500,
     gravity: 11,
     speed: 1.9,
   });
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   useEffect(() => {
     socket?.emit("calculate_ranks", {
@@ -304,22 +303,14 @@ const RankSection = ({
     setTimeout(() => {
       createConfetti();
     }, 12000);
-  }, [createConfetti]);
+  },[]);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center  text-white">
+    <div className="w-full h-full relative flex flex-col items-center justify-center  text-white">
       <canvas
-        // Use the ref directly here
-        {...canvasProps}
-        ref={canvasRef} // Spread the rest of the canvasProps (without ref)
-        style={{
-          display: "block",
-          position: "absolute",
-          pointerEvents: "none",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-        }}
+            
+        ref={canvasProps.ref}  // eslint-disable-line
+        style={canvasProps.style} // eslint-disable-line
       />
       <motion.div
         initial={{ translateY: "200px", scale: 1.1 }}
@@ -473,7 +464,7 @@ const RankSection = ({
 const Page = () => {
   const socket = useSocket();
   const dispatch = useDispatch();
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState(4);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const teacher = useSelector((root: RootState) => root.teacher.currentGame);
   useEffect(() => {

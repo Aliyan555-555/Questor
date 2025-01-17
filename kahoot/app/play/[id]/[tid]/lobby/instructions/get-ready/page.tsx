@@ -78,6 +78,23 @@ const Page = () => {
         )}`
       );
     });
+
+    // socket?.emit("checkUserInRoom", {
+    //   roomId: student?.roomId,
+    //   studentData: student,
+    // });
+
+    //  const handleUserInRoom = (status: boolean) => {
+    //   if (!status) {
+    //     navigation.push(`/play/${quizId}/${teacherId}/lobby`);
+    //   }
+    // };
+
+
+    
+    // socket?.on("userInRoom", handleUserInRoom);
+
+
     // const handleBeforeUnload = (event) => {
     //   const message = "Are you sure you want to leave? Any unsaved progress might be lost.";
     //   event.returnValue = message;

@@ -4,11 +4,13 @@ import { Server } from "socket.io";
 import bodyParser from "body-parser";
 import cors from "cors";
 import axios from "axios";
+import { ObjectId } from "mongodb";
 import AuthRouter from "./routers/auth.route.js";
 import connectToMongodb from "./database/index.js";
 import dotenv from 'dotenv';
 import quizModel from "./model/quiz.model.js";
-
+import { questionModel } from "./model/question.model.js";
+import mongoose, { mongo } from "mongoose";
 dotenv.config()
 const app = express();
 connectToMongodb()
@@ -34,7 +36,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-// app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -70,235 +71,235 @@ app.get("/api/v1/avatars", async (req, res) => {
 app.use('/api/v1/auth',AuthRouter)
 const rooms = {};
 const roomPins = {};
-const demoData = [
-  {
-    _id: 22,
-    name: "Programming Languages",
-    questions: [
-      {
-        _id: 1,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question:
-          "What is the name of the programming language that is used for web development?",
-        options: ["Java", "Python", "JavaScript", "C++"],
-        answerIndex: [2], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 2,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question:
-          "Which language is primarily used for statistical computing and graphics?",
-        options: ["Java", "R", "Python", "C++"],
-        answerIndex: [1], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 3,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question:
-          "Which programming language is known as the backbone of web development?",
-        options: ["Ruby", "JavaScript", "C#", "Java"],
-        answerIndex: [1], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 4,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question:
-          "Which programming language is used for Android app development?",
-        options: ["C#", "Swift", "Kotlin", "Java"],
-        answerIndex: [2], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 5,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "Which of these is not a programming language?",
-        options: ["Swift", "Rust", "JavaScript", "Google"],
-        answerIndex: [3], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-    ],
-  },
-  {
-    _id: 23,
-    name: "Web Development",
-    questions: [
-      {
-        _id: 6,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "Which HTML tag is used for the largest heading?",
-        options: ["<h1>", "<h3>", "<h6>", "<h2>"],
-        answerIndex: [0], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 7,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "Which CSS property is used to change the text color?",
-        options: ["color", "font-color", "text-color", "background-color"],
-        answerIndex: [0], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 8,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "What does CSS stand for?",
-        options: [
-          "Cascading Style Sheets",
-          "Coded Style Sheets",
-          "Creative Style Sheets",
-          "Computer Style Sheets",
-        ],
-        answerIndex: [0], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 9,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "Which of these is a JavaScript framework?",
-        options: ["React", "HTML", "CSS", "MySQL"],
-        answerIndex: [0], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 10,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "Which of these is used to style a website?",
-        options: ["HTML", "CSS", "JavaScript", "PHP"],
-        answerIndex: [1], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-    ],
-  },
-  {
-    _id: 24,
-    name: "Data Structures and Algorithms",
-    questions: [
-      {
-        _id: 11,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "What is the time complexity of binary search?",
-        options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
-        answerIndex: [2], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 12,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "Which data structure is used for implementing recursion?",
-        options: ["Stack", "Queue", "Array", "Linked List"],
-        answerIndex: [0], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 13,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "What is the time complexity of a linear search?",
-        options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
-        answerIndex: [1], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 14,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "Which data structure is used to implement a priority queue?",
-        options: ["Queue", "Heap", "Stack", "Array"],
-        answerIndex: [1], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-      {
-        _id: 15,
-        duration: 4000,
-        showQuestionDuration: 2000,
-        type: "quiz",
-        media: "",
-        maximumMarks: 1000,
-        question: "What does a hash function do?",
-        options: [
-          "Sorts data",
-          "Searches data",
-          "Converts data into a fixed size",
-          "Filters data",
-        ],
-        answerIndex: [2], // index start with 0
-        attemptStudents: [],
-        results: [],
-      },
-    ],
-  },
-];
+// const demoData = [
+//   {
+//     _id: 22,
+//     name: "Programming Languages",
+//     questions: [
+//       {
+//         _id: 1,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question:
+//           "What is the name of the programming language that is used for web development?",
+//         options: ["Java", "Python", "JavaScript", "C++"],
+//         answerIndex: [2], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 2,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question:
+//           "Which language is primarily used for statistical computing and graphics?",
+//         options: ["Java", "R", "Python", "C++"],
+//         answerIndex: [1], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 3,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question:
+//           "Which programming language is known as the backbone of web development?",
+//         options: ["Ruby", "JavaScript", "C#", "Java"],
+//         answerIndex: [1],
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 4,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question:
+//           "Which programming language is used for Android app development?",
+//         options: ["C#", "Swift", "Kotlin", "Java"],
+//         answerIndex: [2], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 5,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "Which of these is not a programming language?",
+//         options: ["Swift", "Rust", "JavaScript", "Google"],
+//         answerIndex: [3], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//     ],
+//   },
+//   {
+//     _id: 23,
+//     name: "Web Development",
+//     questions: [
+//       {
+//         _id: 6,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "Which HTML tag is used for the largest heading?",
+//         options: ["<h1>", "<h3>", "<h6>", "<h2>"],
+//         answerIndex: [0], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 7,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "Which CSS property is used to change the text color?",
+//         options: ["color", "font-color", "text-color", "background-color"],
+//         answerIndex: [0], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 8,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "What does CSS stand for?",
+//         options: [
+//           "Cascading Style Sheets",
+//           "Coded Style Sheets",
+//           "Creative Style Sheets",
+//           "Computer Style Sheets",
+//         ],
+//         answerIndex: [0], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 9,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "Which of these is a JavaScript framework?",
+//         options: ["React", "HTML", "CSS", "MySQL"],
+//         answerIndex: [0], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 10,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "Which of these is used to style a website?",
+//         options: ["HTML", "CSS", "JavaScript", "PHP"],
+//         answerIndex: [1], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//     ],
+//   },
+//   {
+//     _id: 24,
+//     name: "Data Structures and Algorithms",
+//     questions: [
+//       {
+//         _id: 11,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "What is the time complexity of binary search?",
+//         options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
+//         answerIndex: [2], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 12,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "Which data structure is used for implementing recursion?",
+//         options: ["Stack", "Queue", "Array", "Linked List"],
+//         answerIndex: [0], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 13,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "What is the time complexity of a linear search?",
+//         options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
+//         answerIndex: [1], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 14,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "Which data structure is used to implement a priority queue?",
+//         options: ["Queue", "Heap", "Stack", "Array"],
+//         answerIndex: [1], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//       {
+//         _id: 15,
+//         duration: 4000,
+//         showQuestionDuration: 2000,
+//         type: "quiz",
+//         media: "",
+//         maximumMarks: 1000,
+//         question: "What does a hash function do?",
+//         options: [
+//           "Sorts data",
+//           "Searches data",
+//           "Converts data into a fixed size",
+//           "Filters data",
+//         ],
+//         answerIndex: [2], // index start with 0
+//         attemptStudents: [],
+//         results: [],
+//       },
+//     ],
+//   },
+// ];
 
 
 
@@ -312,8 +313,10 @@ const generatePin = () => {
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
-  socket.on("createRoom", ({ quizId, teacherId }) => {
-    console.log(rooms);
+  socket.on("createRoom",async ({ quizId, teacherId }) => {
+    // console.log(rooms);
+    const question = await questionModel.find();
+    console.log(question)
     const roomId = `${teacherId}-${quizId}`;
     if (rooms[roomId]) {
       socket.emit("roomCreated", {
@@ -324,7 +327,7 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Room already exists" });
       return;
     }
-
+    const selectedQuiz = await quizModel.findById(quizId).populate('questions')
     const pin = generatePin();
     rooms[roomId] = {
       teacherId,
@@ -332,12 +335,12 @@ io.on("connection", (socket) => {
       quizId,
       status: "waiting",
       kahoot: {
-        ...demoData.filter((d) => d._id == quizId)[0],
-        // ...quizModel.findOne({_id:quizId}).filter((d) => d._id == quizId)[0],
-        questions: demoData
-          .filter((d) => d._id == quizId)[0]
+        // ...demoData.filter((d) => d._id == quizId)[0],
+        ...selectedQuiz._doc,
+        questions: selectedQuiz._doc
+          // .filter((d) => d._id == quizId)[0]
           .questions.map((q) => {
-            return { ...q, attemptStudents: [], results: [] };
+            return { ...q._doc, attemptStudents: [], results: [] };
           }),
         students: [],
         results: [],
@@ -443,13 +446,23 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Room not found or invalid PIN" });
     }
   });
-  socket.on("verifyPin", ({ roomId, pin }) => {
-    if (rooms[roomId] && rooms[roomId].pin === pin) {
-      socket.emit("pinVerified", { status: true, roomId });
-    } else {
+  socket.on("verifyPin", ({ pin }) => {
+    let roomFound = false;
+  
+    // Iterate through all rooms to find a match
+    for (const id in rooms) {
+      if (rooms[id].pin === pin) {
+        roomFound = true;
+        socket.emit("pinVerified", { status: true, roomId: id });
+        break;
+      }
+    }
+  
+    if (!roomFound) {
       socket.emit("pinVerified", { status: false, message: "Invalid PIN" });
     }
   });
+  
 
   socket.on("calculate_ranks", (data) => {
     const sortedStudents = [...rooms[data.roomId].students].sort(
@@ -463,6 +476,7 @@ io.on("connection", (socket) => {
       students: sortedStudents,
       data: rooms[data.roomId],
     });
+    rooms[data.roomId].status = "ended";
   });
 
   socket.on("start", (roomId) => {
@@ -489,6 +503,12 @@ io.on("connection", (socket) => {
     const answerIndex = data.answer
       ? optionArray.findIndex((option) => option === data.answer)
       : null;
+      const questionObjectId = new ObjectId(data.question.question._id);
+      data.question.question._id = questionObjectId;
+      console.log(data.question.question._id.toHexString());
+      console.log(questionObjectId.toHexString());
+      console.log(questionObjectId.toHexString() === data.question.question._id.toHexString());
+      console.log(rooms[data.question.roomId].kahoot.questions.filter((q) => q._id.toHexString() === data.question.question._id.toHexString()))
     if (!rooms[data.question.roomId]) {
       return socket.emit("error", { message: "Room not found" });
     }
@@ -499,9 +519,11 @@ io.on("connection", (socket) => {
     ) {
       return socket.emit("error", { message: "Student not found in room" });
     }
+    // console.log("Question Array",rooms[data.question.roomId].kahoot.questions)
+    // console.log("Question ID",data.question.question._id)
+    // console.log(rooms[data.question.roomId].kahoot.questions.filter((q) => q._id === data.question.question._id))
     if (
-      rooms[data.question.roomId].kahoot.questions
-        .find((q) => q._id === data.question.question._id)
+      rooms[data.question.roomId].kahoot.questions.filter((q) => q._id.toHexString() === data.question.question._id.toHexString())[0]
         .attemptStudents.includes(data.studentId)
     ) {
       return socket.emit("error", {
@@ -519,9 +541,8 @@ io.on("connection", (socket) => {
         (student) => student._id === data.studentId
       ).score += score;
 
-      console.log("question", data.question.question._id);
-      rooms[data.question.roomId].kahoot.questions
-        .find((q) => q._id === data.question.question._id)
+      // console.log("question", data.question.question._id);
+      rooms[data.question.roomId].kahoot.questions.find((q) => q._id.toHexString() === data.question.question._id.toHexString())
         .results.push({
           studentId: data.studentId,
           questionId: data.question.question._id,
@@ -531,12 +552,9 @@ io.on("connection", (socket) => {
         });
     } else {
     }
-    rooms[data.question.roomId].kahoot.questions
-      .find((question) => question._id === data.question.question._id)
+    rooms[data.question.roomId].kahoot.questions.find((q) => q._id.toHexString() === data.question.question._id.toHexString())
       .attemptStudents.push(data.studentId);
-    const results = rooms[data.question.roomId].kahoot.questions.find(
-      (q) => q._id === data.question.question._id
-    ).results;
+    const results = rooms[data.question.roomId].kahoot.questions.find((q) => q._id.toHexString() === data.question.question._id.toHexString()).results;
     const sortedResults = [...results].sort((a, b) => b.score - a.score);
     const studentPosition = sortedResults.findIndex(
       (result) => result.studentId === data.studentId
@@ -559,7 +577,7 @@ io.on("connection", (socket) => {
         studentRank,
         studentTakenMarks: score.toFixed(0),
         questionIndex: rooms[data.question.roomId].kahoot.questions.findIndex(
-          (q) => q._id === data.question.question._id
+          (q) => q._id.toHexString() === data.question.question._id.toHexString()
         ),
       },
       student: currentStudent,

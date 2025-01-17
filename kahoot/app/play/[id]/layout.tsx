@@ -6,6 +6,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("hello")
   return (
     <div
       style={{ backgroundImage: "url(/images/bg.webp)" }}

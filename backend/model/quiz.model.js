@@ -16,11 +16,10 @@ import mongoose from "mongoose";
 // });
 
 const quizSchema = new mongoose.Schema({
-  _id: { type: Number, required: true },
   name: { type: String, required: true },
   questions: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Question",
+    ref: "question",
     required: true,
   }],
 });

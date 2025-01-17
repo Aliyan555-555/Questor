@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const questionSchema = new mongoose.Schema({
-  _id: { type: Number, required: true },
   duration: { type: Number, required: true },
   showQuestionDuration: { type: Number, required: true },
   type: { type: String, required: true, enum: ["quiz", "other"], default: "quiz" },
@@ -14,4 +13,4 @@ const questionSchema = new mongoose.Schema({
   results: [],
 });
 
-export const questionModel =  mongoose.model("Question", questionSchema);
+export const questionModel =  mongoose.model("question", questionSchema);

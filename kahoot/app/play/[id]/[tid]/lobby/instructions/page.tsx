@@ -11,7 +11,7 @@ import {
 } from "@/src/redux/schema/student";
 import { RootState } from "@/src/redux/store";
 import { GrEdit } from "react-icons/gr";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -32,10 +32,7 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
   const student = useSelector((state: RootState) => state.student.currentGame);
   const dispatch = useDispatch();
-  const params = useParams();
-  const { tid, id } = params;
-  const teacherId = tid;
-  const quizId = id;
+
   const [isCharacter, setIsCharacter] = useState(true);
 
   const getQuizIdFromRoomId = useCallback(
@@ -49,8 +46,8 @@ const Page = () => {
     (e: MouseEvent) => {
       if (
         drawerRef.current &&
-        drawerRef.current.contains(e.target as Node) &&
-        drawerIsActive
+        drawerRef.current.contains(e.target as Node)
+        // drawerIsActive
       ) {
         setDrawerIsActive(false);
       }
@@ -65,7 +62,7 @@ const Page = () => {
 
     const handleUserInRoom = (status: boolean) => {
       if (!status) {
-        navigation.push(`/play/${quizId}/${teacherId}/lobby`);
+        navigation.push(`/play/connect/to/game`);
       }
     };
 
@@ -97,12 +94,7 @@ const Page = () => {
 
     socket?.on("userInRoom", handleUserInRoom);
     socket?.on("recreation", () => {
-      navigation.push(
-        `/play/${getQuizIdFromRoomId(
-          student?.roomId ?? "",
-          "quiz"
-        )}/${getQuizIdFromRoomId(student?.roomId ?? "", "teacher")}/lobby`
-      );
+      navigation.push(`/play/connect/to/game`);
       setTimeout(() => {
         dispatch(disconnect());
       }, 2000);
@@ -144,7 +136,7 @@ const Page = () => {
       }
     } catch (error) {
       toast.error("Error");
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -229,9 +221,8 @@ const Page = () => {
           </button>
         </div>
         <div className="w-full overflow-y-auto scroll-smooth h-[85%] flex flex-wrap items-center justify-between gap-6 p-6">
-          {isCharacter ? (
-           
-              characters.map((c) => (
+          {isCharacter
+            ? characters.map((c) => (
                 <div
                   key={c.id}
                   className="w-fit h-fit"
@@ -242,36 +233,32 @@ const Page = () => {
                     w={"128px"}
                     h={"128px"}
                     bg={"#F2F2F2"}
-
                   />
                 </div>
               ))
-            
-          ) : (
-            accessories.map((a) => (
-              <div
-                key={a.id}
-                onClick={() => handleChangeCharacterAccessories(a.id)}
-                className="w-[128px] bg-slate-100 rounded-lg h-[128px] relative"
-              >
-                <Image
-                  src={"/images/AvatarPrototype.svg"}
-                  alt="AvatarPrototype"
-                  width={128}
-                  height={128}
-                  className=" bg-cover"
-                />
-                <Image
-                  src={a.resource}
-                  loading="lazy"
-                  alt="AvatarAccessory"
-                  width={128}
-                  height={128}
-                  className="absolute top-0 left-0"
-                />
-              </div>
-            ))
-          )}
+            : accessories.map((a) => (
+                <div
+                  key={a.id}
+                  onClick={() => handleChangeCharacterAccessories(a.id)}
+                  className="w-[128px] bg-slate-100 rounded-lg h-[128px] relative"
+                >
+                  <Image
+                    src={"/images/AvatarPrototype.svg"}
+                    alt="AvatarPrototype"
+                    width={128}
+                    height={128}
+                    className=" bg-cover"
+                  />
+                  <Image
+                    src={a.resource}
+                    loading="lazy"
+                    alt="AvatarAccessory"
+                    width={128}
+                    height={128}
+                    className="absolute top-0 left-0"
+                  />
+                </div>
+              ))}
         </div>
       </motion.div>
     </div>
