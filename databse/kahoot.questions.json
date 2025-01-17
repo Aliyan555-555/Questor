@@ -1,0 +1,88 @@
+[{
+  "_id": {
+    "$oid": "6788abd48090874ae7a5127a"
+  },
+  "duration": 4000,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "maximumMarks": 1000,
+  "question": "What is the name of the programming language that is used for web development?",
+  "options": [
+    "Java",
+    "Python",
+    "JavaScript",
+    "C++"
+  ],
+  "answerIndex": [
+    2
+  ],
+  "attemptStudents": [],
+  "results": []
+},
+{
+  "_id": {
+    "$oid": "6788c59ed9b1cabe37ad63fb"
+  },
+  "duration": 4000,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "maximumMarks": 1000,
+  "question": "Which language is primarily used for statistical computing and graphics?",
+  "options": [
+    "Java",
+    "R",
+    "Python",
+    "C++"
+  ],
+  "answerIndex": [
+    1
+  ],
+  "attemptStudents": [],
+  "results": []
+},
+{
+  "_id": {
+    "$oid": "6788c96cd9b1cabe37ad6401"
+  },
+  "duration": 4000,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "maximumMarks": 1000,
+  "question": "Which programming language is used for Android app development?",
+  "options": [
+    "C#",
+    "Swift",
+    "Kotlin",
+    "Java"
+  ],
+  "answerIndex": [
+    2
+  ],
+  "attemptStudents": [],
+  "results": []
+},
+{
+  "_id": {
+    "$oid": "6788c96cd9b1cabe37ad6402"
+  },
+  "duration": 4000,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "maximumMarks": 1000,
+  "question": "Which of these is not a programming language?",
+  "options": [
+    "Swift",
+    "Rust",
+    "JavaScript",
+    "Google"
+  ],
+  "answerIndex": [
+    3
+  ],
+  "attemptStudents": [],
+  "results": []
+}]
