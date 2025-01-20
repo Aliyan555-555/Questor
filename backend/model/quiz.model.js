@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 // const questionSchema = new mongoose.Schema({
 //   _id: { type: Number, required: true },
 //   duration: { type: Number, required: true }, // Question duration in milliseconds
@@ -17,11 +16,31 @@ import mongoose from "mongoose";
 
 const quizSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  questions: [{
+  creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "question",
+    ref: "User",
     required: true,
-  }],
+  },
+  coverImage:{
+    type: String,
+    default: "/images/defaultCover.png",
+  },
+  isPrivet: {
+    type: Boolean,
+    default: true,
+  },
+  status: {
+    type: String,
+    enum: ["active", "inactive", "draft"],
+    default: "draft",
+  },
+  questions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "question",
+      required: true,
+    },
+  ],
 });
 
 const quizModel = mongoose.model("Quiz", quizSchema);

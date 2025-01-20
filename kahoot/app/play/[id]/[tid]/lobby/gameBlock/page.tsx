@@ -303,14 +303,13 @@ const RankSection = ({
     setTimeout(() => {
       createConfetti();
     }, 12000);
-  },[]);
+  }, []);
 
   return (
     <div className="w-full h-full relative flex flex-col items-center justify-center  text-white">
       <canvas
-            
-        ref={canvasProps.ref}  // eslint-disable-line
-        style={canvasProps.style} // eslint-disable-line
+        ref={canvasProps.ref as React.RefObject<HTMLCanvasElement>}
+        style={canvasProps.style as React.CSSProperties}
       />
       <motion.div
         initial={{ translateY: "200px", scale: 1.1 }}
@@ -348,10 +347,10 @@ const RankSection = ({
           className="w-[300px] h-[400px] z-[100] relative bg-purple-700 flex items-center flex-col rounded-lg text-white py-10"
         >
           <motion.div
-           initial={{ opacity: 0, translateY: 20 }}
-           className="absolute top-0 "
-           animate={{ translateY: -125, opacity: 1 }}
-           transition={{ delay: 7.5, duration: 0.8 }}
+            initial={{ opacity: 0, translateY: 20 }}
+            className="absolute top-0 "
+            animate={{ translateY: -125, opacity: 1 }}
+            transition={{ delay: 7.5, duration: 0.8 }}
           >
             {students.length >= 2 && (
               <AnimatedAvatar
@@ -436,10 +435,10 @@ const RankSection = ({
         >
           <ThirdRankIcon />
           <motion.div
-           initial={{ opacity: 0, translateY: 20 }}
-           className="absolute top-0 "
-           animate={{ translateY: -125, opacity: 1 }}
-           transition={{ delay: 2, duration: 0.8 }}
+            initial={{ opacity: 0, translateY: 20 }}
+            className="absolute top-0 "
+            animate={{ translateY: -125, opacity: 1 }}
+            transition={{ delay: 2, duration: 0.8 }}
           >
             {students.length >= 3 && (
               <AnimatedAvatar

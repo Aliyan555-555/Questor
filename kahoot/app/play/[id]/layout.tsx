@@ -1,5 +1,5 @@
 "use client";
-import { SocketProvider } from "@/src/hooks/useSocket";
+// import { SocketProvider } from "@/src/hooks/useSocket";
 
 export default function RootLayout({
   children,
@@ -12,7 +12,8 @@ export default function RootLayout({
       style={{ backgroundImage: "url(/images/bg.webp)" }}
       className="w-screen h-screen bg-cover bg-no-repeat bg-center"
     >
-      <SocketProvider>{children}</SocketProvider>
+      {/* <SocketProvider>{children}</SocketProvider> */}
+      {children}
     </div>
   );
 }

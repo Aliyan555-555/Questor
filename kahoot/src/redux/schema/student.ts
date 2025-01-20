@@ -32,7 +32,7 @@ interface CurrentGame {
     nickname: string;
     score: number;
     item: {
-      id:string;
+      id: string;
       resource: string;
     };
     avatar: Avatar;
@@ -43,15 +43,15 @@ interface StudentState {
   currentGame: CurrentGame | null;
   avatars: Avatar[];
   accessories: Accessory[];
-  isAuthenticated:boolean;
-  user:{
-    name:string;
-    _id:string;
-    profileImage:string;
-    providerId:string;
-    providerName:string;
-    email:string;
-    password:string;
+  isAuthenticated: boolean;
+  user: {
+    name: string;
+    _id: string;
+    profileImage: string;
+    providerId: string;
+    providerName: string;
+    email: string;
+    password: string;
   } | null;
 }
 
@@ -59,7 +59,7 @@ const initialState: StudentState = {
   currentGame: null,
   avatars: [],
   accessories: [],
-  user:null,
+  user: null,
   isAuthenticated: false,
 };
 
@@ -76,14 +76,14 @@ const studentSlice = createSlice({
     disconnect(state) {
       state.currentGame = null;
     },
-    changeCharacters(state,actions){
-      if (state.currentGame){
-        state.currentGame.student.avatar = actions.payload
+    changeCharacters(state, actions) {
+      if (state.currentGame) {
+        state.currentGame.student.avatar = actions.payload;
       }
     },
-    changeCharacterAccessories(state,actions){
-      if (state.currentGame){
-        state.currentGame.student.item = actions.payload
+    changeCharacterAccessories(state, actions) {
+      if (state.currentGame) {
+        state.currentGame.student.item = actions.payload;
       }
     },
     setAvatars(state, action) {
@@ -93,13 +93,17 @@ const studentSlice = createSlice({
       state.avatars.push(action.payload);
     },
     updateAvatar(state, action) {
-      const index = state.avatars.findIndex((avatar) => avatar.id === action.payload.id);
+      const index = state.avatars.findIndex(
+        (avatar) => avatar.id === action.payload.id
+      );
       if (index !== -1) {
         state.avatars[index] = action.payload;
       }
     },
     removeAvatar(state, action) {
-      state.avatars = state.avatars.filter((avatar) => avatar.id !== action.payload.id);
+      state.avatars = state.avatars.filter(
+        (avatar) => avatar.id !== action.payload.id
+      );
     },
     setAccessories(state, action) {
       state.accessories = action.payload;
@@ -108,30 +112,36 @@ const studentSlice = createSlice({
       state.accessories.push(action.payload);
     },
     updateAccessory(state, action) {
-      const index = state.accessories.findIndex((accessory) => accessory.id === action.payload.id);
+      const index = state.accessories.findIndex(
+        (accessory) => accessory.id === action.payload.id
+      );
       if (index !== -1) {
         state.accessories[index] = action.payload;
       }
     },
     removeAccessory(state, action) {
-      state.accessories = state.accessories.filter((accessory) => accessory.id !== action.payload.id);
+      state.accessories = state.accessories.filter(
+        (accessory) => accessory.id !== action.payload.id
+      );
     },
-    login (state,action) {
-      if (state.isAuthenticated){
-         toast.error("User is already logged in")
-         return;
+    login(state, action) {
+      if (state.isAuthenticated) {
+        toast.error("User is already logged in");
+        return;
       }
       state.user = action.payload;
       state.isAuthenticated = true;
     },
-    logout (state) {
+    logout(state) {
       state.user = null;
       state.isAuthenticated = false;
     },
-    updateUser (state,action) {
-      state.user = {...state.user,...action.payload};
-    }
-
+    updateUser(state, action) {
+      state.user = { ...state.user, ...action.payload };
+    },
+    createNewDraft() {},
+    updateDraft() {},
+    deleteDraft() {},
   },
 });
 
