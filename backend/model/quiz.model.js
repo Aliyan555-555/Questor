@@ -15,13 +15,17 @@ import mongoose from "mongoose";
 // });
 
 const quizSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String},
+  description: {
+    type: String,
+
+  },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+   
   },
-  coverImage:{
+  coverImage: {
     type: String,
     default: "/images/defaultCover.png",
   },
@@ -33,6 +37,11 @@ const quizSchema = new mongoose.Schema({
     type: String,
     enum: ["active", "inactive", "draft"],
     default: "draft",
+  },
+  theme:{
+    type:mongoose.Types.ObjectId,
+    ref: "theme",
+    
   },
   questions: [
     {

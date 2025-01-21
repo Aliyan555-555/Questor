@@ -7,13 +7,13 @@ import axios from "axios";
 import { ObjectId } from "mongodb";
 import AuthRouter from "./routers/auth.route.js";
 import connectToMongodb from "./database/index.js";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import quizModel from "./model/quiz.model.js";
 import { questionModel } from "./model/question.model.js";
-import mongoose, { mongo } from "mongoose";
-dotenv.config()
+import ThemeRouter from "./routers/theme.route.js";
+dotenv.config();
 const app = express();
-connectToMongodb()
+connectToMongodb();
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:8000",
@@ -42,9 +42,9 @@ app.use(express.json());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: "*",
     // origin: [process.env.FRONTEND_BASE_URL],
-    methods: ["GET", "POST","PUT","DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
 
@@ -62,13 +62,16 @@ const getAvatars = async () => {
 
 app.get("/api/v1/avatars", async (req, res) => {
   try {
-  const response = await getAvatars();
-  res.status(200).json({...response,status:true});
+    const response = await getAvatars();
+    res.status(200).json({ ...response, status: true });
   } catch (error) {
-    res.status(500).json({message: "Error fetching avatars",error,status:false})
+    res
+      .status(500)
+      .json({ message: "Error fetching avatars", error, status: false });
   }
 });
-app.use('/api/v1/auth',AuthRouter)
+app.use("/api/v1/auth", AuthRouter);
+app.use("/api/v1", ThemeRouter);
 const rooms = {};
 const roomPins = {};
 // const demoData = [
@@ -301,8 +304,6 @@ const roomPins = {};
 //   },
 // ];
 
-
-
 const generatePin = () => {
   let pin;
   do {
@@ -313,10 +314,10 @@ const generatePin = () => {
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
-  socket.on("createRoom",async ({ quizId, teacherId }) => {
+  socket.on("createRoom", async ({ quizId, teacherId }) => {
     // console.log(rooms);
     const question = await questionModel.find();
-    console.log(question)
+    console.log(question);
     const roomId = `${teacherId}-${quizId}`;
     if (rooms[roomId]) {
       socket.emit("roomCreated", {
@@ -327,7 +328,7 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Room already exists" });
       return;
     }
-    const selectedQuiz = await quizModel.findById(quizId).populate('questions')
+    const selectedQuiz = await quizModel.findById(quizId).populate("questions");
     const pin = generatePin();
     rooms[roomId] = {
       teacherId,
@@ -337,20 +338,18 @@ io.on("connection", (socket) => {
       kahoot: {
         // ...demoData.filter((d) => d._id == quizId)[0],
         ...selectedQuiz._doc,
-        questions: selectedQuiz._doc
-          // .filter((d) => d._id == quizId)[0]
-          .questions.map((q) => {
+        questions: selectedQuiz._doc.questions // .filter((d) => d._id == quizId)[0]
+          .map((q) => {
             return { ...q._doc, attemptStudents: [], results: [] };
           }),
         students: [],
         results: [],
       },
-      currentStage:{
-        status:'waiting',
-        quizId:quizId,
-        currentQuestionIndex:0,
-        currentQuestionStage:1,
-        
+      currentStage: {
+        status: "waiting",
+        quizId: quizId,
+        currentQuestionIndex: 0,
+        currentQuestionStage: 1,
       },
       students: [],
       pin,
@@ -448,7 +447,7 @@ io.on("connection", (socket) => {
   });
   socket.on("verifyPin", ({ pin }) => {
     let roomFound = false;
-  
+
     // Iterate through all rooms to find a match
     for (const id in rooms) {
       if (rooms[id].pin === pin) {
@@ -457,12 +456,11 @@ io.on("connection", (socket) => {
         break;
       }
     }
-  
+
     if (!roomFound) {
       socket.emit("pinVerified", { status: false, message: "Invalid PIN" });
     }
   });
-  
 
   socket.on("calculate_ranks", (data) => {
     const sortedStudents = [...rooms[data.roomId].students].sort(
@@ -503,12 +501,19 @@ io.on("connection", (socket) => {
     const answerIndex = data.answer
       ? optionArray.findIndex((option) => option === data.answer)
       : null;
-      const questionObjectId = new ObjectId(data.question.question._id);
-      data.question.question._id = questionObjectId;
-      console.log(data.question.question._id.toHexString());
-      console.log(questionObjectId.toHexString());
-      console.log(questionObjectId.toHexString() === data.question.question._id.toHexString());
-      console.log(rooms[data.question.roomId].kahoot.questions.filter((q) => q._id.toHexString() === data.question.question._id.toHexString()))
+    const questionObjectId = new ObjectId(data.question.question._id);
+    data.question.question._id = questionObjectId;
+    console.log(data.question.question._id.toHexString());
+    console.log(questionObjectId.toHexString());
+    console.log(
+      questionObjectId.toHexString() ===
+        data.question.question._id.toHexString()
+    );
+    console.log(
+      rooms[data.question.roomId].kahoot.questions.filter(
+        (q) => q._id.toHexString() === data.question.question._id.toHexString()
+      )
+    );
     if (!rooms[data.question.roomId]) {
       return socket.emit("error", { message: "Room not found" });
     }
@@ -523,7 +528,11 @@ io.on("connection", (socket) => {
     // console.log("Question ID",data.question.question._id)
     // console.log(rooms[data.question.roomId].kahoot.questions.filter((q) => q._id === data.question.question._id))
     if (
-      rooms[data.question.roomId].kahoot.questions.filter((q) => q._id.toHexString() === data.question.question._id.toHexString())[0]
+      rooms[data.question.roomId].kahoot.questions
+        .filter(
+          (q) =>
+            q._id.toHexString() === data.question.question._id.toHexString()
+        )[0]
         .attemptStudents.includes(data.studentId)
     ) {
       return socket.emit("error", {
@@ -542,7 +551,11 @@ io.on("connection", (socket) => {
       ).score += score;
 
       // console.log("question", data.question.question._id);
-      rooms[data.question.roomId].kahoot.questions.find((q) => q._id.toHexString() === data.question.question._id.toHexString())
+      rooms[data.question.roomId].kahoot.questions
+        .find(
+          (q) =>
+            q._id.toHexString() === data.question.question._id.toHexString()
+        )
         .results.push({
           studentId: data.studentId,
           questionId: data.question.question._id,
@@ -552,9 +565,14 @@ io.on("connection", (socket) => {
         });
     } else {
     }
-    rooms[data.question.roomId].kahoot.questions.find((q) => q._id.toHexString() === data.question.question._id.toHexString())
+    rooms[data.question.roomId].kahoot.questions
+      .find(
+        (q) => q._id.toHexString() === data.question.question._id.toHexString()
+      )
       .attemptStudents.push(data.studentId);
-    const results = rooms[data.question.roomId].kahoot.questions.find((q) => q._id.toHexString() === data.question.question._id.toHexString()).results;
+    const results = rooms[data.question.roomId].kahoot.questions.find(
+      (q) => q._id.toHexString() === data.question.question._id.toHexString()
+    ).results;
     const sortedResults = [...results].sort((a, b) => b.score - a.score);
     const studentPosition = sortedResults.findIndex(
       (result) => result.studentId === data.studentId
@@ -577,7 +595,8 @@ io.on("connection", (socket) => {
         studentRank,
         studentTakenMarks: score.toFixed(0),
         questionIndex: rooms[data.question.roomId].kahoot.questions.findIndex(
-          (q) => q._id.toHexString() === data.question.question._id.toHexString()
+          (q) =>
+            q._id.toHexString() === data.question.question._id.toHexString()
         ),
       },
       student: currentStudent,
@@ -623,29 +642,44 @@ io.on("connection", (socket) => {
       return;
     }
     // console.log(avatars)
-    const selectedAvatar = avatars.filter((a) => a.id === data.selectedAvatarId)[0]
+    const selectedAvatar = avatars.filter(
+      (a) => a.id === data.selectedAvatarId
+    )[0];
     if (!selectedAvatar) {
       console.error(`Avatar with ID ${data.selectedAvatarId} not found.`);
       return;
     }
-    const studentIndex = room.students.findIndex((s) => s._id === data.student._id);
-    const studentKahootIndex = room.kahoot.students.findIndex((s) => s._id === data.student._id);
+    const studentIndex = room.students.findIndex(
+      (s) => s._id === data.student._id
+    );
+    const studentKahootIndex = room.kahoot.students.findIndex(
+      (s) => s._id === data.student._id
+    );
     if (studentIndex === -1) {
-      console.error(`Student with ID ${data.student._id} not found in room ${data.roomId}.`);
+      console.error(
+        `Student with ID ${data.student._id} not found in room ${data.roomId}.`
+      );
       return;
     }
     room.kahoot.students[studentKahootIndex] = {
       ...room.kahoot.students[studentKahootIndex],
-      avatar:selectedAvatar
-    }
+      avatar: selectedAvatar,
+    };
     room.students[studentIndex] = {
       ...room.students[studentIndex],
       avatar: selectedAvatar,
     };
-    io.to(data.roomId).emit('changedStudentCharacter',{students: room.students,room,student:room.students[studentIndex]});
-    socket.emit('changedYourCharacter',{student:room.students[studentIndex],room});
+    io.to(data.roomId).emit("changedStudentCharacter", {
+      students: room.students,
+      room,
+      student: room.students[studentIndex],
+    });
+    socket.emit("changedYourCharacter", {
+      student: room.students[studentIndex],
+      room,
+    });
   });
-  
+
   socket.on("changeCharacterAccessories", async (data) => {
     const { avatars, items } = await getAvatars();
     const room = rooms[data.roomId];
@@ -654,30 +688,146 @@ io.on("connection", (socket) => {
       return;
     }
     // console.log(avatars)
-    const selectedAccessories = items.filter((a) => a.id === data.selectedAccessoriesId)[0]
+    const selectedAccessories = items.filter(
+      (a) => a.id === data.selectedAccessoriesId
+    )[0];
     if (!selectedAccessories) {
       console.error(`Accessories with ID ${data.selectedAvatarId} not found.`);
       return;
     }
-    const studentIndex = room.students.findIndex((s) => s._id === data.student._id);
-    const studentKahootIndex = room.kahoot.students.findIndex((s) => s._id === data.student._id);
+    const studentIndex = room.students.findIndex(
+      (s) => s._id === data.student._id
+    );
+    const studentKahootIndex = room.kahoot.students.findIndex(
+      (s) => s._id === data.student._id
+    );
     if (studentIndex === -1) {
-      console.error(`Student with ID ${data.student._id} not found in room ${data.roomId}.`);
+      console.error(
+        `Student with ID ${data.student._id} not found in room ${data.roomId}.`
+      );
       return;
     }
     room.kahoot.students[studentKahootIndex] = {
       ...room.kahoot.students[studentKahootIndex],
-      item:selectedAccessories
-    }
+      item: selectedAccessories,
+    };
     room.students[studentIndex] = {
       ...room.students[studentIndex],
-      item:selectedAccessories
+      item: selectedAccessories,
     };
-    io.to(data.roomId).emit('changedStudentCharacterAccessories',{students: room.students,room,student:room.students[studentIndex]});
-    socket.emit('changedYourCharacterAccessories',{student:room.students[studentIndex],room});
+    io.to(data.roomId).emit("changedStudentCharacterAccessories", {
+      students: room.students,
+      room,
+      student: room.students[studentIndex],
+    });
+    socket.emit("changedYourCharacterAccessories", {
+      student: room.students[studentIndex],
+      room,
+    });
   });
 
+  socket.on("create_quiz", async (data) => {
+    try {
+      // Create a question
+      const question = await questionModel.create({
+        duration: 30,
+        type: "quiz",
+        showQuestionDuration: 2000,
+        media: "",
+        options: [],
+        answerIndex: 0,
+        attemptStudents: [],
+        results: [],
+        maximumMarks: 1000,
+        question: "",
+      });
   
+      if (!question) {
+        socket.emit("created_quiz", {
+          message: "Failed to create question",
+          status: false,
+        });
+        return;
+      }
+  
+      // Create a quiz with the newly created question
+      const newQuiz = await quizModel.create({
+        ...data,
+        questions: [question._id], // Ensure `questions` is an array
+      });
+  
+      if (!newQuiz) {
+        socket.emit("created_quiz", {
+          message: "Failed to create quiz",
+          status: false,
+        });
+        return;
+      }
+  
+      // Populate the questions field in the newQuiz document
+      const populatedQuiz = await newQuiz.populate("questions")
+      console.log(populatedQuiz)
+  
+      socket.emit("created_quiz", {
+        data: populatedQuiz,
+        status: true,
+        message: "Quiz created successfully",
+      });
+    } catch (error) {
+      console.error("Error during quiz creation:", error);
+      socket.emit("created_quiz", {
+        message: "Something went wrong during quiz creation",
+        status: false,
+      });
+    }
+  });
+  
+  socket.on("update_quiz", async (data) => {
+    try {
+      const updateQuiz = await quizModel.findByIdAndUpdate(data._id, data);
+      if (!updateQuiz) {
+        socket.emit("updated_quiz", {
+          message: "Something went wrong",
+          status: false,
+        });
+        return;
+      }
+      socket.emit("updated_quiz", {
+        data: updateQuiz,
+        status: true,
+        message: "updated successfully",
+      });
+    } catch (error) {
+      socket.emit("updated_quiz", {
+        message: "Something went wrong",
+        status: false,
+      });
+    }
+  });
+
+  socket.on("delete_quiz", async (data) => {
+    try {
+      const deleteQuiz = await quizModel.findByIdAndDelete(data._id);
+      if (!deleteQuiz) {
+        socket.emit("deleted_quiz", {
+          message: "Something went wrong",
+          status: false,
+        });
+        return;
+      }
+      socket.emit("deleted_quiz", {
+        data: deleteQuiz,
+        status: true,
+        message: "deleted successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      socket.emit("deleted_quiz", {
+        message: "Something went wrong",
+        status: false,
+      });
+    }
+  });
 
   socket.on("disconnect", () => {
     console.log("Client disconnected:", socket.id);

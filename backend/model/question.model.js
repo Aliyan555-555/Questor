@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
 const questionSchema = new mongoose.Schema({
-  duration: { type: Number, required: true },
-  showQuestionDuration: { type: Number, required: true },
-  type: { type: String, required: true, enum: ["quiz", "other"], default: "quiz" },
+  duration: { type: Number },
+  showQuestionDuration: { type: Number},
+  type: { type: String, enum: ["quiz", "other"], default: "quiz" },
   media: { type: String, default: "" },
-  maximumMarks: { type: Number, required: true },
-  question: { type: String, required: true },
-  options: [{ type: String, required: true }],
+  maximumMarks: { type: Number },
+  question: { type: String},
+  options: [{ type: String}],
   answerIndex: [],
   attemptStudents: [],
   results: [],

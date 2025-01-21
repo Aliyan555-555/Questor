@@ -21,22 +21,27 @@ export const fetchAvatars = async () => {
     console.log(error);
   }
 };
-export const SocialLogin = async (data:{
+export const SocialLogin = async (data: {
   name: string | null;
   email: string | null;
   providerId: string | null;
   providerName: string | null;
-  profileImage: string |null;
+  profileImage: string | null;
 }) => {
   try {
     const res = await API_DOMAIN.post("/api/v1/auth/social/login", data);
     return res.data;
   } catch (error) {
     toast.error("Something went wrong");
-    console.log(error)
+    console.log(error);
   }
 };
-export const LoginWithGoogle = async (dispatch: AppDispatch,navigation:AppRouterInstance,redirect:boolean,redirectUrl:string | null) => {
+export const LoginWithGoogle = async (
+  dispatch: AppDispatch,
+  navigation: AppRouterInstance,
+  redirect: boolean,
+  redirectUrl: string | null
+) => {
   const res = await signInWithPopup(auth, googleProvider);
   const user = res.user;
   const response = await SocialLogin({
@@ -54,8 +59,16 @@ export const LoginWithGoogle = async (dispatch: AppDispatch,navigation:AppRouter
       navigation.push("/");
     }
     // navigation.push("/");
-
   } else {
     toast.error("Failed to login try again");
+  }
+};
+
+export const GetAllThemes = async () => {
+  try {
+    const res = await API_DOMAIN.get("/api/v1/themes");
+    return res.data;
+  } catch (error) {
+    toast.error("Something went wrong");
   }
 };

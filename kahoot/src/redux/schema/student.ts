@@ -39,11 +39,18 @@ interface CurrentGame {
   };
 }
 
+interface Theme {
+  _id:string;
+  image:string;
+}
+
 interface StudentState {
   currentGame: CurrentGame | null;
   avatars: Avatar[];
   accessories: Accessory[];
   isAuthenticated: boolean;
+  currentDraft:null;
+  themes:Theme[];
   user: {
     name: string;
     _id: string;
@@ -61,6 +68,8 @@ const initialState: StudentState = {
   accessories: [],
   user: null,
   isAuthenticated: false,
+  themes:[],
+  currentDraft:null,
 };
 
 const studentSlice = createSlice({
@@ -142,11 +151,24 @@ const studentSlice = createSlice({
     createNewDraft() {},
     updateDraft() {},
     deleteDraft() {},
+    setThemes (state,actions) {
+      state.themes = actions.payload;
+    },
+    setCurrentDraft(state,action) {
+      state.currentDraft = action.payload;
+    },
+    updateCurrentDraft(state,action){
+      state.currentDraft = {...action.payload };
+    }
+
   },
 });
 
 export const {
   join,
+  setCurrentDraft,
+  updateCurrentDraft,
+  setThemes,
   login,
   logout,
   updateUser,
