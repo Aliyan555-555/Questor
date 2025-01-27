@@ -40,7 +40,7 @@ const quizSchema = new mongoose.Schema({
   },
   theme:{
     type:mongoose.Types.ObjectId,
-    ref: "theme",
+    ref: "Theme",
     
   },
   questions: [

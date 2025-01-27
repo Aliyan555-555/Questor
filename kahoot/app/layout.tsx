@@ -7,14 +7,13 @@ import StoreProvider from "@/src/redux/Provider";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "@/src/redux/store";
 import Loading from "./play/[id]/loading";
-import { useDispatch } from "react-redux";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   return (
     <html lang="en">
       <StoreProvider>

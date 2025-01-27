@@ -150,25 +150,56 @@ const studentSlice = createSlice({
     },
     createNewDraft() {},
     updateDraft() {},
-    deleteDraft() {},
+    deleteDraft() {
+
+    },
+    clearCurrentDraft(state) {
+      state.currentDraft = null
+    },
     setThemes (state,actions) {
+      console.log(actions.payload)
       state.themes = actions.payload;
     },
     setCurrentDraft(state,action) {
       state.currentDraft = action.payload;
     },
+    updateQuestion(state,actions){
+      const updatedQuestion = actions.payload;
+      const questions = state.currentDraft.questions.map(question => {
+        if (question._id === updatedQuestion._id){
+          return updatedQuestion;
+        }
+        return question
+      })
+      state.currentDraft= {...state.currentDraft,questions:questions}
+    },
+    setQuestionsIndex(state,action){
+      state.currentDraft = {...state.currentDraft,questions:action.payload}
+    },
     updateCurrentDraft(state,action){
       state.currentDraft = {...action.payload };
-    }
+    },
+    updateQuestionMedia(state, actions) {
+      const updatedQuestion = actions.payload;
 
+          const updatedQuestions = state.currentDraft.questions.map((question) =>
+        question._id === actions.payload._id ? updatedQuestion : question
+      );
+          state.currentDraft = { ...state.currentDraft, questions: updatedQuestions };
+    }
+    
   },
 });
 
 export const {
   join,
+  updateQuestion,
+  updateQuestionMedia,
   setCurrentDraft,
+  clearCurrentDraft,
   updateCurrentDraft,
   setThemes,
+  setQuestionsIndex,
   login,
   logout,
   updateUser,

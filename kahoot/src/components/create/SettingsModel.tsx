@@ -1,0 +1,262 @@
+import { Backdrop, Button, IconButton, Radio } from "@mui/material";
+import React, { useCallback, useState } from "react";
+import { MdCrop, MdOutlineSettings } from "react-icons/md";
+import { useDropzone } from "react-dropzone";
+import ImageCroppingComponent from "./ImageCropModel";
+
+const SettingsModel = ({ data }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isImageCropModelOpen, setIsImageCropModelOpen] = useState(false);
+
+  const handleIsOpen = () => setIsOpen(true);
+  const handleIsClose = () => setIsOpen(isImageCropModelOpen?true:false);
+
+  const handleClickOutside = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    if (e.target === e.currentTarget) {
+      handleIsClose();
+    }
+  };
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setSelectedFile(URL.createObjectURL(acceptedFiles[0]));
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive, fileRejections } =
+    useDropzone({
+      onDrop,
+      accept: {
+        "image/png": [],
+        "image/jpeg": [],
+        "image/jpg": [],
+      },
+    });
+
+  const renderError = () => {
+    if (fileRejections.length > 0) {
+      return (
+        <p className="text-red-500">
+          Only PNG, JPG, and JPEG files are accepted.
+        </p>
+      );
+    }
+    return null;
+  };
+
+  const handleCrop = () => {
+    setIsImageCropModelOpen(true);
+  };
+
+  return (
+    <div
+      onClick={isOpen ? handleIsClose : handleIsOpen}
+      className="relative cursor-pointer flex py-1 justify-between border-2 border-gray-300 rounded-lg w-[300px] px-2 h-full"
+    >
+      <input
+        type="text"
+        readOnly
+        value={data?.name}
+        placeholder="Enter title here"
+        className="bg-transparent font-semibold focus:outline-none focus:border-none cursor-pointer"
+      />
+      <button className="text-sm !bg-gray-100 rounded-md font-semibold px-3 text-black">
+        Settings
+      </button>
+
+      <Backdrop open={isOpen} className="z-50" onClick={handleClickOutside}>
+        <div
+          className="w-[85%] flex flex-col h-[95%] bg-white rounded-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="w-full h-[50px] border-b border-gray-300 flex items-center justify-between px-8">
+            <div className="flex text-lg font-semibold items-center gap-2">
+              <MdOutlineSettings fontSize={22} />
+              <h2>Settings</h2>
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={handleIsClose} className="!bg-gray-100 !text-black !px-4 !font-semibold !capitalize !rounded-md">
+                Cancel
+              </Button>
+              <Button className="!bg-blue-600 !text-white !px-4 !font-semibold !capitalize !rounded-md">
+                Done
+              </Button>
+            </div>
+          </div>
+          <div className="flex-1 w-full flex">
+            {/* Sidebar */}
+            <div className="w-[300px] h-full border-r border-gray-300">
+              <div className="w-full bg-gray-100 py-4 px-6 border-b border-gray-300 font-semibold relative text-xl">
+                <span className="absolute left-0 top-0 w-[5px] h-full bg-blue-600"></span>{" "}
+                Basic Settings
+              </div>
+            </div>
+            {/* Main Content */}
+            <div className="flex-1 h-full overflow-y-auto p-4 gap-4 bg-gray-100 flex">
+              {/* Left Panel */}
+              <div className="h-full w-[60%] flex flex-col gap-4">
+                {/* Input Section */}
+                <div
+                  style={{
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                  }}
+                  className="w-full flex flex-col gap-1 bg-white rounded-lg p-4"
+                >
+                  <div className="flex flex-col gap-1">
+                    <h2 className="text-sm font-bold">Title</h2>
+                    <p>Enter a title for your kahoot</p>
+                    <input
+                      type="text"
+                      className="px-4 py-2 border rounded-md border-gray-300 w-full focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h2 className="text-sm font-bold">
+                      Description{" "}
+                      <span className="text-gray-400">(Optional)</span>
+                    </h2>
+                    <p>
+                      Provide a short description for your kahoot to increase
+                      visibility.
+                    </p>
+                    <textarea
+                      rows={4}
+                      className="px-4 py-2 border rounded-md border-gray-300 w-full focus:outline-none"
+                    ></textarea>
+                  </div>
+                </div>
+                {/* Visibility Section */}
+                <div
+                  style={{
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                  }}
+                  className="w-full flex flex-col gap-2 bg-white rounded-lg p-4"
+                >
+                  <h2 className="text-sm font-bold">Visibility</h2>
+                  <p>Choose who can see this kahoot.</p>
+                  <div
+                    className="w-full flex p-2"
+                    style={{
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                    }}
+                  >
+                    <Radio
+                      checked
+                      value="c"
+                      name="size-radio-button-demo"
+                      inputProps={{ "aria-label": "c" }}
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          fontSize: 28,
+                        },
+                      }}
+                    />
+                    <div>
+                      <h4>Privet</h4>
+                      <p className="text-gray-400">Only visible to you</p>
+                    </div>
+                  </div>
+                  <div
+                    className="w-full flex p-2 mt-2"
+                    style={{
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                    }}
+                  >
+                    <Radio
+                      checked
+                      value="c"
+                      name="size-radio-button-demo"
+                      inputProps={{ "aria-label": "c" }}
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          fontSize: 28,
+                        },
+                      }}
+                    />
+                    <div>
+                      <h4>Public</h4>
+                      <p className="text-gray-400">
+                        Visible to everyone on the Discover page.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Right Panel */}
+              <div className="h-full w-[40%] flex flex-col gap-4">
+                <div
+                  style={{
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                  }}
+                  className="w-full flex flex-col gap-1 bg-white rounded-lg p-4"
+                >
+                  <h2 className="text-sm font-bold">Cover Image</h2>
+                  <p>Add a cover image to make your kahoot stand out.</p>
+                  <div
+                    {...getRootProps()}
+                    className={`border-2 border-dashed 
+                          h-[200px] flex w-full items-center relative justify-center rounded-lg text-center ${
+                            isDragActive
+                              ? "border-blue-500 bg-blue-100"
+                              : "border-gray-300"
+                          }`}
+                  >
+                    {selectedFile && (
+                      <div className="w-full relative h-[200px]">
+                        <img
+                          src={selectedFile}
+                          alt="Cover"
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                        <div className="absolute p-3 z-50 w-full top-0 left-0 h-full bg-gradient-to-b from-transparent to-black flex items-end justify-between">
+                          <IconButton
+                            className={"!bg-white !text-black"}
+                            onClick={(e) => { e.stopPropagation();handleCrop()}}
+                          >
+                            <MdCrop />
+                          </IconButton>
+
+                          <Button className="!px-3 !py-1.5 !font-semibold !capitalize !text-black !bg-white !rounded-md ">
+                            Change
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                    <input {...getInputProps()} />
+                    {isDragActive ? (
+                      <p className="text-blue-500">Drop the files here...</p>
+                    ) : (
+                      !selectedFile && (
+                        <p>
+                          Drag & drop some files here, or click to select files
+                        </p>
+                      )
+                    )}
+                    {renderError()}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Backdrop>
+      {isImageCropModelOpen && (
+        <ImageCroppingComponent
+          open={isImageCropModelOpen}
+          close={() => setIsImageCropModelOpen(false)}
+          image={selectedFile}
+          setImage={(d) => setSelectedFile(d) }
+        />
+      )}
+    </div>
+  );
+};
+
+export default SettingsModel;

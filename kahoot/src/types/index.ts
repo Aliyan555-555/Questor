@@ -41,6 +41,7 @@ export interface Question {
   options: string[];
   showQuestionDuration: number;
   duration: number;
+  isMultiSelect:boolean;
   maximumMarks: number;
   answerIndex: number[];
   type: string;
