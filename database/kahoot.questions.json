@@ -1,88 +1,202 @@
 [{
   "_id": {
-    "$oid": "6788abd48090874ae7a5127a"
+    "$oid": "6793992b5e28878e767db1cd"
   },
-  "duration": 4000,
+  "duration": 30,
   "showQuestionDuration": 2000,
   "type": "quiz",
-  "media": "",
+  "media": "https://images.pexels.com/photos/30309178/pexels-photo-30309178.jpeg?auto=compress&cs=tinysrgb&h=350",
+  "isMultiSelect": true,
   "maximumMarks": 1000,
-  "question": "What is the name of the programming language that is used for web development?",
+  "question": "",
   "options": [
-    "Java",
-    "Python",
-    "JavaScript",
-    "C++"
+    "sdfsad",
+    "dsadasd",
+    "sadasds",
+    "sadsdas"
   ],
   "answerIndex": [
-    2
+    0
   ],
   "attemptStudents": [],
-  "results": []
+  "results": [],
+  "__v": 0
 },
 {
   "_id": {
-    "$oid": "6788c59ed9b1cabe37ad63fb"
+    "$oid": "67939dce5e28878e767db22d"
   },
-  "duration": 4000,
+  "duration": 30,
   "showQuestionDuration": 2000,
   "type": "quiz",
   "media": "",
+  "isMultiSelect": false,
   "maximumMarks": 1000,
-  "question": "Which language is primarily used for statistical computing and graphics?",
+  "question": "",
   "options": [
-    "Java",
-    "R",
-    "Python",
-    "C++"
+    "",
+    "",
+    "",
+    ""
   ],
-  "answerIndex": [
-    1
-  ],
+  "answerIndex": [],
   "attemptStudents": [],
-  "results": []
+  "results": [],
+  "__v": 0
 },
 {
   "_id": {
-    "$oid": "6788c96cd9b1cabe37ad6401"
+    "$oid": "67939e425e28878e767db23d"
   },
-  "duration": 4000,
+  "duration": 30,
   "showQuestionDuration": 2000,
-  "type": "quiz",
+  "type": "true/false",
   "media": "",
+  "isMultiSelect": false,
   "maximumMarks": 1000,
-  "question": "Which programming language is used for Android app development?",
+  "question": "",
   "options": [
-    "C#",
-    "Swift",
-    "Kotlin",
-    "Java"
+    "",
+    "",
+    "",
+    ""
   ],
-  "answerIndex": [
-    2
-  ],
+  "answerIndex": [],
   "attemptStudents": [],
-  "results": []
+  "results": [],
+  "__v": 0
 },
 {
   "_id": {
-    "$oid": "6788c96cd9b1cabe37ad6402"
+    "$oid": "67974e135e28878e767db29f"
   },
-  "duration": 4000,
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "typeanswer",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "sdasd",
+    "asdd",
+    "sdas",
+    "sdasd"
+  ],
+  "answerIndex": [
+    0
+  ],
+  "attemptStudents": [],
+  "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679760755e28878e767db33e"
+  },
+  "duration": 30,
   "showQuestionDuration": 2000,
   "type": "quiz",
   "media": "",
+  "isMultiSelect": false,
   "maximumMarks": 1000,
-  "question": "Which of these is not a programming language?",
+  "question": "",
   "options": [
-    "Swift",
-    "Rust",
-    "JavaScript",
-    "Google"
+    "",
+    "",
+    "",
+    ""
   ],
-  "answerIndex": [
-    3
-  ],
+  "answerIndex": [],
   "attemptStudents": [],
-  "results": []
+  "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679773375e28878e767db3b5"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerIndex": [],
+  "attemptStudents": [],
+  "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679773425e28878e767db3bb"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "typeanswer",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerIndex": [],
+  "attemptStudents": [],
+  "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6797751b870cc549d9d21f9d"
+  },
+  "duration": 10,
+  "showQuestionDuration": 2000,
+  "type": "typeanswer",
+  "media": "",
+  "isMultiSelect": true,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerIndex": [],
+  "attemptStudents": [],
+  "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67977520870cc549d9d21fa3"
+  },
+  "duration": 55,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerIndex": [],
+  "attemptStudents": [],
+  "results": [],
+  "__v": 0
 }]

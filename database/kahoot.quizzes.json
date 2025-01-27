@@ -1,12 +1,100 @@
 [{
   "_id": {
-    "$oid": "6788ab468090874ae7a51276"
+    "$oid": "6793992b5e28878e767db1cf"
   },
-  "name": "Programming Languages",
+  "name": "Untitled Quiz",
+  "description": "Add a description here.",
+  "creator": {
+    "$oid": "67877a63e9f07b10fa0ad3a6"
+  },
+  "coverImage": "/images/defaultCover.png",
+  "isPrivet": true,
+  "status": "draft",
+  "theme": {
+    "$oid": "678e32b0d9b1cabe37ad6433"
+  },
   "questions": [
-    "6788abd48090874ae7a5127a",
-    "6788c59ed9b1cabe37ad63fb",
-    "6788c96cd9b1cabe37ad6401",
-    "6788c96cd9b1cabe37ad6402"
-  ]
+    {
+      "$oid": "6793992b5e28878e767db1cd"
+    },
+    {
+      "$oid": "67939e425e28878e767db23d"
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "67974e135e28878e767db2a1"
+  },
+  "name": "Untitled Quiz",
+  "description": "Add a description here.",
+  "creator": {
+    "$oid": "67877a63e9f07b10fa0ad3a6"
+  },
+  "coverImage": "/images/defaultCover.png",
+  "isPrivet": true,
+  "status": "draft",
+  "theme": {
+    "$oid": "678e32b0d9b1cabe37ad6411"
+  },
+  "questions": [
+    {
+      "$oid": "67974e135e28878e767db29f"
+    },
+    {
+      "$oid": "679760755e28878e767db33e"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679773375e28878e767db3b7"
+  },
+  "name": "Untitled Quiz",
+  "description": "Add a description here.",
+  "creator": {
+    "$oid": "67877a63e9f07b10fa0ad3a6"
+  },
+  "coverImage": "/images/defaultCover.png",
+  "isPrivet": true,
+  "status": "draft",
+  "theme": {
+    "$oid": "678e32b0d9b1cabe37ad6411"
+  },
+  "questions": [
+    {
+      "$oid": "679773375e28878e767db3b5"
+    },
+    {
+      "$oid": "679773425e28878e767db3bb"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6797751b870cc549d9d21f9f"
+  },
+  "name": "Untitled Quiz",
+  "description": "Add a description here.",
+  "creator": {
+    "$oid": "67877a63e9f07b10fa0ad3a6"
+  },
+  "coverImage": "/images/defaultCover.png",
+  "isPrivet": true,
+  "status": "draft",
+  "theme": {
+    "$oid": "678e32b0d9b1cabe37ad6411"
+  },
+  "questions": [
+    {
+      "$oid": "6797751b870cc549d9d21f9d"
+    },
+    {
+      "$oid": "67977520870cc549d9d21fa3"
+    }
+  ],
+  "__v": 0
 }]
