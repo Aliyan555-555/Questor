@@ -3,14 +3,22 @@ import React, { useCallback, useState } from "react";
 import { MdCrop, MdOutlineSettings } from "react-icons/md";
 import { useDropzone } from "react-dropzone";
 import ImageCroppingComponent from "./ImageCropModel";
+import GalleryModel from "./GalleryModel";
 
-const SettingsModel = ({ data }) => {
+const SettingsModel = ({ data, handleSaveSettings }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(data?.coverImage);
   const [isImageCropModelOpen, setIsImageCropModelOpen] = useState(false);
-
+  const [isGallrayOpen, setIsGalleryOpen] = useState(false);
+  const [quizData, setQuizData] = useState({
+    name: data?.name,
+    discription: data?.discription,
+    isPrivet: data?.isPrivet,
+    coverImage: data?.coverImage,
+  });
   const handleIsOpen = () => setIsOpen(true);
-  const handleIsClose = () => setIsOpen(isImageCropModelOpen?true:false);
+  const handleIsClose = () =>
+    setIsOpen(isImageCropModelOpen ? true : isGallrayOpen ? true : false);
 
   const handleClickOutside = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -21,33 +29,49 @@ const SettingsModel = ({ data }) => {
     }
   };
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setSelectedFile(URL.createObjectURL(acceptedFiles[0]));
-  }, []);
+  // const onDrop = useCallback((acceptedFiles: File[]) => {
+  //   setSelectedFile(URL.createObjectURL(acceptedFiles[0]));
+  // }, []);
 
-  const { getRootProps, getInputProps, isDragActive, fileRejections } =
-    useDropzone({
-      onDrop,
-      accept: {
-        "image/png": [],
-        "image/jpeg": [],
-        "image/jpg": [],
-      },
-    });
+  // const { getRootProps, getInputProps, isDragActive, fileRejections } =
+  //   useDropzone({
+  //     onDrop,
+  //     accept: {
+  //       "image/png": [],
+  //       "image/jpeg": [],
+  //       "image/jpg": [],
+  //     },
+  //   });
 
-  const renderError = () => {
-    if (fileRejections.length > 0) {
-      return (
-        <p className="text-red-500">
-          Only PNG, JPG, and JPEG files are accepted.
-        </p>
-      );
-    }
-    return null;
+  // const renderError = () => {
+  //   if (fileRejections.length > 0) {
+  //     return (
+  //       <p className="text-red-500">
+  //         Only PNG, JPG, and JPEG files are accepted.
+  //       </p>
+  //     );
+  //   }
+  //   return null;
+  // };
+
+  // const handleCrop = () => {
+  //   setIsImageCropModelOpen(true);
+  // };
+
+  const handleSave = () => {
+    handleSaveSettings({ ...quizData, coverImage: selectedFile });
+    handleIsClose()
   };
 
-  const handleCrop = () => {
-    setIsImageCropModelOpen(true);
+  const handleCancel = () => {
+    setQuizData({
+      name: "",
+      discription: "",
+      isPrivet: true,
+      coverImage: "",
+    });
+    setSelectedFile(data?.coverImage)
+    handleIsClose();
   };
 
   return (
@@ -71,21 +95,27 @@ const SettingsModel = ({ data }) => {
           className="w-[85%] flex flex-col h-[95%] bg-white rounded-lg"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="w-full h-[50px] border-b border-gray-300 flex items-center justify-between px-8">
+          <div className="w-full py-3 border-b border-gray-300 flex items-center justify-between px-8">
             <div className="flex text-lg font-semibold items-center gap-2">
               <MdOutlineSettings fontSize={22} />
               <h2>Settings</h2>
             </div>
             <div className="flex gap-2">
-              <Button onClick={handleIsClose} className="!bg-gray-100 !text-black !px-4 !font-semibold !capitalize !rounded-md">
+              <Button
+                onClick={handleCancel}
+                className="!bg-gray-100 !text-black !px-4 !font-semibold !capitalize !rounded-md"
+              >
                 Cancel
               </Button>
-              <Button className="!bg-blue-600 !text-white !px-4 !font-semibold !capitalize !rounded-md">
+              <Button
+                onClick={handleSave}
+                className="!bg-blue-600 !text-white !px-4 !font-semibold !capitalize !rounded-md"
+              >
                 Done
               </Button>
             </div>
           </div>
-          <div className="flex-1 w-full flex">
+          <div className="flex-1  w-full flex">
             {/* Sidebar */}
             <div className="w-[300px] h-full border-r border-gray-300">
               <div className="w-full bg-gray-100 py-4 px-6 border-b border-gray-300 font-semibold relative text-xl">
@@ -93,11 +123,9 @@ const SettingsModel = ({ data }) => {
                 Basic Settings
               </div>
             </div>
-            {/* Main Content */}
-            <div className="flex-1 h-full overflow-y-auto p-4 gap-4 bg-gray-100 flex">
-              {/* Left Panel */}
-              <div className="h-full w-[60%] flex flex-col gap-4">
-                {/* Input Section */}
+
+            <div className="flex-1 max-h-full overflow-y-scroll pt-4 px-4  gap-3 bg-gray-100 flex">
+              <div className="h-full w-[60%] flex flex-col gap-3">
                 <div
                   style={{
                     boxShadow:
@@ -110,6 +138,10 @@ const SettingsModel = ({ data }) => {
                     <p>Enter a title for your kahoot</p>
                     <input
                       type="text"
+                      value={quizData.name}
+                      onChange={(e) =>
+                        setQuizData({ ...quizData, name: e.target.value })
+                      }
                       className="px-4 py-2 border rounded-md border-gray-300 w-full focus:outline-none"
                     />
                   </div>
@@ -120,15 +152,21 @@ const SettingsModel = ({ data }) => {
                     </h2>
                     <p>
                       Provide a short description for your kahoot to increase
-                      visibility.
+                      visibility
                     </p>
                     <textarea
-                      rows={4}
+                      rows={3}
+                      value={quizData.discription}
+                      onChange={(e) =>
+                        setQuizData({
+                          ...quizData,
+                          description: e.target.value,
+                        })
+                      }
                       className="px-4 py-2 border rounded-md border-gray-300 w-full focus:outline-none"
                     ></textarea>
                   </div>
                 </div>
-                {/* Visibility Section */}
                 <div
                   style={{
                     boxShadow:
@@ -139,17 +177,18 @@ const SettingsModel = ({ data }) => {
                   <h2 className="text-sm font-bold">Visibility</h2>
                   <p>Choose who can see this kahoot.</p>
                   <div
-                    className="w-full flex p-2"
+                    className="w-full flex select-none p-2"
+                    onClick={() =>
+                      setQuizData((prev) => ({ ...prev, isPrivet: true }))
+                    }
                     style={{
                       boxShadow:
                         "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                   >
                     <Radio
-                      checked
-                      value="c"
+                      checked={quizData.isPrivet}
                       name="size-radio-button-demo"
-                      inputProps={{ "aria-label": "c" }}
                       sx={{
                         "& .MuiSvgIcon-root": {
                           fontSize: 28,
@@ -162,17 +201,18 @@ const SettingsModel = ({ data }) => {
                     </div>
                   </div>
                   <div
-                    className="w-full flex p-2 mt-2"
+                    className="w-full flex p-2 mt-2 select-none"
+                    onClick={() =>
+                      setQuizData((prev) => ({ ...prev, isPrivet: false }))
+                    }
                     style={{
                       boxShadow:
                         "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                     }}
                   >
                     <Radio
-                      checked
-                      value="c"
+                      checked={!quizData.isPrivet}
                       name="size-radio-button-demo"
-                      inputProps={{ "aria-label": "c" }}
                       sx={{
                         "& .MuiSvgIcon-root": {
                           fontSize: 28,
@@ -200,28 +240,25 @@ const SettingsModel = ({ data }) => {
                   <h2 className="text-sm font-bold">Cover Image</h2>
                   <p>Add a cover image to make your kahoot stand out.</p>
                   <div
-                    {...getRootProps()}
+                    onClick={() => setIsGalleryOpen(true)}
                     className={`border-2 border-dashed 
-                          h-[200px] flex w-full items-center relative justify-center rounded-lg text-center ${
-                            isDragActive
-                              ? "border-blue-500 bg-blue-100"
-                              : "border-gray-300"
-                          }`}
+                          h-[200px] flex w-full select-none items-center  relative justify-center rounded-lg text-center border-gray-300`}
                   >
+                    {!selectedFile && <p className="font-semibold text-lg text-white bg-blue-600 px-3 rounded-md py-1">Select images</p>}
                     {selectedFile && (
                       <div className="w-full relative h-[200px]">
                         <img
                           src={selectedFile}
                           alt="Cover"
-                          className="w-full h-full object-cover rounded-lg"
+                          className="w-full h-full object-cover object-center rounded-lg"
                         />
                         <div className="absolute p-3 z-50 w-full top-0 left-0 h-full bg-gradient-to-b from-transparent to-black flex items-end justify-between">
-                          <IconButton
+                          {/* <IconButton
                             className={"!bg-white !text-black"}
                             onClick={(e) => { e.stopPropagation();handleCrop()}}
                           >
                             <MdCrop />
-                          </IconButton>
+                          </IconButton> */}
 
                           <Button className="!px-3 !py-1.5 !font-semibold !capitalize !text-black !bg-white !rounded-md ">
                             Change
@@ -229,17 +266,6 @@ const SettingsModel = ({ data }) => {
                         </div>
                       </div>
                     )}
-                    <input {...getInputProps()} />
-                    {isDragActive ? (
-                      <p className="text-blue-500">Drop the files here...</p>
-                    ) : (
-                      !selectedFile && (
-                        <p>
-                          Drag & drop some files here, or click to select files
-                        </p>
-                      )
-                    )}
-                    {renderError()}
                   </div>
                 </div>
               </div>
@@ -247,14 +273,20 @@ const SettingsModel = ({ data }) => {
           </div>
         </div>
       </Backdrop>
-      {isImageCropModelOpen && (
+      {/* {isImageCropModelOpen && (
         <ImageCroppingComponent
           open={isImageCropModelOpen}
           close={() => setIsImageCropModelOpen(false)}
           image={selectedFile}
           setImage={(d) => setSelectedFile(d) }
         />
-      )}
+      )} */}
+
+      <GalleryModel
+        close={() => setIsGalleryOpen(false)}
+        open={isGallrayOpen}
+        setImage={(i) => setSelectedFile(i)}
+      />
     </div>
   );
 };

@@ -19,56 +19,65 @@ import {
   updateQuestionMedia,
 } from "@/src/redux/schema/student";
 import SettingsModel from "@/src/components/create/SettingsModel";
-import { Button, IconButton, isMuiElement } from "@mui/material";
+import { Button, IconButton, isMuiElement, Tooltip } from "@mui/material";
 import Image from "next/image";
 import { MdDeleteOutline, MdOutlineDeleteForever } from "react-icons/md";
 import { ReactSortable } from "react-sortablejs";
 import { truncateString } from "@/src/lib/services";
 import GalleryModel from "@/src/components/create/GalleryModel";
-import { CircleIcon, DiamondIcon, DoneIcon, KahootIcon, QuizIcon, SquareIcon, TriangleIcon } from "@/src/lib/svg";
+import {
+  CircleIcon,
+  DiamondIcon,
+  DoneIcon,
+  KahootIcon,
+  QuizIcon,
+  SquareIcon,
+  TriangleIcon,
+} from "@/src/lib/svg";
 import { Question } from "@/src/types";
 import { QuestionsTypes, TimeLimit } from "@/src/contents";
 import { GetAllThemes } from "@/src/redux/api";
+import { BsInfo } from "react-icons/bs";
 
 const Create = () => {
   const socket = useSocket();
   const [isOpenGallery, setIsOpenGallery] = useState(false);
   const themes = useSelector((root: RootState) => root.student.themes);
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState("");
   const [customizableBarIsOpen, setCustomizableBarIsOpen] = useState(true);
   const user = useSelector((root: RootState) => root.student.user);
   const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
-  const [selectedQuestionData, setSelectedQuestionData] = useState<Question | null>(null);
+  const [selectedQuestionData, setSelectedQuestionData] =
+    useState<Question | null>(null);
   const dispatch = useDispatch();
-  const path = usePathname()
+  const path = usePathname();
   const query = useSearchParams();
   const data = useSelector((root: RootState) => root.student.currentDraft);
   const navigation = useRouter();
   const id = query.get("id");
   const [isThemeOpen, setIsThemeOpen] = useState(false);
 
-
   const fetch = async () => {
     const res = await GetAllThemes();
     if (res?.status) {
       dispatch(setThemes(res?.data));
     }
-  }
+  };
   useEffect(() => {
     if (id && !data) {
-
-      socket?.emit("fetch_quiz", { _id: id })
+      socket?.emit("fetch_quiz", { _id: id });
     }
 
     fetch();
   }, []);
   const createQuiz = async () => {
     try {
-      dispatch(clearCurrentDraft())
+      dispatch(clearCurrentDraft());
 
       if (!user?._id) {
-        navigation.push(`/auth/login?redirect_url=${window.location.origin}${path}&redirect=true`
-        )
+        navigation.push(
+          `/auth/login?redirect_url=${window.location.origin}${path}&redirect=true`
+        );
         return toast.error("User not authenticated");
       }
 
@@ -81,7 +90,6 @@ const Create = () => {
         creator: user._id,
         theme: "678e32b0d9b1cabe37ad6411",
       });
-
     } catch (error) {
       console.error(error);
       toast.error("Failed to create quiz.");
@@ -95,7 +103,6 @@ const Create = () => {
   }, [id, socket, dispatch]);
 
   useEffect(() => {
-
     if (socket) {
       socket.on("feched_quiz", (quizData) => {
         if (quizData.status) {
@@ -103,7 +110,7 @@ const Create = () => {
         } else {
           toast.error("Failed to fetch quiz data.");
         }
-      })
+      });
       socket.on("created_quiz", (quizData) => {
         if (quizData?.status) {
           dispatch(setCurrentDraft(quizData.data));
@@ -124,37 +131,38 @@ const Create = () => {
 
       socket.on("deleted_question_in_quiz", (quizData) => {
         dispatch(updateCurrentDraft({ ...quizData.data }));
-        setSelectedQuestion(quizData.data.questions[quizData.data.questions.length - 1]._id)
-        setSelectedQuestionData(quizData.data.questions[quizData.data.questions.length - 1])
+        setSelectedQuestion(
+          quizData.data.questions[quizData.data.questions.length - 1]._id
+        );
+        setSelectedQuestionData(
+          quizData.data.questions[quizData.data.questions.length - 1]
+        );
       });
 
       socket.on("set_question_value", (quizData) => {
         dispatch(updateCurrentDraft({ ...quizData.data }));
-      })
+      });
 
       socket.on("updated_question_media", (quizData) => {
         if (quizData.status) {
           dispatch(updateQuestionMedia({ ...quizData.data }));
-
         }
-      })
+      });
 
       socket.on("updated_question", (quizData) => {
         if (quizData.status) {
-          console.log(quizData.data)
+          console.log(quizData.data);
           dispatch(updateQuestion({ ...quizData.data }));
-          setSelectedQuestionData(quizData.data)
+          setSelectedQuestionData(quizData.data);
         }
-      })
+      });
 
       socket.on("updated_theme", (quizData) => {
         if (quizData.status) {
           dispatch(updateCurrentDraft({ ...quizData.data }));
         }
-
       });
       socket.on("updated_quiz", (quizData) => {
-
         if (quizData.status) {
           dispatch(updateCurrentDraft({ ...quizData.data }));
         }
@@ -162,10 +170,8 @@ const Create = () => {
       socket.on("question_added", (quizData) => {
         if (quizData.status) {
           dispatch(updateCurrentDraft({ ...quizData.data }));
-
         }
-
-      })
+      });
     }
 
     if (id && !data) {
@@ -174,11 +180,11 @@ const Create = () => {
 
     return () => {
       if (socket) {
-        socket.off("updated_quiz")
+        socket.off("updated_quiz");
         socket.off("updated_question");
-        socket.off("updated_question_media")
+        socket.off("updated_question_media");
         socket.off("set_question_value");
-        socket.off("deleted_question_in_quiz")
+        socket.off("deleted_question_in_quiz");
         socket.off("created_quiz");
         socket.off("fetched_quiz");
       }
@@ -186,17 +192,17 @@ const Create = () => {
   }, [socket, id, data, dispatch]);
   useEffect(() => {
     if (data?.questions?.length > 0) {
-      setSelectedQuestion(data.questions[0]._id)
-      setSelectedQuestionData(data.questions[0])
+      setSelectedQuestion(data.questions[0]._id);
+      setSelectedQuestionData(data.questions[0]);
     } else {
-      setSelectedQuestion(null)
+      setSelectedQuestion(null);
     }
-  }, [])
+  }, []);
   const handleUpdateQuestion = (question) => {
     if (question) {
-      socket?.emit("update_question", question)
+      socket?.emit("update_question", question);
     }
-  }
+  };
 
   const handleDeleteQuestion = (questionId: string) => {
     if (!id || !questionId) {
@@ -204,23 +210,25 @@ const Create = () => {
     }
     if (data?.questions.length > 1) {
       socket?.emit("delete_question_in_quiz", { questionId, _id: id });
-
     }
-
   };
   const handleUpdateQuiz = (quizData) => {
     const isSame = JSON.stringify(quizData) === JSON.stringify(data);
-   
-      socket?.emit("update_quiz", quizData);
-  
+
+    socket?.emit("update_quiz", quizData);
+
     // socket?.emit("update_quiz",quizData)
-  }
+  };
   const handleSetQuestion = (value: string) => {
     if (!selectedQuestion) {
       return toast.error("Please select a question to set as the main one.");
     }
-    socket?.emit("set_question_value", { questionId: selectedQuestion, _id: id, value });
-  }
+    socket?.emit("set_question_value", {
+      questionId: selectedQuestion,
+      _id: id,
+      value,
+    });
+  };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSetQuestion(inputValue);
@@ -229,22 +237,34 @@ const Create = () => {
 
   useEffect(() => {
     if (data && data.questions.length > 0) {
-      setSelectedQuestionData(data?.questions.filter(question => question._id === selectedQuestion)[0])
+      setSelectedQuestionData(
+        data?.questions.filter(
+          (question) => question._id === selectedQuestion
+        )[0]
+      );
     }
-  }, [selectedQuestion])
+  }, [selectedQuestion]);
 
   const handleChangeMedia = (qid: string, quizId: string, media: string) => {
-    socket?.emit("update_question_media", { questionId: qid, _id: quizId, media });
-  }
+    socket?.emit("update_question_media", {
+      questionId: qid,
+      _id: quizId,
+      media,
+    });
+  };
   const handleRemoveMedia = (qid: string, quizId: string, media: string) => {
-    socket?.emit("update_question_media", { questionId: qid, _id: quizId, media: media });
-  }
+    socket?.emit("update_question_media", {
+      questionId: qid,
+      _id: quizId,
+      media: media,
+    });
+  };
   const handleChangeTheme = (theme) => {
-    socket?.emit("update_theme", { id, theme })
-  }
+    socket?.emit("update_theme", { id, theme });
+  };
   const handleAddQuestion = (type) => {
-    socket?.emit("add_question", { id, type })
-  }
+    socket?.emit("add_question", { id, type });
+  };
   const handleSaveAnswerIndex = (questionIndex, optionIndex) => {
     if (!selectedQuestionData?.isMultiSelect) {
       // Single-select: Replace the current answer with the selected option
@@ -254,11 +274,14 @@ const Create = () => {
       });
     } else {
       // Multi-select: Toggle the option in the answerIndex array
-      const isSelected = selectedQuestionData?.answerIndex?.includes(optionIndex);
+      const isSelected =
+        selectedQuestionData?.answerIndex?.includes(optionIndex);
       const updatedAnswerIndex = isSelected
-        ? selectedQuestionData.answerIndex.filter((index) => index !== optionIndex) // Remove the option if already selected
+        ? selectedQuestionData.answerIndex.filter(
+            (index) => index !== optionIndex
+          ) // Remove the option if already selected
         : [...(selectedQuestionData?.answerIndex || []), optionIndex]; // Add the option if not selected
-  
+
       handleUpdateQuestion({
         ...selectedQuestionData,
         answerIndex: updatedAnswerIndex,
@@ -268,39 +291,151 @@ const Create = () => {
 
   const handleQuestionSorting = (questionsArray) => {
     const updatedQuestions = questionsArray.map(({ id, ...rest }) => rest);
-      // const isSame = JSON.stringify(data.questions) === JSON.stringify(updatedQuestions);
-  
-      data?.questions.map((q,i) => {
-        if (q._id !== questionsArray[i]._id) {
-          handleUpdateQuiz({...data,questions:updatedQuestions});
-          console.log("updating")
-          return
-        }
-      })
-      console.log("Updating question order...");
+    // const isSame = JSON.stringify(data.questions) === JSON.stringify(updatedQuestions);
+
+    data?.questions.map((q, i) => {
+      if (q._id !== questionsArray[i]._id) {
+        handleUpdateQuiz({ ...data, questions: updatedQuestions });
+        console.log("updating");
+        return;
+      }
+    });
+    console.log("Updating question order...");
     // dispatch(setCurrentDraft({...data, questions: updatedQuestions}));
   };
 
-  
+  const handleSaveSettings = (quizData) => {
+    handleUpdateQuiz({ ...data, ...quizData });
+  };
+
+  const handleQuestionWarningValidator = (question) => {
+    if (!question.question || typeof question.question !== "string") {
+      return "Question is missing or invalid";
+    }
+
+    if (typeof question.duration !== "number" || question.duration <= 0) {
+      return "Invalid duration";
+    }
+
+    if (
+      typeof question.maximumMarks !== "number" ||
+      question.maximumMarks <= 0
+    ) {
+      return "Invalid maximum marks";
+    }
+
+    if (
+      typeof question.showQuestionDuration !== "number" ||
+      question.showQuestionDuration < 0
+    ) {
+      return "Invalid question duration";
+    }
+
+    if (
+      !["quiz", "true/false", "slider", "typeanswer"].includes(question.type)
+    ) {
+      return "Invalid question type";
+    }
+
+    if (question.type === "quiz") {
+      if (!Array.isArray(question.options) || question.options.length !== 4) {
+        return "Quiz must have exactly 4 options";
+      }
+      if (
+        !Array.isArray(question.answerIndex) ||
+        question.answerIndex.length === 0
+      ) {
+        return "Quiz must have at least one correct answer";
+      }
+    }
+
+    if (question.type === "true/false") {
+      if (
+        !Array.isArray(question.options) ||
+        question.options.length !== 2 ||
+        question.options[0].toLowerCase() !== "true" ||
+        question.options[1].toLowerCase() !== "false"
+      ) {
+        return "True/False question must have exactly 2 options: 'True' and 'False'";
+      }
+      if (
+        !Array.isArray(question.answerIndex) ||
+        ![0, 1].includes(question.answerIndex[0])
+      ) {
+        return "True/False question must have an answer index of 0 (True) or 1 (False)";
+      }
+    }
+
+    if (question.type === "slider") {
+      if (
+        !Array.isArray(question.answerIndex) ||
+        question.answerIndex.length !== 1 ||
+        typeof question.answerIndex[0] !== "number"
+      ) {
+        return "Slider question must have a numeric answer";
+      }
+    }
+
+    if (question.type === "typeanswer") {
+      if (
+        !Array.isArray(question.answerIndex) ||
+        question.answerIndex.length === 0 ||
+        !question.answerIndex.every(
+          (ans) => typeof ans === "string" && ans.trim() !== ""
+        )
+      ) {
+        return "TypeAnswer question must have at least one valid text-based answer";
+      }
+    }
+
+    if (
+      question.isMultiSelect &&
+      (!Array.isArray(question.answerIndex) || question.answerIndex.length < 2)
+    ) {
+      return "Multi-select question must have multiple correct answers";
+    }
+
+    return null;
+  };
+
   return (
     <div className="w-screen bg-white h-screen flex flex-col">
       <div
         style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 4px 0px" }}
-        className="w-full h-[60px] py-2 gap-4 flex"
+        className="w-full py-2 gap-4 flex"
       >
-        <div className="w-[200px]"></div>
-        <SettingsModel data={data} />
-        <Button onClick={() => setIsThemeOpen(true)} className="!bg-blue-600 !text-white !font-semibold !px-6 !text-md !capitalize !tracking-wide">
-          Theme
-        </Button>
+        <div className="w-[200px] "></div>
+        <SettingsModel handleSaveSettings={handleSaveSettings} data={data} />
+        <div className="flex flex-1 items-center justify-center gap-4">
+          <Button
+            onClick={() => {
+              setIsThemeOpen(true);
+              setCustomizableBarIsOpen(true);
+            }}
+            className="!bg-blue-600 !text-white !font-semibold !px-6 !text-md !capitalize !tracking-wide"
+          >
+            Theme
+          </Button>
+          <Button className="!bg-gray-300 !text-black !font-semibold !px-6 !text-md !capitalize !tracking-wide">
+            Exist
+          </Button>
+          <Button className="!bg-blue-600 !text-white !font-semibold !px-6 !text-md !capitalize !tracking-wide">
+            Save
+          </Button>
+        </div>
       </div>
       <div className="w-full flex-1 flex">
         <div className="w-[180px]">
-          <div
-            className="w-full py-1 overflow-y-auto h-[80vh]"
-          >
+          <div className="w-full py-1 overflow-y-auto h-[80vh]">
             <ReactSortable
-              list={ data?data?.questions.map((questions,index)=>({...questions,id:index + 1})):[]}
+              list={
+                data
+                  ? data?.questions.map((questions, index) => ({
+                      ...questions,
+                      id: index + 1,
+                    }))
+                  : []
+              }
               setList={handleQuestionSorting}
               animation={200}
               easing="ease-out"
@@ -311,7 +446,8 @@ const Create = () => {
                   key={q._id}
                   onClick={() => setSelectedQuestion(q._id)}
                   style={{
-                    backgroundColor: selectedQuestion === q._id ? "#EAF4FC" : "#fff",
+                    backgroundColor:
+                      selectedQuestion === q._id ? "#EAF4FC" : "#fff",
                   }}
                   className="w-full  select-none group h-[150px] py-2 flex cursor-grab flex-col"
                 >
@@ -326,28 +462,37 @@ const Create = () => {
                       </button>
                       <button
                         onClick={() => handleDeleteQuestion(q._id)}
-                        className={`p-1 ${data?.questions.length > 1 ? "cursor-pointer" : 'cursor-not-allowed'} rounded-full bg-transparent hover:bg-[#0000001b]`}
+                        className={`p-1 ${
+                          data?.questions.length > 1
+                            ? "cursor-pointer"
+                            : "cursor-not-allowed"
+                        } rounded-full bg-transparent hover:bg-[#0000001b]`}
                       >
                         <MdOutlineDeleteForever fontSize={15} />
                       </button>
                     </div>
                     <div className="flex-1 h-full pl-1 pr-2 py-2">
                       <div
-                        className={`w-full h-full rounded-md ${selectedQuestion === q._id
-                          ? "group-hover:border-blue-500"
-                          : "group-hover:border-gray-400"
-                          } ${selectedQuestion === q._id
+                        className={`w-full h-full relative rounded-md ${
+                          selectedQuestion === q._id
+                            ? "group-hover:border-blue-500"
+                            : "group-hover:border-gray-400"
+                        } ${
+                          selectedQuestion === q._id
                             ? "border-blue-500 bg-white"
                             : "border-transparent bg-gray-100"
-                          } border-[3px]`}
+                        } border-[3px]`}
                       >
+                 
                         <div className="w-full flex items-center justify-center py-1">
-                          <p className="text-xs text-gray-400 font-bold text-center">{q.question === "" ? "Question" : truncateString(q.question, 15)}</p>
+                          <p className="text-xs text-gray-400 font-bold text-center">
+                            {q.question === ""
+                              ? "Question"
+                              : truncateString(q.question, 15)}
+                          </p>
                         </div>
                         <div className="flex w-full items-center py-2 justify-center relative">
-                          <div
-                            className="rounded-full absolute left-2 w-[22px] h-[22px] flex items-center justify-center text-gray-400 text-[10px] border p-1 border-gray-300"
-                          >
+                          <div className="rounded-full absolute left-2 w-[22px] h-[22px] flex items-center justify-center text-gray-400 text-[10px] border p-1 border-gray-300">
                             <p>{q.duration}</p>
                           </div>
                           <div className="w-[40px] h-[30px] border border-dotted border-gray-300 text-gray-400 flex items-center justify-center">
@@ -384,77 +529,127 @@ const Create = () => {
             </ReactSortable>
           </div>
           <div className="w-full px-3 flex bg-white flex-col gap-1 sticky bottom-0 py-2">
-            <AddQuestionTypesDropdown setType={(type) => handleAddQuestion(type)} />
-
+            <AddQuestionTypesDropdown
+              setType={(type) => handleAddQuestion(type)}
+            />
           </div>
         </div>
         <div
           style={{
             backgroundImage: `url(${data?.theme?.image || ""})`,
           }}
-          className="flex-1 bg-cover bg-center bg-no-repeat h-full"
+          className="flex-1 bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen pb-20 scroll"
         >
           <div className="w-full flex items-center justify-center py-10">
-            <input onBlur={() => handleSetQuestion(inputValue)} onKeyDown={handleKeyDown} value={inputValue} onChange={(e) => setInputValue(e.target.value)} style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px" }} type="text" placeholder="Start type your question" className="w-[95%] text-gray-500 font-semibold h-[50px] placeholder:text-xl placeholder:text-center focus:outline-none  bg-white rounded-md text-center text-xl active:placeholder:hidden" />
-
+            <input
+              onBlur={() => handleSetQuestion(inputValue)}
+              onKeyDown={handleKeyDown}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              style={{
+                boxShadow:
+                  "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
+              }}
+              type="text"
+              placeholder="Start type your question"
+              className="w-[95%] text-gray-500 font-semibold h-[50px] placeholder:text-xl placeholder:text-center focus:outline-none  bg-white rounded-md text-center text-xl active:placeholder:hidden"
+            />
           </div>
           <div className="w-full flex items-center justify-center">
             <div className="w-[450px] flex flex-col gap-3 items-center justify-center h-[300px] bg-[#eeeeeee0] rounded-md">
-              {
-                data && data.questions && Array.isArray(data.questions) ? (
-                  // Find the selected question
-                  data.questions.find((question) => question._id === selectedQuestion)?.media === "" ? (
-                    <React.Fragment >
-                      <IconButton onClick={() => setIsOpenGallery(true)} className="!bg-white !text-gray-700">
-                        <IoIosAdd fontSize={50} />
-                      </IconButton>
-                      <h3 className="text-3xl font-semibold text-gray-700" onClick={() => setIsOpenGallery(true)} >Find and insert image</h3>
-                      <h4 className="text-xl text-gray-700" onClick={() => setIsOpenGallery(true)} >Upload a file or drag and drop here</h4>
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                      {data.questions.find((question) => question._id === selectedQuestion)?.media ? (
-
-                        <div className="w-full h-full relative">
-                          <Image
-                            src={data.questions.find((question) => question._id === selectedQuestion).media}
-                            alt="Media"
-                            width={300}
-                            height={300}
-                            className="w-full h-full object-cover object-center"
-                          />
-                          <div className="w-full absolute bottom-0 flex justify-end p-2 text-gray-700">
-                            <IconButton onClick={() => handleRemoveMedia(data.questions.find((question) => question._id === selectedQuestion)._id, id, "")} className="!bg-white !rounded-md
-                          !p-2 ">
-                              <MdDeleteOutline />
-                            </IconButton>
-
-                          </div>
-                        </div>
-                      ) : (
-                        // Handle case where media is invalid
-                        <h3 className="text-2xl text-gray-500">Media is unavailable or invalid.</h3>
-                      )}
-                    </React.Fragment>
-                  )
-                ) : (
-                  // Fallback UI for invalid data or no questions
+              {data && data.questions && Array.isArray(data.questions) ? (
+                // Find the selected question
+                data.questions.find(
+                  (question) => question._id === selectedQuestion
+                )?.media === "" ? (
                   <React.Fragment>
-                    <h3 className="text-2xl text-gray-500">No questions available to display.</h3>
+                    <IconButton
+                      onClick={() => setIsOpenGallery(true)}
+                      className="!bg-white !text-gray-700"
+                    >
+                      <IoIosAdd fontSize={50} />
+                    </IconButton>
+                    <h3
+                      className="text-3xl font-semibold text-gray-700"
+                      onClick={() => setIsOpenGallery(true)}
+                    >
+                      Find and insert image
+                    </h3>
+                    <h4
+                      className="text-xl text-gray-700"
+                      onClick={() => setIsOpenGallery(true)}
+                    >
+                      Upload a file or drag and drop here
+                    </h4>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    {data.questions.find(
+                      (question) => question._id === selectedQuestion
+                    )?.media ? (
+                      <div className="w-full h-full relative">
+                        <Image
+                          src={
+                            data.questions.find(
+                              (question) => question._id === selectedQuestion
+                            ).media
+                          }
+                          alt="Media"
+                          width={300}
+                          height={300}
+                          className="w-full h-full object-cover object-center"
+                        />
+                        <div className="w-full absolute bottom-0 flex justify-end p-2 text-gray-700">
+                          <IconButton
+                            onClick={() =>
+                              handleRemoveMedia(
+                                data.questions.find(
+                                  (question) =>
+                                    question._id === selectedQuestion
+                                )._id,
+                                id,
+                                ""
+                              )
+                            }
+                            className="!bg-white !rounded-md
+                          !p-2 "
+                          >
+                            <MdDeleteOutline />
+                          </IconButton>
+                        </div>
+                      </div>
+                    ) : (
+                      // Handle case where media is invalid
+                      <h3 className="text-2xl text-gray-500">
+                        Media is unavailable or invalid.
+                      </h3>
+                    )}
                   </React.Fragment>
                 )
-              }
-
+              ) : (
+                // Fallback UI for invalid data or no questions
+                <React.Fragment>
+                  <h3 className="text-2xl text-gray-500">
+                    No questions available to display.
+                  </h3>
+                </React.Fragment>
+              )}
             </div>
           </div>
           <div className="w-full flex flex-wrap py-5 px-3 gap-3">
-            <div className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"}`}>
+            <div
+              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${
+                selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
+              }`}
+            >
               <div className="h-full bg-[#D01937] w-fit px-1 flex items-center rounded-md">
                 <TriangleIcon height={40} width={40} />
               </div>
               <div className="h-full flex-1">
                 <input
-                  onBlur={() => handleUpdateQuestion({ ...selectedQuestionData })}
+                  onBlur={() =>
+                    handleUpdateQuestion({ ...selectedQuestionData })
+                  }
                   value={selectedQuestionData?.options?.[0] ?? ""}
                   onChange={(e) =>
                     setSelectedQuestionData((prev) => {
@@ -474,24 +669,46 @@ const Create = () => {
                   placeholder="Enter your answer"
                   className="w-full h-full px-2 bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
                 />
-
               </div>
-              <div className={` h-full items-center px-1 ${selectedQuestionData?.options[0] ? "flex" : "hidden"}`}>
-                <div onClick={() => handleSaveAnswerIndex('', 0)} className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(0) ? "bg-green-500" : "bg-transparent"} group h-[35px] rounded-full   border-[3px] border-white`}>
-                  <div className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(0) ? "flex" : "hidden"} group-hover:flex`}>
+              <div
+                className={` h-full items-center px-1 ${
+                  selectedQuestionData?.options[0] ? "flex" : "hidden"
+                }`}
+              >
+                <div
+                  onClick={() => handleSaveAnswerIndex("", 0)}
+                  className={`w-[35px] ${
+                    selectedQuestionData?.answerIndex.includes(0)
+                      ? "bg-green-500"
+                      : "bg-transparent"
+                  } group h-[35px] rounded-full   border-[3px] border-white`}
+                >
+                  <div
+                    className={`w-full h-full ${
+                      selectedQuestionData?.answerIndex.includes(0)
+                        ? "flex"
+                        : "hidden"
+                    } group-hover:flex`}
+                  >
                     <DoneIcon />
                   </div>
                 </div>
               </div>
             </div>
-            <div className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"}`}>
+            <div
+              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${
+                selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
+              }`}
+            >
               <div className="h-full bg-[#1368CE] w-fit px-1 flex items-center rounded-md">
                 <DiamondIcon height={40} width={40} />
               </div>
               <div className="h-full flex-1">
                 <input
                   value={selectedQuestionData?.options?.[1] ?? ""}
-                  onBlur={() => handleUpdateQuestion({ ...selectedQuestionData })}
+                  onBlur={() =>
+                    handleUpdateQuestion({ ...selectedQuestionData })
+                  }
                   onChange={(e) =>
                     setSelectedQuestionData((prev) => {
                       if (!prev) return prev; // Ensure `prev` is not null or undefined
@@ -511,23 +728,45 @@ const Create = () => {
                   placeholder="Enter your answer"
                   className="w-full h-full px-2 bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
                 />
-
               </div>
-              <div className={` h-full items-center px-1 ${selectedQuestionData?.options[1] ? "flex" : "hidden"}`}>
-                <div onClick={() => handleSaveAnswerIndex('', 1)} className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(1) ? "bg-green-500" : "bg-transparent"} group h-[35px] rounded-full   border-[3px] border-white`}>
-                  <div className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(1) ? "flex" : "hidden"} group-hover:flex`}>
+              <div
+                className={` h-full items-center px-1 ${
+                  selectedQuestionData?.options[1] ? "flex" : "hidden"
+                }`}
+              >
+                <div
+                  onClick={() => handleSaveAnswerIndex("", 1)}
+                  className={`w-[35px] ${
+                    selectedQuestionData?.answerIndex.includes(1)
+                      ? "bg-green-500"
+                      : "bg-transparent"
+                  } group h-[35px] rounded-full   border-[3px] border-white`}
+                >
+                  <div
+                    className={`w-full h-full ${
+                      selectedQuestionData?.answerIndex.includes(1)
+                        ? "flex"
+                        : "hidden"
+                    } group-hover:flex`}
+                  >
                     <DoneIcon />
                   </div>
                 </div>
               </div>
             </div>
-            <div className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[2] ? "bg-[#D89E00]" : "bg-white"}`}>
+            <div
+              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${
+                selectedQuestionData?.options[2] ? "bg-[#D89E00]" : "bg-white"
+              }`}
+            >
               <div className="h-full bg-[#D89E00] w-fit px-1 flex items-center rounded-md">
                 <CircleIcon height={40} width={40} />
               </div>
               <div className="h-full flex-1">
                 <input
-                  onBlur={() => handleUpdateQuestion({ ...selectedQuestionData })}
+                  onBlur={() =>
+                    handleUpdateQuestion({ ...selectedQuestionData })
+                  }
                   value={selectedQuestionData?.options?.[2] ?? ""}
                   onChange={(e) =>
                     setSelectedQuestionData((prev) => {
@@ -548,24 +787,46 @@ const Create = () => {
                   placeholder="Enter your answer"
                   className="w-full h-full px-2 bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
                 />
-
               </div>
-              <div className={` h-full items-center px-1 ${selectedQuestionData?.options[2] ? "flex" : "hidden"}`}>
-                <div onClick={() => handleSaveAnswerIndex('', 2)} className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(2) ? "bg-green-500" : "bg-transparent"} group h-[35px] rounded-full   border-[3px] border-white`}>
-                  <div className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(2) ? "flex" : "hidden"} group-hover:flex`}>
+              <div
+                className={` h-full items-center px-1 ${
+                  selectedQuestionData?.options[2] ? "flex" : "hidden"
+                }`}
+              >
+                <div
+                  onClick={() => handleSaveAnswerIndex("", 2)}
+                  className={`w-[35px] ${
+                    selectedQuestionData?.answerIndex.includes(2)
+                      ? "bg-green-500"
+                      : "bg-transparent"
+                  } group h-[35px] rounded-full   border-[3px] border-white`}
+                >
+                  <div
+                    className={`w-full h-full ${
+                      selectedQuestionData?.answerIndex.includes(2)
+                        ? "flex"
+                        : "hidden"
+                    } group-hover:flex`}
+                  >
                     <DoneIcon />
                   </div>
                 </div>
               </div>
             </div>
-            <div className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[3] ? "bg-[#26890C]" : "bg-white"}`}>
+            <div
+              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${
+                selectedQuestionData?.options[3] ? "bg-[#26890C]" : "bg-white"
+              }`}
+            >
               <div className="h-full bg-[#26890C] w-fit px-1 flex items-center rounded-md">
                 <SquareIcon height={40} width={40} />
               </div>
               <div className="h-full flex-1">
                 <input
                   value={selectedQuestionData?.options?.[3] ?? ""}
-                  onBlur={() => handleUpdateQuestion({ ...selectedQuestionData })}
+                  onBlur={() =>
+                    handleUpdateQuestion({ ...selectedQuestionData })
+                  }
                   onChange={(e) =>
                     setSelectedQuestionData((prev) => {
                       if (!prev) return prev; // Ensure `prev` is not null or undefined
@@ -585,17 +846,32 @@ const Create = () => {
                   placeholder="Enter your answer"
                   className="w-full h-full px-2 bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
                 />
-
               </div>
-              <div className={` h-full items-center px-1 ${selectedQuestionData?.options[3] ? "flex" : "hidden"}`}>
-                <div onClick={() => handleSaveAnswerIndex('', 3)} className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(3) ? "bg-green-500" : "bg-transparent"} group h-[35px] rounded-full   border-[3px] border-white`}>
-                  <div className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(3) ? "flex" : "hidden"} group-hover:flex`}>
+              <div
+                className={` h-full items-center px-1 ${
+                  selectedQuestionData?.options[3] ? "flex" : "hidden"
+                }`}
+              >
+                <div
+                  onClick={() => handleSaveAnswerIndex("", 3)}
+                  className={`w-[35px] ${
+                    selectedQuestionData?.answerIndex.includes(3)
+                      ? "bg-green-500"
+                      : "bg-transparent"
+                  } group h-[35px] rounded-full   border-[3px] border-white`}
+                >
+                  <div
+                    className={`w-full h-full ${
+                      selectedQuestionData?.answerIndex.includes(3)
+                        ? "flex"
+                        : "hidden"
+                    } group-hover:flex`}
+                  >
                     <DoneIcon />
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
         <motion.div
@@ -618,66 +894,118 @@ const Create = () => {
             <div className="w-full h-full z-10 p-5 relative flex flex-col gap-6">
               <div className="w-full flex justify-between">
                 <h3 className="text-lg font-semibold">Themes</h3>
-                <IconButton onClick={() => setIsThemeOpen(false)} className="!text-black">
+                <IconButton
+                  onClick={() => setIsThemeOpen(false)}
+                  className="!text-black"
+                >
                   <RxCross2 />
                 </IconButton>
-
-
               </div>
               <div className="w-full flex flex-wrap h-[90vh] overflow-y-scroll justify-center gap-3">
                 {themes.map((theme) => (
-                  <div onClick={() => handleChangeTheme(theme._id)} className={`w-[110px]  border-[3px] rounded-md p-1 ${theme._id === data?.theme._id ? 'border-blue-600' : 'border-transparent'} hover:border-gray-400  h-[110px] `}>
-                    <Image className="w-full h-full object-cover rounded-md" src={theme.image} alt="Theme" width={100} height={100} />
+                  <div
+                    onClick={() => handleChangeTheme(theme._id)}
+                    className={`w-[110px]  border-[3px] rounded-md p-1 ${
+                      theme._id === data?.theme._id
+                        ? "border-blue-600"
+                        : "border-transparent"
+                    } hover:border-gray-400  h-[110px] `}
+                  >
+                    <Image
+                      className="w-full h-full object-cover rounded-md"
+                      src={theme.image}
+                      alt="Theme"
+                      width={100}
+                      height={100}
+                    />
                   </div>
                 ))}
-
               </div>
-
             </div>
-          ) : (<div className="w-full h-full z-10 p-5 relative flex flex-col gap-6">
-            <div className="w-full flex flex-col gap-2">
-              <h3 className="text-lg font-semibold">Question type</h3>
+          ) : (
+            <div className="w-full h-full z-10 p-5 relative flex flex-col gap-6">
+              <div className="w-full flex flex-col gap-2">
+                <h3 className="text-lg font-semibold">Question type</h3>
 
-              <TypesDropdown selectedQuestion={selectedQuestionData} setTypes={(value: string) => handleUpdateQuestion({
-                ...selectedQuestionData, type: value
-              })} />
+                <TypesDropdown
+                  selectedQuestion={selectedQuestionData}
+                  setTypes={(value: string) =>
+                    handleUpdateQuestion({
+                      ...selectedQuestionData,
+                      type: value,
+                    })
+                  }
+                />
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <h3 className="text-lg font-semibold">Time limit</h3>
+                <TimeLimitDropdown
+                  duration={selectedQuestionData?.duration}
+                  setDuration={(value: number) =>
+                    handleUpdateQuestion({
+                      ...selectedQuestionData,
+                      duration: value,
+                    })
+                  }
+                />
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <h3 className="text-lg font-semibold">Answer options</h3>
 
+                <QuestionOptionDropdown
+                  isMultiSelect={selectedQuestionData?.isMultiSelect}
+                  onSelectOption={(value: boolean) => {
+                    handleUpdateQuestion({
+                      ...selectedQuestionData,
+                      isMultiSelect: value,
+                      answerIndex: [],
+                    });
+                  }}
+                />
+              </div>
             </div>
-            <div className="w-full flex flex-col gap-2">
-              <h3 className="text-lg font-semibold">Time limit</h3>
-              <TimeLimitDropdown duration={selectedQuestionData?.duration} setDuration={(value: number) => handleUpdateQuestion({ ...selectedQuestionData, duration: value })} />
-            </div>
-            <div className="w-full flex flex-col gap-2">
-              <h3 className="text-lg font-semibold">Answer options</h3>
-
-              <QuestionOptionDropdown isMultiSelect={selectedQuestionData?.isMultiSelect} onSelectOption={(value: boolean) =>{ handleUpdateQuestion({ ...selectedQuestionData, isMultiSelect: value,answerIndex:[] });}} />
-            </div>
-
-
-          </div>)}
+          )}
         </motion.div>
       </div>
-      <GalleryModel open={isOpenGallery} close={() => setIsOpenGallery(false)} setImage={(ImageSrc) => handleChangeMedia(selectedQuestion, id, ImageSrc)} />
+      <GalleryModel
+        open={isOpenGallery}
+        close={() => setIsOpenGallery(false)}
+        setImage={(ImageSrc) =>
+          handleChangeMedia(selectedQuestion, id, ImageSrc)
+        }
+      />
     </div>
   );
 };
 
 export default Create;
 
-
-const TypesDropdown = ({ setTypes, selectedQuestion }: { setTypes: (value: string) => void; selectedQuestion: Question }) => {
+const TypesDropdown = ({
+  setTypes,
+  selectedQuestion,
+}: {
+  setTypes: (value: string) => void;
+  selectedQuestion: Question;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleSelect = (value) => {
-    setTypes(value)
-  }
+    setTypes(value);
+  };
   return (
     <button
       onClick={() => setIsOpen(!isOpen)}
       className="w-full items-center !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md relative"
     >
-      {QuestionsTypes.find(t => t.type === selectedQuestion?.type)?.icon}   {QuestionsTypes.find(t => t.type === selectedQuestion?.type)?.title}
+      {QuestionsTypes.find((t) => t.type === selectedQuestion?.type)?.icon}{" "}
+      {QuestionsTypes.find((t) => t.type === selectedQuestion?.type)?.title}
       {isOpen && (
-        <div style={{ boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px" }} className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md">
+        <div
+          style={{
+            boxShadow:
+              "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
+          }}
+          className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
+        >
           {QuestionsTypes.map((type) => (
             <div
               onClick={() => handleSelect(type.type)}
@@ -693,27 +1021,37 @@ const TypesDropdown = ({ setTypes, selectedQuestion }: { setTypes: (value: strin
     </button>
   );
 };
-const TimeLimitDropdown = ({ duration, setDuration }: { duration: number; setDuration: (value: number) => void }) => {
+const TimeLimitDropdown = ({
+  duration,
+  setDuration,
+}: {
+  duration: number;
+  setDuration: (value: number) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleSetDuration = (value: number) => {
-    setDuration(value)
-  }
+    setDuration(value);
+  };
   return (
     <button
       onClick={() => setIsOpen(!isOpen)}
       className="w-full items-center !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md relative"
     >
-
-      {TimeLimit.find(i => i.value === duration)?.title}
+      {TimeLimit.find((i) => i.value === duration)?.title}
       {isOpen && (
-        <div style={{ boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px" }} className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md">
+        <div
+          style={{
+            boxShadow:
+              "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
+          }}
+          className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
+        >
           {TimeLimit.map((type) => (
             <div
               onClick={() => handleSetDuration(type.value)}
               key={type.id}
               className="w-full flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
             >
-
               <p className="text-sm font-medium">{type.title}</p>
             </div>
           ))}
@@ -723,9 +1061,14 @@ const TimeLimitDropdown = ({ duration, setDuration }: { duration: number; setDur
   );
 };
 
-const QuestionOptionDropdown = ({ isMultiSelect, onSelectOption }: { isMultiSelect: boolean; onSelectOption: (value: boolean) => void }) => {
+const QuestionOptionDropdown = ({
+  isMultiSelect,
+  onSelectOption,
+}: {
+  isMultiSelect: boolean;
+  onSelectOption: (value: boolean) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-
 
   const handleSelectOption = (option: boolean) => {
     onSelectOption(option);
@@ -752,8 +1095,9 @@ const QuestionOptionDropdown = ({ isMultiSelect, onSelectOption }: { isMultiSele
         >
           <div
             onClick={() => handleSelectOption(false)}
-            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${!isMultiSelect ? "bg-gray-100" : ""
-              }`}
+            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${
+              !isMultiSelect ? "bg-gray-100" : ""
+            }`}
           >
             <h4 className="text-lg font-semibold">Single Select</h4>
             <p className="text-xs text-gray-500">
@@ -762,8 +1106,9 @@ const QuestionOptionDropdown = ({ isMultiSelect, onSelectOption }: { isMultiSele
           </div>
           <div
             onClick={() => handleSelectOption(true)}
-            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${isMultiSelect ? "bg-gray-100" : ""
-              }`}
+            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${
+              isMultiSelect ? "bg-gray-100" : ""
+            }`}
           >
             <h4 className="text-lg font-semibold">Multi Select</h4>
             <p className="text-xs text-gray-500">
@@ -776,8 +1121,11 @@ const QuestionOptionDropdown = ({ isMultiSelect, onSelectOption }: { isMultiSele
   );
 };
 
-
-const AddQuestionTypesDropdown = ({ setType }: { setType: (type: string) => void }) => {
+const AddQuestionTypesDropdown = ({
+  setType,
+}: {
+  setType: (type: string) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -787,7 +1135,10 @@ const AddQuestionTypesDropdown = ({ setType }: { setType: (type: string) => void
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
       setIsOpen(false);
     }
   };
