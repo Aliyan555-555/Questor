@@ -187,8 +187,9 @@ const enterFullscreen = () => {
       navigation.push(`/play/${game?.quizId}/${game?.teacherId}/lobby/start`);
     }
   };
+  
   return (
-    <div className="w-screen  h-screen bg-cover p-2 flex flex-col items-center justify-center  relative bg-no-repeat bg-center">
+    <div style={{backgroundImage:`url(${game?.kahoot.theme.image})`}} className="w-screen  h-screen bg-cover p-2 flex flex-col items-center justify-center  relative bg-no-repeat bg-top">
       <div className="w-[50%] absolute top-2   h-[130px] flex gap-2 ">
         <div className="flex-1 flex items-center h-full bg-white">
           <div className="w-[50%] p-2 h-full flex items-center text-2xl font-semibold text-black justify-center">
@@ -231,10 +232,10 @@ const enterFullscreen = () => {
           start
         </Button>
       </div>
-      <div className="w-screen  ">
+      <div className="w-screen  flex items-center justify-center">
       {/* <AnimatedAvatar /> */}
         {game?.students.length === 0 ? (
-          <div className="text-6xl text-center font-semibold text-white">
+          <div className="text-6xl bg-[#46178F] w-fit rounded-md py-4 px-10 text-center font-semibold text-white">
             Waiting for players…
           </div>
         ) : (

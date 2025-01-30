@@ -14,7 +14,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket: Socket = io(process.env.NEXT_PUBLIC_SERVER as string);
+    const newSocket: Socket = io(process.env.NEXT_PUBLIC_SERVER as string,{
+      reconnection:true,
+      reconnectionAttempts: Infinity,
+      transports: ['websocket']
+    });
     setSocket(newSocket);
     return () => {
       newSocket.close();

@@ -2,7 +2,6 @@
 import { useSocket } from "@/src/hooks/useSocket";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-
 const Page = () => {
   const socket = useSocket();
   const navigation = useRouter();
@@ -15,7 +14,7 @@ const Page = () => {
 
   }, []);
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center ">
+    <div  className="w-screen h-screen flex flex-col items-center justify-center ">
       <h3 className="text-4xl md:text-7xl font-black text-white mb-6">Get Ready!</h3>
       <svg
         className="animate-spin w-32 h-32"

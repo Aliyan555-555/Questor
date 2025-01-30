@@ -70,32 +70,31 @@ export const GetAllThemes = async () => {
     return res.data;
   } catch (error) {
     toast.error("Something went wrong");
+    console.log(error);
   }
 };
 
-
-const UNSPLASH_ACCESS_KEY = "_4NGbOJApxtjkhRfOvizpz4x1N5r1imh-mXQezsfwUE";
-const PEXELS_ACCESS_KEY = "h7DaOpkVtxntbBxd7VRgNgYavDL1XBpdMa1NdnEPFmUzMUWizdcPo06c";
+const UNSPLASH_ACCESS_KEY = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
+const PEXELS_ACCESS_KEY = process.env.NEXT_PUBLIC_PEXELS_ACCESS_KEY;
+const imageCache = new Map();
 
 export const FetchUnsplashImages = async (
   query: string = "",
   page: number = 1,
   perPage: number = 30,
   isPopular: boolean = false
-): Promise<any[]> => {
+) => {
   const cacheKey = `${isPopular ? "popular" : query}-${page}`;
-  const cache =
-    FetchUnsplashImages.cache || (FetchUnsplashImages.cache = new Map());
 
-  if (cache.has(cacheKey)) {
+  if (imageCache.has(cacheKey)) {
     console.log("Serving from cache:", cacheKey);
-    return cache.get(cacheKey);
+    return imageCache.get(cacheKey);
   }
 
   try {
     const endpoint = isPopular
-      ? "https://api.unsplash.com/photos" // Fetch popular images
-      : "https://api.unsplash.com/search/photos"; // Fetch search results
+      ? "https://api.unsplash.com/photos"
+      : "https://api.unsplash.com/search/photos";
 
     const params = isPopular
       ? { page, per_page: perPage }
@@ -104,18 +103,20 @@ export const FetchUnsplashImages = async (
     const response = await axios.get(endpoint, {
       params,
       headers: {
-        Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`, // Ensure this key is properly set in your environment
+        Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`,
       },
     });
 
-    // Monitor rate limit headers
     console.log("Rate Limit:", response.headers["x-ratelimit-limit"]);
-    console.log("Remaining Requests:", response.headers["x-ratelimit-remaining"]);
+    console.log(
+      "Remaining Requests:",
+      response.headers["x-ratelimit-remaining"]
+    );
 
     const results = isPopular ? response.data : response.data.results || [];
-    cache.set(cacheKey, results); // Cache the results
+    imageCache.set(cacheKey, results);
     return results;
-  } catch (error: any) {
+  } catch (error) {
     if (error.response?.status === 429) {
       console.error("Rate limit exceeded. Please try again later.");
     } else {
@@ -139,8 +140,7 @@ export const FetchPexelsImages = async (
     };
 
     const response = await axios.get(
-      "https://api.pexels.com/v1/" +
-        (isPopular ? "curated" : "search"),
+      "https://api.pexels.com/v1/" + (isPopular ? "curated" : "search"),
       {
         params,
         headers: {
@@ -149,7 +149,7 @@ export const FetchPexelsImages = async (
       }
     );
 
-    return response.data.photos.map((img: any) => ({
+    return response.data.photos.map((img) => ({
       id: img.id,
       src: img.src.medium,
       alt: img.alt,
@@ -159,5 +159,15 @@ export const FetchPexelsImages = async (
   } catch (error) {
     console.error("Error fetching Pexels images:", error);
     return [];
+  }
+};
+
+export const getAllQuizzesByUserId = async (id: string) => {
+  try {
+    const res = await API_DOMAIN.get(`/api/v1/quiz/get/quizzes/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log("Error fetching Quizzes", error);
+    toast.error("Something want wrong");
   }
 };

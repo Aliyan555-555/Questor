@@ -1,4 +1,4 @@
-import { KahootIcon, PuzzleIcon, SliderIcon, TrueFalseIcon, TypeAnswerIcon } from '@/src/lib/svg';
+import { KahootIcon,SliderIcon, TrueFalseIcon, TypeAnswerIcon } from '@/src/lib/svg';
 
 export const QuestionsTypes = [
   {

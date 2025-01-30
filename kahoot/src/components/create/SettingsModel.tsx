@@ -1,20 +1,23 @@
-import { Backdrop, Button, IconButton, Radio } from "@mui/material";
-import React, { useCallback, useState } from "react";
-import { MdCrop, MdOutlineSettings } from "react-icons/md";
-import { useDropzone } from "react-dropzone";
-import ImageCroppingComponent from "./ImageCropModel";
+import { Backdrop, Button, Radio } from "@mui/material";
+import React, { useState } from "react";
+import { MdOutlineSettings } from "react-icons/md";
 import GalleryModel from "./GalleryModel";
 
 const SettingsModel = ({ data, handleSaveSettings }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(data?.coverImage);
-  const [isImageCropModelOpen, setIsImageCropModelOpen] = useState(false);
+  const [isImageCropModelOpen] = useState(false);
   const [isGallrayOpen, setIsGalleryOpen] = useState(false);
-  const [quizData, setQuizData] = useState({
+  const [quizData, setQuizData] = useState<{
+    name: string; description: string;
+    isPrivet:boolean;
+    coverImage: string;
+  }>({
     name: data?.name,
-    discription: data?.discription,
+    description: data?.discription,
     isPrivet: data?.isPrivet,
     coverImage: data?.coverImage,
+
   });
   const handleIsOpen = () => setIsOpen(true);
   const handleIsClose = () =>
@@ -66,7 +69,7 @@ const SettingsModel = ({ data, handleSaveSettings }) => {
   const handleCancel = () => {
     setQuizData({
       name: "",
-      discription: "",
+      description: "",
       isPrivet: true,
       coverImage: "",
     });
@@ -156,7 +159,7 @@ const SettingsModel = ({ data, handleSaveSettings }) => {
                     </p>
                     <textarea
                       rows={3}
-                      value={quizData.discription}
+                      value={quizData.description}
                       onChange={(e) =>
                         setQuizData({
                           ...quizData,

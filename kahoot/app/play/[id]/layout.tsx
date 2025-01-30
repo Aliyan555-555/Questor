@@ -1,4 +1,7 @@
-"use client";
+// "use client";
+
+// import { RootState } from "@/src/redux/store";
+// import { useSelector } from "react-redux";
 
 
 export default function RootLayout({
@@ -6,10 +9,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("hello")
+  // const quiz = useSelector((root:RootState) => root.student.currentGame)
   return (
     <div
-      style={{ backgroundImage: "url(/images/bg.webp)" }}
+      // style={{ backgroundImage: "url(/images/bg.webp)" }}
       className="w-screen h-screen bg-cover bg-no-repeat bg-center"
     >
       {/* <SocketProvider>{children}</SocketProvider> */}

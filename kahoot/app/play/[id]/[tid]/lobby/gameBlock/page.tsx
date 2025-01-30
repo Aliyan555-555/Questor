@@ -13,7 +13,7 @@ import {
 } from "@/src/lib/svg";
 import { RootState } from "@/src/redux/store";
 import { useConfetti } from "@stevent-team/react-party";
-import React, { useEffect, useRef, useState } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { useSocket } from "@/src/hooks/useSocket";
@@ -126,7 +126,7 @@ const OptionsSection = ({
     { icon: <SquareIcon width={50} height={50} /> },
   ];
   const colors = ["red", "blue", "#C79200", "green"];
-  const [duration, setDuration] = useState(30);
+  const [duration, setDuration] = useState(data?.kahoot.questions[currentQuestionIndex].duration);
   const [isTimesUp, setIsTimesUp] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null); // Ref for audio element
 
@@ -144,13 +144,16 @@ const OptionsSection = ({
   // Handle timer countdown
   useEffect(() => {
     const timer = setInterval(() => {
-      setDuration((prev) => {
+      setDuration((prev:SetStateAction<number | undefined>) => {
         if (prev === 0) {
           setIsTimesUp(true);
           clearInterval(timer);
           return 0;
         }
-        return prev - 1;
+        if (prev === undefined || prev === null) {
+          return 0;
+        }
+        return typeof prev === 'number' ? prev - 1 : 0;
       });
     }, 1000);
     return () => clearInterval(timer);
@@ -463,7 +466,7 @@ const RankSection = ({
 const Page = () => {
   const socket = useSocket();
   const dispatch = useDispatch();
-  const [stage, setStage] = useState(4);
+  const [stage, setStage] = useState(1);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const teacher = useSelector((root: RootState) => root.teacher.currentGame);
   useEffect(() => {
@@ -505,7 +508,7 @@ const Page = () => {
   }, [stage]);
 
   return (
-    <div className="w-screen h-screen overflow-hidden">
+    <div style={{backgroundImage:`url(${teacher?.kahoot.theme.image})`}} className="w-screen h-screen bg-cover bg-top overflow-hidden">
       {stage === 1 && (
         <QuestionSection
           question={teacher?.kahoot.questions[currentQuestionIndex].question}

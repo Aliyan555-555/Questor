@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 interface Avatar {
@@ -24,6 +24,20 @@ interface Accessory {
   type: string;
   resource: string;
 }
+interface Question {
+  _id: string;
+  question: string;
+  options: string[];
+  answerIndex: number[];
+  duration: number;
+  showQuestionDuration: number;
+  isMultiSelect: boolean;
+  maximumMarks: number;
+  type: string;
+  media: string;
+  attemptStudents: string[];
+  results: string[];
+}
 
 interface CurrentGame {
   roomId: string;
@@ -31,6 +45,11 @@ interface CurrentGame {
     _id: string;
     nickname: string;
     score: number;
+    kahoot:{
+      theme:{
+        image:string;
+      }
+    }
     item: {
       id: string;
       resource: string;
@@ -40,8 +59,22 @@ interface CurrentGame {
 }
 
 interface Theme {
-  _id:string;
-  image:string;
+  _id: string;
+  image: string;
+}
+
+export interface CurrentDraft {
+  _id: string;
+  name: string;
+  isPrivet: boolean;
+  description: string;
+  coverImage:string;
+  questions: Question[];
+  theme: {
+      _id: string;
+      image: string;
+    }
+  
 }
 
 interface StudentState {
@@ -49,8 +82,8 @@ interface StudentState {
   avatars: Avatar[];
   accessories: Accessory[];
   isAuthenticated: boolean;
-  currentDraft:null;
-  themes:Theme[];
+  currentDraft: null | CurrentDraft;
+  themes: Theme[];
   user: {
     name: string;
     _id: string;
@@ -68,8 +101,8 @@ const initialState: StudentState = {
   accessories: [],
   user: null,
   isAuthenticated: false,
-  themes:[],
-  currentDraft:null,
+  themes: [],
+  currentDraft: null,
 };
 
 const studentSlice = createSlice({
@@ -150,44 +183,41 @@ const studentSlice = createSlice({
     },
     createNewDraft() {},
     updateDraft() {},
-    deleteDraft() {
-
-    },
+    deleteDraft() {},
     clearCurrentDraft(state) {
-      state.currentDraft = null
+      state.currentDraft = null;
     },
-    setThemes (state,actions) {
-      console.log(actions.payload)
+    setThemes(state, actions) {
       state.themes = actions.payload;
     },
-    setCurrentDraft(state,action) {
+    setCurrentDraft(state, action) {
       state.currentDraft = action.payload;
     },
-    updateQuestion(state,actions){
-      const updatedQuestion = actions.payload;
-      const questions = state.currentDraft.questions.map(question => {
-        if (question._id === updatedQuestion._id){
-          return updatedQuestion;
-        }
-        return question
-      })
-      state.currentDraft= {...state.currentDraft,questions:questions}
+    updateQuestion(state, action: PayloadAction<Question>) {
+      if (!state.currentDraft) return;
+
+      state.currentDraft.questions = state.currentDraft.questions.map(
+        (question) =>
+          question._id === action.payload._id ? action.payload : question
+      );
     },
-    setQuestionsIndex(state,action){
-      state.currentDraft = {...state.currentDraft,questions:action.payload}
+    setQuestionsIndex(state, action) {
+      state.currentDraft = { ...state.currentDraft, questions: action.payload };
     },
-    updateCurrentDraft(state,action){
-      state.currentDraft = {...action.payload };
+    updateCurrentDraft(state, action) {
+      state.currentDraft = { ...action.payload };
     },
     updateQuestionMedia(state, actions) {
       const updatedQuestion = actions.payload;
 
-          const updatedQuestions = state.currentDraft.questions.map((question) =>
+      const updatedQuestions = state.currentDraft.questions.map((question) =>
         question._id === actions.payload._id ? updatedQuestion : question
       );
-          state.currentDraft = { ...state.currentDraft, questions: updatedQuestions };
-    }
-    
+      state.currentDraft = {
+        ...state.currentDraft,
+        questions: updatedQuestions,
+      };
+    },
   },
 });
 

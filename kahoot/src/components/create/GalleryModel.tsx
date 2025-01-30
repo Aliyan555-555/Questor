@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { BsImage } from "react-icons/bs";
 import React, { useState, useEffect, useRef } from 'react';
 
-const GalleryModel = ({ open, close, setImage }: { open: boolean, close: () => void, setImage: () => void }) => {
+const GalleryModel = ({ open, close, setImage }: { open: boolean, close: () => void, setImage: (value: string) => void }) => {
     const [searchQuery, setSearchQuery] = useState<string | null>(null);
     const [imagesApiName] = useState(["Unsplash", "Pexeles"])
     const [currentApiIndex, setCurrentApiIndex] = useState(0)
@@ -45,8 +45,16 @@ const GalleryModel = ({ open, close, setImage }: { open: boolean, close: () => v
 
 export default GalleryModel;
 
-const UnsplashImages = ({ searchQuery, setSearchQuery, setImage,close }: {setImage:() =>void, searchQuery: string | null; setSearchQuery: React.Dispatch<React.SetStateAction<string | null>> }) => {
-    const [images, setImages] = useState<any[]>([]);
+const UnsplashImages = ({ searchQuery, setSearchQuery, setImage, close }: { setImage: (value:string) => void, searchQuery: string | null; setSearchQuery:(value:string) => void;close:() => void}) => {
+    const [images, setImages] = useState<{
+        width:number;
+        height:number;
+        urls:{
+            full:string;
+            thumb:string;
+
+        }
+    }[]>([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const galleryRef = useRef<HTMLDivElement>(null);
@@ -102,7 +110,7 @@ const UnsplashImages = ({ searchQuery, setSearchQuery, setImage,close }: {setIma
                 <input
                     type="text"
                     placeholder="Search for images..."
-                    value={searchQuery??""}
+                    value={searchQuery ?? ""}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className='p-2 border-2 focus:outline-none w-[80%] border-gray-500 rounded-md'
                 />
@@ -129,8 +137,8 @@ const UnsplashImages = ({ searchQuery, setSearchQuery, setImage,close }: {setIma
                     </div>
 
                 ) : (<div ref={galleryRef} className="w-full h-full flex-1 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    {images.map((img,i) => (
-                        <div  onClick={()=>handleSelectImage(img.urls.full)} key={i} className="shadow-md cursor-pointer rounded-lg h-[150px] overflow-hidden bg-white">
+                    {images.map((img, i) => (
+                        <div onClick={() => handleSelectImage(img.urls.full)} key={i} className="shadow-md cursor-pointer rounded-lg h-[150px] overflow-hidden bg-white">
                             <Image
                                 src={img.urls.thumb}
                                 width={img.width / 10}
@@ -152,8 +160,12 @@ const UnsplashImages = ({ searchQuery, setSearchQuery, setImage,close }: {setIma
 
 
 
-const PexelsImages = ({ searchQuery, setSearchQuery,setImage,close }) => {
-    const [images, setImages] = useState<any[]>([]);
+const PexelsImages = ({ searchQuery, setSearchQuery, setImage, close }: { searchQuery: string | null; setSearchQuery: (value: string) => void; setImage: (value: string) => void; close: () => void }) => {
+    const [images, setImages] = useState<{
+        src:string;
+        width: number;
+        height: number;
+    }[]>([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const galleryRef = useRef<HTMLDivElement>(null);
@@ -220,9 +232,9 @@ const PexelsImages = ({ searchQuery, setSearchQuery,setImage,close }) => {
                 ref={galleryRef}
                 className="w-full h-full flex-1 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"
             >
-                {images.map((img,i) => (
+                {images.map((img, i) => (
                     <div
-                    onClick={() => handleSelectImage(img.src)}
+                        onClick={() => handleSelectImage(img.src)}
                         key={i}
                         className="shadow-md rounded-lg cursor-pointer h-[150px] overflow-hidden bg-white"
                     >

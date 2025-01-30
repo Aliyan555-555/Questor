@@ -46,9 +46,10 @@ const Page = () => {
     (e: MouseEvent) => {
       if (
         drawerRef.current &&
-        drawerRef.current.contains(e.target as Node)
-        // drawerIsActive
+        !drawerRef.current.contains(e.target as Node) &&
+        drawerIsActive
       ) {
+
         setDrawerIsActive(false);
       }
     },
@@ -167,12 +168,12 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="w-screen overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
+    <div  className="w-screen overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
       {loading ? (
         <Loader h={100} w={100} />
       ) : (
         <motion.div
-          animate={{ translateY: drawerIsActive ? "-210px" : "0" }}
+          animate={{ translateY: drawerIsActive ? "-180px" : "0" }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
           onClick={() => setDrawerIsActive(!drawerIsActive)}
           className="relative w-fit h-fit"
@@ -191,8 +192,8 @@ const Page = () => {
           )}
         </motion.div>
       )}
-      <h3 className="mb-2 drop-shadow-2xl">{student?.student.nickname}</h3>
-      <p className="text-center text-3xl md:text-4xl">
+      <h3 className="mb-2 bg-[#00000057] mt-3 px-4 py-2 drop-shadow-2xl">{student?.student.nickname}</h3>
+      <p className="text-center bg-[#00000057] px-4 py-2 text-3xl md:text-4xl">
         You&lsquo;re in! See your nickname on screen?
       </p>
       <motion.div

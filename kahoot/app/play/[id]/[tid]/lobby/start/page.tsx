@@ -35,7 +35,7 @@ const Start: React.FC = () => {
   }, [counter, navigation, teacher?.quizId, teacher?.teacherId]);
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div style={{backgroundImage:`url(${teacher?.kahoot.theme.image})`}} className="w-screen h-screen flex items-center justify-center">
       {isVisible ? (
         <motion.div
           initial={bounceInitialScale}

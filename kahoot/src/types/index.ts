@@ -31,6 +31,9 @@ export interface Teacher {
     name: string;
     questions: Question[];
     students: Student[];
+    theme:{
+      image:string
+    }
   };
   students: Student[];
 }

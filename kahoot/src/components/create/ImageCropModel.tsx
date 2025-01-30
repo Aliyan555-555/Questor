@@ -4,16 +4,14 @@ import React, { useRef } from "react";
 import {
   CropperRef,
   Cropper,
-  CropperState,
-  CoreSettings,
 } from "react-advanced-cropper";
 import "react-advanced-cropper/dist/style.css";
 
-const ImageCroppingComponent = ({ open, close, image, setImage }) => {
+const ImageCroppingComponent = ({ open, close, image, setImage }:{open:boolean;close:() => void;image:string;setImage:(value:string) => void}) => {
   const cropperRef = useRef<CropperRef>(null);
 
   // Default cropping coordinates
-  const defaultCoordinates = (state: CropperState, settings: CoreSettings) => {
+  const defaultCoordinates = () => {
     return {
       left: 100,
       top: 100,

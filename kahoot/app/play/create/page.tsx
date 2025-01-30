@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useSocket } from "@/src/hooks/useSocket";
 import {
   clearCurrentDraft,
+  CurrentDraft,
   setCurrentDraft,
   setThemes,
   updateCurrentDraft,
@@ -19,7 +20,7 @@ import {
   updateQuestionMedia,
 } from "@/src/redux/schema/student";
 import SettingsModel from "@/src/components/create/SettingsModel";
-import { Button, IconButton, isMuiElement, Tooltip } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Image from "next/image";
 import { MdDeleteOutline, MdOutlineDeleteForever } from "react-icons/md";
 import { ReactSortable } from "react-sortablejs";
@@ -29,20 +30,20 @@ import {
   CircleIcon,
   DiamondIcon,
   DoneIcon,
-  KahootIcon,
-  QuizIcon,
   SquareIcon,
   TriangleIcon,
 } from "@/src/lib/svg";
 import { Question } from "@/src/types";
 import { QuestionsTypes, TimeLimit } from "@/src/contents";
 import { GetAllThemes } from "@/src/redux/api";
-import { BsInfo } from "react-icons/bs";
+import { SaveModel } from "@/src/components/create/SaveModel";
 
 const Create = () => {
   const socket = useSocket();
+  const [savingErrors, setSavingErrors] = useState<ErrorType[]>([])
   const [isOpenGallery, setIsOpenGallery] = useState(false);
   const themes = useSelector((root: RootState) => root.student.themes);
+  const [isSaveModelOpen, setIsSaveModelOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [customizableBarIsOpen, setCustomizableBarIsOpen] = useState(true);
   const user = useSelector((root: RootState) => root.student.user);
@@ -80,10 +81,13 @@ const Create = () => {
         );
         return toast.error("User not authenticated");
       }
-
-      if (data) {
-        return toast.error("Quiz data already exists. Please clear it first.");
+      if (!id) {
+        dispatch(clearCurrentDraft());
       }
+
+      if (data && data._id === id) return;
+
+
       socket?.emit("create_quiz", {
         name: "Untitled Quiz",
         description: "Add a description here.",
@@ -146,6 +150,7 @@ const Create = () => {
       socket.on("updated_question_media", (quizData) => {
         if (quizData.status) {
           dispatch(updateQuestionMedia({ ...quizData.data }));
+          setSelectedQuestionData(quizData.data)
         }
       });
 
@@ -191,8 +196,9 @@ const Create = () => {
     };
   }, [socket, id, data, dispatch]);
   useEffect(() => {
-    if (data?.questions?.length > 0) {
+    if (data && data.questions?.length > 0) {
       setSelectedQuestion(data.questions[0]._id);
+      setInputValue(data.questions[0].question);
       setSelectedQuestionData(data.questions[0]);
     } else {
       setSelectedQuestion(null);
@@ -213,7 +219,7 @@ const Create = () => {
     }
   };
   const handleUpdateQuiz = (quizData) => {
-    const isSame = JSON.stringify(quizData) === JSON.stringify(data);
+    // const isSame = JSON.stringify(quizData) === JSON.stringify(data);
 
     socket?.emit("update_quiz", quizData);
 
@@ -237,50 +243,52 @@ const Create = () => {
 
   useEffect(() => {
     if (data && data.questions.length > 0) {
+      // setInputValue(data?.questions.filter(
+      //   (question) => question._id === selectedQuestion
+      // )[0].question ?? "");
       setSelectedQuestionData(
         data?.questions.filter(
           (question) => question._id === selectedQuestion
         )[0]
       );
+
     }
   }, [selectedQuestion]);
 
-  const handleChangeMedia = (qid: string, quizId: string, media: string) => {
+  const handleChangeMedia = (qid: string | null, quizId: string, media: string) => {
     socket?.emit("update_question_media", {
       questionId: qid,
       _id: quizId,
       media,
     });
   };
-  const handleRemoveMedia = (qid: string, quizId: string, media: string) => {
+  const handleRemoveMedia = (qid: string, quizId: string | null, media: string) => {
     socket?.emit("update_question_media", {
       questionId: qid,
       _id: quizId,
       media: media,
     });
   };
-  const handleChangeTheme = (theme) => {
+  const handleChangeTheme = (theme: string) => {
     socket?.emit("update_theme", { id, theme });
   };
-  const handleAddQuestion = (type) => {
+  const handleAddQuestion = (type: string) => {
     socket?.emit("add_question", { id, type });
   };
-  const handleSaveAnswerIndex = (questionIndex, optionIndex) => {
+  const handleSaveAnswerIndex = (questionIndex: string, optionIndex: number) => {
     if (!selectedQuestionData?.isMultiSelect) {
-      // Single-select: Replace the current answer with the selected option
       handleUpdateQuestion({
         ...selectedQuestionData,
         answerIndex: [optionIndex],
       });
     } else {
-      // Multi-select: Toggle the option in the answerIndex array
       const isSelected =
         selectedQuestionData?.answerIndex?.includes(optionIndex);
       const updatedAnswerIndex = isSelected
         ? selectedQuestionData.answerIndex.filter(
-            (index) => index !== optionIndex
-          ) // Remove the option if already selected
-        : [...(selectedQuestionData?.answerIndex || []), optionIndex]; // Add the option if not selected
+          (index) => index !== optionIndex
+        ) // Remove the option if already selected
+        : [...(selectedQuestionData?.answerIndex || []), optionIndex];
 
       handleUpdateQuestion({
         ...selectedQuestionData,
@@ -289,10 +297,25 @@ const Create = () => {
     }
   };
 
-  const handleQuestionSorting = (questionsArray) => {
+  const handleQuestionSorting = (
+    questionsArray: Array<{
+      id: number;
+      _id: string;
+      question: string;
+      options: string[];
+      answerIndex: number[];
+      duration: number;
+      showQuestionDuration: number;
+      isMultiSelect: boolean;
+      maximumMarks: number;
+      type: string;
+      media: string;
+      attemptStudents: string[];
+      results: string[];
+    }>
+  ) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const updatedQuestions = questionsArray.map(({ id, ...rest }) => rest);
-    // const isSame = JSON.stringify(data.questions) === JSON.stringify(updatedQuestions);
-
     data?.questions.map((q, i) => {
       if (q._id !== questionsArray[i]._id) {
         handleUpdateQuiz({ ...data, questions: updatedQuestions });
@@ -300,103 +323,47 @@ const Create = () => {
         return;
       }
     });
-    console.log("Updating question order...");
     // dispatch(setCurrentDraft({...data, questions: updatedQuestions}));
   };
 
-  const handleSaveSettings = (quizData) => {
+  const handleSaveSettings = (quizData: CurrentDraft) => {
     handleUpdateQuiz({ ...data, ...quizData });
   };
+  useEffect(() => {
+    if (data && id) {
+      setSavingErrors(() => {
+        const updatedErrors = data?.questions.reduce((acc: ErrorType[], q, i) => {
+          const error = {
+            index: i + 1,
+            type: q.type,
+            question: q.question,
+            media: q.media !== "" ? q.media : "/images/defaultCover.png",
+            message: '',
+          };
 
-  const handleQuestionWarningValidator = (question) => {
-    if (!question.question || typeof question.question !== "string") {
-      return "Question is missing or invalid";
+          if (!q.question || q.question.trim() === "") {
+            acc.push({ ...error, message: "Enter a valid question" });
+          } else if (!q.options || !Array.isArray(q.options) || q.options.length < 2) {
+            acc.push({ ...error, message: "At least two options are required." });
+          } else if (q.options.some(opt => !opt || opt.trim() === "")) {
+            acc.push({ ...error, message: "Each option must have valid text." });
+          } else if (!Array.isArray(q.answerIndex) || q.answerIndex.length === 0) {
+            acc.push({ ...error, message: "At least one correct answer must be selected." });
+          } else if (!q.isMultiSelect && q.answerIndex.length > 1) {
+            acc.push({ ...error, message: "Single select questions must have only one correct answer." });
+          }
+
+          return acc;
+        }, []);
+
+        return updatedErrors;
+      });
     }
+  }, [data, id]);
 
-    if (typeof question.duration !== "number" || question.duration <= 0) {
-      return "Invalid duration";
-    }
-
-    if (
-      typeof question.maximumMarks !== "number" ||
-      question.maximumMarks <= 0
-    ) {
-      return "Invalid maximum marks";
-    }
-
-    if (
-      typeof question.showQuestionDuration !== "number" ||
-      question.showQuestionDuration < 0
-    ) {
-      return "Invalid question duration";
-    }
-
-    if (
-      !["quiz", "true/false", "slider", "typeanswer"].includes(question.type)
-    ) {
-      return "Invalid question type";
-    }
-
-    if (question.type === "quiz") {
-      if (!Array.isArray(question.options) || question.options.length !== 4) {
-        return "Quiz must have exactly 4 options";
-      }
-      if (
-        !Array.isArray(question.answerIndex) ||
-        question.answerIndex.length === 0
-      ) {
-        return "Quiz must have at least one correct answer";
-      }
-    }
-
-    if (question.type === "true/false") {
-      if (
-        !Array.isArray(question.options) ||
-        question.options.length !== 2 ||
-        question.options[0].toLowerCase() !== "true" ||
-        question.options[1].toLowerCase() !== "false"
-      ) {
-        return "True/False question must have exactly 2 options: 'True' and 'False'";
-      }
-      if (
-        !Array.isArray(question.answerIndex) ||
-        ![0, 1].includes(question.answerIndex[0])
-      ) {
-        return "True/False question must have an answer index of 0 (True) or 1 (False)";
-      }
-    }
-
-    if (question.type === "slider") {
-      if (
-        !Array.isArray(question.answerIndex) ||
-        question.answerIndex.length !== 1 ||
-        typeof question.answerIndex[0] !== "number"
-      ) {
-        return "Slider question must have a numeric answer";
-      }
-    }
-
-    if (question.type === "typeanswer") {
-      if (
-        !Array.isArray(question.answerIndex) ||
-        question.answerIndex.length === 0 ||
-        !question.answerIndex.every(
-          (ans) => typeof ans === "string" && ans.trim() !== ""
-        )
-      ) {
-        return "TypeAnswer question must have at least one valid text-based answer";
-      }
-    }
-
-    if (
-      question.isMultiSelect &&
-      (!Array.isArray(question.answerIndex) || question.answerIndex.length < 2)
-    ) {
-      return "Multi-select question must have multiple correct answers";
-    }
-
-    return null;
-  };
+  const handleChangeQuizStatus = () => {
+    socket?.emit("update_quiz_status", { status: 'active', _id: id });
+  }
 
   return (
     <div className="w-screen bg-white h-screen flex flex-col">
@@ -419,7 +386,7 @@ const Create = () => {
           <Button className="!bg-gray-300 !text-black !font-semibold !px-6 !text-md !capitalize !tracking-wide">
             Exist
           </Button>
-          <Button className="!bg-blue-600 !text-white !font-semibold !px-6 !text-md !capitalize !tracking-wide">
+          <Button onClick={() => { setIsSaveModelOpen(true); handleChangeQuizStatus() }} className="!bg-blue-600 !text-white !font-semibold !px-6 !text-md !capitalize !tracking-wide">
             Save
           </Button>
         </div>
@@ -430,10 +397,10 @@ const Create = () => {
             <ReactSortable
               list={
                 data
-                  ? data?.questions.map((questions, index) => ({
-                      ...questions,
-                      id: index + 1,
-                    }))
+                  ? data?.questions.map((question, index) => ({
+                    ...question,
+                    id: index + 1,
+                  }))
                   : []
               }
               setList={handleQuestionSorting}
@@ -462,28 +429,25 @@ const Create = () => {
                       </button>
                       <button
                         onClick={() => handleDeleteQuestion(q._id)}
-                        className={`p-1 ${
-                          data?.questions.length > 1
-                            ? "cursor-pointer"
-                            : "cursor-not-allowed"
-                        } rounded-full bg-transparent hover:bg-[#0000001b]`}
+                        className={`p-1 ${data?.questions.length > 1
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed"
+                          } rounded-full bg-transparent hover:bg-[#0000001b]`}
                       >
                         <MdOutlineDeleteForever fontSize={15} />
                       </button>
                     </div>
                     <div className="flex-1 h-full pl-1 pr-2 py-2">
                       <div
-                        className={`w-full h-full relative rounded-md ${
-                          selectedQuestion === q._id
-                            ? "group-hover:border-blue-500"
-                            : "group-hover:border-gray-400"
-                        } ${
-                          selectedQuestion === q._id
+                        className={`w-full h-full relative rounded-md ${selectedQuestion === q._id
+                          ? "group-hover:border-blue-500"
+                          : "group-hover:border-gray-400"
+                          } ${selectedQuestion === q._id
                             ? "border-blue-500 bg-white"
                             : "border-transparent bg-gray-100"
-                        } border-[3px]`}
+                          } border-[3px]`}
                       >
-                 
+
                         <div className="w-full flex items-center justify-center py-1">
                           <p className="text-xs text-gray-400 font-bold text-center">
                             {q.question === ""
@@ -557,11 +521,8 @@ const Create = () => {
           </div>
           <div className="w-full flex items-center justify-center">
             <div className="w-[450px] flex flex-col gap-3 items-center justify-center h-[300px] bg-[#eeeeeee0] rounded-md">
-              {data && data.questions && Array.isArray(data.questions) ? (
-                // Find the selected question
-                data.questions.find(
-                  (question) => question._id === selectedQuestion
-                )?.media === "" ? (
+              {data ? (
+                selectedQuestionData?.media === "" ? (
                   <React.Fragment>
                     <IconButton
                       onClick={() => setIsOpenGallery(true)}
@@ -584,15 +545,11 @@ const Create = () => {
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    {data.questions.find(
-                      (question) => question._id === selectedQuestion
-                    )?.media ? (
+                    {selectedQuestionData?.media ? (
                       <div className="w-full h-full relative">
                         <Image
                           src={
-                            data.questions.find(
-                              (question) => question._id === selectedQuestion
-                            ).media
+                            selectedQuestionData?.media
                           }
                           alt="Media"
                           width={300}
@@ -603,10 +560,7 @@ const Create = () => {
                           <IconButton
                             onClick={() =>
                               handleRemoveMedia(
-                                data.questions.find(
-                                  (question) =>
-                                    question._id === selectedQuestion
-                                )._id,
+                                selectedQuestionData._id,
                                 id,
                                 ""
                               )
@@ -638,9 +592,8 @@ const Create = () => {
           </div>
           <div className="w-full flex flex-wrap py-5 px-3 gap-3">
             <div
-              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${
-                selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
-              }`}
+              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
+                }`}
             >
               <div className="h-full bg-[#D01937] w-fit px-1 flex items-center rounded-md">
                 <TriangleIcon height={40} width={40} />
@@ -671,24 +624,21 @@ const Create = () => {
                 />
               </div>
               <div
-                className={` h-full items-center px-1 ${
-                  selectedQuestionData?.options[0] ? "flex" : "hidden"
-                }`}
+                className={` h-full items-center px-1 ${selectedQuestionData?.options[0] ? "flex" : "hidden"
+                  }`}
               >
                 <div
                   onClick={() => handleSaveAnswerIndex("", 0)}
-                  className={`w-[35px] ${
-                    selectedQuestionData?.answerIndex.includes(0)
-                      ? "bg-green-500"
-                      : "bg-transparent"
-                  } group h-[35px] rounded-full   border-[3px] border-white`}
+                  className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(0)
+                    ? "bg-green-500"
+                    : "bg-transparent"
+                    } group h-[35px] rounded-full   border-[3px] border-white`}
                 >
                   <div
-                    className={`w-full h-full ${
-                      selectedQuestionData?.answerIndex.includes(0)
-                        ? "flex"
-                        : "hidden"
-                    } group-hover:flex`}
+                    className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(0)
+                      ? "flex"
+                      : "hidden"
+                      } group-hover:flex`}
                   >
                     <DoneIcon />
                   </div>
@@ -696,9 +646,8 @@ const Create = () => {
               </div>
             </div>
             <div
-              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${
-                selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
-              }`}
+              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
+                }`}
             >
               <div className="h-full bg-[#1368CE] w-fit px-1 flex items-center rounded-md">
                 <DiamondIcon height={40} width={40} />
@@ -730,24 +679,21 @@ const Create = () => {
                 />
               </div>
               <div
-                className={` h-full items-center px-1 ${
-                  selectedQuestionData?.options[1] ? "flex" : "hidden"
-                }`}
+                className={` h-full items-center px-1 ${selectedQuestionData?.options[1] ? "flex" : "hidden"
+                  }`}
               >
                 <div
                   onClick={() => handleSaveAnswerIndex("", 1)}
-                  className={`w-[35px] ${
-                    selectedQuestionData?.answerIndex.includes(1)
-                      ? "bg-green-500"
-                      : "bg-transparent"
-                  } group h-[35px] rounded-full   border-[3px] border-white`}
+                  className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(1)
+                    ? "bg-green-500"
+                    : "bg-transparent"
+                    } group h-[35px] rounded-full   border-[3px] border-white`}
                 >
                   <div
-                    className={`w-full h-full ${
-                      selectedQuestionData?.answerIndex.includes(1)
-                        ? "flex"
-                        : "hidden"
-                    } group-hover:flex`}
+                    className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(1)
+                      ? "flex"
+                      : "hidden"
+                      } group-hover:flex`}
                   >
                     <DoneIcon />
                   </div>
@@ -755,9 +701,8 @@ const Create = () => {
               </div>
             </div>
             <div
-              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${
-                selectedQuestionData?.options[2] ? "bg-[#D89E00]" : "bg-white"
-              }`}
+              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[2] ? "bg-[#D89E00]" : "bg-white"
+                }`}
             >
               <div className="h-full bg-[#D89E00] w-fit px-1 flex items-center rounded-md">
                 <CircleIcon height={40} width={40} />
@@ -789,24 +734,21 @@ const Create = () => {
                 />
               </div>
               <div
-                className={` h-full items-center px-1 ${
-                  selectedQuestionData?.options[2] ? "flex" : "hidden"
-                }`}
+                className={` h-full items-center px-1 ${selectedQuestionData?.options[2] ? "flex" : "hidden"
+                  }`}
               >
                 <div
                   onClick={() => handleSaveAnswerIndex("", 2)}
-                  className={`w-[35px] ${
-                    selectedQuestionData?.answerIndex.includes(2)
-                      ? "bg-green-500"
-                      : "bg-transparent"
-                  } group h-[35px] rounded-full   border-[3px] border-white`}
+                  className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(2)
+                    ? "bg-green-500"
+                    : "bg-transparent"
+                    } group h-[35px] rounded-full   border-[3px] border-white`}
                 >
                   <div
-                    className={`w-full h-full ${
-                      selectedQuestionData?.answerIndex.includes(2)
-                        ? "flex"
-                        : "hidden"
-                    } group-hover:flex`}
+                    className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(2)
+                      ? "flex"
+                      : "hidden"
+                      } group-hover:flex`}
                   >
                     <DoneIcon />
                   </div>
@@ -814,9 +756,8 @@ const Create = () => {
               </div>
             </div>
             <div
-              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${
-                selectedQuestionData?.options[3] ? "bg-[#26890C]" : "bg-white"
-              }`}
+              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[3] ? "bg-[#26890C]" : "bg-white"
+                }`}
             >
               <div className="h-full bg-[#26890C] w-fit px-1 flex items-center rounded-md">
                 <SquareIcon height={40} width={40} />
@@ -848,24 +789,21 @@ const Create = () => {
                 />
               </div>
               <div
-                className={` h-full items-center px-1 ${
-                  selectedQuestionData?.options[3] ? "flex" : "hidden"
-                }`}
+                className={` h-full items-center px-1 ${selectedQuestionData?.options[3] ? "flex" : "hidden"
+                  }`}
               >
                 <div
                   onClick={() => handleSaveAnswerIndex("", 3)}
-                  className={`w-[35px] ${
-                    selectedQuestionData?.answerIndex.includes(3)
-                      ? "bg-green-500"
-                      : "bg-transparent"
-                  } group h-[35px] rounded-full   border-[3px] border-white`}
+                  className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(3)
+                    ? "bg-green-500"
+                    : "bg-transparent"
+                    } group h-[35px] rounded-full   border-[3px] border-white`}
                 >
                   <div
-                    className={`w-full h-full ${
-                      selectedQuestionData?.answerIndex.includes(3)
-                        ? "flex"
-                        : "hidden"
-                    } group-hover:flex`}
+                    className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(3)
+                      ? "flex"
+                      : "hidden"
+                      } group-hover:flex`}
                   >
                     <DoneIcon />
                   </div>
@@ -904,12 +842,12 @@ const Create = () => {
               <div className="w-full flex flex-wrap h-[90vh] overflow-y-scroll justify-center gap-3">
                 {themes.map((theme) => (
                   <div
+                    key={theme._id}
                     onClick={() => handleChangeTheme(theme._id)}
-                    className={`w-[110px]  border-[3px] rounded-md p-1 ${
-                      theme._id === data?.theme._id
-                        ? "border-blue-600"
-                        : "border-transparent"
-                    } hover:border-gray-400  h-[110px] `}
+                    className={`w-[110px]  border-[3px] rounded-md p-1 ${theme._id === data?.theme._id
+                      ? "border-blue-600"
+                      : "border-transparent"
+                      } hover:border-gray-400  h-[110px] `}
                   >
                     <Image
                       className="w-full h-full object-cover rounded-md"
@@ -974,6 +912,12 @@ const Create = () => {
           handleChangeMedia(selectedQuestion, id, ImageSrc)
         }
       />
+      {isSaveModelOpen && <SaveModel
+        open={isSaveModelOpen}
+        id={id}
+        close={() => setIsSaveModelOpen(false)}
+        errors={savingErrors}
+      />}
     </div>
   );
 };
@@ -988,7 +932,7 @@ const TypesDropdown = ({
   selectedQuestion: Question;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const handleSelect = (value) => {
+  const handleSelect = (value: string) => {
     setTypes(value);
   };
   return (
@@ -1095,9 +1039,8 @@ const QuestionOptionDropdown = ({
         >
           <div
             onClick={() => handleSelectOption(false)}
-            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${
-              !isMultiSelect ? "bg-gray-100" : ""
-            }`}
+            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${!isMultiSelect ? "bg-gray-100" : ""
+              }`}
           >
             <h4 className="text-lg font-semibold">Single Select</h4>
             <p className="text-xs text-gray-500">
@@ -1106,9 +1049,8 @@ const QuestionOptionDropdown = ({
           </div>
           <div
             onClick={() => handleSelectOption(true)}
-            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${
-              isMultiSelect ? "bg-gray-100" : ""
-            }`}
+            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${isMultiSelect ? "bg-gray-100" : ""
+              }`}
           >
             <h4 className="text-lg font-semibold">Multi Select</h4>
             <p className="text-xs text-gray-500">
@@ -1179,4 +1121,120 @@ const AddQuestionTypesDropdown = ({
       )}
     </div>
   );
+
+
 };
+
+interface ErrorType {
+  index: number;
+  message: string;
+  type: string;
+  question: string;
+  media: string;
+}
+// export const SaveModel = ({ open, close, errors, id }: {
+//   open: boolean; close: () => void; errors: ErrorType[]; id: string | null
+// }) => {
+//   const navigation = useRouter();
+
+//   const handleLiveHost = () => {
+//     navigation.push(`/play/${id}`);
+//   }
+
+//   return (
+//     <Backdrop open={open} className="z-[100000000000] flex items-center justify-center bg-black/30 backdrop-blur-md">
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         exit={{ opacity: 0, y: -20 }}
+//         className="w-full select-none max-w-[600px] p-6 bg-white/20 backdrop-blur-lg rounded-2xl shadow-2xl flex flex-col gap-6 border border-white/20"
+//       >
+//         {/* Title Section */}
+//         <div className="text-center">
+//           <h2 className="text-3xl font-bold text-white">{errors.length > 0 ? "This kahoot can't be played" : "Your kahoot is ready"}</h2>
+//           {errors.length > 0 && <p className="text-sm text-gray-300 mt-2">
+//             All questions need to be completed before you can start playing.
+//           </p>}
+//         </div>
+
+//         {/* Errors List */}
+//         {errors.length > 0 && <div className="w-full max-h-[350px] scroll-smooth overflow-y-auto space-y-4 scrollbar-hide">
+//           {errors.map((error, index) => (
+//             <motion.div
+//               key={index}
+//               initial={{ opacity: 0, scale: 0.9 }}
+//               animate={{ opacity: 1, scale: 1 }}
+//               transition={{ delay: index * 0.1 }}
+//               className="flex items-center gap-4 p-4 bg-red-500/10 backdrop-blur-md border border-red-500/40 rounded-xl shadow-md hover:shadow-lg transition-shadow"
+//             >
+//               {/* Image */}
+//               <div className="w-[80px] h-[80px] flex-shrink-0 overflow-hidden rounded-lg border border-white/20">
+//                 <Image
+//                   src={error.media}
+//                   alt="image"
+//                   width={80}
+//                   height={80}
+//                   className="object-fill w-full h-full"
+//                 />
+//               </div>
+
+//               {/* Error Details */}
+//               <div className="flex-1 gap-3 text-white">
+//                 <h3 className="capitalize font-semibold text-sm text-red-300">
+//                   {error.index} - {error.type}
+//                 </h3>
+//                 <p className="text-sm font-medium">{error.question}</p>
+//                 <p className="text-sm rounded-sm font-semibold py-[2px] px-[3px] mt-1 bg-red-600/40 border border-red-500 text-white">
+//                   {error.message}
+//                 </p>
+//               </div>
+
+
+//             </motion.div>
+//           ))}
+//         </div>}
+//         <div className="w-full ">
+//           <div onClick={handleLiveHost} className="w-full cursor-pointer flex bg-white/70 hover:bg-white/45 h-[70px] rounded-md">
+//             <div className=" h-full w-[70px] flex items-center justify-center ">
+//               <FiPlay fontSize={25} />
+//             </div>
+//             <div className="flex  flex-col justify-center">
+//               <h2 className="font-bold">Host live</h2>
+//               <p className="font-semibold">Host a live kahoot now</p>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Actions */}
+//         {errors.length > 0 && <div className="flex gap-4">
+//           <Button
+//             onClick={close}
+//             className="!w-1/2 !bg-gray-600 !text-white !font-semibold !capitalize !py-3 !rounded-lg !transition-all"
+//           >
+//             Back to Edit
+//           </Button>
+//           <Button
+//             onClick={close}
+//             className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
+//           >
+//             Keep as Draft
+//           </Button>
+//         </div>}
+//         {errors.length === 0 && <div className="flex gap-4">
+//           <Button
+//             onClick={close}
+//             className="!w-1/2 !bg-gray-600 !text-white !font-semibold !capitalize !py-3 !rounded-lg !transition-all"
+//           >
+//             Back to Edit
+//           </Button>
+//           <Button
+//             onClick={close}
+//             className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
+//           >
+//             Done
+//           </Button>
+//         </div>}
+//       </motion.div>
+//     </Backdrop>
+//   );
+// };

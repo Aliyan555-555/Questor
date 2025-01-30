@@ -11,6 +11,7 @@ import dotenv from "dotenv";
 import quizModel from "./model/quiz.model.js";
 import { questionModel } from "./model/question.model.js";
 import ThemeRouter from "./routers/theme.route.js";
+import QuizRouter from "./routers/quiz.router.js";
 dotenv.config();
 const app = express();
 connectToMongodb();
@@ -19,7 +20,7 @@ const allowedOrigins = [
   "http://localhost:8000",
   "http://dev.meteoricsolutions.com:8000",
   "http://dev.meteoricsolutions.com:9000",
-  process.env.FRONTEND_URL, // Ensure you have this environment variable set
+  process.env.FRONTEND_URL,
 ];
 
 const corsOptions = {
@@ -43,7 +44,6 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
-    // origin: [process.env.FRONTEND_BASE_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
@@ -56,7 +56,7 @@ const getAvatars = async () => {
     return res.data;
   } catch (error) {
     console.log("Error fetching avatars:", error);
-    return { avatars: [], items: [] }; // Return empty arrays on error to avoid breaking the code
+    return { avatars: [], items: [] };
   }
 };
 
@@ -72,237 +72,9 @@ app.get("/api/v1/avatars", async (req, res) => {
 });
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1", ThemeRouter);
+app.use("/api/v1/quiz", QuizRouter);
 const rooms = {};
 const roomPins = {};
-// const demoData = [
-//   {
-//     _id: 22,
-//     name: "Programming Languages",
-//     questions: [
-//       {
-//         _id: 1,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question:
-//           "What is the name of the programming language that is used for web development?",
-//         options: ["Java", "Python", "JavaScript", "C++"],
-//         answerIndex: [2], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 2,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question:
-//           "Which language is primarily used for statistical computing and graphics?",
-//         options: ["Java", "R", "Python", "C++"],
-//         answerIndex: [1], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 3,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question:
-//           "Which programming language is known as the backbone of web development?",
-//         options: ["Ruby", "JavaScript", "C#", "Java"],
-//         answerIndex: [1],
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 4,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question:
-//           "Which programming language is used for Android app development?",
-//         options: ["C#", "Swift", "Kotlin", "Java"],
-//         answerIndex: [2], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 5,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "Which of these is not a programming language?",
-//         options: ["Swift", "Rust", "JavaScript", "Google"],
-//         answerIndex: [3], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//     ],
-//   },
-//   {
-//     _id: 23,
-//     name: "Web Development",
-//     questions: [
-//       {
-//         _id: 6,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "Which HTML tag is used for the largest heading?",
-//         options: ["<h1>", "<h3>", "<h6>", "<h2>"],
-//         answerIndex: [0], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 7,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "Which CSS property is used to change the text color?",
-//         options: ["color", "font-color", "text-color", "background-color"],
-//         answerIndex: [0], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 8,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "What does CSS stand for?",
-//         options: [
-//           "Cascading Style Sheets",
-//           "Coded Style Sheets",
-//           "Creative Style Sheets",
-//           "Computer Style Sheets",
-//         ],
-//         answerIndex: [0], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 9,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "Which of these is a JavaScript framework?",
-//         options: ["React", "HTML", "CSS", "MySQL"],
-//         answerIndex: [0], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 10,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "Which of these is used to style a website?",
-//         options: ["HTML", "CSS", "JavaScript", "PHP"],
-//         answerIndex: [1], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//     ],
-//   },
-//   {
-//     _id: 24,
-//     name: "Data Structures and Algorithms",
-//     questions: [
-//       {
-//         _id: 11,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "What is the time complexity of binary search?",
-//         options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
-//         answerIndex: [2], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 12,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "Which data structure is used for implementing recursion?",
-//         options: ["Stack", "Queue", "Array", "Linked List"],
-//         answerIndex: [0], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 13,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "What is the time complexity of a linear search?",
-//         options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
-//         answerIndex: [1], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 14,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "Which data structure is used to implement a priority queue?",
-//         options: ["Queue", "Heap", "Stack", "Array"],
-//         answerIndex: [1], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//       {
-//         _id: 15,
-//         duration: 4000,
-//         showQuestionDuration: 2000,
-//         type: "quiz",
-//         media: "",
-//         maximumMarks: 1000,
-//         question: "What does a hash function do?",
-//         options: [
-//           "Sorts data",
-//           "Searches data",
-//           "Converts data into a fixed size",
-//           "Filters data",
-//         ],
-//         answerIndex: [2], // index start with 0
-//         attemptStudents: [],
-//         results: [],
-//       },
-//     ],
-//   },
-// ];
 
 const generatePin = () => {
   let pin;
@@ -313,11 +85,7 @@ const generatePin = () => {
 };
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
-
   socket.on("createRoom", async ({ quizId, teacherId }) => {
-    // console.log(rooms);
-    const question = await questionModel.find();
-    console.log(question);
     const roomId = `${teacherId}-${quizId}`;
     if (rooms[roomId]) {
       socket.emit("roomCreated", {
@@ -328,7 +96,11 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Room already exists" });
       return;
     }
-    const selectedQuiz = await quizModel.findById(quizId).populate("questions");
+    const selectedQuiz = await quizModel
+      .findById(quizId)
+      .populate("questions")
+      .populate("theme");
+    // console.log(selectedQuiz)
     const pin = generatePin();
     rooms[roomId] = {
       teacherId,
@@ -342,6 +114,7 @@ io.on("connection", (socket) => {
           .map((q) => {
             return { ...q._doc, attemptStudents: [], results: [] };
           }),
+
         students: [],
         results: [],
       },
@@ -387,10 +160,12 @@ io.on("connection", (socket) => {
         });
         return;
       }
+      const currentQuiz = await quizModel
+        .findById(rooms[roomId].quizId)
+        .populate("theme")
+        .populate("questions");
       const { avatars, items } = await getAvatars();
       const assignedAvatarIds = rooms[roomId].students.map((s) => s.avatar?.id);
-
-      // Filter out already assigned avatars
       const availableAvatars = avatars.filter(
         (avatar) => !assignedAvatarIds.includes(avatar.id)
       );
@@ -399,14 +174,9 @@ io.on("connection", (socket) => {
         socket.emit("error", { message: "No avatars available." });
         return;
       }
-
-      // Randomly select an avatar and item
-      // console.log(items);
       const randomAvatar =
         availableAvatars[Math.floor(Math.random() * availableAvatars.length)];
       const randomItem = items.length > 0 ? await items[2] : null;
-
-      // Add student to the room
       const student = {
         _id: studentId,
         nickname,
@@ -415,6 +185,7 @@ io.on("connection", (socket) => {
         totalQuestions: [],
         attemptQuestions: [],
         rank: 0,
+        kahoot: currentQuiz,
         score: 0,
         activeQuestion: null,
       };
@@ -429,6 +200,7 @@ io.on("connection", (socket) => {
             totalQuestions: [],
             attemptQuestions: [],
             rank: 0,
+
             score: 0,
             activeQuestion: null,
           },
@@ -728,34 +500,41 @@ io.on("connection", (socket) => {
   socket.on("add_question", async (data) => {
     try {
       const { id, type } = data;
-        const question = await questionModel.create({
+      const question = await questionModel.create({
         duration: 30,
         type: type,
         showQuestionDuration: 2000,
         media: "",
-        options: ["","","",""],
+        options: ["", "", "", ""],
         answerIndex: [],
         attemptStudents: [],
         results: [],
         maximumMarks: 1000,
         question: "",
       });
-        const updatedQuiz = await quizModel
+      const updatedQuiz = await quizModel
         .findByIdAndUpdate(
           id,
-          { $push: { questions: question._id } }, 
+          { $push: { questions: question._id } },
           { new: true }
         )
-        .populate("questions") 
-        .populate("theme"); 
-  
-      socket.emit("question_added", {data:updatedQuiz,status:true,message:"added question successfully"});
+        .populate("questions")
+        .populate("theme");
+
+      socket.emit("question_added", {
+        data: updatedQuiz,
+        status: true,
+        message: "added question successfully",
+      });
     } catch (error) {
       console.error("Error adding question:", error);
-      socket.emit("question_added", { message: "Failed to add question",status:false });
+      socket.emit("question_added", {
+        message: "Failed to add question",
+        status: false,
+      });
     }
   });
-  
+
   socket.on("create_quiz", async (data) => {
     try {
       // Create a question
@@ -764,7 +543,7 @@ io.on("connection", (socket) => {
         type: "quiz",
         showQuestionDuration: 2000,
         media: "",
-        options: ["","","",""],
+        options: ["", "", "", ""],
         answerIndex: [],
         attemptStudents: [],
         results: [],
@@ -969,7 +748,10 @@ io.on("connection", (socket) => {
 
   socket.on("update_theme", async (data) => {
     const { id, theme } = data;
-    const updatedQuiz = await quizModel.findByIdAndUpdate(id, { theme },{new:true}).populate('questions').populate('theme');
+    const updatedQuiz = await quizModel
+      .findByIdAndUpdate(id, { theme }, { new: true })
+      .populate("questions")
+      .populate("theme");
     if (!updatedQuiz) {
       socket.emit("updated_theme", {
         message: "Something went wrong",
@@ -983,10 +765,31 @@ io.on("connection", (socket) => {
       status: true,
     });
   });
-
+  socket.on("update_quiz_status", async (data) => {
+    const { id, status } = data;
+    const updatedQuiz = await quizModel
+      .findByIdAndUpdate(id, { status }, { new: true })
+      .populate("questions")
+      .populate("theme");
+    if (!updatedQuiz) {
+      socket.emit("updated_quiz_status", {
+        message: "Something went wrong",
+        status: false,
+      });
+      return;
+    }
+    socket.emit("updated_quiz", {
+      data: updatedQuiz,
+      message: "Updated successfully",
+      status: true,
+    });
+  });
   socket.on("update_quiz", async (data) => {
     try {
-      const updateQuiz = await quizModel.findByIdAndUpdate(data._id, data).populate('questions').populate('theme');
+      const updateQuiz = await quizModel
+        .findByIdAndUpdate(data._id, data, { new: true })
+        .populate("questions")
+        .populate("theme");
       if (!updateQuiz) {
         socket.emit("updated_quiz", {
           message: "Something went wrong",
