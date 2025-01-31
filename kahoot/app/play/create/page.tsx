@@ -37,6 +37,9 @@ import { Question } from "@/src/types";
 import { QuestionsTypes, TimeLimit } from "@/src/contents";
 import { GetAllThemes } from "@/src/redux/api";
 import { SaveModel } from "@/src/components/create/SaveModel";
+import Loading from "../[id]/loading";
+import imageLoader from "@/src/components/ImageLoader";
+import useOutsideClick from "@/src/hooks/useClickoutside";
 
 const Create = () => {
   const socket = useSocket();
@@ -65,10 +68,14 @@ const Create = () => {
     }
   };
   useEffect(() => {
-    if (id && !data) {
+    if (id && data._id !== id) {
       socket?.emit("fetch_quiz", { _id: id });
     }
-
+    return () =>{
+      socket?.off("fetch_quiz");
+    }
+  });
+  useEffect(() => {
     fetch();
   }, []);
   const createQuiz = async () => {
@@ -111,6 +118,8 @@ const Create = () => {
       socket.on("feched_quiz", (quizData) => {
         if (quizData.status) {
           dispatch(setCurrentDraft(quizData.data));
+          setSelectedQuestion(quizData.data.questions?.[0]?._id || null);
+          setSelectedQuestionData(quizData.data.questions?.[0]);
         } else {
           toast.error("Failed to fetch quiz data.");
         }
@@ -242,7 +251,7 @@ const Create = () => {
   };
 
   useEffect(() => {
-    if (data && data.questions.length > 0) {
+    if (data && data.questions?.length > 0) {
       // setInputValue(data?.questions.filter(
       //   (question) => question._id === selectedQuestion
       // )[0].question ?? "");
@@ -251,6 +260,7 @@ const Create = () => {
           (question) => question._id === selectedQuestion
         )[0]
       );
+      setInputValue(data?.questions.filter((question) => question._id === selectedQuestion)[0]?.question ?? "")
 
     }
   }, [selectedQuestion]);
@@ -316,7 +326,7 @@ const Create = () => {
   ) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const updatedQuestions = questionsArray.map(({ id, ...rest }) => rest);
-    data?.questions.map((q, i) => {
+    data?.questions?.map((q, i) => {
       if (q._id !== questionsArray[i]._id) {
         handleUpdateQuiz({ ...data, questions: updatedQuestions });
         console.log("updating");
@@ -365,6 +375,17 @@ const Create = () => {
     socket?.emit("update_quiz_status", { status: 'active', _id: id });
   }
 
+  const ReturnToHome = () => {
+    handleUpdateQuiz(data);
+    navigation.push('/')
+  }
+
+  if (id !== data?._id){
+    return(
+      <Loading  />
+    )
+  }
+
   return (
     <div className="w-screen bg-white h-screen flex flex-col">
       <div
@@ -383,7 +404,7 @@ const Create = () => {
           >
             Theme
           </Button>
-          <Button className="!bg-gray-300 !text-black !font-semibold !px-6 !text-md !capitalize !tracking-wide">
+          <Button onClick={ReturnToHome} className="!bg-gray-300 !text-black !font-semibold !px-6 !text-md !capitalize !tracking-wide">
             Exist
           </Button>
           <Button onClick={() => { setIsSaveModelOpen(true); handleChangeQuizStatus() }} className="!bg-blue-600 !text-white !font-semibold !px-6 !text-md !capitalize !tracking-wide">
@@ -396,11 +417,10 @@ const Create = () => {
           <div className="w-full py-1 overflow-y-auto h-[80vh]">
             <ReactSortable
               list={
-                data
-                  ? data?.questions.map((question, index) => ({
-                    ...question,
-                    id: index + 1,
-                  }))
+                data && data.questions ? data?.questions?.map((question, index) => ({
+                  ...question,
+                  id: index + 1,
+                }))
                   : []
               }
               setList={handleQuestionSorting}
@@ -408,7 +428,7 @@ const Create = () => {
               easing="ease-out"
               className="sortable-container"
             >
-              {data?.questions?.map((q, i) => (
+              {data && data.questions && data?.questions?.map((q, i) => (
                 <div
                   key={q._id}
                   onClick={() => setSelectedQuestion(q._id)}
@@ -469,6 +489,7 @@ const Create = () => {
                                 width={40}
                                 height={30}
                                 className="w-full h-full"
+                                loader={imageLoader}
                               />
                             )}
                           </div>
@@ -502,14 +523,14 @@ const Create = () => {
           style={{
             backgroundImage: `url(${data?.theme?.image || ""})`,
           }}
-          className="flex-1 bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen pb-20 scroll"
+          className="flex-1 bg-cover bg-center bg-no-repeat  overflow-y-scroll h-screen pb-20 scroll"
         >
           <div className="w-full flex items-center justify-center py-10">
             <input
               onBlur={() => handleSetQuestion(inputValue)}
               onKeyDown={handleKeyDown}
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={(e) => {setInputValue(e.target.value);handleSetQuestion(e.target.value)}}
               style={{
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
@@ -552,8 +573,12 @@ const Create = () => {
                             selectedQuestionData?.media
                           }
                           alt="Media"
+                          // loading="lazy"
+                          // quality={100}
                           width={300}
                           height={300}
+                          // priority={true}
+                          loader={imageLoader}
                           className="w-full h-full object-cover object-center"
                         />
                         <div className="w-full absolute bottom-0 flex justify-end p-2 text-gray-700">
@@ -592,7 +617,8 @@ const Create = () => {
           </div>
           <div className="w-full flex flex-wrap py-5 px-3 gap-3">
             <div
-              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
+              onClick={() => document.getElementById('option1').focus()}
+              className={`w-[49%] h-[100px] select-none p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
                 }`}
             >
               <div className="h-full bg-[#D01937] w-fit px-1 flex items-center rounded-md">
@@ -600,8 +626,9 @@ const Create = () => {
               </div>
               <div className="h-full flex-1">
                 <input
+                  id="option1"
                   onBlur={() =>
-                    handleUpdateQuestion({ ...selectedQuestionData })
+                    handleUpdateQuestion({ ...selectedQuestionData,question:selectedQuestionData.question })
                   }
                   value={selectedQuestionData?.options?.[0] ?? ""}
                   onChange={(e) =>
@@ -620,7 +647,7 @@ const Create = () => {
                   }
                   type="text"
                   placeholder="Enter your answer"
-                  className="w-full h-full px-2 bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                  className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
                 />
               </div>
               <div
@@ -646,6 +673,7 @@ const Create = () => {
               </div>
             </div>
             <div
+              onClick={() => document.getElementById('option2').focus()}
               className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
                 }`}
             >
@@ -654,9 +682,10 @@ const Create = () => {
               </div>
               <div className="h-full flex-1">
                 <input
+                  id="option2"
                   value={selectedQuestionData?.options?.[1] ?? ""}
                   onBlur={() =>
-                    handleUpdateQuestion({ ...selectedQuestionData })
+                    handleUpdateQuestion({ ...selectedQuestionData,question:selectedQuestionData.question })
                   }
                   onChange={(e) =>
                     setSelectedQuestionData((prev) => {
@@ -675,7 +704,7 @@ const Create = () => {
                   }
                   type="text"
                   placeholder="Enter your answer"
-                  className="w-full h-full px-2 bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                  className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text  bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
                 />
               </div>
               <div
@@ -701,6 +730,7 @@ const Create = () => {
               </div>
             </div>
             <div
+              onClick={() => document.getElementById('option3').focus()}
               className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[2] ? "bg-[#D89E00]" : "bg-white"
                 }`}
             >
@@ -709,8 +739,9 @@ const Create = () => {
               </div>
               <div className="h-full flex-1">
                 <input
+                  id="option3"
                   onBlur={() =>
-                    handleUpdateQuestion({ ...selectedQuestionData })
+                    handleUpdateQuestion({ ...selectedQuestionData,question:selectedQuestionData.question })
                   }
                   value={selectedQuestionData?.options?.[2] ?? ""}
                   onChange={(e) =>
@@ -730,7 +761,7 @@ const Create = () => {
                   }
                   type="text"
                   placeholder="Enter your answer"
-                  className="w-full h-full px-2 bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                  className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
                 />
               </div>
               <div
@@ -756,6 +787,7 @@ const Create = () => {
               </div>
             </div>
             <div
+              onClick={() => document.getElementById('option4').focus()}
               className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[3] ? "bg-[#26890C]" : "bg-white"
                 }`}
             >
@@ -764,28 +796,27 @@ const Create = () => {
               </div>
               <div className="h-full flex-1">
                 <input
+                  id="option4"
                   value={selectedQuestionData?.options?.[3] ?? ""}
                   onBlur={() =>
-                    handleUpdateQuestion({ ...selectedQuestionData })
+                    handleUpdateQuestion({ ...selectedQuestionData,question:selectedQuestionData.question })
                   }
                   onChange={(e) =>
                     setSelectedQuestionData((prev) => {
-                      if (!prev) return prev; // Ensure `prev` is not null or undefined
+                      if (!prev) return prev;
                       const updatedQuestion = { ...prev };
 
                       if (updatedQuestion.options) {
-                        // Create a shallow copy of the `options` array to avoid direct mutation
                         updatedQuestion.options = [...updatedQuestion.options];
-                        updatedQuestion.options[3] = e.target.value; // Update the first option
+                        updatedQuestion.options[3] = e.target.value;
                       }
-
-                      console.log(updatedQuestion); // Debugging
-                      return updatedQuestion; // Return the updated state
+                      console.log(updatedQuestion);
+                      return updatedQuestion;
                     })
                   }
                   type="text"
                   placeholder="Enter your answer"
-                  className="w-full h-full px-2 bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                  className="w-full h-full px-2 caret-black focus:placeholder:text-white bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
                 />
               </div>
               <div
@@ -854,6 +885,7 @@ const Create = () => {
                       src={theme.image}
                       alt="Theme"
                       width={100}
+                      // loader={imageLoader}
                       height={100}
                     />
                   </div>
@@ -917,12 +949,13 @@ const Create = () => {
         id={id}
         close={() => setIsSaveModelOpen(false)}
         errors={savingErrors}
+        ReturnToHome={ReturnToHome}
       />}
     </div>
   );
 };
 
-export default Create;
+export default React.memo(Create);
 
 const TypesDropdown = ({
   setTypes,
@@ -932,37 +965,41 @@ const TypesDropdown = ({
   selectedQuestion: Question;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(dropdownRef, () => setIsOpen(false))
   const handleSelect = (value: string) => {
     setTypes(value);
   };
   return (
-    <button
-      onClick={() => setIsOpen(!isOpen)}
-      className="w-full items-center !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md relative"
-    >
-      {QuestionsTypes.find((t) => t.type === selectedQuestion?.type)?.icon}{" "}
-      {QuestionsTypes.find((t) => t.type === selectedQuestion?.type)?.title}
-      {isOpen && (
-        <div
-          style={{
-            boxShadow:
-              "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
-          }}
-          className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
-        >
-          {QuestionsTypes.map((type) => (
-            <div
-              onClick={() => handleSelect(type.type)}
-              key={type.id}
-              className="w-full flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-            >
-              {type.icon} {/* Render the icon directly */}
-              <p className="text-sm font-medium">{type.title}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </button>
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full items-center !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md relative"
+      >
+        {QuestionsTypes.find((t) => t.type === selectedQuestion?.type)?.icon}{" "}
+        {QuestionsTypes.find((t) => t.type === selectedQuestion?.type)?.title}
+        {isOpen && (
+          <div
+            style={{
+              boxShadow:
+                "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
+            }}
+            className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
+          >
+            {QuestionsTypes.map((type) => (
+              <div
+                onClick={() => handleSelect(type.type)}
+                key={type.id}
+                className="w-full flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+              >
+                {type.icon} {/* Render the icon directly */}
+                <p className="text-sm font-medium">{type.title}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </button>
+    </div>
   );
 };
 const TimeLimitDropdown = ({
@@ -973,35 +1010,40 @@ const TimeLimitDropdown = ({
   setDuration: (value: number) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(dropdownRef, () => setIsOpen(false))
   const handleSetDuration = (value: number) => {
     setDuration(value);
   };
   return (
-    <button
-      onClick={() => setIsOpen(!isOpen)}
-      className="w-full items-center !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md relative"
-    >
-      {TimeLimit.find((i) => i.value === duration)?.title}
-      {isOpen && (
-        <div
-          style={{
-            boxShadow:
-              "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
-          }}
-          className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
-        >
-          {TimeLimit.map((type) => (
-            <div
-              onClick={() => handleSetDuration(type.value)}
-              key={type.id}
-              className="w-full flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-            >
-              <p className="text-sm font-medium">{type.title}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </button>
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full items-center !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md relative"
+      >
+        {TimeLimit.find((i) => i.value === duration)?.title}
+        {isOpen && (
+          <div
+            style={{
+              boxShadow:
+                "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
+            }}
+            className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
+          >
+            {TimeLimit.map((type) => (
+              <div
+                onClick={() => handleSetDuration(type.value)}
+                key={type.id}
+                className="w-full flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
+              >
+                <p className="text-sm font-medium">{type.title}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </button>
+
+    </div>
   );
 };
 
@@ -1013,7 +1055,8 @@ const QuestionOptionDropdown = ({
   onSelectOption: (value: boolean) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(dropdownRef, () => setIsOpen(false))
   const handleSelectOption = (option: boolean) => {
     onSelectOption(option);
     setIsOpen(false);
@@ -1021,7 +1064,7 @@ const QuestionOptionDropdown = ({
   console.log("debug", isMultiSelect);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full items-center !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md"
@@ -1132,109 +1175,3 @@ interface ErrorType {
   question: string;
   media: string;
 }
-// export const SaveModel = ({ open, close, errors, id }: {
-//   open: boolean; close: () => void; errors: ErrorType[]; id: string | null
-// }) => {
-//   const navigation = useRouter();
-
-//   const handleLiveHost = () => {
-//     navigation.push(`/play/${id}`);
-//   }
-
-//   return (
-//     <Backdrop open={open} className="z-[100000000000] flex items-center justify-center bg-black/30 backdrop-blur-md">
-//       <motion.div
-//         initial={{ opacity: 0, y: 20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         exit={{ opacity: 0, y: -20 }}
-//         className="w-full select-none max-w-[600px] p-6 bg-white/20 backdrop-blur-lg rounded-2xl shadow-2xl flex flex-col gap-6 border border-white/20"
-//       >
-//         {/* Title Section */}
-//         <div className="text-center">
-//           <h2 className="text-3xl font-bold text-white">{errors.length > 0 ? "This kahoot can't be played" : "Your kahoot is ready"}</h2>
-//           {errors.length > 0 && <p className="text-sm text-gray-300 mt-2">
-//             All questions need to be completed before you can start playing.
-//           </p>}
-//         </div>
-
-//         {/* Errors List */}
-//         {errors.length > 0 && <div className="w-full max-h-[350px] scroll-smooth overflow-y-auto space-y-4 scrollbar-hide">
-//           {errors.map((error, index) => (
-//             <motion.div
-//               key={index}
-//               initial={{ opacity: 0, scale: 0.9 }}
-//               animate={{ opacity: 1, scale: 1 }}
-//               transition={{ delay: index * 0.1 }}
-//               className="flex items-center gap-4 p-4 bg-red-500/10 backdrop-blur-md border border-red-500/40 rounded-xl shadow-md hover:shadow-lg transition-shadow"
-//             >
-//               {/* Image */}
-//               <div className="w-[80px] h-[80px] flex-shrink-0 overflow-hidden rounded-lg border border-white/20">
-//                 <Image
-//                   src={error.media}
-//                   alt="image"
-//                   width={80}
-//                   height={80}
-//                   className="object-fill w-full h-full"
-//                 />
-//               </div>
-
-//               {/* Error Details */}
-//               <div className="flex-1 gap-3 text-white">
-//                 <h3 className="capitalize font-semibold text-sm text-red-300">
-//                   {error.index} - {error.type}
-//                 </h3>
-//                 <p className="text-sm font-medium">{error.question}</p>
-//                 <p className="text-sm rounded-sm font-semibold py-[2px] px-[3px] mt-1 bg-red-600/40 border border-red-500 text-white">
-//                   {error.message}
-//                 </p>
-//               </div>
-
-
-//             </motion.div>
-//           ))}
-//         </div>}
-//         <div className="w-full ">
-//           <div onClick={handleLiveHost} className="w-full cursor-pointer flex bg-white/70 hover:bg-white/45 h-[70px] rounded-md">
-//             <div className=" h-full w-[70px] flex items-center justify-center ">
-//               <FiPlay fontSize={25} />
-//             </div>
-//             <div className="flex  flex-col justify-center">
-//               <h2 className="font-bold">Host live</h2>
-//               <p className="font-semibold">Host a live kahoot now</p>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Actions */}
-//         {errors.length > 0 && <div className="flex gap-4">
-//           <Button
-//             onClick={close}
-//             className="!w-1/2 !bg-gray-600 !text-white !font-semibold !capitalize !py-3 !rounded-lg !transition-all"
-//           >
-//             Back to Edit
-//           </Button>
-//           <Button
-//             onClick={close}
-//             className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
-//           >
-//             Keep as Draft
-//           </Button>
-//         </div>}
-//         {errors.length === 0 && <div className="flex gap-4">
-//           <Button
-//             onClick={close}
-//             className="!w-1/2 !bg-gray-600 !text-white !font-semibold !capitalize !py-3 !rounded-lg !transition-all"
-//           >
-//             Back to Edit
-//           </Button>
-//           <Button
-//             onClick={close}
-//             className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
-//           >
-//             Done
-//           </Button>
-//         </div>}
-//       </motion.div>
-//     </Backdrop>
-//   );
-// };

@@ -15,9 +15,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const newSocket: Socket = io(process.env.NEXT_PUBLIC_SERVER as string,{
-      reconnection:true,
-      reconnectionAttempts: Infinity,
-      transports: ['websocket']
+      // reconnection:true,
+      // reconnectionAttempts: Infinity,
+      // transports: ['websocket']
     });
     setSocket(newSocket);
     return () => {
