@@ -48,13 +48,13 @@ const Ranking = () => {
       studentData: student,
     });
 
-    const handleUserInRoom = (status: boolean) => {
-      if (!status) {
-        navigation.push(`/play/connect/to/game`);
-      }
-    };
+    // const handleUserInRoom = (status: boolean) => {
+    //   if (!status) {
+    //     navigation.push(`/play/connect/to/game`);
+    //   }
+    // };
 
-    socket?.on("userInRoom", handleUserInRoom);
+    // socket?.on("userInRoom", handleUserInRoom);
     
     // Clean up socket listener
     return () => {

@@ -26,7 +26,7 @@ export const CounterRoundInitial = {
   
   export const CounterRoundTransition = {
     delay: 0,
-    duration: 0.1,
+    duration: 0.7,
     repeat: 0,
     repeatDelay: 0,
     type: "spring",

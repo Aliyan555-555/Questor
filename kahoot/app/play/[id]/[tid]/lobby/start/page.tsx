@@ -17,7 +17,7 @@ const Start: React.FC = () => {
   const navigation = useRouter();
   const [rotate, setRotate] = useState(0);
   const teacher = useSelector((root: RootState) => root.teacher.currentGame);
-  const [counter, setCounter] = useState(5);
+  const [counter, setCounter] = useState(4);
 
   useEffect(() => {
     if (counter === 0) {
@@ -27,15 +27,15 @@ const Start: React.FC = () => {
     } else {
       const interval = setInterval(() => {
         setCounter((prev) => prev - 1);
-        setRotate((prevRotate) => prevRotate + 22.5); // Update the rotation incrementally
-      }, 1000);
+        setRotate((prevRotate) => prevRotate + 180 / 2 / 2); // Update the rotation incrementally
+      }, 1400);
 
       return () => clearInterval(interval);
     }
   }, [counter, navigation, teacher?.quizId, teacher?.teacherId]);
 
   return (
-    <div style={{backgroundImage:`url(${teacher?.kahoot.theme.image})`}} className="w-screen h-screen flex items-center justify-center">
+    <div style={{ backgroundImage: `url(${teacher?.kahoot.theme.image})` }} className="w-screen h-screen flex items-center justify-center">
       {isVisible ? (
         <motion.div
           initial={bounceInitialScale}
@@ -47,15 +47,28 @@ const Start: React.FC = () => {
           {teacher?.kahoot.name}
         </motion.div>
       ) : (
-        <div className="text-white w-[150px] h-[150px] flex items-center justify-center relative text-6xl font-bold">
+        <div className="text-white w-[200px] h-[200px] flex items-center justify-center relative text-6xl font-bold">
           {" "}
           <motion.div
             initial={CounterRoundInitial}
-            animate={{rotate}}
+            animate={{ rotate: `${rotate}deg` }}
             transition={CounterRoundTransition}
-            className="w-[150px] h-[150px]  absolute top-0 left-0  bg-purple-500 flex items-center justify-center"
+            className="w-[200px] h-[200px]  absolute top-0 left-0  bg-purple-500 flex items-center justify-center"
           ></motion.div>{" "}
-          <p className="z-50 relative">{counter}</p>
+          <motion.p
+            animate={{ scale: [1.2, 0, 1.2] }} // Scale down, then scale up
+            initial={{ scale: 1 }}
+            transition={{
+              duration: 1.5, // Smooth transition duration
+              ease: "easeInOut", // Smooth easing
+              times: [0, 0.5, 1], // Defines when scale values should occur
+              repeat: 1, // Runs twice (initial + repeat once)
+            }}
+            className="z-50 relative"
+          >
+            {counter}
+          </motion.p>
+
         </div>
       )}
     </div>

@@ -7,9 +7,12 @@ import {
   FirstRankIcon,
   QuizIcon,
   SecondRankIcon,
+  SliderIcon,
   SquareIcon,
   ThirdRankIcon,
   TriangleIcon,
+  TrueFalseIcon,
+  TypeAnswerIcon,
 } from "@/src/lib/svg";
 import { RootState } from "@/src/redux/store";
 import { useConfetti } from "@stevent-team/react-party";
@@ -22,6 +25,8 @@ import { Socket } from "socket.io-client";
 import { Question, Student, Teacher } from "@/src/types";
 import { MdFullscreen } from "react-icons/md";
 import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
+import Image from "next/image";
+import imageLoader from "@/src/components/ImageLoader";
 
 const QuestionSection = ({
   question,
@@ -81,13 +86,17 @@ const QuestionSection = ({
           }}
           className="bg-[#00000071] relative rounded-full flex items-center justify-center w-[70px] h-[70px]"
         >
-          <QuizIcon />
+         {questionData.type === 'quiz' && <QuizIcon />}
+         {questionData.type === "true/false" && <TrueFalseIcon h={80} w={80} />}
+         {questionData.type === "slider" && <SliderIcon w={80} h={80} />}
+         {questionData.type === "typeanswer" && <TypeAnswerIcon h={80} w={80} />}
+
           <motion.div
             animate={{ opacity: [1, 1, 0], scale: [1.5, 1, 1.5] }}
             transition={{ duration: 0.3, delay: 2 }}
             className="bg-[#00000071]  px-[100px] py-1 text-lg text-white font-bold absolute top-[120%]"
           >
-            Quiz
+            {questionData.type}
           </motion.div>
         </motion.div>
       </motion.div>
@@ -201,17 +210,32 @@ const OptionsSection = ({
         <div className="w-[100px] h-[100px] flex items-center justify-center bg-white text-black rounded-full text-4xl font-bold">
           <span>{duration}</span>
         </div>
+
+       {question.media !== "" && (
+         <div className="w-[400px] h-[300px] bg-white">
+         <Image
+         src={question.media}
+         alt={question.question}
+         className="w-full h-full object-cover"
+         loader={imageLoader}
+         width={400}
+         height={300}
+         />
+
+       </div>
+       )}
         <div className="w-[100px] h-[100px] flex items-center justify-center bg-white text-black rounded-full text-4xl font-bold">
           <span>{question?.attemptStudents.length}</span>
         </div>
       </div>
-      <div className="w-full flex gap-2 mb-16 flex-wrap">
+      
+      <div className="w-full flex gap-2  flex-wrap">
         {question?.options.map((option, i) => (
           <button
             key={i}
             disabled={isTimesUp && i !== question.answerIndex[0]}
             style={{ background: colors[i] }}
-            className="w-[49%] cursor-pointer disabled:opacity-35 flex p-5 text-3xl items-center justify-between gap-4 font-semibold text-white"
+            className="w-[49%] cursor-pointer disabled:opacity-35 flex p-4 text-3xl items-center justify-between gap-4 font-semibold text-white"
           >
             <div className="flex gap-4 items-center">
               <span>{icons[i].icon}</span>
