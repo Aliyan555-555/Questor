@@ -8,3 +8,13 @@ export const GetAllQuizzesByUserId = async (req, res) => {
     res.status(500).json({ message: error.message, status: false });
   }
 };
+
+
+export const GetAllPublicQuizzes = async (req, res) => {
+  try {
+    const publicQuizzes = await quizModel.find({ isPrivate: false,status:'active' });
+    res.status(200).json({ data: publicQuizzes, status: true });
+  } catch (error) {
+    res.status(500).json({ message: error.message, status: false });
+  }
+}

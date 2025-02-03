@@ -13,7 +13,7 @@ interface ErrorType {
   media: string;
 }
 export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
-  open: boolean; close: () => void; errors: ErrorType[]; id: string | null;ReturnToHome:() => void
+  open: boolean; close: () => void; errors: ErrorType[]; id: string | null;ReturnToHome:(value:string) => void
 }) => {
   const navigation = useRouter();
 
@@ -94,7 +94,7 @@ export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
             Back to Edit
           </Button>
           <Button
-            onClick={() =>{ReturnToHome();close();}}
+            onClick={() =>{ReturnToHome('draft');close();}}
             className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
           >
             Keep as Draft
@@ -108,10 +108,11 @@ export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
             Back to Edit
           </Button>
           <Button
-            onClick={() =>{ReturnToHome();close();}}
+            onClick={() =>{ReturnToHome('active');close();}}
+            
             className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
           >
-            Done
+            Publish
           </Button>
         </div>}
       </motion.div>

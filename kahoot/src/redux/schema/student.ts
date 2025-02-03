@@ -69,6 +69,7 @@ export interface CurrentDraft {
   isPrivet: boolean;
   description: string;
   coverImage:string;
+  status:'draft' | 'active';
   questions: Question[];
   theme: {
       _id: string;

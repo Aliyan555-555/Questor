@@ -171,3 +171,12 @@ export const getAllQuizzesByUserId = async (id: string) => {
     toast.error("Something want wrong");
   }
 };
+export const getAllPublicQuizzes = async () => {
+  try {
+    const res = await API_DOMAIN.get(`/api/v1/quiz/get/public/quizzes`);
+    return res.data;
+  } catch (error) {
+    console.log("Error fetching Quizzes", error);
+    toast.error("Something want wrong");
+  }
+};

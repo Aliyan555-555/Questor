@@ -176,8 +176,6 @@ const UnsplashImages = React.memo(
     }
 );
 UnsplashImages.displayName = "UnsplashImages";
-
-
 const PexelsImages = React.memo(
     ({ searchQuery, setSearchQuery, setImage, close }: { searchQuery: string | null; setSearchQuery: (value: string) => void; setImage: (value: string) => void; close: () => void }) => {
         const [images, setImages] = useState<{
@@ -277,4 +275,7 @@ const PexelsImages = React.memo(
         );
     }
 );
-PexelsImages.displayName = "PexelsImages"
+PexelsImages.displayName = "PexelsImages";
+
+
+

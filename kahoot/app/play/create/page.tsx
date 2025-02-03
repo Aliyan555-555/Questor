@@ -375,8 +375,8 @@ const Create = () => {
     socket?.emit("update_quiz_status", { status: 'active', _id: id });
   }
 
-  const ReturnToHome = () => {
-    handleUpdateQuiz(data);
+  const ReturnToHome = (status) => {
+    handleUpdateQuiz({...data,status:status});
     navigation.push('/')
   }
 
@@ -404,7 +404,7 @@ const Create = () => {
           >
             Theme
           </Button>
-          <Button onClick={ReturnToHome} className="!bg-gray-300 !text-black !font-semibold !px-6 !text-md !capitalize !tracking-wide">
+          <Button onClick={() => ReturnToHome(data.status)} className="!bg-gray-300 !text-black !font-semibold !px-6 !text-md !capitalize !tracking-wide">
             Exist
           </Button>
           <Button onClick={() => { setIsSaveModelOpen(true); handleChangeQuizStatus() }} className="!bg-blue-600 !text-white !font-semibold !px-6 !text-md !capitalize !tracking-wide">
@@ -530,7 +530,7 @@ const Create = () => {
               onBlur={() => handleSetQuestion(inputValue)}
               onKeyDown={handleKeyDown}
               value={inputValue}
-              onChange={(e) => {setInputValue(e.target.value);handleSetQuestion(e.target.value)}}
+              onChange={(e) => {setInputValue(e.target.value);handleSetQuestion(inputValue)}}
               style={{
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
@@ -689,17 +689,15 @@ const Create = () => {
                   }
                   onChange={(e) =>
                     setSelectedQuestionData((prev) => {
-                      if (!prev) return prev; // Ensure `prev` is not null or undefined
+                      if (!prev) return prev;
                       const updatedQuestion = { ...prev };
 
                       if (updatedQuestion.options) {
-                        // Create a shallow copy of the `options` array to avoid direct mutation
                         updatedQuestion.options = [...updatedQuestion.options];
-                        updatedQuestion.options[1] = e.target.value; // Update the first option
+                        updatedQuestion.options[1] = e.target.value;
                       }
-
-                      console.log(updatedQuestion); // Debugging
-                      return updatedQuestion; // Return the updated state
+                      console.log(updatedQuestion);
+                      return updatedQuestion;
                     })
                   }
                   type="text"
