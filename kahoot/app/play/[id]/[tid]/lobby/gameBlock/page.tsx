@@ -282,7 +282,7 @@ const ScoreBoard = ({
       </div>
       <div className="flex w-full flex-col items-center gap-3 justify-center flex-1">
         {data?.kahoot.students
-          // .sort((a, b) => b.score - a.score) // Sort by score, descending order
+          .sort((a, b) => b.score - a.score) // Sort by score in descending order
           .map((student) => (
             <div
               key={student._id}
@@ -295,15 +295,16 @@ const ScoreBoard = ({
                   w="50px"
                   h="50px"
                 />
-                <p className="px-2"> {student.nickname}</p>
+                <p className="px-2">{student.nickname}</p>
               </div>
-              <p className="px-4"> {student.score.toFixed(0)}</p>
+              <p className="px-4">{student.score.toFixed(0)}</p>
             </div>
           ))}
       </div>
     </div>
   );
 };
+
 const RankSection = ({
   data,
   socket,
