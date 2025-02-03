@@ -86,10 +86,10 @@ const QuestionSection = ({
           }}
           className="bg-[#00000071] relative rounded-full flex items-center justify-center w-[70px] h-[70px]"
         >
-         {questionData.type === 'quiz' && <QuizIcon />}
-         {questionData.type === "true/false" && <TrueFalseIcon h={80} w={80} />}
-         {questionData.type === "slider" && <SliderIcon w={80} h={80} />}
-         {questionData.type === "typeanswer" && <TypeAnswerIcon h={80} w={80} />}
+          {questionData.type === 'quiz' && <QuizIcon />}
+          {questionData.type === "true/false" && <TrueFalseIcon h={80} w={80} />}
+          {questionData.type === "slider" && <SliderIcon w={80} h={80} />}
+          {questionData.type === "typeanswer" && <TypeAnswerIcon h={80} w={80} />}
 
           <motion.div
             animate={{ opacity: [1, 1, 0], scale: [1.5, 1, 1.5] }}
@@ -153,7 +153,7 @@ const OptionsSection = ({
   // Handle timer countdown
   useEffect(() => {
     const timer = setInterval(() => {
-      setDuration((prev:SetStateAction<number | undefined>) => {
+      setDuration((prev: SetStateAction<number | undefined>) => {
         if (prev === 0) {
           setIsTimesUp(true);
           clearInterval(timer);
@@ -186,9 +186,8 @@ const OptionsSection = ({
 
   return (
     <div
-      className={`w-full h-full fixed top-0 left-0 ${
-        isTimesUp && " bg-[#000a]"
-      } p-2 md:p-4 flex-col flex relative items-center justify-between`}
+      className={`w-full h-full fixed top-0 left-0 ${isTimesUp && " bg-[#000a]"
+        } p-2 md:p-4 flex-col flex relative items-center justify-between`}
     >
       <button
         onClick={() => {
@@ -200,8 +199,8 @@ const OptionsSection = ({
         {data?.kahoot.students.length === question?.attemptStudents.length
           ? "Next"
           : duration === 0
-          ? "Next"
-          : "Next"}
+            ? "Next"
+            : "Next"}
       </button>
       <div className="w-[80%] text-wrap px-4 py-3 text-4xl leading-[60px] font-bold text-center text-black bg-white">
         {question?.question}
@@ -211,24 +210,24 @@ const OptionsSection = ({
           <span>{duration}</span>
         </div>
 
-       {question.media !== "" && (
-         <div className="w-[400px] h-[300px] bg-white">
-         <Image
-         src={question.media}
-         alt={question.question}
-         className="w-full h-full object-cover"
-         loader={imageLoader}
-         width={400}
-         height={300}
-         />
+        {question.media !== "" && (
+          <div className="w-[400px] h-[300px] bg-white">
+            <Image
+              src={question.media}
+              alt={question.question}
+              className="w-full h-full object-cover"
+              loader={imageLoader}
+              width={400}
+              height={300}
+            />
 
-       </div>
-       )}
+          </div>
+        )}
         <div className="w-[100px] h-[100px] flex items-center justify-center bg-white text-black rounded-full text-4xl font-bold">
           <span>{question?.attemptStudents.length}</span>
         </div>
       </div>
-      
+
       <div className="w-full flex gap-2  flex-wrap">
         {question?.options.map((option, i) => (
           <button
@@ -282,7 +281,7 @@ const ScoreBoard = ({
       </div>
       <div className="flex w-full flex-col items-center gap-3 justify-center flex-1">
         {data?.kahoot.students
-          .sort((a, b) => b.score - a.score) // Sort by score in descending order
+          // .sort((a, b) =>{ console.log(a,b);return (Number(b.score)- Number(a.score))}) 
           .map((student) => (
             <div
               key={student._id}
@@ -533,7 +532,7 @@ const Page = () => {
   }, [stage]);
 
   return (
-    <div style={{backgroundImage:`url(${teacher?.kahoot.theme.image})`}} className="w-screen h-screen bg-cover bg-top overflow-hidden">
+    <div style={{ backgroundImage: `url(${teacher?.kahoot.theme.image})` }} className="w-screen h-screen bg-cover bg-top overflow-hidden">
       {stage === 1 && (
         <QuestionSection
           question={teacher?.kahoot.questions[currentQuestionIndex].question}
