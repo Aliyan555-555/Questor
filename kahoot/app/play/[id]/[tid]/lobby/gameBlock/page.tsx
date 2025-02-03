@@ -260,7 +260,6 @@ const OptionsSection = ({
     </div>
   );
 };
-
 const ScoreBoard = ({
   data,
   nextQuestion,
@@ -268,6 +267,16 @@ const ScoreBoard = ({
   data: Teacher | null;
   nextQuestion: () => void;
 }) => {
+  if (!data || !data.kahoot?.students) {
+    return <p className="text-white text-2xl">No data available</p>;
+  }
+  console.log("Original Data:", data.kahoot.students);
+  const students = [...data.kahoot.students]
+    .filter((student) => typeof student.score === "number" && !isNaN(student.score));
+    .sort((a, b) => Number(b.score.toFixed(0)) - Number(a.score.toFixed(0)));
+
+  console.log("Sorted Data:", students);
+
   return (
     <div className="w-full p-4 flex flex-col items-center h-full relative">
       <button
@@ -280,11 +289,12 @@ const ScoreBoard = ({
         Scoreboard
       </div>
       <div className="flex w-full flex-col items-center gap-3 justify-center flex-1">
-        {data?.kahoot.students
-          // .sort((a, b) =>{ console.log(a,b);return (Number(b.score)- Number(a.score))}) 
-          .map((student) => (
+        {students.length === 0 ? (
+          <p className="text-white text-2xl">No students available</p>
+        ) : (
+          students.map((student) => (
             <div
-              key={student._id}
+              key={student._id || Math.random()} // Ensure unique keys
               className="bg-white rounded-xl text-2xl flex items-center justify-between font-semibold text-black w-[70%] p-1"
             >
               <div className="flex items-center">
@@ -294,11 +304,12 @@ const ScoreBoard = ({
                   w="50px"
                   h="50px"
                 />
-                <p className="px-2">{student.nickname}</p>
+                <p className="px-2">{student.nickname || "Unknown"}</p>
               </div>
-              <p className="px-4">{student.score.toFixed(0)}</p>
+              <p className="px-4">{student.score?.toFixed(0) || "0"}</p>
             </div>
-          ))}
+          ))
+        )}
       </div>
     </div>
   );
