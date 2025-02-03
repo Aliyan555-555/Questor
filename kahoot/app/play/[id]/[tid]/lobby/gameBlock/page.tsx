@@ -272,7 +272,7 @@ const ScoreBoard = ({
   }
   console.log("Original Data:", data.kahoot.students);
   const students = [...data.kahoot.students]
-    .filter((student) => typeof student.score === "number" && !isNaN(student.score));
+    .filter((student) => typeof student.score === "number" && !isNaN(student.score))
     .sort((a, b) => Number(b.score.toFixed(0)) - Number(a.score.toFixed(0)));
 
   console.log("Sorted Data:", students);
