@@ -16,10 +16,10 @@ const Student = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const socket = useSocket();
-  function getTeacherId(inputString: string) {
-    const parts = inputString.split("-");
-    return parts[0];
-  }
+  // function getTeacherId(inputString: string) {
+  //   const parts = inputString.split("-");
+  //   return parts[0];
+  // }
 
   const { id } = params;
   const [roomId, setRoomId] = useState<null | string>(null);
@@ -58,12 +58,15 @@ const Student = () => {
       const handleJoinedRoom = ({
         roomId,
         student,
+        refreshToken
       }: {
         roomId: string;
         student: StudentDate;
+        refreshToken:string;
       }) => {
-        dispatch(join({ roomId, student }));
-        router.push(`/play/${id}/${getTeacherId(roomId)}/lobby/instructions`);
+        console.log(refreshToken)
+        dispatch(join({ roomId, student,refreshToken}));
+        // router.push(`/play/${id}/${getTeacherId(roomId)}/lobby/instructions`);
       };
 
       const handleNicknameError = (error: { message: string }) => {

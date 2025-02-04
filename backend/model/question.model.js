@@ -9,6 +9,7 @@ const questionSchema = new mongoose.Schema({
   maximumMarks: { type: Number },
   question: { type: String},
   options: [{ type: String}],
+  answerText: { type: String, default:null,},
   answerIndex: [],
   attemptStudents: [],
   results: [],

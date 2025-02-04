@@ -71,7 +71,7 @@ const Create = () => {
     if (id && data._id !== id) {
       socket?.emit("fetch_quiz", { _id: id });
     }
-    return () =>{
+    return () => {
       socket?.off("fetch_quiz");
     }
   });
@@ -249,6 +249,39 @@ const Create = () => {
       handleSetQuestion(inputValue);
     }
   };
+  const updateQuestionTypes = () => {
+    if (selectedQuestionData) {
+
+
+
+      if (
+        selectedQuestionData.type === "true/false" &&
+        JSON.stringify(selectedQuestionData.options) !== JSON.stringify(["True", "False"])
+      ) {
+        handleUpdateQuestion({
+          ...selectedQuestionData,
+          answerIndex: [],
+          options: ["True", "False"],
+        });
+      } else if (
+        selectedQuestionData.type === "quiz" &&
+        (!selectedQuestionData.options || selectedQuestionData.options.length !== 4)
+      ) {
+        handleUpdateQuestion({
+          ...selectedQuestionData,
+          options: ["", "", "", ""],
+          answerIndex: [],
+        });
+      }
+    }
+  }
+  useEffect(() => {
+    updateQuestionTypes()
+  }, [selectedQuestionData, handleUpdateQuestion]);
+
+  // useEffect(() => { 
+  //   handleSetQuestion(inputValue)
+  // },[inputValue,handleSetQuestion])
 
   useEffect(() => {
     if (data && data.questions?.length > 0) {
@@ -342,7 +375,7 @@ const Create = () => {
   useEffect(() => {
     if (data && id) {
       setSavingErrors(() => {
-        const updatedErrors = data?.questions.reduce((acc: ErrorType[], q, i) => {
+        const updatedErrors = data?.questions?.reduce((acc: ErrorType[], q, i) => {
           const error = {
             index: i + 1,
             type: q.type,
@@ -376,15 +409,18 @@ const Create = () => {
   }
 
   const ReturnToHome = (status) => {
-    handleUpdateQuiz({...data,status:status});
+    handleUpdateQuiz({ ...data, status: status });
     navigation.push('/')
   }
 
-  if (id !== data?._id){
-    return(
-      <Loading  />
+  if (id !== data?._id) {
+    return (
+      <Loading />
     )
-  }
+  };
+
+
+
 
   return (
     <div className="w-screen bg-white h-screen flex flex-col">
@@ -528,9 +564,10 @@ const Create = () => {
           <div className="w-full flex items-center justify-center py-10">
             <input
               onBlur={() => handleSetQuestion(inputValue)}
+
               onKeyDown={handleKeyDown}
               value={inputValue}
-              onChange={(e) => {setInputValue(e.target.value);handleSetQuestion(inputValue)}}
+              onChange={(e) => { setInputValue(e.target.value); handleSetQuestion(inputValue) }}
               style={{
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
@@ -573,11 +610,8 @@ const Create = () => {
                             selectedQuestionData?.media
                           }
                           alt="Media"
-                          // loading="lazy"
-                          // quality={100}
                           width={300}
                           height={300}
-                          // priority={true}
                           loader={imageLoader}
                           className="w-full h-full object-cover object-center"
                         />
@@ -598,7 +632,6 @@ const Create = () => {
                         </div>
                       </div>
                     ) : (
-                      // Handle case where media is invalid
                       <h3 className="text-2xl text-gray-500">
                         Media is unavailable or invalid.
                       </h3>
@@ -606,7 +639,6 @@ const Create = () => {
                   </React.Fragment>
                 )
               ) : (
-                // Fallback UI for invalid data or no questions
                 <React.Fragment>
                   <h3 className="text-2xl text-gray-500">
                     No questions available to display.
@@ -615,231 +647,326 @@ const Create = () => {
               )}
             </div>
           </div>
-          <div className="w-full flex flex-wrap py-5 px-3 gap-3">
-            <div
-              onClick={() => document.getElementById('option1').focus()}
-              className={`w-[49%] h-[100px] select-none p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
-                }`}
-            >
-              <div className="h-full bg-[#D01937] w-fit px-1 flex items-center rounded-md">
-                <TriangleIcon height={40} width={40} />
-              </div>
-              <div className="h-full flex-1">
-                <input
-                  id="option1"
-                  onBlur={() =>
-                    handleUpdateQuestion({ ...selectedQuestionData,question:selectedQuestionData.question })
-                  }
-                  value={selectedQuestionData?.options?.[0] ?? ""}
-                  onChange={(e) =>
-                    setSelectedQuestionData((prev) => {
-                      if (!prev) return prev;
-                      const updatedQuestion = { ...prev };
 
-                      if (updatedQuestion.options) {
-                        updatedQuestion.options = [...updatedQuestion.options];
-                        updatedQuestion.options[0] = e.target.value;
-                      }
-
-                      console.log(updatedQuestion);
-                      return updatedQuestion;
-                    })
-                  }
-                  type="text"
-                  placeholder="Enter your answer"
-                  className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
-                />
-              </div>
-              <div
-                className={` h-full items-center px-1 ${selectedQuestionData?.options[0] ? "flex" : "hidden"
-                  }`}
-              >
+          {
+            selectedQuestionData?.type === 'quiz' && (
+              <div className="w-full flex flex-wrap py-5 px-3 gap-3">
                 <div
-                  onClick={() => handleSaveAnswerIndex("", 0)}
-                  className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(0)
-                    ? "bg-green-500"
-                    : "bg-transparent"
-                    } group h-[35px] rounded-full   border-[3px] border-white`}
+                  onClick={() => document.getElementById('option1').focus()}
+                  className={`w-[49%] h-[100px] select-none p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
+                    }`}
                 >
+                  <div className="h-full bg-[#D01937] w-fit px-1 flex items-center rounded-md">
+                    <TriangleIcon height={40} width={40} />
+                  </div>
+                  <div className="h-full flex-1">
+                    <input
+                      id="option1"
+                      onBlur={() =>
+                        handleUpdateQuestion({ ...selectedQuestionData, question: selectedQuestionData.question })
+                      }
+                      value={selectedQuestionData?.options?.[0] ?? ""}
+                      onChange={(e) =>
+                        setSelectedQuestionData((prev) => {
+                          if (!prev) return prev;
+                          const updatedQuestion = { ...prev };
+
+                          if (updatedQuestion.options) {
+                            updatedQuestion.options = [...updatedQuestion.options];
+                            updatedQuestion.options[0] = e.target.value;
+                          }
+
+                          console.log(updatedQuestion);
+                          return updatedQuestion;
+                        })
+                      }
+                      type="text"
+                      placeholder="Enter your answer"
+                      className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                    />
+                  </div>
                   <div
-                    className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(0)
-                      ? "flex"
-                      : "hidden"
-                      } group-hover:flex`}
+                    className={` h-full items-center px-1 ${selectedQuestionData?.options[0] ? "flex" : "hidden"
+                      }`}
                   >
-                    <DoneIcon />
+                    <div
+                      onClick={() => handleSaveAnswerIndex("", 0)}
+                      className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(0)
+                        ? "bg-green-500"
+                        : "bg-transparent"
+                        } group h-[35px] rounded-full   border-[3px] border-white`}
+                    >
+                      <div
+                        className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(0)
+                          ? "flex"
+                          : "hidden"
+                          } group-hover:flex`}
+                      >
+                        <DoneIcon />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  onClick={() => document.getElementById('option2').focus()}
+                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
+                    }`}
+                >
+                  <div className="h-full bg-[#1368CE] w-fit px-1 flex items-center rounded-md">
+                    <DiamondIcon height={40} width={40} />
+                  </div>
+                  <div className="h-full flex-1">
+                    <input
+                      id="option2"
+                      value={selectedQuestionData?.options?.[1] ?? ""}
+                      onBlur={() =>
+                        handleUpdateQuestion({ ...selectedQuestionData, question: selectedQuestionData.question })
+                      }
+                      onChange={(e) =>
+                        setSelectedQuestionData((prev) => {
+                          if (!prev) return prev;
+                          const updatedQuestion = { ...prev };
+
+                          if (updatedQuestion.options) {
+                            updatedQuestion.options = [...updatedQuestion.options];
+                            updatedQuestion.options[1] = e.target.value;
+                          }
+                          console.log(updatedQuestion);
+                          return updatedQuestion;
+                        })
+                      }
+                      type="text"
+                      placeholder="Enter your answer"
+                      className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text  bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                    />
+                  </div>
+                  <div
+                    className={` h-full items-center px-1 ${selectedQuestionData?.options[1] ? "flex" : "hidden"
+                      }`}
+                  >
+                    <div
+                      onClick={() => handleSaveAnswerIndex("", 1)}
+                      className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(1)
+                        ? "bg-green-500"
+                        : "bg-transparent"
+                        } group h-[35px] rounded-full   border-[3px] border-white`}
+                    >
+                      <div
+                        className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(1)
+                          ? "flex"
+                          : "hidden"
+                          } group-hover:flex`}
+                      >
+                        <DoneIcon />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  onClick={() => document.getElementById('option3').focus()}
+                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[2] ? "bg-[#D89E00]" : "bg-white"
+                    }`}
+                >
+                  <div className="h-full bg-[#D89E00] w-fit px-1 flex items-center rounded-md">
+                    <CircleIcon height={40} width={40} />
+                  </div>
+                  <div className="h-full flex-1">
+                    <input
+                      id="option3"
+                      onBlur={() =>
+                        handleUpdateQuestion({ ...selectedQuestionData, question: selectedQuestionData.question })
+                      }
+                      value={selectedQuestionData?.options?.[2] ?? ""}
+                      onChange={(e) =>
+                        setSelectedQuestionData((prev) => {
+                          if (!prev) return prev; // Ensure `prev` is not null or undefined
+                          const updatedQuestion = { ...prev };
+
+                          if (updatedQuestion.options) {
+                            // Create a shallow copy of the `options` array to avoid direct mutation
+                            updatedQuestion.options = [...updatedQuestion.options];
+                            updatedQuestion.options[2] = e.target.value; // Update the first option
+                          }
+
+                          console.log(updatedQuestion); // Debugging
+                          return updatedQuestion; // Return the updated state
+                        })
+                      }
+                      type="text"
+                      placeholder="Enter your answer"
+                      className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                    />
+                  </div>
+                  <div
+                    className={` h-full items-center px-1 ${selectedQuestionData?.options[2] ? "flex" : "hidden"
+                      }`}
+                  >
+                    <div
+                      onClick={() => handleSaveAnswerIndex("", 2)}
+                      className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(2)
+                        ? "bg-green-500"
+                        : "bg-transparent"
+                        } group h-[35px] rounded-full   border-[3px] border-white`}
+                    >
+                      <div
+                        className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(2)
+                          ? "flex"
+                          : "hidden"
+                          } group-hover:flex`}
+                      >
+                        <DoneIcon />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  onClick={() => document.getElementById('option4').focus()}
+                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[3] ? "bg-[#26890C]" : "bg-white"
+                    }`}
+                >
+                  <div className="h-full bg-[#26890C] w-fit px-1 flex items-center rounded-md">
+                    <SquareIcon height={40} width={40} />
+                  </div>
+                  <div className="h-full flex-1">
+                    <input
+                      id="option4"
+                      value={selectedQuestionData?.options?.[3] ?? ""}
+                      onBlur={() =>
+                        handleUpdateQuestion({ ...selectedQuestionData, question: selectedQuestionData.question })
+                      }
+                      onChange={(e) =>
+                        setSelectedQuestionData((prev) => {
+                          if (!prev) return prev;
+                          const updatedQuestion = { ...prev };
+
+                          if (updatedQuestion.options) {
+                            updatedQuestion.options = [...updatedQuestion.options];
+                            updatedQuestion.options[3] = e.target.value;
+                          }
+                          console.log(updatedQuestion);
+                          return updatedQuestion;
+                        })
+                      }
+                      type="text"
+                      placeholder="Enter your answer"
+                      className="w-full h-full px-2 caret-black focus:placeholder:text-white bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                    />
+                  </div>
+                  <div
+                    className={` h-full items-center px-1 ${selectedQuestionData?.options[3] ? "flex" : "hidden"
+                      }`}
+                  >
+                    <div
+                      onClick={() => handleSaveAnswerIndex("", 3)}
+                      className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(3)
+                        ? "bg-green-500"
+                        : "bg-transparent"
+                        } group h-[35px] rounded-full   border-[3px] border-white`}
+                    >
+                      <div
+                        className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(3)
+                          ? "flex"
+                          : "hidden"
+                          } group-hover:flex`}
+                      >
+                        <DoneIcon />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              onClick={() => document.getElementById('option2').focus()}
-              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
-                }`}
-            >
-              <div className="h-full bg-[#1368CE] w-fit px-1 flex items-center rounded-md">
-                <DiamondIcon height={40} width={40} />
-              </div>
-              <div className="h-full flex-1">
-                <input
-                  id="option2"
-                  value={selectedQuestionData?.options?.[1] ?? ""}
-                  onBlur={() =>
-                    handleUpdateQuestion({ ...selectedQuestionData,question:selectedQuestionData.question })
-                  }
-                  onChange={(e) =>
-                    setSelectedQuestionData((prev) => {
-                      if (!prev) return prev;
-                      const updatedQuestion = { ...prev };
+            )
+          }
 
-                      if (updatedQuestion.options) {
-                        updatedQuestion.options = [...updatedQuestion.options];
-                        updatedQuestion.options[1] = e.target.value;
-                      }
-                      console.log(updatedQuestion);
-                      return updatedQuestion;
-                    })
-                  }
-                  type="text"
-                  placeholder="Enter your answer"
-                  className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text  bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
-                />
-              </div>
-              <div
-                className={` h-full items-center px-1 ${selectedQuestionData?.options[1] ? "flex" : "hidden"
-                  }`}
-              >
+          {
+            selectedQuestionData?.type === "true/false" && (
+              <div className="w-full flex flex-wrap py-5 px-3 gap-3">
                 <div
-                  onClick={() => handleSaveAnswerIndex("", 1)}
-                  className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(1)
-                    ? "bg-green-500"
-                    : "bg-transparent"
-                    } group h-[35px] rounded-full   border-[3px] border-white`}
+
+                  className={`w-[49%] h-[100px] select-none p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
+                    }`}
                 >
+                  <div className="h-full bg-[#D01937] w-fit px-1 flex items-center rounded-md">
+                    <TriangleIcon height={40} width={40} />
+                  </div>
+                  <div className="h-full flex-1">
+                    <input
+
+                      onBlur={() =>
+                        handleUpdateQuestion({ ...selectedQuestionData, question: selectedQuestionData.question })
+                      }
+                      value={"True"}
+                      type="text"
+                      placeholder="Enter your answer"
+                      className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                    />
+                  </div>
                   <div
-                    className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(1)
-                      ? "flex"
-                      : "hidden"
-                      } group-hover:flex`}
+                    className={` h-full items-center px-1 ${selectedQuestionData?.options[0] ? "flex" : "hidden"
+                      }`}
                   >
-                    <DoneIcon />
+                    <div
+                      onClick={() => handleSaveAnswerIndex("", 0)}
+                      className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(0)
+                        ? "bg-green-500"
+                        : "bg-transparent"
+                        } group h-[35px] rounded-full   border-[3px] border-white`}
+                    >
+                      <div
+                        className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(0)
+                          ? "flex"
+                          : "hidden"
+                          } group-hover:flex`}
+                      >
+                        <DoneIcon />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+
+                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
+                    }`}
+                >
+                  <div className="h-full bg-[#1368CE] w-fit px-1 flex items-center rounded-md">
+                    <DiamondIcon height={40} width={40} />
+                  </div>
+                  <div className="h-full flex-1">
+                    <input
+                      value={"False"}
+                      onBlur={() =>
+                        handleUpdateQuestion({ ...selectedQuestionData, question: selectedQuestionData.question })
+                      }
+                      type="text"
+                      placeholder="Enter your answer"
+                      className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text  bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
+                    />
+                  </div>
+                  <div
+                    className={` h-full items-center px-1 ${selectedQuestionData?.options[1] ? "flex" : "hidden"
+                      }`}
+                  >
+                    <div
+                      onClick={() => handleSaveAnswerIndex("", 1)}
+                      className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(1)
+                        ? "bg-green-500"
+                        : "bg-transparent"
+                        } group h-[35px] rounded-full   border-[3px] border-white`}
+                    >
+                      <div
+                        className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(1)
+                          ? "flex"
+                          : "hidden"
+                          } group-hover:flex`}
+                      >
+                        <DoneIcon />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              onClick={() => document.getElementById('option3').focus()}
-              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[2] ? "bg-[#D89E00]" : "bg-white"
-                }`}
-            >
-              <div className="h-full bg-[#D89E00] w-fit px-1 flex items-center rounded-md">
-                <CircleIcon height={40} width={40} />
-              </div>
-              <div className="h-full flex-1">
-                <input
-                  id="option3"
-                  onBlur={() =>
-                    handleUpdateQuestion({ ...selectedQuestionData,question:selectedQuestionData.question })
-                  }
-                  value={selectedQuestionData?.options?.[2] ?? ""}
-                  onChange={(e) =>
-                    setSelectedQuestionData((prev) => {
-                      if (!prev) return prev; // Ensure `prev` is not null or undefined
-                      const updatedQuestion = { ...prev };
-
-                      if (updatedQuestion.options) {
-                        // Create a shallow copy of the `options` array to avoid direct mutation
-                        updatedQuestion.options = [...updatedQuestion.options];
-                        updatedQuestion.options[2] = e.target.value; // Update the first option
-                      }
-
-                      console.log(updatedQuestion); // Debugging
-                      return updatedQuestion; // Return the updated state
-                    })
-                  }
-                  type="text"
-                  placeholder="Enter your answer"
-                  className="w-full h-full px-2 caret-black focus:placeholder:text-white cursor-text bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
-                />
-              </div>
-              <div
-                className={` h-full items-center px-1 ${selectedQuestionData?.options[2] ? "flex" : "hidden"
-                  }`}
-              >
-                <div
-                  onClick={() => handleSaveAnswerIndex("", 2)}
-                  className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(2)
-                    ? "bg-green-500"
-                    : "bg-transparent"
-                    } group h-[35px] rounded-full   border-[3px] border-white`}
-                >
-                  <div
-                    className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(2)
-                      ? "flex"
-                      : "hidden"
-                      } group-hover:flex`}
-                  >
-                    <DoneIcon />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              onClick={() => document.getElementById('option4').focus()}
-              className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[3] ? "bg-[#26890C]" : "bg-white"
-                }`}
-            >
-              <div className="h-full bg-[#26890C] w-fit px-1 flex items-center rounded-md">
-                <SquareIcon height={40} width={40} />
-              </div>
-              <div className="h-full flex-1">
-                <input
-                  id="option4"
-                  value={selectedQuestionData?.options?.[3] ?? ""}
-                  onBlur={() =>
-                    handleUpdateQuestion({ ...selectedQuestionData,question:selectedQuestionData.question })
-                  }
-                  onChange={(e) =>
-                    setSelectedQuestionData((prev) => {
-                      if (!prev) return prev;
-                      const updatedQuestion = { ...prev };
-
-                      if (updatedQuestion.options) {
-                        updatedQuestion.options = [...updatedQuestion.options];
-                        updatedQuestion.options[3] = e.target.value;
-                      }
-                      console.log(updatedQuestion);
-                      return updatedQuestion;
-                    })
-                  }
-                  type="text"
-                  placeholder="Enter your answer"
-                  className="w-full h-full px-2 caret-black focus:placeholder:text-white bg-transparent text-white  font-semibold rounded-md focus:outline-none text-xl"
-                />
-              </div>
-              <div
-                className={` h-full items-center px-1 ${selectedQuestionData?.options[3] ? "flex" : "hidden"
-                  }`}
-              >
-                <div
-                  onClick={() => handleSaveAnswerIndex("", 3)}
-                  className={`w-[35px] ${selectedQuestionData?.answerIndex.includes(3)
-                    ? "bg-green-500"
-                    : "bg-transparent"
-                    } group h-[35px] rounded-full   border-[3px] border-white`}
-                >
-                  <div
-                    className={`w-full h-full ${selectedQuestionData?.answerIndex.includes(3)
-                      ? "flex"
-                      : "hidden"
-                      } group-hover:flex`}
-                  >
-                    <DoneIcon />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            )
+          }
         </div>
         <motion.div
           animate={{ width: customizableBarIsOpen ? "310px" : 0 }}
@@ -917,7 +1044,7 @@ const Create = () => {
                   }
                 />
               </div>
-              <div className="w-full flex flex-col gap-2">
+              {selectedQuestionData?.type === 'quiz' && <div className="w-full flex flex-col gap-2">
                 <h3 className="text-lg font-semibold">Answer options</h3>
 
                 <QuestionOptionDropdown
@@ -930,7 +1057,7 @@ const Create = () => {
                     });
                   }}
                 />
-              </div>
+              </div>}
             </div>
           )}
         </motion.div>
@@ -1059,7 +1186,7 @@ const QuestionOptionDropdown = ({
     onSelectOption(option);
     setIsOpen(false);
   };
-  console.log("debug", isMultiSelect);
+  // console.log("debug", isMultiSelect);
 
   return (
     <div className="relative w-full" ref={dropdownRef}>

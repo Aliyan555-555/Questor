@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {  useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -65,11 +65,13 @@ const Student = () => {
       const handleJoinedRoom = ({
         roomId,
         student,
+        refreshToken,
       }: {
         roomId: string;
         student: StudentDate;
+        refreshToken: string;
       }) => {
-        dispatch(join({ roomId, student }));
+        dispatch(join({ roomId, student, refreshToken }));
         router.push(`/play/${getQuizId(roomId)}/${getTeacherId(roomId)}/lobby/instructions`);
       };
 
