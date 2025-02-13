@@ -23,12 +23,10 @@ const Student = () => {
   }
   function getQuizId(inputString: string) {
     const parts = inputString.split("-");
-    // console.log(parts[0], parts[1])
     return parts[1];
   }
-
-  // const { id } = params;
   const [roomId, setRoomId] = useState<null | string>(null);
+  const [teacherId,setTeacherId] = useState<null | string>(null)
   const [nickname, setNickname] = useState("");
   const isQR = query.get("qr");
   const [pin, setPin] = useState(query.get("pin") || "");
@@ -51,17 +49,15 @@ const Student = () => {
       toast.error("Please enter a PIN");
       return;
     }
-
     if (socket) {
       socket.emit("verifyPin", { pin });
+    }else {
     }
   };
 
   useEffect(() => {
     if (socket) {
       console.log("connected");
-
-
       const handleJoinedRoom = ({
         roomId,
         student,
@@ -72,16 +68,17 @@ const Student = () => {
         refreshToken: string;
       }) => {
         dispatch(join({ roomId, student, refreshToken }));
-        router.push(`/play/${getQuizId(roomId)}/${getTeacherId(roomId)}/lobby/instructions`);
+        router.push(`/play/${roomId}/${teacherId}/lobby/instructions`);
       };
 
       const handleNicknameError = (error: { message: string }) => {
         toast.error(error.message);
       };
 
-      const handlePinVerified = (data: { status: boolean; id: string }) => {
+      const handlePinVerified = (data: { status: boolean; roomId: string;teacherId:string }) => {
         if (data.status) {
-          setRoomId(data.id);
+          setRoomId(data.roomId);
+          setTeacherId(data.teacherId)
           setPinVerified(true);
         } else {
           toast.error("Invalid PIN");
@@ -128,6 +125,14 @@ const Student = () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [pinVerified, pin, nickname]);
+
+  useEffect(() => {
+   if (socket?.id){ 
+    socket?.disconnect();
+   }else {
+    socket?.connect();
+   }
+  },[])
 
   return (
     <div

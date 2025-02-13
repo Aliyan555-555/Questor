@@ -1,0 +1,2984 @@
+ [
+    {
+      "id": 5455,
+      "free": false,
+      "name": "Flamingo hat",
+      "names": {
+        "ar-SA": "قبعة فلامنغو",
+        "da-DK": "Flamingo-hat",
+        "es-ES": "Sombrero de flamenco",
+        "fr-FR": "Chapeau flamant rose",
+        "id-ID": "Topi flamingo",
+        "ja-JP": "フラミンゴの帽子",
+        "ko-KR": "플라밍고 모자",
+        "nb-NO": "Flamingohatt",
+        "pl-PL": "Czapka z flamingiem",
+        "sv-SE": "Flamingo-hatt",
+        "th-TH": "หมวกฟลามิงโก",
+        "uk-UA": "Капелюх-фламінго"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5455_1717145256448.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827701,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5454,
+      "free": false,
+      "name": "Hibiscus",
+      "names": {
+        "ar-SA": "كركديه",
+        "da-DK": "Hibiscus",
+        "es-ES": "Hibisco",
+        "fr-FR": "Hibiscus",
+        "id-ID": "Hibiskus",
+        "ja-JP": "ハイビスカス",
+        "ko-KR": "히비스커스",
+        "nb-NO": "Hibiskus",
+        "pl-PL": "Hibiskus",
+        "sv-SE": "Hibiskus",
+        "th-TH": "ชบา",
+        "uk-UA": "Гібіскус"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5454_1717145178659.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827721,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5453,
+      "free": false,
+      "name": "Olive wreath",
+      "names": {
+        "ar-SA": "إكليل زيتون",
+        "da-DK": "Olivenkrans",
+        "es-ES": "Corona de olivo",
+        "fr-FR": "Couronne d'olivier",
+        "id-ID": "Karangan daun zaitun",
+        "ja-JP": "オリーブのリース",
+        "ko-KR": "올리브 화환",
+        "nb-NO": "Olivenkrans",
+        "pl-PL": "Wieniec z oliwek",
+        "sv-SE": "Olivkrans",
+        "th-TH": "พวงมะกอก",
+        "uk-UA": "Оливковий вінок"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5453_1717145148931.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827700,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5452,
+      "free": false,
+      "name": "Jellyfish",
+      "names": {
+        "ar-SA": "قنديل البحر",
+        "da-DK": "Vandmænd",
+        "de-DE": "Quallen",
+        "es-ES": "Medusa",
+        "fr-FR": "Une méduse",
+        "id-ID": "Ubur-ubur",
+        "it-IT": "Medusa",
+        "ja-JP": "クラゲ",
+        "ko-KR": "해파리",
+        "nb-NO": "Maneter",
+        "nl-NL": "Kwallen",
+        "pl-PL": "Meduza",
+        "pt-BR": "Água-viva",
+        "sv-SE": "Manet",
+        "th-TH": "แมงกะพรุน",
+        "tr-TR": "Denizanası",
+        "uk-UA": "Медуза",
+        "zh-CN": "水母",
+        "zh-TW": "水母"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5452_1717144995289.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738333080807,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5451,
+      "free": false,
+      "name": "Swimming glasses",
+      "names": {
+        "ar-SA": "نظارات السباحة",
+        "da-DK": "Svømmebriller",
+        "es-ES": "Gafas de natación",
+        "fr-FR": "Lunettes de natation",
+        "id-ID": "Kacamata renang",
+        "ja-JP": "水中メガネ",
+        "ko-KR": "물안경",
+        "nb-NO": "Svømmebriller",
+        "pl-PL": "Okulary pływackie",
+        "sv-SE": "Simglasögon",
+        "th-TH": "แว่นตาว่ายน้ำ",
+        "uk-UA": "Окуляри для плавання",
+        "zh-TW": "蛙鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5451_1717144956220.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827694,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5450,
+      "free": false,
+      "name": "Rain hat",
+      "names": {
+        "ar-SA": "قبعة المطر",
+        "da-DK": "Sydvest",
+        "es-ES": "Sombrero de lluvia",
+        "fr-FR": "Chapeau pluie",
+        "id-ID": "Topi hujan",
+        "ja-JP": "レインハット",
+        "ko-KR": "레인 햇",
+        "nb-NO": "Regnhatt",
+        "pl-PL": "Kapelusz przeciwdeszczowy",
+        "sv-SE": "Regnhatt",
+        "th-TH": "หมวกกันฝน",
+        "uk-UA": "Капелюх від дощу",
+        "zh-TW": "雨帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5450_1717144930664.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827739,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5449,
+      "free": false,
+      "name": "Diving helmet",
+      "names": {
+        "ar-SA": "خوذة الغوص",
+        "da-DK": "Dykkerhjelm",
+        "es-ES": "Casco de buceo",
+        "fr-FR": "Casque de plongée",
+        "id-ID": "Helm selam",
+        "ja-JP": "潜水用ヘルメット",
+        "ko-KR": "다이빙 헬멧",
+        "nb-NO": "Dykkerhjelm",
+        "pl-PL": "Kask do nurkowania",
+        "sv-SE": "Dykarhjälm",
+        "th-TH": "หมวกดำน้ำ",
+        "uk-UA": "Водолазний шолом",
+        "zh-TW": "深潛頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5449_1717144836325.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827719,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5429,
+      "free": false,
+      "name": "Cat headset",
+      "names": {
+        "da-DK": "Katteheadset",
+        "es-ES": "Auriculares de gato",
+        "fr-FR": "Casque chat",
+        "ja-JP": "猫耳付きヘッドセット",
+        "ko-KR": "고양이 헤드셋",
+        "nb-NO": "Hodetelefoner for katt",
+        "pl-PL": "Słuchawki z kotem",
+        "sv-SE": "Katt-headset",
+        "th-TH": "หูฟังแมว",
+        "uk-UA": "Котяча гарнітура"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5429_1724922750094.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827698,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5430,
+      "free": false,
+      "name": "Floating equations",
+      "names": {
+        "da-DK": "Flydende ligninger",
+        "es-ES": "Ecuaciones flotantes",
+        "fr-FR": "Équations flottantes",
+        "ja-JP": "フローティング方程式",
+        "ko-KR": "플로팅 방정식",
+        "nb-NO": "Flytende ligninger",
+        "pl-PL": "Unoszące się równania",
+        "sv-SE": "Flytande ekvationer",
+        "th-TH": "สมการลอยล่อง",
+        "uk-UA": "Плавучі рівняння"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5430_1724922784316.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827727,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5431,
+      "free": false,
+      "name": "Gold medal hat",
+      "names": {
+        "da-DK": "Guldmedaljehat",
+        "es-ES": "Sombrero de medalla de oro",
+        "fr-FR": "Chapeau en métal doré",
+        "ja-JP": "金メダルの帽子",
+        "ko-KR": "금메달 모자",
+        "nb-NO": "Gullmedaljehatt",
+        "pl-PL": "Czapka ze złotym medalem",
+        "sv-SE": "Guldmedaljhatt",
+        "th-TH": "หมวกเหรียญทอง",
+        "uk-UA": "Капелюх із золотою медаллю"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5431_1724922853292.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827716,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5432,
+      "free": false,
+      "name": "Newspaper hat",
+      "names": {
+        "da-DK": "Avishat",
+        "es-ES": "Sombrero de periódico",
+        "fr-FR": "Chapeau en papier journal",
+        "ja-JP": "新聞紙の帽子",
+        "ko-KR": "신문지 모자",
+        "nb-NO": "Avishatt",
+        "pl-PL": "Czapka z gazetą",
+        "sv-SE": "Tidningshatt",
+        "th-TH": "หมวกหนังสือพิมพ์",
+        "uk-UA": "Капелюх із газети"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5432_1724922866394.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827728,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5433,
+      "free": false,
+      "name": "Paper boat hat",
+      "names": {
+        "da-DK": "Hat af papirbåd",
+        "es-ES": "Sombrero de papel",
+        "fr-FR": "Chapeau bateau en papier",
+        "ja-JP": "紙製の船の帽子",
+        "ko-KR": "종이배 모자",
+        "nb-NO": "Hatt av papirbåt",
+        "pl-PL": "Czapka z papierową łódką",
+        "sv-SE": "Pappersbåtshatt",
+        "th-TH": "หมวกเรือกระดาษ",
+        "uk-UA": "Паперовий капелюх-човник"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5433_1724922883005.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827714,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5434,
+      "free": false,
+      "name": "VR headset",
+      "names": {
+        "da-DK": "VR-headset",
+        "es-ES": "Auriculares de RV",
+        "fr-FR": "Casque RV",
+        "ja-JP": "VRヘッドセット",
+        "ko-KR": "VR 헤드셋",
+        "nb-NO": "VR-hodetelefoner",
+        "pl-PL": "Słuchawki VR",
+        "sv-SE": "VR-headset",
+        "th-TH": "แว่น VR",
+        "uk-UA": "VR-гарнітура"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5434_1724922899508.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827724,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5467,
+      "free": false,
+      "name": "Ghost",
+      "names": {
+        "ar-SA": "شبح",
+        "da-DK": "Spøgelse",
+        "de-DE": "Ghost",
+        "es-ES": "Ghost: la sombra del amor",
+        "fr-FR": "Ghost",
+        "id-ID": "Hantu",
+        "it-IT": "Ghost",
+        "ja-JP": "ゴースト",
+        "ko-KR": "유령",
+        "nb-NO": "Spøkelse",
+        "nl-NL": "Ghost",
+        "pl-PL": "Duch",
+        "pt-BR": "Ghost",
+        "sv-SE": "Spöke",
+        "th-TH": "ผี",
+        "tr-TR": "Hayalet",
+        "uk-UA": "Привид",
+        "zh-CN": "幽灵号",
+        "zh-TW": "幽靈"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5467_1727690559757.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738333080827,
+      "collections": [
+        {
+          "id": 5468,
+          "name": "Season 4 - Halloween",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5469,
+      "free": false,
+      "name": "Cursed ghost",
+      "names": {
+        "da-DK": "Forbandet spøgelse",
+        "es-ES": "Fantasma maldito",
+        "fr-FR": "Fantôme maudit",
+        "ja-JP": "呪われた幽霊",
+        "ko-KR": "저주받은 유형",
+        "nb-NO": "Forbannet spøkelse",
+        "pl-PL": "Przeklęty duch",
+        "sv-SE": "Förbannat spöke",
+        "th-TH": "ผีต้องสาป",
+        "tr-TR": "Lanetli hayalet",
+        "uk-UA": "Проклятий привид"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5469_1727690772930.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738333080831,
+      "collections": [
+        {
+          "id": 5468,
+          "name": "Season 4 - Halloween",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5470,
+      "free": false,
+      "name": "Bat wings",
+      "names": {
+        "da-DK": "Flagermusevinger",
+        "es-ES": "Alas de murciélago",
+        "fr-FR": "Ailes de chauve-souris",
+        "ja-JP": "コウモリの翼",
+        "ko-KR": "박쥐 날개",
+        "nb-NO": "Flaggermusvinger",
+        "pl-PL": "Skrzydła nietoperza",
+        "sv-SE": "Fladdermusvingar",
+        "th-TH": "ปีกค้างคาว",
+        "tr-TR": "Yarasa kanatları",
+        "uk-UA": "Крила кажана"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5470_1727690815219.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827692,
+      "collections": [
+        {
+          "id": 5468,
+          "name": "Season 4 - Halloween",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5471,
+      "free": false,
+      "name": "Skeleton mask",
+      "names": {
+        "da-DK": "Skeletmaske",
+        "es-ES": "Máscara de esqueleto",
+        "fr-FR": "Masque de squelette",
+        "ja-JP": "ガイコツのマスク",
+        "ko-KR": "해골 마스크",
+        "nb-NO": "Skjelettmaske",
+        "pl-PL": "Maska szkieletu",
+        "sv-SE": "Skelettmask",
+        "th-TH": "หน้ากากโครงกระดูก",
+        "tr-TR": "İskelet maskesi",
+        "uk-UA": "Маска скелета"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5471_1727690843069.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827717,
+      "collections": [
+        {
+          "id": 5468,
+          "name": "Season 4 - Halloween",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 10661,
+      "free": false,
+      "name": "Demon hat",
+      "names": {
+        "da-DK": "Dæmon-hat",
+        "es-ES": "Sombrero demoníaco",
+        "fr-FR": "Chapeau démon",
+        "ja-JP": "悪魔の帽子",
+        "ko-KR": "악마 모자",
+        "nb-NO": "Demonhatt",
+        "pl-PL": "Czapka demona",
+        "sv-SE": "Demonhatt",
+        "th-TH": "หมวกปีศาจ",
+        "tr-TR": "Şeytan şapkası",
+        "uk-UA": "Капелюх демона"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10661_1727700841814.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827726,
+      "collections": [
+        {
+          "id": 5468,
+          "name": "Season 4 - Halloween",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 10774,
+      "free": false,
+      "name": "Beanie and scarf",
+      "names": {
+        "da-DK": "Hue og halstørklæde",
+        "es-ES": "Gorro y bufanda",
+        "fr-FR": "Bonnet et écharpe",
+        "ja-JP": "ビーニー帽とスカーフ",
+        "ko-KR": "비니와 목도리",
+        "nb-NO": "Lue og skjerf",
+        "pl-PL": "Czapka beanie i szalik",
+        "sv-SE": "Mössa och halsduk",
+        "th-TH": "บีนนี่และผ้าพันคอ",
+        "tr-TR": "Bere ve atkı",
+        "uk-UA": "Шапка та шарф"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10774_1730399348865.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827691,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 10775,
+      "free": false,
+      "name": "Colored lights",
+      "names": {
+        "da-DK": "Farvede lys",
+        "es-ES": "Luces de colores",
+        "fr-FR": "Lumières colorées",
+        "ja-JP": "カラーライト",
+        "ko-KR": "알록달록한 조명",
+        "nb-NO": "Fargede lys",
+        "pl-PL": "Kolorowe lampki",
+        "sv-SE": "Färgade lampor",
+        "th-TH": "ไฟหลากสี",
+        "tr-TR": "Renkli ışıklar",
+        "uk-UA": "Кольорові вогники"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10775_1730367927366.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827687,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 10776,
+      "free": false,
+      "name": "Fireworks",
+      "names": {
+        "ar-SA": "الألعاب النارية",
+        "da-DK": "Fyrværkeri",
+        "de-DE": "Feuerwerk",
+        "es-ES": "Jugar con fuegos artificiales",
+        "fr-FR": "Les feux d'artifice",
+        "id-ID": "Kembang api",
+        "it-IT": "Ai fuochi d'artificio",
+        "ja-JP": "花火",
+        "ko-KR": "불꽃놀이",
+        "nb-NO": "Fyrverkeri",
+        "nl-NL": "Vuurwerk",
+        "pl-PL": "Fajerwerki",
+        "pt-BR": "Ver fogos de artifício",
+        "sv-SE": "Fyrverkerier",
+        "th-TH": "ดอกไม้ไฟ",
+        "tr-TR": "Havai fişekler",
+        "uk-UA": "Феєрверки",
+        "zh-CN": "烟花",
+        "zh-TW": "看煙火"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10776_1730367944879.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738333080749,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 10777,
+      "free": false,
+      "name": "Gold hat",
+      "names": {
+        "da-DK": "Guldhat",
+        "es-ES": "Sombrero de oro",
+        "fr-FR": "Chapeau doré",
+        "ja-JP": "ゴールドの帽子",
+        "ko-KR": "황금 모자",
+        "nb-NO": "Gullhatt",
+        "pl-PL": "Złota czapka",
+        "sv-SE": "Guldhatt",
+        "th-TH": "หมวกสีทอง",
+        "tr-TR": "Altın şapka",
+        "uk-UA": "Золотий капелюх"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10777_1730399330104.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827690,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 10778,
+      "free": false,
+      "name": "Snowglobe",
+      "names": {
+        "da-DK": "Snekugle",
+        "es-ES": "Bola de nieve",
+        "fr-FR": "Boule à neige",
+        "ja-JP": "スノーグローブ",
+        "ko-KR": "스노우글로브",
+        "nb-NO": "Snøkule",
+        "pl-PL": "Śnieżna kula",
+        "sv-SE": "Snöglob",
+        "th-TH": "ลูกโลกหิมะ ",
+        "tr-TR": "Kar küresi",
+        "uk-UA": "Снігова куля"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10778_1730367976256.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827695,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 11097,
+      "free": true,
+      "name": "Green football helmet",
+      "names": {
+        "ar-SA": "خوذة كرة قدم خضراء",
+        "da-DK": "Grøn fodboldhjelm",
+        "de-DE": "Grüner Football-Helm",
+        "es-ES": "Casco de fútbol verde",
+        "fr-FR": "Casque de football américain vert",
+        "it-IT": "Casco da football americano verde",
+        "ja-JP": "グリーンのフットボールヘルメット",
+        "ko-KR": "그린 미식 축구 헬멧",
+        "nb-NO": "Grønn fotballhjelm",
+        "nl-NL": "Groene footballhelm",
+        "pl-PL": "Zielony kask piłkarski",
+        "pt-BR": "Capacete de futebol americano verde",
+        "sv-SE": "Grön amerikansk fotbollshjälm",
+        "th-TH": "หมวกอเมริกันฟุตบอลสีเขียว",
+        "tr-TR": "Yeşil Amerikan futbolu kaskı",
+        "uk-UA": "Зелений футбольний шолом",
+        "zh-CN": "绿色橄榄球头盔",
+        "zh-TW": "綠色美式足球頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/11097_1738332081820.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738750865849,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 11096,
+      "free": true,
+      "name": "Red football helmet",
+      "names": {
+        "ar-SA": "خوذة كرة قدم حمراء",
+        "da-DK": "Rød fodboldhjelm",
+        "de-DE": "Roter Football-Helm",
+        "es-ES": "Casco de fútbol rojo",
+        "fr-FR": "Casque de football américain rouge",
+        "id-ID": "Helm football merah",
+        "it-IT": "Casco da football americano rosso",
+        "ja-JP": "赤いフットボールヘルメット",
+        "ko-KR": "레드 미식 축구 헬멧",
+        "nb-NO": "Rød fotballhjelm",
+        "nl-NL": "Rode footballhelm",
+        "pl-PL": "Czerwony kask piłkarski",
+        "pt-BR": "Capacete de futebol americano vermelho",
+        "sv-SE": "Röd amerikansk fotbollshjälm",
+        "th-TH": "หมวกอเมริกันฟุตบอลสีแดง",
+        "tr-TR": "Kırmızı Amerikan futbolu kaskı",
+        "uk-UA": "Червоний футбольний шолом",
+        "zh-CN": "红色橄榄球头盔",
+        "zh-TW": "紅色美式足球頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/11096_1738332057724.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738750877835,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3450,
+      "free": true,
+      "name": "Hearts",
+      "names": {
+        "ar-SA": "قلوب",
+        "da-DK": "Hjerter",
+        "de-DE": "Herzen",
+        "es-ES": "Corazones",
+        "fr-FR": "Cœurs",
+        "id-ID": "Hati",
+        "it-IT": "Cuori",
+        "ja-JP": "ハート",
+        "ko-KR": "하트",
+        "nb-NO": "Hjerter",
+        "nl-NL": "Hartjes",
+        "pl-PL": "Serca",
+        "pt-BR": "Corações",
+        "sv-SE": "Hjärtan",
+        "th-TH": "หัวใจ",
+        "tr-TR": "Kalpler",
+        "uk-UA": "Серця",
+        "zh-CN": "心形",
+        "zh-TW": "愛心"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3450_1687269197432.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738750913097,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3500,
+      "free": true,
+      "name": "Heart glasses",
+      "names": {
+        "ar-SA": "نظارة على شكل قلب",
+        "da-DK": "Hjerteformede briller",
+        "de-DE": "Herz-Brille",
+        "es-ES": "Gafas de corazón",
+        "fr-FR": "Lunettes en forme de cœur",
+        "id-ID": "Kacamata bentuk hati",
+        "it-IT": "Occhiali a cuore",
+        "ja-JP": "ハートのメガネ",
+        "ko-KR": "하트 안경",
+        "nb-NO": "Hjertebriller",
+        "nl-NL": "Bril met hartjes",
+        "pl-PL": "Okulary w kształcie serca",
+        "pt-BR": "Óculos de coração",
+        "sv-SE": "Hjärtglasögon",
+        "th-TH": "แว่นรูปหัวใจ",
+        "tr-TR": "Kalp gözlük",
+        "uk-UA": "Окуляри у формі сердець",
+        "zh-CN": "心形眼镜",
+        "zh-TW": "心形眼鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3500_1687269220753.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738750930098,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5378,
+      "free": true,
+      "name": "Trapper hat",
+      "names": {
+        "ar-SA": "قبعة الصياد",
+        "da-DK": "Jægerhue",
+        "es-ES": "Sombrero Cazador",
+        "fr-FR": "Chapeau de trappeur",
+        "id-ID": "Topi bulu pelindung kepala",
+        "ja-JP": "トラッパーハット",
+        "ko-KR": "트래퍼 모자",
+        "nb-NO": "Fangstmannslue",
+        "pl-PL": "Czapka trapera",
+        "pt-BR": "Chapéu de caçador",
+        "sv-SE": "Pälsmössa",
+        "th-TH": "หมวกปิดหู",
+        "uk-UA": "Вушанка",
+        "zh-CN": "猎户帽",
+        "zh-TW": "毛絨飛行帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5378_1703158570992.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827716,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5377,
+      "free": true,
+      "name": "Green beanie",
+      "names": {
+        "ar-SA": "قبعة خضراء",
+        "da-DK": "Grøn hue",
+        "es-ES": "Gorro verde",
+        "fr-FR": "Bonnet vert",
+        "id-ID": "Kupluk hijau",
+        "ja-JP": "グリーンのビーニー帽",
+        "ko-KR": "녹색 비니 모자",
+        "nb-NO": "Grønn lue",
+        "pl-PL": "Zielona czapka beanie",
+        "pt-BR": "Gorro verde",
+        "sv-SE": "Grön mössa",
+        "th-TH": "บีนนี่สีเขียว",
+        "uk-UA": "Зелена шапочка",
+        "zh-CN": "绿色无檐小便帽",
+        "zh-TW": "綠色 Beanie"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5377_1703158472399.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827718,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5376,
+      "free": true,
+      "name": "Red beanie",
+      "names": {
+        "ar-SA": "قبعة حمراء",
+        "da-DK": "Rød hue",
+        "es-ES": "Gorro rojo",
+        "fr-FR": "Bonnet rouge",
+        "id-ID": "Kupluk merah",
+        "ja-JP": "赤いビーニー帽",
+        "ko-KR": "빨간 비니 모자",
+        "nb-NO": "Rød lue",
+        "pl-PL": "Czerwona czapka beanie",
+        "pt-BR": "Gorro vermelho",
+        "sv-SE": "Röd mössa",
+        "th-TH": "บีนนี่สีแดง",
+        "uk-UA": "Червона шапочка",
+        "zh-CN": "红色无檐小便帽",
+        "zh-TW": "紅色 Beanie"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5376_1703158436435.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827720,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5370,
+      "free": true,
+      "name": "Beanie",
+      "names": {
+        "ar-SA": "قبعة صغيرة",
+        "da-DK": "Hue",
+        "es-ES": "Gorro",
+        "fr-FR": "Bonnet",
+        "id-ID": "Kupluk",
+        "ja-JP": "ビーニー帽",
+        "ko-KR": "비니 모자",
+        "nb-NO": "Lue",
+        "pl-PL": "Czapka beanie",
+        "pt-BR": "Gorro",
+        "sv-SE": "Mössa",
+        "th-TH": "บีนนี่",
+        "uk-UA": "Шапочка",
+        "zh-CN": "无檐小便帽",
+        "zh-TW": "Beanie"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5370_1702041455710.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827730,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5369,
+      "free": true,
+      "name": "Earmuffs",
+      "names": {
+        "ar-SA": "واقي الأذنين",
+        "da-DK": "Ørevarmere",
+        "de-DE": "Ohrenwärmer",
+        "es-ES": "Orejeras",
+        "fr-FR": "Cache-oreilles",
+        "id-ID": "Penutup telinga",
+        "it-IT": "Cuffie paraorecchie",
+        "ja-JP": "耳あて",
+        "ko-KR": "귀덮개",
+        "nb-NO": "Øreklokker",
+        "nl-NL": "Oorwarmers",
+        "pl-PL": "Nauszniki",
+        "pt-BR": "Protetores de ouvido",
+        "sv-SE": "Öronmuffar",
+        "th-TH": "ที่ปิดหู",
+        "tr-TR": "Kulak ısıtıcı",
+        "uk-UA": "Теплі навушники",
+        "zh-CN": "耳套",
+        "zh-TW": "禦寒耳罩"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5369_1703158343397.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827746,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5402,
+      "free": true,
+      "name": "Lion mask",
+      "names": {
+        "ar-SA": "قناع الأسد",
+        "da-DK": "Løvemaske",
+        "es-ES": "Máscara de león",
+        "fr-FR": "Masque lion",
+        "id-ID": "Topeng singa",
+        "ja-JP": "ライオンのマスク",
+        "ko-KR": "사자 가면",
+        "nb-NO": "Løvemaske",
+        "pl-PL": "Maska lwa",
+        "sv-SE": "Lejonmask",
+        "th-TH": "หน้ากากสิงโต",
+        "uk-UA": "Маска лева",
+        "zh-CN": "狮子面具",
+        "zh-TW": "獅王面具"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5402_1707384002357.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827712,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4100,
+      "free": true,
+      "name": "Ski goggles",
+      "names": {
+        "ar-SA": "نظارات التزلج",
+        "da-DK": "Skibriller",
+        "de-DE": "Skibrille",
+        "es-ES": "Gafas de esquí",
+        "fr-FR": "Masque de ski",
+        "id-ID": "Kacamata ski",
+        "it-IT": "Maschera da sci",
+        "ja-JP": "スキーゴーグル",
+        "ko-KR": "스키 고글",
+        "nb-NO": "Skibriller",
+        "nl-NL": "Skibril",
+        "pl-PL": "Gogle narciarskie",
+        "pt-BR": "Óculos de esqui",
+        "sv-SE": "Skidglasögon",
+        "th-TH": "แว่นตาสกี",
+        "tr-TR": "Kayak gözlüğü",
+        "uk-UA": "Лижні окуляри",
+        "zh-CN": "滑雪护目镜",
+        "zh-TW": "滑雪護目鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4100_1687269448758.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827692,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4050,
+      "free": true,
+      "name": "Rainbow shades",
+      "names": {
+        "ar-SA": "ألوان قوس قُزح",
+        "da-DK": "Regnbue-solbriller",
+        "de-DE": "Regenbogen-Sonnenbrille",
+        "es-ES": "Gafas de arco iris",
+        "fr-FR": "Lunettes de soleil arc-en-ciel",
+        "id-ID": "Kacamata pelangi",
+        "it-IT": "Occhiali arcobaleno",
+        "ja-JP": "レインボーシェード",
+        "ko-KR": "무지개빛",
+        "nb-NO": "Regnbuesolbriller",
+        "nl-NL": "Regenboogbril",
+        "pl-PL": "Kolory tęczy",
+        "pt-BR": "Óculos de arco-íris",
+        "sv-SE": "Regnbågsbrillor",
+        "th-TH": "แว่นเฉดสายรุ้ง",
+        "tr-TR": "Gökkuşağı tonları",
+        "uk-UA": "Веселкові окуляри",
+        "zh-CN": "彩虹太阳镜",
+        "zh-TW": "彩虹太陽眼鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4050_1687269430367.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827736,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5371,
+      "free": true,
+      "name": "Scarf",
+      "names": {
+        "ar-SA": "وشاح",
+        "da-DK": "Halstørklæde",
+        "de-DE": "Schal",
+        "es-ES": "Bufanda",
+        "fr-FR": "Écharpe",
+        "id-ID": "Syal",
+        "it-IT": "Sciarpa",
+        "ja-JP": "スカーフ",
+        "ko-KR": "목도리",
+        "nb-NO": "Skjerf",
+        "nl-NL": "Sjaal",
+        "pl-PL": "Szalik",
+        "pt-BR": "Cachecol",
+        "sv-SE": "Halsduk",
+        "th-TH": "ผ้าพันคอ",
+        "tr-TR": "Atkı",
+        "uk-UA": "Шарф",
+        "zh-CN": "围巾",
+        "zh-TW": "圍巾"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5371_1702041483493.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827748,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5372,
+      "free": false,
+      "name": "Elf hat",
+      "names": {
+        "ar-SA": "قبعة قزم",
+        "da-DK": "Nissehue",
+        "de-DE": "Elfenmütze",
+        "es-ES": "Gorro de duende",
+        "fr-FR": "Chapeau d'elfe",
+        "id-ID": "Topi peri",
+        "it-IT": "Cappello da elfo",
+        "ja-JP": "エルフの帽子",
+        "ko-KR": "엘프 모자",
+        "nb-NO": "Alvelue",
+        "nl-NL": "Elfjesmuts",
+        "pl-PL": "Czapka elfa",
+        "pt-BR": "Chapéu de elfo",
+        "sv-SE": "Alvhatt",
+        "th-TH": "หมวกเอลฟ์",
+        "tr-TR": "Elf şapkası",
+        "uk-UA": "Капелюх ельфа",
+        "zh-CN": "精灵帽子",
+        "zh-TW": "小精靈帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5372_1702041509608.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827729,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5368,
+      "free": false,
+      "name": "Santa hat",
+      "names": {
+        "ar-SA": "قبعة بابا نويل",
+        "da-DK": "Nissehue",
+        "de-DE": "Weihnachtsmütze",
+        "es-ES": "Sombrero de Papá Noel",
+        "fr-FR": "Chapeau de Père Noël",
+        "id-ID": "Topi Santa",
+        "it-IT": "Cappello di Babbo Natale",
+        "ja-JP": "サンタの帽子",
+        "ko-KR": "산타 모자",
+        "nb-NO": "Julenisselue",
+        "nl-NL": "Kerstmuts",
+        "pl-PL": "Czapka Świętego Mikołaja",
+        "pt-BR": "Chapéu de Papai Noel",
+        "sv-SE": "Tomteluva",
+        "th-TH": "หมวกซานต้า",
+        "tr-TR": "Noel baba şapkası",
+        "uk-UA": "Капелюх Санта-Клауса",
+        "zh-CN": "圣诞帽",
+        "zh-TW": "聖誕老公公帽子"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5368_1702041393090.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738333080847,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 1550,
+      "free": true,
+      "name": "Kahoot! hat",
+      "names": {
+        "ar-SA": "قبعة !Kahoot",
+        "da-DK": "Kahoot!-hat",
+        "de-DE": "Kahoot!-Hut",
+        "es-ES": "Casco Kahoot!",
+        "fr-FR": "Chapeau Kahoot!",
+        "id-ID": "Topi Kahoot!",
+        "it-IT": "Cappello di Kahoot!",
+        "ja-JP": "Kahoot! ハット",
+        "ko-KR": "Kahoot! 모자",
+        "nb-NO": "Kahoot!-hatt",
+        "nl-NL": "Kahoot!-hoed",
+        "pl-PL": "Kapelusz Kahoot!",
+        "pt-BR": "Chapéu da Kahoot!",
+        "sv-SE": "Kahoot!-hatt",
+        "th-TH": "หมวก Kahoot!",
+        "tr-TR": "Kahoot! şapkası",
+        "uk-UA": "Кахутівський капелюх",
+        "zh-CN": "Kahoot! 帽",
+        "zh-TW": "Kahoot! 帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1550_1687269078451.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827693,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3100,
+      "free": true,
+      "name": "Flower wreath",
+      "names": {
+        "ar-SA": "أكليل زهور",
+        "da-DK": "Blomsterkrans",
+        "de-DE": "Blumenkranz",
+        "es-ES": "Corona de flores",
+        "fr-FR": "Couronne de fleurs",
+        "id-ID": "Karangan bunga",
+        "it-IT": "Corona di fiori",
+        "ja-JP": "花輪",
+        "ko-KR": "꽃 장식",
+        "nb-NO": "Blomsterkrans",
+        "nl-NL": "Bloemenkrans",
+        "pl-PL": "Wianek z kwiatów",
+        "pt-BR": "Coroa de flores",
+        "sv-SE": "Blomkrans",
+        "th-TH": "พวงดอกไม้",
+        "tr-TR": "Çiçekli taç",
+        "uk-UA": "Квітковий вінок",
+        "zh-CN": "花环",
+        "zh-TW": "花圈"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3100_1687269059480.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827699,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3150,
+      "free": true,
+      "name": "Crown",
+      "names": {
+        "ar-SA": "تاج",
+        "da-DK": "Krone",
+        "de-DE": "Krone",
+        "es-ES": "Corona",
+        "fr-FR": "Couronne",
+        "id-ID": "Mahkota",
+        "it-IT": "Corona",
+        "ja-JP": "王冠",
+        "ko-KR": "어릿광대",
+        "nb-NO": "Krone",
+        "nl-NL": "Kroon",
+        "pl-PL": "Korona",
+        "pt-BR": "Coroa",
+        "sv-SE": "Krona",
+        "th-TH": "มงกุฎ",
+        "tr-TR": "Taç",
+        "uk-UA": "Корона",
+        "zh-CN": "王冠",
+        "zh-TW": "王冠"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3150_1687269099928.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827735,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3200,
+      "free": true,
+      "name": "Viking helmet",
+      "names": {
+        "ar-SA": "خوذة الفايكينغ",
+        "da-DK": "Vikingehjelm",
+        "de-DE": "Wikingerhelm",
+        "es-ES": "Casco vikingo",
+        "fr-FR": "Casque de viking",
+        "id-ID": "Helm viking",
+        "it-IT": "Elmo vichingo",
+        "ja-JP": "バイキングのヘルメット",
+        "ko-KR": "바이킹 헬멧",
+        "nb-NO": "Vikinghjelm",
+        "nl-NL": "Vikinghelm",
+        "pl-PL": "Hełm Wikinga",
+        "pt-BR": "Capacete viking",
+        "sv-SE": "Vikingahjälm",
+        "th-TH": "หมวกไวกิ้ง",
+        "tr-TR": "Viking başlığı",
+        "uk-UA": "Шолом вікінга",
+        "zh-CN": "维京人头盔",
+        "zh-TW": "維京人頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3200_1687269116316.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827711,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3250,
+      "free": true,
+      "name": "Graduation cap",
+      "names": {
+        "ar-SA": "قبعة التخرج",
+        "da-DK": "Universitetshue",
+        "de-DE": "Doktorhut",
+        "es-ES": "Birrete",
+        "fr-FR": "Chapeau de remise de diplômes",
+        "id-ID": "Topi wisuda",
+        "it-IT": "Tocco di laurea",
+        "ja-JP": "卒業式の帽子",
+        "ko-KR": "사각모",
+        "nb-NO": "Russelue",
+        "nl-NL": "Afstudeerhoedje",
+        "pl-PL": "Czapka absolwenta",
+        "pt-BR": "Chapéu de formatura",
+        "sv-SE": "Examenshatt",
+        "th-TH": "หมวกรับปริญญา",
+        "tr-TR": "Mezuniyet kepi",
+        "uk-UA": "Академічна шапочка",
+        "zh-CN": "毕业帽",
+        "zh-TW": "畢業帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3250_1687269133335.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827705,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3300,
+      "free": true,
+      "name": "Cowboy hat",
+      "names": {
+        "ar-SA": "قبعة كاوبوي",
+        "da-DK": "Cowboyhat",
+        "de-DE": "Cowboyhut",
+        "es-ES": "Sombrero de vaquero",
+        "fr-FR": "Chapeau de cowboy",
+        "id-ID": "Topi koboi",
+        "it-IT": "Cappello da cowboy",
+        "ja-JP": "カウボーイハット",
+        "ko-KR": "카우보이 모자",
+        "nb-NO": "Cowboyhatt",
+        "nl-NL": "Cowboyhoed",
+        "pl-PL": "Kowbojski kapelusz",
+        "pt-BR": "Chapéu de caubói",
+        "sv-SE": "Cowboyhatt",
+        "th-TH": "หมวกคาวบอย",
+        "tr-TR": "Kovboy şapkası",
+        "uk-UA": "Ковбойський капелюх",
+        "zh-CN": "牛仔帽",
+        "zh-TW": "牛仔帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3300_1687269151601.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827741,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3350,
+      "free": true,
+      "name": "Witch hat",
+      "names": {
+        "ar-SA": "قبعة الساحرة الشريرة",
+        "da-DK": "Heksehat",
+        "de-DE": "Hexenhut",
+        "es-ES": "Sombrero de bruja",
+        "fr-FR": "Chapeau de sorcière",
+        "id-ID": "Topi penyihir",
+        "it-IT": "Cappello da strega",
+        "ja-JP": "魔女の帽子",
+        "ko-KR": "마녀 모자",
+        "nb-NO": "Heksehatt",
+        "nl-NL": "Heksenhoed",
+        "pl-PL": "Kapelusz czarownicy",
+        "pt-BR": "Chapéu de bruxa",
+        "sv-SE": "Häxhatt",
+        "th-TH": "หมวกแม่มด",
+        "tr-TR": "Cadı şapkası",
+        "uk-UA": "Відьомський капелюх",
+        "zh-CN": "女巫帽子",
+        "zh-TW": "巫婆帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3350_1687269166103.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827698,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3400,
+      "free": true,
+      "name": "Gamer headset",
+      "names": {
+        "ar-SA": "سماعات رأس ألعاب فيديو",
+        "da-DK": "Gaming-headset",
+        "de-DE": "Gaming-Headset",
+        "es-ES": "Audífonos gamer",
+        "fr-FR": "Casque de gamer",
+        "id-ID": "Headset pemain game",
+        "it-IT": "Cuffie da gamer",
+        "ja-JP": "ゲーミングヘッドセット",
+        "ko-KR": "게이머 헤드셋",
+        "nb-NO": "Gaming-hodetelefoner",
+        "nl-NL": "Gamerheadset",
+        "pl-PL": "Zestaw słuchawkowy gracza",
+        "pt-BR": "Fone gamer",
+        "sv-SE": "Gaming-headset",
+        "th-TH": "หูฟังเกมมิ่ง",
+        "tr-TR": "Oyuncu kulaklığı",
+        "uk-UA": "Гарнітура геймера",
+        "zh-CN": "电竞耳机",
+        "zh-TW": "電競耳機"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3400_1687269182679.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827734,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3550,
+      "free": true,
+      "name": "Science glasses",
+      "names": {
+        "ar-SA": "نظارات معمل",
+        "da-DK": "Beskyttelsesbriller",
+        "de-DE": "Laborbrille",
+        "es-ES": "Gafas de laboratorio",
+        "fr-FR": "Lunettes de laboratoire",
+        "id-ID": "Kacamata sains",
+        "it-IT": "Occhiali da laboratorio",
+        "ja-JP": "実験メガネ",
+        "ko-KR": "실험용 고글",
+        "nb-NO": "Beskyttelsesbriller",
+        "nl-NL": "Laboratoriumbril",
+        "pl-PL": "Okulary ochronne",
+        "pt-BR": "Óculos de proteção",
+        "sv-SE": "Vetenskapsglasögon",
+        "th-TH": "แว่นตาวิทยาศาสตร์",
+        "tr-TR": "Laboratuvar gözlüğü",
+        "uk-UA": "Окуляри науковця",
+        "zh-CN": "科学家眼镜",
+        "zh-TW": "科學家護目鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3550_1687269235273.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827738,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5300,
+      "free": true,
+      "name": "Safety helmet",
+      "names": {
+        "ar-SA": "خوذة الأمان",
+        "da-DK": "Sikkerhedshjelm",
+        "es-ES": "Casco de seguridad",
+        "fr-FR": "Casque de sécurité",
+        "id-ID": "Helm pengaman",
+        "ja-JP": "安全ヘルメット",
+        "ko-KR": "안전 헬멧",
+        "nb-NO": "Vernehjelm",
+        "nl-NL": "Veiligheidshelm",
+        "pl-PL": "Kask ochronny",
+        "pt-BR": "Capacete de segurança",
+        "sv-SE": "Skyddshjälm",
+        "th-TH": "หมวกนิรภัย",
+        "uk-UA": "Захисний шолом",
+        "zh-CN": "安全帽",
+        "zh-TW": "安全頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5300_1698239529151.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827710,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5309,
+      "free": true,
+      "name": "Safari hat",
+      "names": {
+        "ar-SA": "قبعة سفاري",
+        "da-DK": "Safari-hat",
+        "es-ES": "Sombrero safari",
+        "fr-FR": "Chapeau de safari",
+        "id-ID": "Topi safari",
+        "ja-JP": "サファリハット",
+        "ko-KR": "사파리 모자",
+        "nb-NO": "Safarihatt",
+        "pl-PL": "Czapka safari",
+        "pt-BR": "Chapéu de safári",
+        "sv-SE": "Safarihatt",
+        "th-TH": "หมวกซาฟารี",
+        "uk-UA": "Панама",
+        "zh-CN": "狩猎旅行帽",
+        "zh-TW": "狩獵帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5309_1700056603841.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827725,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3600,
+      "free": true,
+      "name": "Pirate patch",
+      "names": {
+        "ar-SA": "رقعة عين القرصان",
+        "da-DK": "Øjenklap til pirat",
+        "de-DE": "Piraten Augenklappe",
+        "es-ES": "Parche pirata",
+        "fr-FR": "Cache-œil de pirate",
+        "id-ID": "Penutup mata bajak laut",
+        "it-IT": "Benda per occhio da pirata",
+        "ja-JP": "海賊アイパッチ",
+        "ko-KR": "해적의 안대",
+        "nb-NO": "Øyelapp",
+        "nl-NL": "Piratenooglapje",
+        "pl-PL": "Opaska na oko pirata",
+        "pt-BR": "Tapa-olho de pirata",
+        "sv-SE": "Piratlapp",
+        "th-TH": "ที่ปิดตาโจรสลัด",
+        "tr-TR": "Korsan göz bandı",
+        "uk-UA": "Піратська пов'язка",
+        "zh-CN": "海盗眼罩",
+        "zh-TW": "海盜眼罩"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3600_1687269252628.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827693,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 1250,
+      "free": true,
+      "name": "Monocle",
+      "names": {
+        "ar-SA": "نظارة لعين واحدة",
+        "da-DK": "Monokel",
+        "de-DE": "Monokel",
+        "es-ES": "Monóculo",
+        "fr-FR": "Monocle",
+        "id-ID": "Monokel",
+        "it-IT": "Monocolo",
+        "ja-JP": "片眼鏡",
+        "ko-KR": "외알안경",
+        "nb-NO": "Monokkel",
+        "nl-NL": "Monocle",
+        "pl-PL": "Monokl",
+        "pt-BR": "Monóculo",
+        "sv-SE": "Monokel",
+        "th-TH": "แว่นตาข้างเดียว",
+        "tr-TR": "Monokl",
+        "uk-UA": "Монокль",
+        "zh-CN": "单片眼镜",
+        "zh-TW": "單片眼鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1250_1688567264808.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827739,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 1300,
+      "free": true,
+      "name": "Mozart wig",
+      "names": {
+        "ar-SA": "شعر موتزارت",
+        "da-DK": "Mozart-paryk",
+        "de-DE": "Mozart-Perücke",
+        "es-ES": "Peluca de Mozart",
+        "fr-FR": "Perruque de Mozart",
+        "id-ID": "Rambut palsu Mozart",
+        "it-IT": "Parrucca di Mozart",
+        "ja-JP": "モーツァルトのかつら",
+        "ko-KR": "모차르트 가발",
+        "nb-NO": "Mozart-parykk",
+        "nl-NL": "Mozartpruik",
+        "pl-PL": "Peruka Mozarta",
+        "pt-BR": "Peruca de Mozart",
+        "sv-SE": "Mozart-peruk",
+        "th-TH": "วิกโมสาร์ท",
+        "tr-TR": "Mozart peruğu",
+        "uk-UA": "Перука Моцарта",
+        "zh-CN": "莫扎特假发",
+        "zh-TW": "莫札特假髮"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1300_1688567298716.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827697,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 1350,
+      "free": true,
+      "name": "Einstein wig",
+      "names": {
+        "ar-SA": "شعر أينشتين",
+        "da-DK": "Einstein-paryk",
+        "de-DE": "Einstein-Perücke",
+        "es-ES": "Peluca de Einstein",
+        "fr-FR": "Perruque d'Einstein",
+        "id-ID": "Rambut palsu Einstein",
+        "it-IT": "Parrucca di Einstein",
+        "ja-JP": "アインシュタインのカツラ",
+        "ko-KR": "아인슈타인 가발",
+        "nb-NO": "Einstein-parykk",
+        "nl-NL": "Einsteinpruik",
+        "pl-PL": "Peruka Einsteina",
+        "pt-BR": "Peruca de Einstein",
+        "sv-SE": "Einstein-peruk",
+        "th-TH": "วิกไอน์สไตน์",
+        "tr-TR": "Einstein peruğu",
+        "uk-UA": "Перука Ейнштейна",
+        "zh-CN": "爱因斯坦假发",
+        "zh-TW": "愛因斯坦假髮"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1350_1688567323860.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827733,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 1400,
+      "free": true,
+      "name": "Elvis wig",
+      "names": {
+        "ar-SA": "شعر إلفيس",
+        "da-DK": "Elvis-paryk",
+        "de-DE": "Elvis-Perücke",
+        "es-ES": "Peluca de Elvis",
+        "fr-FR": "Perruque d'Elvis",
+        "id-ID": "Rambut palsu Elvis",
+        "it-IT": "Parrucca di Elvis",
+        "ja-JP": "エルヴィスのかつら",
+        "ko-KR": "엘비스 가발",
+        "nb-NO": "Elvis-parykk",
+        "nl-NL": "Elvispruik",
+        "pl-PL": "Peruka Elvisa",
+        "pt-BR": "Peruca do Elvis",
+        "sv-SE": "Elvis-peruk",
+        "th-TH": "วิกเอลวิส",
+        "tr-TR": "Elvis peruğu",
+        "uk-UA": "Перука Елвіса",
+        "zh-CN": "猫王假发",
+        "zh-TW": "貓王假髮"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1400_1688567354560.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827745,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3650,
+      "free": true,
+      "name": "Sunglasses",
+      "names": {
+        "ar-SA": "نظارات شمسية",
+        "da-DK": "Solbriller",
+        "de-DE": "Sonnenbrille",
+        "es-ES": "Gafas de sol",
+        "fr-FR": "Lunettes de soleil",
+        "id-ID": "Kacamata hitam",
+        "it-IT": "Occhiali da sole",
+        "ja-JP": "サングラス",
+        "ko-KR": "선글라스",
+        "nb-NO": "Solbriller",
+        "nl-NL": "Zonnebril",
+        "pl-PL": "Okulary przeciwsłoneczne",
+        "pt-BR": "Óculos de sol",
+        "sv-SE": "Solglasögon",
+        "th-TH": "แว่นกันแดด",
+        "tr-TR": "Güneş gözlüğü",
+        "uk-UA": "Сонцезахисні окуляри",
+        "zh-CN": "太阳镜",
+        "zh-TW": "太陽眼鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3650_1687269273457.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827730,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3700,
+      "free": true,
+      "name": "Top hat",
+      "names": {
+        "ar-SA": "قبعة عالية سوداء",
+        "da-DK": "Tophat",
+        "de-DE": "Zylinderhut",
+        "es-ES": "Sombrero de copa",
+        "fr-FR": "Chapeau haut de forme",
+        "id-ID": "Topi tinggi",
+        "it-IT": "Cilindro",
+        "ja-JP": "シルクハット",
+        "ko-KR": "실크 해트",
+        "nb-NO": "Flosshatt",
+        "nl-NL": "Hoge hoed",
+        "pl-PL": "Cylinder",
+        "pt-BR": "Cartola",
+        "sv-SE": "Cylinderhatt",
+        "th-TH": "หมวกทรงสูง",
+        "tr-TR": "Silindir şapka",
+        "uk-UA": "Циліндр",
+        "zh-CN": "大礼帽",
+        "zh-TW": "大禮帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3700_1687269290383.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827743,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3750,
+      "free": true,
+      "name": "Propeller hat",
+      "names": {
+        "ar-SA": "قبعة بمروحة",
+        "da-DK": "Propelhat",
+        "de-DE": "Propeller-Mütze",
+        "es-ES": "Casco de hélice",
+        "fr-FR": "Chapeau avec hélice",
+        "id-ID": "Topi baling-baling",
+        "it-IT": "Cappello con elica",
+        "ja-JP": "プロペラハット",
+        "ko-KR": "프로펠러 모자",
+        "nb-NO": "Propellhatt",
+        "nl-NL": "Propellerhoed",
+        "pl-PL": "Czapka ze śmigłem",
+        "pt-BR": "Boné de hélice",
+        "sv-SE": "Propellerhatt",
+        "th-TH": "หมวกใบพัด",
+        "tr-TR": "Pervaneli şapka",
+        "uk-UA": "Капелюх із пропелером",
+        "zh-CN": "螺旋桨小帽",
+        "zh-TW": "螺旋槳帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3750_1687269310146.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738332827704,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3800,
+      "free": true,
+      "name": "Party hat",
+      "names": {
+        "ar-SA": "قبعة الاحتفال",
+        "da-DK": "Festhat",
+        "de-DE": "Partyhut",
+        "es-ES": "Sombrero de fiesta",
+        "fr-FR": "Chapeau de fête",
+        "id-ID": "Topi pesta",
+        "it-IT": "Cappello da festa",
+        "ja-JP": "パーティーハット",
+        "ko-KR": "파티 모자",
+        "nb-NO": "Festhatt",
+        "nl-NL": "Feesthoedje",
+        "pl-PL": "Czapka imprezowa",
+        "pt-BR": "Chapéu de festa",
+        "sv-SE": "Partyhatt",
+        "th-TH": "หมวกปาร์ตี้",
+        "tr-TR": "Parti şapkası",
+        "uk-UA": "Капелюх для вечірки",
+        "zh-CN": "派对帽",
+        "zh-TW": "派對帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3800_1687269336404.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827736,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3850,
+      "free": true,
+      "name": "Incognito",
+      "names": {
+        "ar-SA": "مُتنكر",
+        "da-DK": "Inkognito",
+        "de-DE": "Inkognito",
+        "es-ES": "Incógnito",
+        "fr-FR": "Incognito",
+        "id-ID": "Topeng penyamaran",
+        "it-IT": "Incognito",
+        "ja-JP": "謎の人物",
+        "ko-KR": "비밀맨",
+        "nb-NO": "Inkognito",
+        "nl-NL": "Incognito",
+        "pl-PL": "Incognito",
+        "pt-BR": "Disfarce",
+        "sv-SE": "Inkognito",
+        "th-TH": "ปกปิดตัวตน",
+        "tr-TR": "Kılık değiştirme gözlüğü",
+        "uk-UA": "Інкогніто",
+        "zh-CN": "伪装",
+        "zh-TW": "偽裝眼鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3850_1687269359080.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827711,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3900,
+      "free": true,
+      "name": "Pacifier",
+      "names": {
+        "ar-SA": "مصَّاصة",
+        "da-DK": "Sut",
+        "de-DE": "Schnuller",
+        "es-ES": "Chupete",
+        "fr-FR": "Sucette",
+        "id-ID": "Dot",
+        "it-IT": "Ciuccio",
+        "ja-JP": "おしゃぶり",
+        "ko-KR": "쪽쪽이",
+        "nb-NO": "Smukk",
+        "nl-NL": "Fopspeen",
+        "pl-PL": "Smoczek",
+        "pt-BR": "Chupeta",
+        "sv-SE": "Napp",
+        "th-TH": "จุกนม",
+        "tr-TR": "Emzik",
+        "uk-UA": "Соска",
+        "zh-CN": "奶嘴",
+        "zh-TW": "奶嘴"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3900_1687269375700.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827725,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 3950,
+      "free": true,
+      "name": "Pancakes",
+      "names": {
+        "ar-SA": "فطائر مُحلاة",
+        "da-DK": "Pandekager",
+        "de-DE": "Pfannkuchen",
+        "es-ES": "Panqueques",
+        "fr-FR": "Pancakes",
+        "id-ID": "Panekuk",
+        "it-IT": "Pancake",
+        "ja-JP": "パンケーキ",
+        "ko-KR": "팬케이크",
+        "nb-NO": "Pannekaker",
+        "nl-NL": "Pannenkoeken",
+        "pl-PL": "Naleśniki",
+        "pt-BR": "Panquecas",
+        "sv-SE": "Pannkakor",
+        "th-TH": "แพนเค้ก",
+        "tr-TR": "Pankek",
+        "uk-UA": "Млинці",
+        "zh-CN": "薄煎饼",
+        "zh-TW": "鬆餅"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3950_1687269392371.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827742,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4000,
+      "free": true,
+      "name": "Ice cream",
+      "names": {
+        "ar-SA": "آيس كريم",
+        "da-DK": "Is",
+        "de-DE": "Eistüte",
+        "es-ES": "Helado",
+        "fr-FR": "Glace",
+        "id-ID": "Es krim",
+        "it-IT": "Gelato",
+        "ja-JP": "アイスクリーム",
+        "ko-KR": "아이스크림",
+        "nb-NO": "Iskrem",
+        "nl-NL": "IJsje",
+        "pl-PL": "Lody",
+        "pt-BR": "Sorvete",
+        "sv-SE": "Glass",
+        "th-TH": "ไอศกรีม",
+        "tr-TR": "Dondurma",
+        "uk-UA": "Морозиво",
+        "zh-CN": "冰淇淋",
+        "zh-TW": "冰淇淋"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4000_1687269410801.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827719,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4150,
+      "free": true,
+      "name": "Football helmet",
+      "names": {
+        "ar-SA": "خوذة كرة القدم الأمريكية",
+        "da-DK": "Fodboldhjelm",
+        "de-DE": "Football-Helm",
+        "es-ES": "Casco de fútbol",
+        "fr-FR": "Casque de football américain",
+        "id-ID": "Helm football",
+        "it-IT": "Casco da football americano",
+        "ja-JP": "フットボールヘルメット",
+        "ko-KR": "미식 축구 헬멧",
+        "nb-NO": "Fotballhjelm",
+        "nl-NL": "Football-helm",
+        "pl-PL": "Kask futbolowy",
+        "pt-BR": "Capacete de futebol americano",
+        "sv-SE": "Fotbollshjälm",
+        "th-TH": "หมวกอเมริกันฟุตบอล",
+        "tr-TR": "Amerikan futbolu kaskı",
+        "uk-UA": "Футбольний шолом",
+        "zh-CN": "橄榄球头盔",
+        "zh-TW": "美式足球頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4150_1687269467852.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827708,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 11038,
+      "free": false,
+      "name": "Ear antennas",
+      "names": {
+        "da-DK": "Øre-antenner",
+        "es-ES": "Antenas de orejas",
+        "fr-FR": "Antennes oreilles",
+        "ko-KR": "귀 안테나",
+        "pl-PL": "Antenki douszne",
+        "sv-SE": "Öronantenner",
+        "th-TH": "หูรับสัญญาณ",
+        "uk-UA": "Вуха-антени"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/11038_1736339017333.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738581177716,
+      "collections": [
+        {
+          "id": 11036,
+          "name": "Season 6 - Robots",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 11039,
+      "free": false,
+      "name": "Rebreather",
+      "names": {
+        "da-DK": "Luftflaske",
+        "es-ES": "Respirador",
+        "ko-KR": "재호흡기",
+        "pl-PL": "Respirator",
+        "sv-SE": "Rebreather",
+        "th-TH": "เครื่องช่วยหายใจ",
+        "uk-UA": "Респіратор"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/11039_1736339005921.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738581177721,
+      "collections": [
+        {
+          "id": 11036,
+          "name": "Season 6 - Robots",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 11037,
+      "free": false,
+      "name": "Robo goggles",
+      "names": {
+        "da-DK": "Robo-briller",
+        "es-ES": "Gafas robóticas",
+        "ko-KR": "로보 고글",
+        "pl-PL": "Gogle robota",
+        "sv-SE": "Robotglasögon",
+        "th-TH": "แว่นหุ่นโรโบ",
+        "uk-UA": "Робоокуляри"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/11037_1736338991046.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738581177712,
+      "collections": [
+        {
+          "id": 11036,
+          "name": "Season 6 - Robots",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 11040,
+      "free": false,
+      "name": "Cyber helmet",
+      "names": {
+        "da-DK": "Cyber-hjelm",
+        "es-ES": "Casco cibernético",
+        "fr-FR": "Cyber casque",
+        "ko-KR": "사이버 헬멧",
+        "pl-PL": "Cyber kask",
+        "sv-SE": "Cyberhjälm",
+        "th-TH": "หมวกนิรภัยไซเบอร์",
+        "uk-UA": "Кібершолом"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/11040_1736338968163.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738581177812,
+      "collections": [
+        {
+          "id": 11036,
+          "name": "Season 6 - Robots",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4200,
+      "free": true,
+      "name": "Space helmet",
+      "names": {
+        "ar-SA": "خوذة رائد الفضاء",
+        "da-DK": "Rumhjelm",
+        "de-DE": "Weltraumhelm",
+        "es-ES": "Casco espacial",
+        "fr-FR": "Casque d'astronaute",
+        "id-ID": "Helm astronot",
+        "it-IT": "Casco da astronauta",
+        "ja-JP": "スペースヘルメット",
+        "ko-KR": "우주인 헬멧",
+        "nb-NO": "Astronauthjelm",
+        "nl-NL": "Ruimtehelm",
+        "pl-PL": "Kask astronauty",
+        "pt-BR": "Capacete espacial",
+        "sv-SE": "Rymdhjälm",
+        "th-TH": "หมวกนักบินอวกาศ",
+        "tr-TR": "Uzay başlığı",
+        "uk-UA": "Космошолом",
+        "zh-CN": "太空头盔",
+        "zh-TW": "太空頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4200_1687269482849.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827742,
+      "collections": [
+        {
+          "id": 1050,
+          "name": "basic",
+          "defaultCollection": true,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4400,
+      "free": false,
+      "name": "Cosmo headgear",
+      "names": {
+        "ar-SA": "خوذة كونية",
+        "da-DK": "Kosmisk hjelm",
+        "de-DE": "Kosmischer Helm",
+        "es-ES": "Casco Cosmo",
+        "fr-FR": "Casque cosmos",
+        "id-ID": "Helm luar angkasa",
+        "it-IT": "Casco cosmico",
+        "ja-JP": "宇宙ヘルメット",
+        "ko-KR": "우주 헤드기어",
+        "nb-NO": "Kosmisk hjelm",
+        "nl-NL": "Kosmoshelm",
+        "pl-PL": "Kosmiczny kask",
+        "pt-BR": "Capacete cósmico",
+        "sv-SE": "Kosmoshjälm",
+        "th-TH": "หมวกกันน็อกคอสโม",
+        "tr-TR": "Kozmo başlık",
+        "uk-UA": "Космошолом",
+        "zh-CN": "宇宙头套",
+        "zh-TW": "宇宙頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4400_1687424481208.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827708,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4350,
+      "free": false,
+      "name": "Transmitter hat",
+      "names": {
+        "ar-SA": "خوذة إرسال",
+        "da-DK": "Transmitterhat",
+        "de-DE": "Senderhut",
+        "es-ES": "Casco transmisor",
+        "fr-FR": "Casque émetteur",
+        "id-ID": "Topi berpemancar",
+        "it-IT": "Scolapasta radiotrasmittente",
+        "ja-JP": "トランスミッター・ヘルメット",
+        "ko-KR": "송신기 모자",
+        "nb-NO": "Transmitterhatt",
+        "nl-NL": "Zenderhoed",
+        "pl-PL": "Czapka z nadajnikiem",
+        "pt-BR": "Chapéu transmissor",
+        "sv-SE": "Radiohjälm",
+        "th-TH": "หมวกส่งสัญญาณ",
+        "tr-TR": "Verici başlığı",
+        "uk-UA": "Капелюх-трансмітер",
+        "zh-CN": "发射机帽",
+        "zh-TW": "發射器頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4350_1687424461062.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738333080856,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4250,
+      "free": false,
+      "name": "Cardboard helmet",
+      "names": {
+        "ar-SA": "خوذة من الكرتون",
+        "da-DK": "Paphjelm",
+        "de-DE": "Papphelm",
+        "es-ES": "Casco de cartón",
+        "fr-FR": "Casque en carton",
+        "id-ID": "Helm kardus",
+        "it-IT": "Casco di cartone",
+        "ja-JP": "ダンボールヘルメット",
+        "ko-KR": "골판지 헬멧",
+        "nb-NO": "Papphjelm",
+        "nl-NL": "Kartonnen helm",
+        "pl-PL": "Kask z kartonu",
+        "pt-BR": "Capacete de papelão",
+        "sv-SE": "Kartonghjälm",
+        "th-TH": "หมวกกระดาษลัง",
+        "tr-TR": "Kartondan kask",
+        "uk-UA": "Картонний шолом",
+        "zh-CN": "纸板头盔",
+        "zh-TW": "紙箱頭盔"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4250_1687424163221.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827713,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4300,
+      "free": false,
+      "name": "Laser lens",
+      "names": {
+        "ar-SA": "نظارات ليزر",
+        "da-DK": "Laserbriller",
+        "de-DE": "Laser-Brille",
+        "es-ES": "Lentes láser",
+        "fr-FR": "Lunettes laser",
+        "id-ID": "Kacamata laser",
+        "it-IT": "Lenti laser",
+        "ja-JP": "レーザーレンズ",
+        "ko-KR": "레이저 렌즈",
+        "nb-NO": "Laserbriller",
+        "nl-NL": "Laserbril",
+        "pl-PL": "Okulary laserowe",
+        "pt-BR": "Lente laser",
+        "sv-SE": "Laserglasögon",
+        "th-TH": "เลนส์เลเซอร์",
+        "tr-TR": "Işın gözlüğü",
+        "uk-UA": "Лазерний приціл",
+        "zh-CN": "激光透镜",
+        "zh-TW": "雷射眼"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4300_1687424362699.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738332827734,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4500,
+      "free": false,
+      "name": "Cyborg eye",
+      "names": {
+        "ar-SA": "عين سايبورغ",
+        "da-DK": "Cyborgøje",
+        "de-DE": "Cyborg-Auge",
+        "es-ES": "Ojo cíborg",
+        "fr-FR": "Œil de cyborg",
+        "id-ID": "Mata cyborg",
+        "it-IT": "Occhio bionico",
+        "ja-JP": "サイボーグ・アイ",
+        "ko-KR": "사이보그의 눈",
+        "nb-NO": "Kyborgøye",
+        "nl-NL": "Cyborg-oog",
+        "pl-PL": "Oko Cyborga",
+        "pt-BR": "Monóculo ciborgue",
+        "sv-SE": "Cyborg-öga",
+        "th-TH": "ตาไซบอร์ก",
+        "tr-TR": "Cyborg gözü",
+        "uk-UA": "Кібероко",
+        "zh-CN": "塞博格之眼",
+        "zh-TW": "生化人眼罩"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4500_1687424564329.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827695,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4650,
+      "free": false,
+      "name": "Galaxy glasses",
+      "names": {
+        "ar-SA": "نظارات مجريّة",
+        "da-DK": "Galaksebriller",
+        "de-DE": "Galaktische Brille",
+        "es-ES": "Gafas Galaxia",
+        "fr-FR": "Lunettes galaxie",
+        "id-ID": "Kacamata galaksi",
+        "it-IT": "Occhiali galattici",
+        "ja-JP": "ギャラクシーメガネ",
+        "ko-KR": "은하수 안경",
+        "nb-NO": "Galaksebriller",
+        "nl-NL": "Melkwegbril",
+        "pl-PL": "Okulary galaktyczne",
+        "pt-BR": "Óculos intergalácticos",
+        "sv-SE": "Galaxglasögon",
+        "th-TH": "แว่นกาแล็กซี",
+        "tr-TR": "Galaksi gözlüğü",
+        "uk-UA": "Галактичні окуляри",
+        "zh-CN": "银河眼镜",
+        "zh-TW": "銀河眼鏡"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4650_1687424652127.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827705,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4450,
+      "free": false,
+      "name": "UFO cap",
+      "names": {
+        "ar-SA": "قبعة طبق طائر",
+        "da-DK": "Ufokasket",
+        "de-DE": "UFO-Mütze",
+        "es-ES": "Gorra OVNI",
+        "fr-FR": "Casquette OVNI",
+        "id-ID": "Topi UFO",
+        "it-IT": "Cappello da ufologo",
+        "ja-JP": "UFOキャップ",
+        "ko-KR": "UFO 야구 모자",
+        "nb-NO": "UFO-kaps",
+        "nl-NL": "Ufo-pet",
+        "pl-PL": "Czapka UFO",
+        "pt-BR": "Boné OVNI",
+        "sv-SE": "UFO-keps",
+        "th-TH": "หมวกยูเอฟโอ",
+        "tr-TR": "UFO şapkası",
+        "uk-UA": "Кепка уфолога",
+        "zh-CN": "飞碟帽",
+        "zh-TW": "飛碟帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4450_1687424499281.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827740,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4550,
+      "free": false,
+      "name": "Triclops hat",
+      "names": {
+        "ar-SA": "قبعة بثلاثة أعين",
+        "da-DK": "Triklop-hjelm",
+        "de-DE": "Triclops-Hut\n",
+        "es-ES": "Casco Tríclope",
+        "fr-FR": "Casque triclope",
+        "id-ID": "Topi tiga mata",
+        "it-IT": "Casco da ciclope",
+        "ja-JP": "三つ目ハット",
+        "ko-KR": "세눈박이 모자",
+        "nb-NO": "Rød romvesenhatt",
+        "nl-NL": "Triclopsmuts",
+        "pl-PL": "Czapka Tryklopa",
+        "pt-BR": "Chapéu triclope",
+        "sv-SE": "Triclops-hatt",
+        "th-TH": "หมวกไตรคลอปส์",
+        "tr-TR": "Üçgöz şapkası",
+        "uk-UA": "Капелюх триклопа",
+        "zh-CN": "三眼怪兽帽",
+        "zh-TW": "三眼怪怪帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4550_1687424596336.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738333080792,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4600,
+      "free": false,
+      "name": "Alien hat",
+      "names": {
+        "ar-SA": "قبعة كائن فضائي",
+        "da-DK": "Rumvæsenhjelm",
+        "de-DE": "Alien-Hut",
+        "es-ES": "Casco alienígena",
+        "fr-FR": "Casque d'extraterrestre",
+        "id-ID": "Topi alien",
+        "it-IT": "Casco da alieno",
+        "ja-JP": "エイリアンハット",
+        "ko-KR": "외계인 모자",
+        "nb-NO": "Grønn romvesenhatt",
+        "nl-NL": "Alienmuts",
+        "pl-PL": "Czapka kosmity",
+        "pt-BR": "Touca alienígena",
+        "sv-SE": "Alienhatt",
+        "th-TH": "หมวกเอเลี่ยน",
+        "tr-TR": "Uzaylı şapkası",
+        "uk-UA": "Капелюх прибульця",
+        "zh-CN": "外星人帽子",
+        "zh-TW": "外星帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4600_1687424621354.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827745,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 4700,
+      "free": false,
+      "name": "UFO beam",
+      "names": {
+        "ar-SA": "شعاع طبق طائر",
+        "da-DK": "Ufostråle",
+        "de-DE": "UFO-Strahl",
+        "es-ES": "Rayo OVNI",
+        "fr-FR": "Rayon d'OVNI",
+        "id-ID": "Sinar UFO",
+        "it-IT": "Fascio di luce alieno",
+        "ja-JP": "UFOビーム",
+        "ko-KR": "UFO 광선",
+        "nb-NO": "UFO-stråle",
+        "nl-NL": "Ufo-straal",
+        "pl-PL": "Światło UFO",
+        "pt-BR": "Feixe de luz alienígena",
+        "sv-SE": "UFO-stråle",
+        "th-TH": "ลำแสงยูเอฟโอ",
+        "tr-TR": "UFO ışını",
+        "uk-UA": "Промінь НЛО",
+        "zh-CN": "飞碟光束",
+        "zh-TW": "飛碟光束"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4700_1687424695450.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827737,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5322,
+      "free": false,
+      "name": "Stars and planets",
+      "names": {
+        "ar-SA": "النجوم والكواكب",
+        "da-DK": "Stjerner og planeter",
+        "es-ES": "Estrellas y planetas",
+        "fr-FR": "Étoiles et planètes (saison pilote)",
+        "id-ID": "Bintang dan planet",
+        "ja-JP": "星と惑星",
+        "ko-KR": "별과 행성(파일럿 시즌)",
+        "nb-NO": "Stjerner og planeter",
+        "pl-PL": "Gwiazdy i planety",
+        "pt-BR": "Estrelas e planetas (temporada piloto)",
+        "sv-SE": "Stjärnor och planeter",
+        "th-TH": "ดวงดาวและดาวเคราะห์",
+        "uk-UA": "Зірки та планети",
+        "zh-CN": "恒星和行星（飞行员季）",
+        "zh-TW": "星空閃耀 (試用版)"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5322_1701858861728.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738333080801,
+      "collections": [
+        {
+          "id": 1650,
+          "name": "space",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5461,
+      "free": false,
+      "name": "Soccer cap",
+      "names": {
+        "ar-SA": "قبعة كرة القدم",
+        "da-DK": "Fodboldkasket",
+        "es-ES": "Gorra de fútbol",
+        "fr-FR": "Casquette de football",
+        "id-ID": "Topi sepak bola",
+        "ja-JP": "サッカーのキャップ",
+        "ko-KR": "축구 모자",
+        "nb-NO": "Fotballue",
+        "pl-PL": "Czapka piłkarska",
+        "sv-SE": "Fotbollskeps",
+        "th-TH": "หมวกฟุตบอล",
+        "uk-UA": "Футбольна кепка",
+        "zh-TW": "足球帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5461_1717145946426.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827703,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5460,
+      "free": false,
+      "name": "Scuba mask",
+      "names": {
+        "ar-SA": "قناع الغوص",
+        "da-DK": "Dykkermaske",
+        "es-ES": "Máscara de buceo",
+        "fr-FR": "Masque de plongée",
+        "id-ID": "Masker scuba",
+        "ja-JP": "ダイビングマスク",
+        "ko-KR": "스쿠버 마스크",
+        "nb-NO": "Dykkemaske",
+        "pl-PL": "Maska do nurkowania",
+        "sv-SE": "Dykarmask",
+        "th-TH": "หน้ากากดำน้ำ",
+        "uk-UA": "Маска для плавання",
+        "zh-TW": "潛水面罩"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5460_1717145652893.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827702,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 5456,
+      "free": false,
+      "name": "Headband",
+      "names": {
+        "ar-SA": "عصابة رأس",
+        "da-DK": "Pandebånd",
+        "es-ES": "Vincha",
+        "fr-FR": "Bandeau",
+        "id-ID": "Ikat kepala",
+        "ja-JP": "ヘアバンド",
+        "ko-KR": "머리띠",
+        "nb-NO": "Pannebånd",
+        "pl-PL": "Opaska na głowę",
+        "sv-SE": "Pannband",
+        "th-TH": "ที่คาดผม",
+        "uk-UA": "Пов'язка на голову",
+        "zh-TW": "髮帶"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5456_1717145291792.svg",
+      "autoAssign": true,
+      "modifiedAt": 1738332827702,
+      "collections": [
+        {
+          "id": 5448,
+          "name": "Season 2 - Summer",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    },
+    {
+      "id": 10789,
+      "free": false,
+      "name": "Turkey hat",
+      "names": {
+        "ar-SA": "قبعة ديك رومي",
+        "da-DK": "Kalkunhat",
+        "de-DE": "Truthahn-Hut",
+        "es-ES": "Sombrero de pavo",
+        "fr-FR": "Chapeau en forme de dinde",
+        "it-IT": "Cappello da tacchino",
+        "ja-JP": "ターキーハット",
+        "ko-KR": "칠면조 모자",
+        "nb-NO": "Kalkunhatt",
+        "nl-NL": "Kalkoenhoed",
+        "pl-PL": "Czapka indyk",
+        "pt-BR": "Chapéu de peru",
+        "sv-SE": "Kalkonhatt",
+        "th-TH": "หมวกไก่งวง",
+        "tr-TR": "Hindi şapka",
+        "uk-UA": "Капелюх-індичка",
+        "zh-CN": "火鸡帽",
+        "zh-TW": "火雞帽"
+      },
+      "random": false,
+      "enabled": true,
+      "resource": "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10789_1730373768087.svg",
+      "autoAssign": false,
+      "modifiedAt": 1738332827696,
+      "collections": [
+        {
+          "id": 10773,
+          "name": "Season 5 - Autumn/Winter",
+          "defaultCollection": false,
+          "partnerCollection": false
+        }
+      ]
+    }
+ ]

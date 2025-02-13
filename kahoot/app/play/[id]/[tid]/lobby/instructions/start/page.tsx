@@ -1,49 +1,239 @@
 "use client";
-import { useSocket } from "@/src/hooks/useSocket";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-const Page = () => {
-  const socket = useSocket();
-  const navigation = useRouter();
-  useEffect(() => {
-    socket?.on("question_playing_student_process", ({url}) => {
-      navigation.push(url);
-    });
+import { useSocket } from '@/src/hooks/useSocket';
+import { CircleIcon, DiamondIcon, KahootIcon, SliderIcon, SquareIcon, TriangleIcon, TrueFalseIcon, TypeAnswerIcon } from '@/src/lib/svg';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion'
+import { useSelector } from 'react-redux';
+import { RootState } from '@/src/redux/store';
+import AnimatedAvatar from '@/src/components/animated/AnimatedAvatar';
+// import { useSocket } from "@/src/hooks/useSocket";
+// import { useRouter } from "next/navigation";
+// import React, { useEffect } from "react";
+// const Page = () => {
+//   const socket = useSocket();
+//   const navigation = useRouter();
+//   useEffect(() => {
+//     socket?.on("question_playing_student_process", ({url}) => {
+//       navigation.push(url);
+//     });
 
-    
 
-  }, []);
+
+//   }, []);
+//   return (
+//     <div  className="w-screen h-screen flex flex-col items-center justify-center ">
+//       <h3 className="text-4xl md:text-7xl font-black text-white mb-6">Get Ready!</h3>
+//       <svg
+//         className="animate-spin w-32 h-32"
+//         xmlns="http://www.w3.org/2000/svg"
+//         viewBox="0 0 100 100"
+//         preserveAspectRatio="xMidYMid"
+//         fill="none"
+//       >
+//         <circle
+//           className="opacity-50"
+//           cx="50"
+//           cy="50"
+//           r="40"
+//           stroke="white"
+//           strokeWidth="20"
+//         />
+//         <circle
+//           cx="50"
+//           cy="50"
+//           r="40"
+//           stroke="white"
+//           strokeWidth="20"
+//           strokeDasharray="157 157"
+//           strokeDashoffset="0"
+//         />
+//       </svg>
+//       <h4 className="text-white text-3xl font-bold mt-6">Loading...</h4>
+//     </div>
+//   );
+// };
+
+// export default Page;
+
+
+const InitialLoading = () => {
   return (
-    <div  className="w-screen h-screen flex flex-col items-center justify-center ">
-      <h3 className="text-4xl md:text-7xl font-black text-white mb-6">Get Ready!</h3>
-      <svg
-        className="animate-spin w-32 h-32"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="xMidYMid"
-        fill="none"
-      >
-        <circle
-          className="opacity-50"
-          cx="50"
-          cy="50"
-          r="40"
-          stroke="white"
-          strokeWidth="20"
-        />
-        <circle
-          cx="50"
-          cy="50"
-          r="40"
-          stroke="white"
-          strokeWidth="20"
-          strokeDasharray="157 157"
-          strokeDashoffset="0"
-        />
-      </svg>
-      <h4 className="text-white text-3xl font-bold mt-6">Loading...</h4>
+    <div className="w-screen gap-4 flex-col h-screen flex bg-black/15 items-center justify-center ">
+      <h3 className="text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100">Get Ready!</h3>
+      <svg id="spinner_svg__Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 140 140" enableBackground="new 0 0 140 140" xmlSpace="preserve" color="#fff" aria-label="Please wait" className="animate-spin  w-[130px] h-[130px]"><g><circle opacity="0" fill="#FFFFFF" cx="70" cy="70" r="70"></circle><g><path fill="#FFFFFF" d="M70,0C31.3,0,0,31.3,0,70h35c0-19.3,15.7-35,35-35s35,15.7,35,35h35C140,31.3,108.7,0,70,0z"></path></g></g></svg>
+      <h3 className="text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100">Loaing...</h3>
+    </div>
+  )
+}
+
+const WaitingForQuestion = ({ index, question }) => {
+  const [count, setCount] = useState(5);
+
+  useEffect(() => {
+    if (count <= 0) return;
+
+    const interval = setInterval(() => {
+      setCount((prev) => prev - 1);
+    }, 1100);
+
+    return () => clearInterval(interval);
+  }, [count]); 
+
+  return (
+    <div className="h-screen w-screen flex flex-col bg-black/15">
+   
+      <div className="w-full flex h-[60px] justify-center items-center py-2 relative">
+        <div className="h-[50px] absolute left-4 bg-white text-black font-semibold w-[50px] rounded-full flex items-center justify-center text-xl">
+          {index !== null ? index : "1"}
+        </div>
+        <div className="flex py-2 items-center justify-center px-4 gap-2 bg-white text-black rounded-[50px]">
+          {question.type === "quiz" && <KahootIcon w={30} h={30} />}
+          {question.type === "true/false" && <TrueFalseIcon h={30} w={30} />}
+          {question.type === "slider" && <SliderIcon w={30} h={30} />}
+          {question.type === "typeanswer" && <TypeAnswerIcon h={30} w={30} />}
+          <h5 className="font-semibold text-lg capitalize">{question.type}</h5>
+        </div>
+      </div>
+
+      {/* Countdown Section */}
+      <div className="flex flex-1 gap-4 flex-col w-full items-center justify-center">
+        <h2 className="text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100">
+          Question {index}
+        </h2>
+
+        {/* Animated Countdown Circle */}
+        <div className="w-[100px] flex items-center  justify-center h-[100px] relative">
+          <div className="w-full top-0 z-0 left-0 flex items-center justify-center absolute h-full animate-spin">
+            <div className="h-full w-1/2 bg-white rounded-tl-[50px] rounded-bl-[50px]" />
+            <div className="h-full w-1/2 bg-gray-300 rounded-tr-[50px] rounded-br-[50px]" />
+          </div>
+          <div className="text-4xl z-50 relative font-black text-black">{count > 0 ? count : "Go!"}</div>
+        </div>
+
+        <h2 className="text-3xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100">
+          {count > 0 ? "Ready!" : "Start!"}
+        </h2>
+      </div>
     </div>
   );
 };
 
-export default Page;
+
+const QuestionOptionSection = ({ socket, options, question,student}) => {
+  const [count, setCount] = useState<number | null>(null);
+  const [isResult,setIsResult] = useState<boolean>(false);
+  useEffect(() => {
+    if (socket) {
+      socket.on("setCount", ({ count }) => {
+        setCount(count);
+      });
+    }
+    return () => {
+      socket?.off("setCount");
+    };
+  }, [socket]);
+
+  const icons = [
+    { icon: <TriangleIcon width={130} height={130} /> },
+    { icon: <DiamondIcon width={130} height={130} /> },
+    { icon: <CircleIcon width={130} height={130} /> },
+    { icon: <SquareIcon width={130} height={130} /> },
+  ];
+  const colors = ["red", "blue", "#C79200", "green"];
+
+  const handleSubmitAnswer = (option) => {
+    socket.emit("submit_answer",{question,option,student})
+  }
+
+  return (
+    <div className="w-screen h-screen flex flex-col  text-white">
+      <div className="w-full flex h-[60px] justify-center items-center py-2 relative">
+        <div className="h-[50px] absolute left-4 bg-white text-black font-semibold w-[50px] rounded-full flex items-center justify-center text-xl">
+          {count !== null ? count : "0"}
+        </div>
+        <div className="flex py-2 items-center justify-center px-4 gap-2 bg-white text-black rounded-[50px]">
+          {question.type === 'quiz' && <KahootIcon w={30} h={30} />}
+          {question.type === "true/false" && <TrueFalseIcon h={30} w={30} />}
+          {question.type === "slider" && <SliderIcon w={30} h={30} />}
+          {question.type === "typeanswer" && <TypeAnswerIcon h={30} w={30} />}
+          <h5 className="font-semibold text-lg capitalize "> {question.type}</h5>
+        </div>
+      </div>
+      {
+        count && count !== 0 && (
+          <div className="w-full pb-4 pt-2 px-2 md:px-6 h-full grid grid-cols-2 grid-rows-2 gap-2">
+
+            {options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => handleSubmitAnswer(option)}
+                style={{ backgroundColor: colors[index] }}
+                className="flex items-center border-b-8 border-l-4 border-r-8 border-t-4  border-[#0000003e] justify-center w-full h-[99%] md:h-full"
+              >
+                {icons[index]?.icon}
+              </button>
+            ))}
+          </div>
+        )
+      }
+
+      {
+        isResult && (
+          <div className="w-full h-full flex items-center justify-center">
+
+          </div>
+
+        )
+      }
+    </div>
+  );
+};
+const RankStage = () => {
+  return (
+    <div>
+      rank stage
+    </div>
+  )
+}
+const Page = () => {
+  const [stage, setStage] = useState(null);
+  const student = useSelector((root: RootState) => root.student.currentGame.);
+  const [question, setQuestion] = useState(null);
+  const [index, setIndex] = useState(1)
+  console.log("🚀 ~ Page ~ student:", student)
+  const socket = useSocket();
+  useEffect(() => {
+    if (socket) {
+      socket.on("populateCurrentStage", (data) => {
+        if (data.status) {
+          setQuestion(data.data.question);
+          setStage(data.data.stage);
+        }
+      })
+    }
+
+  }, [])
+
+
+  return (
+    <div className={"w-screen h-screen flex flex-col items-center justify-center"}>
+      {!stage && <InitialLoading />}
+      {stage === 1 && <WaitingForQuestion question={{...question,type:'quiz'}} index={index} />}
+      {stage === 2 && <QuestionOptionSection student={student.student} question={question} socket={socket} options={["232323", "44545", "4534", "435"]} />}
+      {stage === 4 && <RankStage />}
+      <div className='w-full bg-white flex relative justify-between p-1 h-[50px]'>
+        <div className=" items-center relative flex">
+          <div className="absolute bottom-0">
+            <AnimatedAvatar avatarItems={student.student.item} chin={false} bg='#0000' h='60px' w='60px' avatarData={student.student.avatar} />
+          </div>
+          <h4 className="text-lg pl-[70px] font-bold">{student.student.nickname}</h4>
+        </div>
+        <div className="h-full w-[60px] rounded-md bg-gray-700 text-white flex items-center justify-center text-lg font-semibold">
+          0
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Page

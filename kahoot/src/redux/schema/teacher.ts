@@ -28,52 +28,22 @@ const teacherSlice = createSlice({
         console.error("No current game found.");
         return;
       }
-      const updatedStudents = state.currentGame.students.map((student) => {
-        if (student._id === actions.payload._id) {
-          return { ...student, avatar: actions.payload.avatar };
-        }
-        return student;
+    
+      state.currentGame.students = state.currentGame.students.map((s) => {
+        return s._id.toString() === actions.payload._id.toString() ? actions.payload : s;
       });
-      const updatedKahootStudents = state.currentGame.kahoot.students.map((student) => {
-        if (student._id === actions.payload._id) {
-          return { ...student, avatar: actions.payload.avatar };
-        }
-        return student;
-      });
-      state.currentGame = {
-        ...state.currentGame,
-        students: updatedStudents,
-        kahoot: {
-          ...state.currentGame.kahoot,
-          students: updatedKahootStudents,
-        },
-      };
     },
+    
     changeStudentCharacterAccessories(state, actions) {
       if (!state.currentGame) {
         console.error("No current game found.");
         return;
       }
-      const updatedStudents = state.currentGame.students.map((student) => {
-        if (student._id === actions.payload._id) {
-          return { ...student, item: actions.payload.item};
-        }
-        return student;
+      state.currentGame.students = state.currentGame.students.map((s) => {
+        return s._id.toString() === actions.payload._id.toString() ? actions.payload : s;
       });
-      const updatedKahootStudents = state.currentGame.kahoot.students.map((student) => {
-        if (student._id === actions.payload._id) {
-          return { ...student, item: actions.payload.item };
-        }
-        return student;
-      });
-      state.currentGame = {
-        ...state.currentGame,
-        students: updatedStudents,
-        kahoot: {
-          ...state.currentGame.kahoot,
-          students: updatedKahootStudents,
-        },
-      };
+
+      
     },
     
   },

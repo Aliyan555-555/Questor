@@ -11,7 +11,7 @@ import {
 } from "@/src/redux/schema/student";
 import { RootState } from "@/src/redux/store";
 import { GrEdit } from "react-icons/gr";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -28,20 +28,14 @@ const Page = () => {
   const [drawerIsActive, setDrawerIsActive] = useState(false);
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const socket = useSocket();
+  const params = useParams();
+  console.log(params.id,params.tid)
   const navigation = useRouter();
   const [loading, setLoading] = useState(true);
   const student = useSelector((state: RootState) => state.student.currentGame);
   const dispatch = useDispatch();
 
   const [isCharacter, setIsCharacter] = useState(true);
-
-  const getQuizIdFromRoomId = useCallback(
-    (roomId: string, get: string): string => {
-      const [teacherId, quizId] = roomId.split("-");
-      return get === "teacher" ? teacherId : quizId;
-    },
-    []
-  );
   const closeDrawerOnOutsideClick = useCallback(
     (e: MouseEvent) => {
       if (
@@ -66,23 +60,20 @@ const Page = () => {
         navigation.push(`/play/connect/to/game`);
       }
     };
-
+    console.log(student)
     socket?.on("started", () => {
       navigation.push(
-        `/play/${getQuizIdFromRoomId(
-          student?.roomId ?? "",
-          "quiz"
-        )}/${getQuizIdFromRoomId(
-          student?.roomId ?? "",
-          "teacher"
-        )}/lobby/instructions/start`
+        `/play/${params.id}/${params.tid}/lobby/instructions/start`
       );
     });
 
     socket?.on("studentJoined", handleStudentJoined);
+
+
     socket?.emit("checkUserInRoom", {
-      roomId: student?.roomId,
+      roomId: student.student.room._id,
       studentData: student,
+      token:student?.refreshToken ?? null,
     });
 
     socket?.on("changedYourCharacter", (data) => {
@@ -125,7 +116,6 @@ const Page = () => {
     student,
     dispatch,
     drawerIsActive,
-    getQuizIdFromRoomId,
   ]);
 
   const fetch = async () => {
@@ -143,11 +133,13 @@ const Page = () => {
 
   const handleChangeCharacter = useCallback(
     (selectedAvatar: string) => {
+    if (selectedAvatar !== student.student.avatar._id){
       socket?.emit("changeCharacter", {
         roomId: student?.roomId,
         selectedAvatarId: selectedAvatar,
         student: student?.student,
       });
+    }
     },
     [socket, student]
   );
@@ -164,6 +156,7 @@ const Page = () => {
   );
 
   useEffect(() => {
+
     fetch();
   }, []);
 
@@ -225,9 +218,9 @@ const Page = () => {
           {isCharacter
             ? characters.map((c) => (
                 <div
-                  key={c.id}
+                  key={c._id}
                   className="w-fit h-fit"
-                  onClick={() => handleChangeCharacter(c.id)}
+                  onClick={() => handleChangeCharacter(c._id)}
                 >
                   <AnimatedAvatar
                     avatarData={c}
@@ -239,8 +232,8 @@ const Page = () => {
               ))
             : accessories.map((a) => (
                 <div
-                  key={a.id}
-                  onClick={() => handleChangeCharacterAccessories(a.id)}
+                  key={a._id}
+                  onClick={() => handleChangeCharacterAccessories(a._id)}
                   className="w-[128px] bg-slate-100 rounded-lg h-[128px] relative"
                 >
                   <Image

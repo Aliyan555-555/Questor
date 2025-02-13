@@ -12,9 +12,11 @@ export default function RootLayout({ children }) {
         socket?.on("reconnecting", (data) => {
             console.log(data)
         });
-    },[])
+    }, [])
+    console.log(student
+    )
     return (
-        <div className="w-screen h-screen bg-cover bg-top " style={{ backgroundImage: `url(${student.kahoot.theme.image})` }}>
+        <div className="w-screen h-screen bg-cover bg-top " style={{ backgroundImage: `url(${student.quiz.theme.image})` }}>
             {children}
         </div>
     )

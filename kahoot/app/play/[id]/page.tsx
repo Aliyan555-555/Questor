@@ -40,6 +40,7 @@ const Teacher = () => {
       socket.on("studentJoined", ({ students, data }) => {
        
         dispatch(update({...data}));
+        console.log(data);
         dispatch(setStudents(students))
         console.log('data',students)
         console.log('game',game)
@@ -49,10 +50,10 @@ const Teacher = () => {
       socket.on("roomCreated", ({ roomId, pin, data }) => {
         setRoomId(roomId);
         setPin(pin);
-        // console.log(data)
         dispatch(created(data));
       });
       socket.on("changedStudentCharacter",(data) => {
+        console.log(data)
         dispatch(changeStudentCharacter(data.student))
       })
       socket.on("changedStudentCharacterAccessories",(data) => {
@@ -184,12 +185,12 @@ const enterFullscreen = () => {
   const handleStart = () => {
     if (socket) {
       socket.emit("start", roomId);
-      navigation.push(`/play/${game?.quizId}/${game?.teacherId}/lobby/start`);
+      navigation.push(`/play/${game?.quiz._id}/${game?.teacher}/lobby/start`);
     }
   };
-  
+  console.log(game)
   return (
-    <div style={{backgroundImage:`url(${game?.kahoot.theme.image})`}} className="w-screen  h-screen bg-cover p-2 flex flex-col items-center justify-center  relative bg-no-repeat bg-top">
+    <div style={{backgroundImage:`url(${game?.quiz.theme.image})`}} className="w-screen  h-screen bg-cover p-2 flex flex-col items-center justify-center  relative bg-no-repeat bg-top">
       <div className="w-[50%] absolute top-2   h-[130px] flex gap-2 ">
         <div className="flex-1 flex items-center h-full bg-white">
           <div className="w-[50%] p-2 h-full flex items-center text-2xl font-semibold text-black justify-center">

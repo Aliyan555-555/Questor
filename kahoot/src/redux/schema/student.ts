@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 interface Avatar {
-  id: string;
+  _id: string;
   resource: string;
   colors: {
     bodyColor: string;

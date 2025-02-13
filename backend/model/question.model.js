@@ -11,8 +11,8 @@ const questionSchema = new mongoose.Schema({
   options: [{ type: String}],
   answerText: { type: String, default:null,},
   answerIndex: [],
-  attemptStudents: [],
-  results: [],
+  // attemptStudents: [],
+  // results: [],
 });
 
 export const questionModel =  mongoose.model("question", questionSchema);

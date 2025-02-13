@@ -22,7 +22,7 @@ const Start: React.FC = () => {
   useEffect(() => {
     if (counter === 0) {
       navigation.push(
-        `/play/${teacher?.quizId}/${teacher?.teacherId}/lobby/gameBlock`
+        `/play/${teacher?.quiz._id}/${teacher?.teacher}/lobby/gameBlock`
       );
     } else {
       const interval = setInterval(() => {
@@ -32,10 +32,10 @@ const Start: React.FC = () => {
 
       return () => clearInterval(interval);
     }
-  }, [counter, navigation, teacher?.quizId, teacher?.teacherId]);
-
+  }, [counter, navigation, teacher?.quiz, teacher?.teacherId]);
+console.log(teacher);
   return (
-    <div style={{ backgroundImage: `url(${teacher?.kahoot.theme.image})` }} className="w-screen h-screen flex items-center justify-center">
+    <div style={{ backgroundImage: `url(${teacher?.quiz.theme.image})` }} className="w-screen h-screen flex items-center justify-center">
       {isVisible ? (
         <motion.div
           initial={bounceInitialScale}
@@ -44,7 +44,7 @@ const Start: React.FC = () => {
           onAnimationComplete={() => setIsVisible(false)}
           className="w-screen bg-white py-4 text-center text-black text-5xl font-bold"
         >
-          {teacher?.kahoot.name}
+          {teacher?.quiz.name}
         </motion.div>
       ) : (
         <div className="text-white w-[200px] h-[200px] flex items-center justify-center relative text-6xl font-bold">

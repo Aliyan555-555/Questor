@@ -27,6 +27,7 @@ import { MdFullscreen } from "react-icons/md";
 import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 import Image from "next/image";
 import imageLoader from "@/src/components/ImageLoader";
+import { useRouter } from "next/navigation";
 
 const QuestionSection = ({
   question,
@@ -41,27 +42,7 @@ const QuestionSection = ({
   socket: Socket | null;
   questionIndex: string;
 }) => {
-  useEffect(() => {
-    socket?.on("student_waiting", () => {
-      socket?.emit("request_question_options_waiting", {
-        roomId,
-        question: questionData,
-        questionIndex,
-      });
-      setTimeout(() => {
-        socket?.emit("request_question_options_stop_waiting", {
-          roomId,
-          question: questionData,
-          questionIndex,
-        });
-      }, 8000);
 
-      return () => {
-        socket?.off("request_question_options_waiting");
-        socket?.off("request_question_options_stop_waiting");
-      };
-    });
-  }, []);
   return (
     <div className="w-full h-full flex flex-col">
       <motion.div
@@ -122,12 +103,13 @@ const OptionsSection = ({
   data,
   currentQuestionIndex,
   setStage,
+  socket
 }: {
   data: Teacher | null;
   currentQuestionIndex: number;
   setStage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const question = data?.kahoot.questions[currentQuestionIndex];
+  const question = data?.quiz.questions[currentQuestionIndex];
   const icons = [
     { icon: <TriangleIcon width={50} height={50} /> },
     { icon: <DiamondIcon width={50} height={50} /> },
@@ -135,11 +117,10 @@ const OptionsSection = ({
     { icon: <SquareIcon width={50} height={50} /> },
   ];
   const colors = ["red", "blue", "#C79200", "green"];
-  const [duration, setDuration] = useState(data?.kahoot.questions[currentQuestionIndex].duration);
+  const [duration, setDuration] = useState(data?.quiz.questions[currentQuestionIndex].duration);
   const [isTimesUp, setIsTimesUp] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null); // Ref for audio element
 
-  // Function to play the audio based on the state
   const playAudio = (fileName: string, loop: boolean) => {
     if (audioRef.current) {
       audioRef.current.src = `/audios/${fileName}`;
@@ -150,40 +131,49 @@ const OptionsSection = ({
     }
   };
 
-  // Handle timer countdown
+  console.log(data)
   useEffect(() => {
+    if (!socket || !data) return;
+
     const timer = setInterval(() => {
-      setDuration((prev: SetStateAction<number | undefined>) => {
-        if (prev === 0) {
-          setIsTimesUp(true);
+      setDuration((prev) => {
+        if (prev <= 0) {
           clearInterval(timer);
+          setIsTimesUp(true);
           return 0;
         }
-        if (prev === undefined || prev === null) {
-          return 0;
-        }
-        return typeof prev === 'number' ? prev - 1 : 0;
+        const newCount = prev - 1;
+        socket.emit("setCount", { roomId: data._id, count: newCount });
+        return newCount;
       });
     }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
-  // Check if all students have attempted the question
+    return () => clearInterval(timer);
+  }, [socket, data]);
   useEffect(() => {
-    if (data?.kahoot.students.length === question?.attemptStudents.length) {
+    if (!socket) return;
+
+    const handleSetCount = ({ count }: { count: number }) => {
+      setDuration(count);
+      if (count === 0) setIsTimesUp(true);
+    };
+
+    socket.on("setCount", handleSetCount);
+    return () => socket.off("setCount", handleSetCount);
+  }, [socket]);
+  console.log(data)
+  useEffect(() => {
+    if (data.students.length === question?.attemptStudents.length) {
       setIsTimesUp(true);
     }
   }, [data, question?.attemptStudents.length]);
-
-  // Effect to control audio based on time
   useEffect(() => {
     if (isTimesUp) {
-      playAudio("GameOver.mp3", false); // Play Game Over audio when time is up
+      playAudio("GameOver.mp3", false);
     } else {
-      playAudio("lobby-halloween.webm", true); // Play lobby music when the timer is running
+      playAudio("lobby-halloween.webm", true);
     }
   }, [isTimesUp]);
-
   return (
     <div
       className={`w-full h-full fixed top-0 left-0 ${isTimesUp && " bg-[#000a]"
@@ -196,7 +186,7 @@ const OptionsSection = ({
         disabled={!isTimesUp}
         className="px-6 py-2 disabled:bg-slate-100 text-lg font-black bg-white absolute right-4 top-4"
       >
-        {data?.kahoot.students.length === question?.attemptStudents.length
+        {data?.students.length === question?.attemptStudents.length
           ? "Next"
           : duration === 0
             ? "Next"
@@ -267,16 +257,12 @@ const ScoreBoard = ({
   data: Teacher | null;
   nextQuestion: () => void;
 }) => {
-  if (!data || !data.kahoot?.students) {
+  if (!data || !data.students) {
     return <p className="text-white text-2xl">No data available</p>;
   }
-  console.log("Original Data:", data.kahoot.students);
-  const students = [...data.kahoot.students]
+  const students = [...data.students]
     .filter((student) => typeof student.score === "number" && !isNaN(student.score))
     .sort((a, b) => Number(b.score.toFixed(0)) - Number(a.score.toFixed(0)));
-
-  console.log("Sorted Data:", students);
-
   return (
     <div className="w-full p-4 flex flex-col items-center h-full relative">
       <button
@@ -355,7 +341,7 @@ const RankSection = ({
         transition={{ duration: 0.5, ease: "easeIn" }}
         className="w-fit scale-150 bg-white text-black px-10 py-4 text-4xl font-bold "
       >
-        {data?.kahoot.name}
+        {data?.quiz.name}
       </motion.div>
 
       <div className="flex">
@@ -503,52 +489,70 @@ const Page = () => {
   const dispatch = useDispatch();
   const [stage, setStage] = useState(1);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const navigation = useRouter();
   const teacher = useSelector((root: RootState) => root.teacher.currentGame);
-  useEffect(() => {
-    const url = `/play/${teacher?.quizId}/${teacher?.teacherId}/lobby/instructions/get-ready`;
-    socket?.emit("question_playing", {
-      currentQuestionIndex: currentQuestionIndex + 1,
-      url,
-      roomId: `${teacher?.teacherId}-${teacher?.quizId}`,
-    });
 
-    return () => {
-      socket?.off("question_playing");
-    };
-  }, [socket]);
   useEffect(() => {
-    socket?.on("resultsData", (data) => {
-      dispatch(update(data.data));
-    });
-  }, []);
+    if (socket) {
+      socket.emit('checkCurrentStage', { id: teacher._id });
+      socket.on('currentStage', (data) => {
+        if (!data.status) {
+          navigation.push(`/play/${teacher.quiz._id}`)
+          return
+        }
+        setCurrentQuestionIndex(teacher.quiz.questions.findIndex(question => question._id === data.data.question._id));
+        setStage(data.data.isLastStage?4:data.data.stage);
+      })
+    }
+    return () => {
+      socket?.off("checkCurrentStage");
+      socket?.off('currentStage')
+    }
+  }, [])
   console.log(teacher);
+
+
   const nextQuestion = () => {
-    if (currentQuestionIndex + 1 === teacher?.kahoot.questions.length) {
+    if (currentQuestionIndex + 1 === teacher?.quiz.questions.length) {
       setStage(4);
-      socket?.emit("ranking_redirection", {
-        roomId: `${teacher.teacherId}-${teacher.quizId}`,
-      });
     } else {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setStage(1);
-      socket?.emit("next_question_redirect", {
-        roomId: `${teacher?.teacherId}-${teacher?.quizId}`,
-      });
+      socket?.emit('changeStage',{
+        room:teacher._id,
+        currentStage:{
+          stage: 1,
+          question: teacher?.quiz.questions[currentQuestionIndex]._id,
+          isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length,
+        }
+      })
+
     }
   };
   useEffect(() => {
     if (stage === 1) {
-      setTimeout(() => setStage(2), 8000);
+      setTimeout(() => {
+        socket?.emit('changeStage',{
+          room:teacher._id,
+          currentStage:{
+            stage: 2,
+            question: teacher?.quiz.questions[currentQuestionIndex]._id,
+            isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length,
+          }
+        })
+      }, 8000);
     }
   }, [stage]);
 
+  console.log(currentQuestionIndex)
+
   return (
-    <div style={{ backgroundImage: `url(${teacher?.kahoot.theme.image})` }} className="w-screen h-screen bg-cover bg-top overflow-hidden">
+    <div style={{ backgroundImage: `url(${teacher?.quiz.theme.image})` }} className="w-screen h-screen bg-cover bg-top overflow-hidden">
       {stage === 1 && (
         <QuestionSection
-          question={teacher?.kahoot.questions[currentQuestionIndex].question}
+          question={teacher?.quiz.questions[currentQuestionIndex].question}
           roomId={`${teacher?.teacherId}-${teacher?.quizId}`}
-          questionData={teacher?.kahoot.questions[currentQuestionIndex]}
+          questionData={teacher?.quiz.questions[currentQuestionIndex]}
           socket={socket}
           questionIndex={`${currentQuestionIndex}`}
         />
@@ -558,6 +562,7 @@ const Page = () => {
           data={teacher}
           currentQuestionIndex={currentQuestionIndex}
           setStage={setStage}
+          socket={socket}
         />
       )}
       {stage === 3 && <ScoreBoard data={teacher} nextQuestion={nextQuestion} />}

@@ -249,35 +249,6 @@ const Create = () => {
       handleSetQuestion(inputValue);
     }
   };
-  const updateQuestionTypes = () => {
-    if (selectedQuestionData) {
-
-
-
-      if (
-        selectedQuestionData.type === "true/false" &&
-        JSON.stringify(selectedQuestionData.options) !== JSON.stringify(["True", "False"])
-      ) {
-        handleUpdateQuestion({
-          ...selectedQuestionData,
-          answerIndex: [],
-          options: ["True", "False"],
-        });
-      } else if (
-        selectedQuestionData.type === "quiz" &&
-        (!selectedQuestionData.options || selectedQuestionData.options.length !== 4)
-      ) {
-        handleUpdateQuestion({
-          ...selectedQuestionData,
-          options: ["", "", "", ""],
-          answerIndex: [],
-        });
-      }
-    }
-  }
-  useEffect(() => {
-    updateQuestionTypes()
-  }, [selectedQuestionData, handleUpdateQuestion]);
 
   // useEffect(() => { 
   //   handleSetQuestion(inputValue)
