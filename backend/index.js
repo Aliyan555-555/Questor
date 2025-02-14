@@ -273,7 +273,7 @@ io.on("connection", (socket) => {
       await newStudent.save();
 
       const populatedStudent = await newStudent.populate([
-        { path: "quiz", populate: [{ path: "theme" },{path:'questions'}] },
+        { path: "quiz", populate: [{ path: "theme" }, { path: "questions" }] },
         { path: "room" },
         { path: "avatar" },
         { path: "item" },
@@ -294,8 +294,8 @@ io.on("connection", (socket) => {
                 path: "questions",
               },
               {
-                path:'theme'
-              }
+                path: "theme",
+              },
             ],
           },
         ],
@@ -332,6 +332,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("checkCurrentStage", async ({ id }) => {
+
     const room = await roomModel.findById(id).populate({
       path: "currentStage",
       populate: { path: "question" }, // Populate question inside currentStage
@@ -349,24 +350,23 @@ io.on("connection", (socket) => {
   });
   socket.on("changeStage", async (data) => {
     try {
-      const room = await roomModel
-        .findByIdAndUpdate(
-          data.room,
-          { currentStage: data.currentStage },
-          { new: true }
-        );
-        await room.populate({
-          path: "currentStage",
-          populate: { path: "question" }, // Populate question inside currentStage
-        });
-  
+      const room = await roomModel.findByIdAndUpdate(
+        data.room,
+        { currentStage: data.currentStage },
+        { new: true }
+      );
+      await room.populate({
+        path: "currentStage",
+        populate: { path: "question" }, // Populate question inside currentStage
+      });
+
       if (!room) {
         return socket.emit("currentStage", { status: false });
       }
-  console.log(room)
+      console.log(room);
       socket.emit("currentStage", { status: true, data: room.currentStage });
 
-      if (room.currentStage.question._id){
+      if (room.currentStage.question._id) {
         io.to(room._id.toString()).emit("populateCurrentStage", {
           data: room.currentStage,
           status: true,
@@ -377,7 +377,6 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Server error", error: error.message });
     }
   });
-  
 
   socket.on("verifyPin", async ({ pin }) => {
     const room = await roomModel.findOne({ pin: pin });
@@ -394,37 +393,61 @@ io.on("connection", (socket) => {
   });
 
   socket.on("calculate_ranks", async (data) => {
-    const room = await roomModel
-      .findById(data.roomId)
-      .findById(roomId)
-      .populate([
-        {
-          path: "quiz",
-          populate: [{ path: "questions" }, { path: "theme" }],
-        },
-        {
-          path: "students",
-          populate: [
-            { path: "avatar" },
-            { path: "item" },
-            {
-              path: "quiz",
-              populate: [{ path: "questions" }, { path: "theme" }],
-            },
-            { path: "room" },
-          ],
-        },
-      ]);
+    const room = await roomModel.findById(data.roomId).populate([
+      {
+        path: "quiz",
+        populate: [{ path: "questions" }, { path: "theme" }],
+      },
+      {
+        path: "students",
+        populate: [
+          { path: "avatar" },
+          { path: "item" },
+          {
+            path: "quiz",
+            populate: [{ path: "questions" }, { path: "theme" }],
+          },
+          { path: "room" },
+        ],
+      },
+    ]);
 
-    const sortedStudents = room.students.sort((a, b) => b.score - a.score);
-    sortedStudents.forEach((student, index) => {
-      student.rank = index + 1;
-    });
-    room.students = sortedStudents;
-    room.status = "ended";
-    room.save();
+    const sortedStudents = room.students
+      .sort((a, b) => b.score - a.score)
+      .map((student, index) => student._id);
+    // sortedStudents.forEach((student, index) => {
+    //   student.rank = index + 1;
+    // });
+
+    // room.students = sortedStudents;
+    // room.status = "completed";
+    // await room.save();
+    await roomModel.findByIdAndUpdate(
+      room._id,
+      { status: "completed", students: sortedStudents },
+      { new: true, runValidators: true }
+    );
+    await room.populate([
+      {
+        path: "students",
+        populate: [
+          {
+            path: "avatar",
+          },
+          {
+            path: "item",
+          },
+        ],
+      },
+      {
+        path: "quiz",
+      },
+      {
+        path: "teacher",
+      },
+    ]);
     io.to(room._id.toString()).emit("calculate_ranks_student", {
-      students: sortedStudents,
+      students: room.students,
       data: room,
     });
   });
@@ -452,17 +475,97 @@ io.on("connection", (socket) => {
   //   io.to(data.roomId).emit("ranking_redirection_student_process");
   // });
 
-  socket.on("submit_answer", (data) => {
-    console.log(data)
+  socket.on("submit_answer", async (data) => {
+    try {
+      const room = await roomModel.findById(data.room).populate({
+        path: "students",
+        populate: [{ path: "avatar" }, { path: "item" }],
+      });
+  
+      if (!room) {
+        console.error(`Room with ID ${data.room} not found.`);
+        return;
+      }
+  
+      const question = await questionModel.findById(data.question);
+      if (!question) {
+        console.error(`Question with ID ${data.question} not found.`);
+        return;
+      }
+  
+      const student = await studentModel.findById(data.student);
+      if (!student) {
+        console.error(`Student with ID ${data.student} not found.`);
+        return;
+      }
+  
+      let getScore = 0;
+      let isCorrect = false;
+  
+      if (data.isTimeUp) {
+        console.log(`Student ${student._id} ran out of time for question ${question._id}.`);
+        // If time is up, mark the answer as incorrect and set score to 0
+        getScore = 0;
+      } else {
+        // Normal answer processing
+        isCorrect = question.answerIndex.every((index) =>
+          data.options.includes(question.options[index])
+        );
+  
+        if (isCorrect) {
+          const totalMarks = question.maximumMarks;
+          const perSecondMarks = totalMarks / question.duration;
+          getScore = data.timeRemaining * perSecondMarks;
+  
+          student.score += getScore;
+          await student.save();
+        }
+      }
+  
+      // Assign ranks
+      const assignRanks = (students) => {
+        return students
+          .sort((a, b) => b.score - a.score)
+          .map((student, index, sortedArray) => ({
+            ...student.toObject(),
+            rank:
+              index > 0 && student.score === sortedArray[index - 1].score
+                ? sortedArray[index - 1].rank
+                : index + 1,
+          }));
+      };
+  
+      const rankedStudents = assignRanks(room.students);
+
+      io.to(room._id.toString()).emit('receiveStudentResult',{
+        student:student._id,
+        score:getScore,
+        question:question._id
+      })
+  
+      socket.emit("result", {
+        question: question._id,
+        isCorrect,
+        isTimeUp: data.isTimeUp,
+        rank: rankedStudents.find((s) => s._id.equals(student._id))?.rank || 0,
+        score: getScore,
+      });
+    } catch (error) {
+      console.error("❌ Error processing answer submission:", error);
+    }
   });
+  
+
   socket.on("student_waiting", () => {
     // console.log("student_waiting")
     io.emit("student_waiting");
   });
   socket.on("setCount", (count) => {
-    io.to(count.roomId).emit("setCount", { count: count.count });
+    io.to(count.roomId).emit("setCount", {
+      duration: count.duration,
+      count: count.count,
+    });
   });
-
   socket.on("next_question_redirect", (data) => {
     io.to(data.roomId).emit("next_question_redirection");
   });
@@ -472,100 +575,21 @@ io.on("connection", (socket) => {
     return room && room.has(socketId);
   };
   socket.on("checkUserInRoom", async ({ roomId, studentData, token }) => {
+    
     const room = await roomModel.findById(roomId);
     if (!room) {
-      socket.emit("userInRoom", false);
+      socket.emit("userInRoom", {status:false});
       console.error(`Room with ID ${roomId} not found.`);
       return;
     }
 
     const studentExist = room.students.includes(studentData.student._id);
-    if (studentExist) {
-      socket.emit("userInRoom", true);
+    if (studentExist && room.status !==  "completed") {
+      socket.emit("userInRoom", {status:true});
     } else {
-      // if (token) {
-      //   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-      //   const existingRoom = await roomModel.findById(decodedData.roomId);
-      //   if (existingRoom) {
-      //     if (existingRoom.status === "waiting") {
-      //       await room.populate([
-      //         {
-      //           path: "quiz",
-      //           populate: [{ path: "theme" }, { path: "questions" }],
-      //         },
-      //         {
-      //           path: "students",
-      //           populate: [
-      //             {
-      //               path: "quiz",
-      //               populate: [{ path: "theme" }, { path: "questions" }],
-      //             },
-      //             { path: "avatar" },
-      //             { path: "item" },
-      //           ],
-      //         },
-      //       ]);
-
-      //       socket.join(existingRoom._id.toString());
-      //       socket.emit("userInRoom", true);
-      //       const student = await studentModel
-      //         .findById(decodedData.studentId)
-      //         .populate([
-      //           {
-      //             path: "quiz",
-      //             populate: [{ path: "theme" }, { path: "questions" }],
-      //           },
-      //           { path: "avatar" },
-      //           { path: "item" },
-      //         ]);
-      //       const refreshToken = jwt.sign(
-      //         {
-      //           roomId: room._id,
-      //           studentId: student._id,
-      //           nickname: student.nickname,
-      //         },
-      //         process.env.JWT_SECRET
-      //       );
-      //       if (existingRoom.students.includes(decodedData.studentId)) {
-      //         io.to(room._id.toString()).emit("studentJoined", {
-      //           students: room.students,
-      //           data: room,
-      //         });
-      //         socket.student = student;
-      //         socket.emit("joinedRoom", {
-      //           roomId: room._id,
-      //           student: student,
-      //           data: room,
-      //           refreshToken,
-      //         });
-      //       } else {
-      //         io.to(room._id.toString()).emit("studentJoined", {
-      //           students: room.students,
-      //           data: room,
-      //         });
-      //         socket.student = student;
-      //         socket.emit("joinedRoom", {
-      //           roomId: room._id,
-      //           student: student,
-      //           data: room,
-      //           refreshToken,
-      //         });
-      //       }
-      //     } else {
-      //       console.log("else 1");
-      //       socket.emit("userInRoom", false);
-      //     }
-      //   } else {
-      //     console.log("else 2");
-      //     socket.emit("userInRoom", false);
-      //   }
-      // } else {
-      //   console.log("else 3");
-      socket.emit("userInRoom", false);
-      // }
+      socket.emit("userInRoom",{status:false});
     }
   });
-
   socket.on("changeCharacter", async (data) => {
     const avatar = await avatarModel.findById(data.selectedAvatarId);
     const room = await roomModel.findById(data.roomId).populate({
@@ -602,7 +626,6 @@ io.on("connection", (socket) => {
       room,
     });
   });
-
   socket.on("changeCharacterAccessories", async (data) => {
     const selectedAccessories = await itemModel.findById(
       data.selectedAccessoriesId
@@ -680,7 +703,6 @@ io.on("connection", (socket) => {
       });
     }
   });
-
   socket.on("create_quiz", async (data) => {
     try {
       // Create a question
@@ -773,7 +795,6 @@ io.on("connection", (socket) => {
       });
     }
   });
-
   socket.on("fetch_quiz", async (data) => {
     try {
       console.log("works", data);
@@ -808,7 +829,6 @@ io.on("connection", (socket) => {
       });
     }
   });
-
   socket.on("delete_question_in_quiz", async (data) => {
     try {
       const quiz = await quizModel
@@ -873,7 +893,6 @@ io.on("connection", (socket) => {
       });
     }
   });
-
   socket.on("update_question", async (data) => {
     const question = await questionModel.findByIdAndUpdate(data._id, data, {
       new: true,
@@ -891,7 +910,6 @@ io.on("connection", (socket) => {
       status: true,
     });
   });
-
   socket.on("update_theme", async (data) => {
     const { id, theme } = data;
     const updatedQuiz = await quizModel
@@ -955,7 +973,6 @@ io.on("connection", (socket) => {
       });
     }
   });
-
   socket.on("delete_quiz", async (data) => {
     try {
       const deleteQuiz = await quizModel.findByIdAndDelete(data._id);
@@ -979,7 +996,6 @@ io.on("connection", (socket) => {
       });
     }
   });
-
   socket.on("disconnect", async () => {
     if (socket.teacher) {
       const room = await roomModel.deleteMany({

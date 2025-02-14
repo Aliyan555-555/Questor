@@ -17,14 +17,6 @@ const Student = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const socket = useSocket();
-  function getTeacherId(inputString: string) {
-    const parts = inputString.split("-");
-    return parts[0];
-  }
-  function getQuizId(inputString: string) {
-    const parts = inputString.split("-");
-    return parts[1];
-  }
   const [roomId, setRoomId] = useState<null | string>(null);
   const [teacherId,setTeacherId] = useState<null | string>(null)
   const [nickname, setNickname] = useState("");

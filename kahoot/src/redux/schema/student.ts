@@ -20,7 +20,7 @@ interface Avatar {
 }
 
 interface Accessory {
-  id: string;
+  _id: string;
   type: string;
   resource: string;
 }
@@ -41,19 +41,23 @@ interface Question {
 
 interface CurrentGame {
   roomId: string;
+  refreshToken:string;
   student: {
     _id: string;
     nickname: string;
     score: number;
-    kahoot:{
+    quiz:{
       theme:{
         image:string;
       }
     }
     item: {
-      id: string;
+      _id: string;
       resource: string;
     };
+    room:{
+      _id:string;
+    },
     avatar: Avatar;
   };
 }
@@ -110,6 +114,9 @@ const studentSlice = createSlice({
   name: "student",
   initialState,
   reducers: {
+    setScore (state,action) {
+      state.currentGame.student.score = action.payload;
+    },
     join(state, action) {
       state.currentGame = action.payload;
     },
@@ -137,7 +144,7 @@ const studentSlice = createSlice({
     },
     updateAvatar(state, action) {
       const index = state.avatars.findIndex(
-        (avatar) => avatar.id === action.payload.id
+        (avatar) => avatar._id === action.payload.id
       );
       if (index !== -1) {
         state.avatars[index] = action.payload;
@@ -145,7 +152,7 @@ const studentSlice = createSlice({
     },
     removeAvatar(state, action) {
       state.avatars = state.avatars.filter(
-        (avatar) => avatar.id !== action.payload.id
+        (avatar) => avatar._id !== action.payload.id
       );
     },
     setAccessories(state, action) {
@@ -156,7 +163,7 @@ const studentSlice = createSlice({
     },
     updateAccessory(state, action) {
       const index = state.accessories.findIndex(
-        (accessory) => accessory.id === action.payload.id
+        (accessory) => accessory._id === action.payload.id
       );
       if (index !== -1) {
         state.accessories[index] = action.payload;
@@ -164,7 +171,7 @@ const studentSlice = createSlice({
     },
     removeAccessory(state, action) {
       state.accessories = state.accessories.filter(
-        (accessory) => accessory.id !== action.payload.id
+        (accessory) => accessory._id !== action.payload.id
       );
     },
     login(state, action) {
@@ -246,6 +253,8 @@ export const {
   updateAccessory,
   changeCharacters,
   removeAccessory,
+  setScore,
+
 } = studentSlice.actions;
 
 export default studentSlice.reducer;

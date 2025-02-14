@@ -68,7 +68,7 @@ const Create = () => {
     }
   };
   useEffect(() => {
-    if (id && data._id !== id) {
+    if (id && data?._id !== id) {
       socket?.emit("fetch_quiz", { _id: id });
     }
     return () => {

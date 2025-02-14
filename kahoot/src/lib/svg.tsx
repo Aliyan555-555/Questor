@@ -538,11 +538,175 @@ export const SliderIcon = ({ w, h }) => (
 
 
 export const DoneIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+    <g fill="none" fillRule="evenodd">
+      <path fill="#000" fillOpacity=".35" d="M36.3114566,18.4496166 L36.8385438,18.9296772 L21.5795759,35.7525985 L12.0244566,26.8266018 L12.5574566,26.2906166 L21.5676221,34.7233838 L36.3114566,18.4496166 Z" />
+      <path stroke="#000" strokeOpacity=".35" strokeWidth="1.04" d="M21.2904742,25.1226725 L31.5639525,13.7841178 L36.0932774,17.9176194 L21.5370651,33.9807194 L12.7729476,25.7795198 L17.0897886,21.446334 L21.2904742,25.1226725 Z" />
+      <path fill="#FFF" d="M31.599 14.52L35.36 17.952 21.507 33.24 13.52 25.766 17.114 22.159 21.333 25.851z" />
+    </g>
+  </svg>
+);
+
+
+export const IsWrongIcon = () =>(
+  <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="80"
+  height="80"
+  viewBox="0 0 80 80"
+>
   <g fill="none" fillRule="evenodd">
-    <path fill="#000" fillOpacity=".35" d="M36.3114566,18.4496166 L36.8385438,18.9296772 L21.5795759,35.7525985 L12.0244566,26.8266018 L12.5574566,26.2906166 L21.5676221,34.7233838 L36.3114566,18.4496166 Z"/>
-    <path stroke="#000" strokeOpacity=".35" strokeWidth="1.04" d="M21.2904742,25.1226725 L31.5639525,13.7841178 L36.0932774,17.9176194 L21.5370651,33.9807194 L12.7729476,25.7795198 L17.0897886,21.446334 L21.2904742,25.1226725 Z"/>
-    <path fill="#FFF" d="M31.599 14.52L35.36 17.952 21.507 33.24 13.52 25.766 17.114 22.159 21.333 25.851z"/>
+    <g>
+      <g>
+        <g>
+          <g transform="translate(-257 -1827) translate(90 1581) translate(47 190) translate(120 56)">
+            <circle
+              cx="40"
+              cy="40"
+              r="37.895"
+              fill="#F35"
+              stroke="#FFF"
+              strokeWidth="4.211"
+            ></circle>
+            <g
+              fill="#FFF"
+              fillRule="nonzero"
+              stroke="#000"
+              strokeOpacity="0.15"
+              strokeWidth="2.105"
+            >
+              <path
+                d="M39.99 12.621v14.736l14.736.001V39.99H39.99v14.736H27.359V39.99H12.62V27.359h14.736l.001-14.737H39.99z"
+                transform="translate(6.316 6.316) rotate(-135 33.674 33.674)"
+              ></path>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
   </g>
 </svg>
+)
+export const StudentSideRankIcon = () => (
+  <svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlnsXlink="http://www.w3.org/1999/xlink"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+  className="absolute top-0 left-0 z-0"
+>
+  <defs>
+    <rect
+      id="uc9z5a1yra"
+      width="22"
+      height="22"
+      x="0.25"
+      y="0.25"
+      rx="11"
+    ></rect>
+    <rect
+      id="xy2mom4qvc"
+      width="22"
+      height="22"
+      x="0.25"
+      y="0.25"
+      rx="11"
+    ></rect>
+  </defs>
+  <g fill="none" fillRule="evenodd">
+    <g>
+      <g>
+        <g>
+          <g>
+            <g>
+              <g
+                fillRule="nonzero"
+                transform="translate(-797 -1903) translate(536 1581) translate(46 170) translate(83 152) translate(132)"
+              >
+                <rect
+                  width="24"
+                  height="24"
+                  fill="#FFF"
+                  rx="12"
+                ></rect>
+                <rect
+                  width="22"
+                  height="22"
+                  x="1"
+                  y="1"
+                  fill="#EB670F"
+                  rx="11"
+                ></rect>
+              </g>
+              <g transform="translate(-797 -1903) translate(536 1581) translate(46 170) translate(83 152) translate(132) translate(.75 .75)">
+                <mask id="mh0j3asj7b" fill="#fff">
+                  <use xlinkHref="#uc9z5a1yra"></use>
+                </mask>
+                <path
+                  fill="#F5A23D"
+                  fillRule="nonzero"
+                  d="M11.055 4.5s14.881 16.381 1.077 18.375c-13.511 0-4.014-13.608-4.014-13.608s1.077 4.42 1.664 4.42c1.567-.52 1.273-9.187 1.273-9.187z"
+                  mask="url(#mh0j3asj7b)"
+                ></path>
+              </g>
+              <g transform="translate(-797 -1903) translate(536 1581) translate(46 170) translate(83 152) translate(132) translate(.75 .75)">
+                <mask id="ugjy7fw7sd" fill="#fff">
+                  <use xlinkHref="#xy2mom4qvc"></use>
+                </mask>
+                <path
+                  fill="#EB670F"
+                  fillRule="nonzero"
+                  d="M11.23 13.313s8.079 8.19.585 9.187c-7.335 0-2.18-6.804-2.18-6.804s.585 2.21.904 2.21c.85-.26.69-4.593.69-4.593z"
+                  mask="url(#ugjy7fw7sd)"
+                ></path>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
+)
+export const IsCorrectIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="80"
+    height="80"
+    viewBox="0 0 80 80"
+    aria-hidden="true"
+  >
+    <g fill="none" fillRule="evenodd">
+      <g>
+        <g>
+          <g>
+            <g transform="translate(-703 -1807) translate(536 1581) translate(46 170) translate(121 56)">
+              <circle
+                cx="40"
+                cy="40"
+                r="37.895"
+                fill="#66BF39"
+                stroke="#FFF"
+                strokeWidth="4.211"
+              ></circle>
+              <g
+                fill="#FFF"
+                fillRule="nonzero"
+                stroke="#000"
+                strokeOpacity="0.15"
+                strokeWidth="2.105"
+              >
+                <path
+                  d="M46.244 15.355l8.127 7.393-25.623 28.184-15.526-14.483 7.743-7.747 7.333 6.396 17.946-19.743z"
+                  transform="translate(6.316 6.316) rotate(-3 33.81 33.138)"
+                ></path>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
 )

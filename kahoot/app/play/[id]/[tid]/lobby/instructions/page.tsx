@@ -55,8 +55,8 @@ const Page = () => {
       console.log(students);
     };
 
-    const handleUserInRoom = (status: boolean) => {
-      if (!status) {
+    const handleUserInRoom = (status) => {
+      if (!status.status) {
         navigation.push(`/play/connect/to/game`);
       }
     };
@@ -69,12 +69,14 @@ const Page = () => {
 
     socket?.on("studentJoined", handleStudentJoined);
 
-
+   setTimeout(() => {
+    
     socket?.emit("checkUserInRoom", {
       roomId: student.student.room._id,
       studentData: student,
       token:student?.refreshToken ?? null,
     });
+   }, 4000);
 
     socket?.on("changedYourCharacter", (data) => {
       dispatch(changeCharacters({ ...data.student.avatar }));

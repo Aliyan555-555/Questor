@@ -3,11 +3,11 @@ export interface Student {
   nickname: string;
   score: number;
   item:{
-    id:string;
+    _id:string;
     resource:string
   },
   avatar: {
-    id: string;
+    _id: string;
   resource: string;
   colors: {
     chinColor: string;
@@ -24,9 +24,8 @@ export interface Student {
 }
 
 export interface Teacher {
-  quizId: string;
-  teacherId: string;
-  kahoot: {
+  teacher: string;
+  quiz: {
     _id: string;
     name: string;
     questions: Question[];
@@ -36,6 +35,9 @@ export interface Teacher {
     }
   };
   students: Student[];
+  // currentStage:{},
+  _id: string;
+  status: string;
 }
 
 export interface Question {

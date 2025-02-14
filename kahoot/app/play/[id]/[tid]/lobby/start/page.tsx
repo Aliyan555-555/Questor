@@ -32,7 +32,7 @@ const Start: React.FC = () => {
 
       return () => clearInterval(interval);
     }
-  }, [counter, navigation, teacher?.quiz, teacher?.teacherId]);
+  }, [counter, navigation, teacher?.quiz]);
 console.log(teacher);
   return (
     <div style={{ backgroundImage: `url(${teacher?.quiz.theme.image})` }} className="w-screen h-screen flex items-center justify-center">

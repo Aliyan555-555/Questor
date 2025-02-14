@@ -102,7 +102,6 @@ const Student = () => {
     }
   });
 
-  // Handle Enter key press to trigger button action
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {

@@ -18,6 +18,9 @@ const teacherSlice = createSlice({
     disconnect(state) {
       state.currentGame = null;
     },
+    updateStudentScore(state,actions){
+    state.currentGame.students.find(student => student._id === actions.payload.student).score += actions.payload.score
+    },
     setStudents(state, actions) {
       if (state.currentGame) {
         state.currentGame.students = actions.payload;
@@ -56,6 +59,8 @@ export const {
   setStudents,
   changeStudentCharacterAccessories,
   changeStudentCharacter,
+  updateStudentScore,
+
 } = teacherSlice.actions;
 
 export default teacherSlice.reducer;
