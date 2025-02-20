@@ -29,7 +29,7 @@ const Page = () => {
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const socket = useSocket();
   const params = useParams();
-  console.log(params.id,params.tid)
+  console.log(params.id, params.tid)
   const navigation = useRouter();
   const [loading, setLoading] = useState(true);
   const student = useSelector((state: RootState) => state.student.currentGame);
@@ -68,15 +68,16 @@ const Page = () => {
     });
 
     socket?.on("studentJoined", handleStudentJoined);
+    socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });    
+    setTimeout(() => {
 
-   setTimeout(() => {
-    
-    socket?.emit("checkUserInRoom", {
-      roomId: student.student.room._id,
-      studentData: student,
-      token:student?.refreshToken ?? null,
-    });
-   }, 5000);
+      socket?.emit("checkUserInRoom", {
+        roomId: student.student.room._id,
+        studentData: student,
+        token: student?.refreshToken ?? null,
+      });
+    }, 5000);
+    socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });
 
     socket?.on("changedYourCharacter", (data) => {
       dispatch(changeCharacters({ ...data.student.avatar }));
@@ -93,7 +94,13 @@ const Page = () => {
         dispatch(disconnect());
       }, 2000);
     });
+    socket?.on("reconnectionAttept", (data) => {
+      if (data.status) {
 
+      } else {
+        toast.error(data.message);
+      }
+    })
     setTimeout(() => setLoading(false), 1000);
 
     // const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -135,13 +142,13 @@ const Page = () => {
 
   const handleChangeCharacter = useCallback(
     (selectedAvatar: string) => {
-    if (selectedAvatar !== student.student.avatar._id){
-      socket?.emit("changeCharacter", {
-        roomId: student?.roomId,
-        selectedAvatarId: selectedAvatar,
-        student: student?.student,
-      });
-    }
+      if (selectedAvatar !== student.student.avatar._id) {
+        socket?.emit("changeCharacter", {
+          roomId: student?.roomId,
+          selectedAvatarId: selectedAvatar,
+          student: student?.student,
+        });
+      }
     },
     [socket, student]
   );
@@ -158,12 +165,15 @@ const Page = () => {
   );
 
   useEffect(() => {
-
+    if (socket) {
+      console.log(socket);
+    }
+    socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });
     fetch();
   }, []);
 
   return (
-    <div  className="w-screen px-4 overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
+    <div className="w-screen px-4 overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
       {loading ? (
         <Loader h={100} w={100} />
       ) : (
@@ -183,18 +193,18 @@ const Page = () => {
               w={"128px"}
               h={"128px"}
               bg="#4686EC"
-              // chin={true}
+            // chin={true}
             />
           )}
         </motion.div>
       )}
       <div className="bg-[#E9E2B6] p-4 rounded-[10px] text-3xl font-semibold mt-3  text-black">
-      <h3 className="">{student?.student.nickname}</h3>
+        <h3 className="">{student?.student.nickname}</h3>
       </div>
       <div className="bg-[#E9E2B6] text-center rounded-[10px] mt-3 p-6 text-black text-2xl">
-      <p>
-        You&lsquo;re in! See your nickname on screen?
-      </p>
+        <p>
+          You&lsquo;re in! See your nickname on screen?
+        </p>
       </div>
       <motion.div
         ref={drawerRef}
@@ -206,17 +216,15 @@ const Page = () => {
         <div className="flex items-center justify-center py-4 text-gray-600">
           <button
             onClick={() => setIsCharacter(true)}
-            className={`border-y-2 rounded-tl-lg rounded-bl-lg w-[200px] border-l-2 border-r-2 border-gray-600 px-8 py-3 text-xl ${
-              isCharacter ? "bg-white" : "bg-slate-100"
-            }`}
+            className={`border-y-2 rounded-tl-lg rounded-bl-lg w-[200px] border-l-2 border-r-2 border-gray-600 px-8 py-3 text-xl ${isCharacter ? "bg-white" : "bg-slate-100"
+              }`}
           >
             Character
           </button>
           <button
             onClick={() => setIsCharacter(false)}
-            className={`border-y-2 border-r-2 w-[200px] rounded-tr-lg rounded-br-lg border-gray-600 px-8 py-3 text-xl ${
-              isCharacter ? "bg-slate-100" : "bg-white"
-            }`}
+            className={`border-y-2 border-r-2 w-[200px] rounded-tr-lg rounded-br-lg border-gray-600 px-8 py-3 text-xl ${isCharacter ? "bg-slate-100" : "bg-white"
+              }`}
           >
             Accessories
           </button>
@@ -224,42 +232,42 @@ const Page = () => {
         <div className="w-full overflow-y-auto scroll-smooth h-[85%] flex flex-wrap items-center justify-between gap-6 p-6">
           {isCharacter
             ? characters.map((c) => (
-                <div
-                  key={c._id}
-                  className="w-fit h-fit"
-                  onClick={() => handleChangeCharacter(c._id)}
-                >
-                  <AnimatedAvatar
-                    avatarData={c}
-                    w={"128px"}
-                    h={"128px"}
-                    bg={"#F2F2F2"}
-                  />
-                </div>
-              ))
+              <div
+                key={c._id}
+                className="w-fit h-fit"
+                onClick={() => handleChangeCharacter(c._id)}
+              >
+                <AnimatedAvatar
+                  avatarData={c}
+                  w={"128px"}
+                  h={"128px"}
+                  bg={"#F2F2F2"}
+                />
+              </div>
+            ))
             : accessories.map((a) => (
-                <div
-                  key={a._id}
-                  onClick={() => handleChangeCharacterAccessories(a._id)}
-                  className="w-[128px] bg-slate-100 rounded-lg h-[128px] relative"
-                >
-                  <Image
-                    src={"/images/AvatarPrototype.svg"}
-                    alt="AvatarPrototype"
-                    width={128}
-                    height={128}
-                    className=" bg-cover"
-                  />
-                  <Image
-                    src={a.resource}
-                    loading="lazy"
-                    alt="AvatarAccessory"
-                    width={128}
-                    height={128}
-                    className="absolute top-0 left-0"
-                  />
-                </div>
-              ))}
+              <div
+                key={a._id}
+                onClick={() => handleChangeCharacterAccessories(a._id)}
+                className="w-[128px] bg-slate-100 rounded-lg h-[128px] relative"
+              >
+                <Image
+                  src={"/images/AvatarPrototype.svg"}
+                  alt="AvatarPrototype"
+                  width={128}
+                  height={128}
+                  className=" bg-cover"
+                />
+                <Image
+                  src={a.resource}
+                  loading="lazy"
+                  alt="AvatarAccessory"
+                  width={128}
+                  height={128}
+                  className="absolute top-0 left-0"
+                />
+              </div>
+            ))}
         </div>
       </motion.div>
     </div>

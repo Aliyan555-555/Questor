@@ -83,7 +83,7 @@ io.on("connection", (socket) => {
       const activeRooms = await roomModel.find({
         teacher: teacherId,
         status: { $in: ["waiting", "started"] },
-        host:socket.id,
+        host: socket.id,
         isActive: true,
       });
       if (activeRooms.length !== 0) {
@@ -137,7 +137,6 @@ io.on("connection", (socket) => {
     }
   });
   socket.on("joinRoom", async ({ pin, roomId, studentId, nickname }) => {
-
     try {
       console.log(`🔍 Checking room: ${roomId}`);
 
@@ -359,6 +358,81 @@ io.on("connection", (socket) => {
       socket.emit("pinVerified", { status: false, message: "Invalid PIN" });
     }
   });
+
+  socket.on("tryReconnect", async ({ token, time }) => {
+    if (token && time) {
+      const decode = jwt.decode(token);
+      if (decode) {
+        const room = await roomModel.findById(decode.roomId).populate([
+          {
+            path: "students",
+          },
+        ]);
+        if (room && room.status !== "completed") {
+          const isStudentExist = room.students.find(
+            (s) => s._id === decode.studentId
+          );
+          if (isStudentExist) {
+            const student = await studentModel
+              .findById(decode.studentId)
+              .populate([
+                {
+                  path: "avatar",
+                },
+                {
+                  path: "item",
+                },
+                {
+                  path: "room",
+                },
+                {
+                  path: "quiz",
+                },
+              ]);
+            if (student) {
+              student.isActive = true;
+              await student.save();
+              socket.join(decode.roomId);
+              socket.emit("reconnectionAttept", {
+                status: true,
+                currentStage: room.currentStage,
+                student,
+              });
+              console.log( {
+                status: true,
+                currentStage: room.currentStage,
+                student,
+              });
+            } else {
+              socket.emit("reconnectionAttept", {
+                status: false,
+                message: "student not exist",
+              });
+              console.log("student not exist");
+            }
+          }
+        } else {
+          socket.emit("reconnectionAttept", {
+            status: false,
+            message: "Room alrady completed",
+          });
+          console.log("Room alrady completed");
+        }
+      } else {
+        socket.emit("reconnectionAttept", {
+          status: false,
+          message: "user token not perper",
+        });
+        console.log("user token not perper");
+      }
+    } else {
+      socket.emit("reconnectionAttept", {
+        status: false,
+        message: "token or time not proided",
+      });
+      console.log("token or time not proided");
+    }
+  });
   socket.on("calculate_ranks", async (data) => {
     const room = await roomModel.findById(data.roomId).populate([
       {
@@ -466,9 +540,15 @@ io.on("connection", (socket) => {
       }
       let getScore = 0;
       let isCorrect = false;
-      const isAttempted = await questionResultModel.findOne({room:room._id,student:data.student,question:data.question});
+      const isAttempted = await questionResultModel.findOne({
+        room: room._id,
+        student: data.student,
+        question: data.question,
+      });
       if (isAttempted) {
-        console.log(`Student ${student._id} has already attempted this question.`);
+        console.log(
+          `Student ${student._id} has already attempted this question.`
+        );
         return;
       }
       if (data.isTimeUp) {
@@ -543,7 +623,7 @@ io.on("connection", (socket) => {
         isCorrect,
         isTimeUp: data.isTimeUp,
         rank: rankedStudents.find((s) => s._id.equals(student._id))?.rank || 0,
-        currentScore:getScore,
+        currentScore: getScore,
         score: student.score,
       });
     } catch (error) {
@@ -568,22 +648,24 @@ io.on("connection", (socket) => {
     const sockets = await io.in(roomId).fetchSockets();
     return room && room.has(socketId);
   };
-  socket.on("checkUserInRoom", async ({ roomId, studentData, token,stage =0 }) => {
-    const room = await roomModel.findById(roomId);
-    if (!room) {
-      socket.emit("userInRoom", { status: false });
-      console.error(`Room with ID ${roomId} not found.`);
-      return;
-    }
+  socket.on(
+    "checkUserInRoom",
+    async ({ roomId, studentData, token, stage = 0 }) => {
+      const room = await roomModel.findById(roomId);
+      if (!room) {
+        socket.emit("userInRoom", { status: false });
+        console.error(`Room with ID ${roomId} not found.`);
+        return;
+      }
 
-
-    const studentExist = room.students.includes(studentData.student._id);
-    if (studentExist) {
-      socket.emit("userInRoom", { status: true });
-    } else {
-      socket.emit("userInRoom", { status: false });
+      const studentExist = room.students.includes(studentData.student._id);
+      if (studentExist) {
+        socket.emit("userInRoom", { status: true });
+      } else {
+        socket.emit("userInRoom", { status: false });
+      }
     }
-  });
+  );
   socket.on("changeCharacter", async (data) => {
     const avatar = await avatarModel.findById(data.selectedAvatarId);
     const room = await roomModel.findById(data.roomId).populate({
@@ -990,7 +1072,7 @@ io.on("connection", (socket) => {
       });
     }
   });
-  socket.on("disconnect", async () => {
+  socket.on("disconnect", async (rason) => {
     if (socket.teacher) {
       const room = await roomModel.deleteMany({
         teacher: socket.teacher._id,
@@ -1000,7 +1082,7 @@ io.on("connection", (socket) => {
       console.log(room);
       return;
     }
-    console.log("Client disconnected:", socket.id);
+    console.log("Client disconnected reason:", socket.id);
     // for (const roomId in rooms) {
     //   console.log(rooms[roomId].hostId, socket.id);
     //   if (rooms[roomId].hostId === socket.id) {
@@ -1028,10 +1110,13 @@ io.on("connection", (socket) => {
     if (socket.student) {
       try {
         const student = await studentModel.findById(socket.student._id);
+
         if (!student) {
           console.error("❌ Student not found.");
           return;
         }
+        student.isActive = false;
+        await student.save();
         const room = await roomModel.findById(student.room);
         if (!room) {
           console.error("❌ Room not found.");
