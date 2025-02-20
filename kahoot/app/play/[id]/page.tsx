@@ -246,13 +246,13 @@ const Teacher = () => {
       <div className="md:w-[40%] lg:w-[40%] flex flex-col h-full max-h-[92%] overflow-hidden">
         {/* QR Code and PIN Section */}
         <div className="w-full bg-blue_1 rounded-tl-[10px] rounded-tr-[10px] flex px-10 py-2 items-center justify-between">
-          <div className="p-2 border border-white rounded-[10px]">
+          <div className="p-2 border border-white bg-white rounded-[10px]">
             <QRCode
               size={125}
               style={{ height: "auto", maxWidth: "100%", width: "100%" }}
               value={QRUrl}
-              bgColor="transparent"
-              fgColor={"white"}
+              bgColor="white"
+              fgColor={"black"}
               viewBox={`0 0 256 256`}
             />
           </div>
