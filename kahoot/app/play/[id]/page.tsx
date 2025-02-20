@@ -258,7 +258,7 @@ const Teacher = () => {
           </div>
           <div className="flex flex-col gap-3 h-full py-4 justify-center">
             <div className="bg-white rounded-[10px] text-blue_1 font-bold text-xl px-4 py-2">
-              Join at : http://dev.meteoricsolutions.com:8000/play/connect/to/game
+              Join at : www.questor.io
             </div>
             <div onClick={handleCopyClick} className="flex gap-4 items-center justify-center">
               <p className="text-blue_1 bg-white font-bold text-xl rotate-[-90deg] px-2 py-1 rounded-[10px]">
