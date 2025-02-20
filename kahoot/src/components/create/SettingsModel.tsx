@@ -199,7 +199,7 @@ const SettingsModel = ({ data, handleSaveSettings }) => {
                       }}
                     />
                     <div>
-                      <h4>Privet</h4>
+                      <h4>Private</h4>
                       <p className="text-gray-400">Only visible to you</p>
                     </div>
                   </div>

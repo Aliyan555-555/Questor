@@ -412,7 +412,7 @@ const Create = () => {
             Theme
           </Button>
           <Button onClick={() => ReturnToHome(data.status)} className="!bg-gray-300 !text-black !font-semibold !px-6 !text-md !capitalize !tracking-wide">
-            Exist
+           Exit
           </Button>
           <Button onClick={() => { setIsSaveModelOpen(true); handleChangeQuizStatus() }} className="!bg-blue-600 !text-white !font-semibold !px-6 !text-md !capitalize !tracking-wide">
             Save

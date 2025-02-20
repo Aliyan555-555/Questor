@@ -127,9 +127,9 @@ io.on("connection", (socket) => {
         pin: newRoom.pin,
         data: newRoom,
       });
-       setInterval(() => {
-        console.log(socket.rooms);
-      }, 1000);
+      //  setInterval(() => {
+      //   console.log(socket.rooms);
+      // }, 1000);
       console.log(`Room created: ${newRoom._id} with PIN: ${newRoom.pin}`);
     } catch (error) {
       console.error("Error creating room:", error);
