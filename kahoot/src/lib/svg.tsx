@@ -315,8 +315,8 @@ export const FirstRankIcon = (props) => (
 <path d="M165.695 171.902C165.695 169.341 164.677 166.884 162.865 165.072C161.054 163.261 158.597 162.243 156.035 162.243H132.611C131.33 162.243 130.102 162.752 129.196 163.658C128.29 164.563 127.781 165.792 127.781 167.073V181.284C127.781 183.941 129.93 186.114 132.611 186.114H137.96C138.761 186.114 139.528 186.432 140.094 186.998C140.66 187.564 140.979 188.332 140.979 189.132V258.838C140.979 260.439 141.615 261.974 142.747 263.107C143.879 264.239 145.415 264.875 147.016 264.875H159.658C161.259 264.875 162.794 264.239 163.926 263.107C165.059 261.974 165.695 260.439 165.695 258.838V171.902Z" fill="#4A241A"/>
 </g>
 <defs>
-<filter id="filter0_d_122_173" x="0.381836" y="0" width="299.313" height="341.457" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter0_d_122_173" x="0.381836" y="0" width="299.313" height="341.457" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="4"/>
 <feGaussianBlur stdDeviation="2"/>
@@ -325,8 +325,8 @@ export const FirstRankIcon = (props) => (
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_122_173"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_122_173" result="shape"/>
 </filter>
-<filter id="filter1_iii_122_173" x="4.25684" y="-0.087793" width="174.564" height="120.751" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter1_iii_122_173" x="4.25684" y="-0.087793" width="174.564" height="120.751" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.1" dy="-0.1"/>
@@ -347,8 +347,8 @@ export const FirstRankIcon = (props) => (
 <feColorMatrix type="matrix" values="0 0 0 0 0.372549 0 0 0 0 0.607843 0 0 0 0 0.960784 0 0 0 1 0"/>
 <feBlend mode="normal" in2="effect2_innerShadow_122_173" result="effect3_innerShadow_122_173"/>
 </filter>
-<filter id="filter2_iii_122_173" x="121.231" y="-0.1" width="174.564" height="120.763" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter2_iii_122_173" x="121.231" y="-0.1" width="174.564" height="120.763" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.1" dy="-0.1"/>
@@ -369,8 +369,8 @@ export const FirstRankIcon = (props) => (
 <feColorMatrix type="matrix" values="0 0 0 0 0.372549 0 0 0 0 0.607843 0 0 0 0 0.960784 0 0 0 1 0"/>
 <feBlend mode="normal" in2="effect2_innerShadow_122_173" result="effect3_innerShadow_122_173"/>
 </filter>
-<filter id="filter3_ii_122_173" x="127.629" y="162.143" width="38.1631" height="102.882" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter3_ii_122_173" x="127.629" y="162.143" width="38.1631" height="102.882" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.15" dy="0.15"/>
@@ -386,48 +386,48 @@ export const FirstRankIcon = (props) => (
 <feBlend mode="normal" in2="effect1_innerShadow_122_173" result="effect2_innerShadow_122_173"/>
 </filter>
 <radialGradient id="paint0_radial_122_173" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(115.99 112.029) rotate(-123.321) scale(55.5845 207.586)">
-<stop stop-color="#3669D9"/>
-<stop offset="1" stop-color="#3669D9" stop-opacity="0"/>
+<stop stopColor="#3669D9"/>
+<stop offset="1" stopColor="#3669D9" stopOpacity="0"/>
 </radialGradient>
 <linearGradient id="paint1_linear_122_173" x1="37.246" y1="-6.52001" x2="58.9194" y2="47.4523" gradientUnits="userSpaceOnUse">
-<stop stop-color="#3D89EC"/>
-<stop offset="1" stop-color="#3D89EC" stop-opacity="0"/>
+<stop stopColor="#3D89EC"/>
+<stop offset="1" stopColor="#3D89EC" stopOpacity="0"/>
 </linearGradient>
 <radialGradient id="paint2_radial_122_173" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(184.09 112.037) rotate(-57.265) scale(36.8111 80.7451)">
-<stop stop-color="#3669D9"/>
-<stop offset="1" stop-color="#3669D9" stop-opacity="0"/>
+<stop stopColor="#3669D9"/>
+<stop offset="1" stopColor="#3669D9" stopOpacity="0"/>
 </radialGradient>
 <linearGradient id="paint3_linear_122_173" x1="262.832" y1="-6.52015" x2="241.158" y2="47.4522" gradientUnits="userSpaceOnUse">
-<stop stop-color="#3D89EC"/>
-<stop offset="1" stop-color="#3D89EC" stop-opacity="0"/>
+<stop stopColor="#3D89EC"/>
+<stop offset="1" stopColor="#3D89EC" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint4_linear_122_173" x1="147.932" y1="54.3346" x2="152.001" y2="56.5925" gradientUnits="userSpaceOnUse">
-<stop stop-color="#1A6DD8"/>
-<stop offset="1" stop-color="#1A6DD8" stop-opacity="0"/>
+<stop stopColor="#1A6DD8"/>
+<stop offset="1" stopColor="#1A6DD8" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint5_linear_122_173" x1="216.379" y1="169.126" x2="131.799" y2="252.004" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F4C654"/>
-<stop offset="1" stop-color="#DC9729"/>
+<stop stopColor="#F4C654"/>
+<stop offset="1" stopColor="#DC9729"/>
 </linearGradient>
 <linearGradient id="paint6_linear_122_173" x1="109.135" y1="339.35" x2="136.496" y2="180.681" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FA8547"/>
-<stop offset="1" stop-color="#FA8547" stop-opacity="0"/>
+<stop stopColor="#FA8547"/>
+<stop offset="1" stopColor="#FA8547" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint7_linear_122_173" x1="247.11" y1="193.794" x2="151.53" y2="193.794" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F9A842"/>
-<stop offset="1" stop-color="#FAA742"/>
+<stop stopColor="#F9A842"/>
+<stop offset="1" stopColor="#FAA742"/>
 </linearGradient>
 <linearGradient id="paint8_linear_122_173" x1="109.198" y1="200.519" x2="245.807" y2="200.519" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FAA945"/>
-<stop offset="1" stop-color="#EC9936"/>
+<stop stopColor="#FAA945"/>
+<stop offset="1" stopColor="#EC9936"/>
 </linearGradient>
 <radialGradient id="paint9_radial_122_173" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(187.041 212.134) rotate(180) scale(127.091 108.295)">
-<stop offset="0.893" stop-color="#F7B44D" stop-opacity="0"/>
-<stop offset="1" stop-color="#F7B44D"/>
+<stop offset="0.893" stopColor="#F7B44D" stopOpacity="0"/>
+<stop offset="1" stopColor="#F7B44D"/>
 </radialGradient>
 <radialGradient id="paint10_radial_122_173" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(127.756 212.134) scale(122.289 107.237)">
-<stop offset="0.879" stop-color="#D2801F" stop-opacity="0"/>
-<stop offset="0.983" stop-color="#D2801F"/>
+<stop offset="0.879" stopColor="#D2801F" stopOpacity="0"/>
+<stop offset="0.983" stopColor="#D2801F"/>
 </radialGradient>
 </defs>
 </svg>
@@ -460,8 +460,8 @@ export const SecondRankIcon = (props) => (
 </g>
 </g>
 <defs>
-<filter id="filter0_d_122_194" x="0.454102" y="0.862061" width="225.364" height="256.811" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter0_d_122_194" x="0.454102" y="0.862061" width="225.364" height="256.811" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="4"/>
 <feGaussianBlur stdDeviation="2"/>
@@ -470,8 +470,8 @@ export const SecondRankIcon = (props) => (
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_122_194"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_122_194" result="shape"/>
 </filter>
-<filter id="filter1_iii_122_194" x="4.3291" y="0.771094" width="130.309" height="90.1562" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter1_iii_122_194" x="4.3291" y="0.771094" width="130.309" height="90.1562" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.1" dy="-0.1"/>
@@ -492,8 +492,8 @@ export const SecondRankIcon = (props) => (
 <feColorMatrix type="matrix" values="0 0 0 0 0.372549 0 0 0 0 0.607843 0 0 0 0 0.960784 0 0 0 1 0"/>
 <feBlend mode="normal" in2="effect2_innerShadow_122_194" result="effect3_innerShadow_122_194"/>
 </filter>
-<filter id="filter2_iii_122_194" x="91.6084" y="0.762061" width="130.309" height="90.1652" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter2_iii_122_194" x="91.6084" y="0.762061" width="130.309" height="90.1652" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.1" dy="-0.1"/>
@@ -514,8 +514,8 @@ export const SecondRankIcon = (props) => (
 <feColorMatrix type="matrix" values="0 0 0 0 0.372549 0 0 0 0 0.607843 0 0 0 0 0.960784 0 0 0 1 0"/>
 <feBlend mode="normal" in2="effect2_innerShadow_122_194" result="effect3_innerShadow_122_194"/>
 </filter>
-<filter id="filter3_ii_122_194" x="87.1713" y="119.046" width="54.1152" height="80.2529" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter3_ii_122_194" x="87.1713" y="119.046" width="54.1152" height="80.2529" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.15" dy="0.15"/>
@@ -531,52 +531,52 @@ export const SecondRankIcon = (props) => (
 <feBlend mode="normal" in2="effect1_innerShadow_122_194" result="effect2_innerShadow_122_194"/>
 </filter>
 <radialGradient id="paint0_radial_122_194" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(87.7311 84.4527) rotate(-123.321) scale(41.4746 154.891)">
-<stop stop-color="#3669D9"/>
-<stop offset="1" stop-color="#3669D9" stop-opacity="0"/>
+<stop stopColor="#3669D9"/>
+<stop offset="1" stopColor="#3669D9" stopOpacity="0"/>
 </radialGradient>
 <linearGradient id="paint1_linear_122_194" x1="28.9758" y1="-4.00295" x2="45.1476" y2="36.2687" gradientUnits="userSpaceOnUse">
-<stop stop-color="#3D89EC"/>
-<stop offset="1" stop-color="#3D89EC" stop-opacity="0"/>
+<stop stopColor="#3D89EC"/>
+<stop offset="1" stopColor="#3D89EC" stopOpacity="0"/>
 </linearGradient>
 <radialGradient id="paint2_radial_122_194" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(138.543 84.459) rotate(-57.2651) scale(27.4667 60.2483)">
-<stop stop-color="#3669D9"/>
-<stop offset="1" stop-color="#3669D9" stop-opacity="0"/>
+<stop stopColor="#3669D9"/>
+<stop offset="1" stopColor="#3669D9" stopOpacity="0"/>
 </radialGradient>
 <linearGradient id="paint3_linear_122_194" x1="197.295" y1="-4.00298" x2="181.124" y2="36.2687" gradientUnits="userSpaceOnUse">
-<stop stop-color="#3D89EC"/>
-<stop offset="1" stop-color="#3D89EC" stop-opacity="0"/>
+<stop stopColor="#3D89EC"/>
+<stop offset="1" stopColor="#3D89EC" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint4_linear_122_194" x1="111.564" y1="41.4041" x2="114.6" y2="43.0888" gradientUnits="userSpaceOnUse">
-<stop stop-color="#1A6DD8"/>
-<stop offset="1" stop-color="#1A6DD8" stop-opacity="0"/>
+<stop stopColor="#1A6DD8"/>
+<stop offset="1" stopColor="#1A6DD8" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint5_linear_122_194" x1="184.07" y1="112.353" x2="99.8601" y2="189.346" gradientUnits="userSpaceOnUse">
-<stop stop-color="#EFEAF6"/>
-<stop offset="1" stop-color="#B5A8C3"/>
+<stop stopColor="#EFEAF6"/>
+<stop offset="1" stopColor="#B5A8C3"/>
 </linearGradient>
 <linearGradient id="paint6_linear_122_194" x1="82.6165" y1="254.07" x2="103.032" y2="135.678" gradientUnits="userSpaceOnUse">
-<stop stop-color="#D0A9F4"/>
-<stop offset="1" stop-color="#D0A9F4" stop-opacity="0"/>
+<stop stopColor="#D0A9F4"/>
+<stop offset="1" stopColor="#D0A9F4" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint7_linear_122_194" x1="185.567" y1="145.462" x2="114.249" y2="145.462" gradientUnits="userSpaceOnUse">
-<stop stop-color="#D3C6E2"/>
-<stop offset="1" stop-color="#D6C6E8"/>
+<stop stopColor="#D3C6E2"/>
+<stop offset="1" stopColor="#D6C6E8"/>
 </linearGradient>
 <linearGradient id="paint8_linear_122_194" x1="71.3573" y1="176.904" x2="185.082" y2="142.489" gradientUnits="userSpaceOnUse">
-<stop stop-color="#E0D3EF"/>
-<stop offset="1" stop-color="#C1B0D4"/>
+<stop stopColor="#E0D3EF"/>
+<stop offset="1" stopColor="#C1B0D4"/>
 </linearGradient>
 <radialGradient id="paint9_radial_122_194" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(140.183 148.789) rotate(156.644) scale(102.679 87.4939)">
-<stop offset="0.837" stop-color="#F6ECFE" stop-opacity="0"/>
-<stop offset="1" stop-color="#F6ECFE"/>
+<stop offset="0.837" stopColor="#F6ECFE" stopOpacity="0"/>
+<stop offset="1" stopColor="#F6ECFE"/>
 </radialGradient>
 <radialGradient id="paint10_radial_122_194" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(105.523 167.249) rotate(-41.2941) scale(80.7594 77.5447)">
-<stop offset="0.91" stop-color="#B396CF" stop-opacity="0"/>
-<stop offset="0.992" stop-color="#B796D5"/>
+<stop offset="0.91" stopColor="#B396CF" stopOpacity="0"/>
+<stop offset="0.992" stopColor="#B796D5"/>
 </radialGradient>
 <radialGradient id="paint11_radial_122_194" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(112.278 153.453) rotate(37.9309) scale(76.0292 86.1591)">
-<stop offset="0.926" stop-color="#AB9CBB" stop-opacity="0"/>
-<stop offset="1" stop-color="#AB9CBB"/>
+<stop offset="0.926" stopColor="#AB9CBB" stopOpacity="0"/>
+<stop offset="1" stopColor="#AB9CBB"/>
 </radialGradient>
 </defs>
 </svg>
@@ -608,8 +608,8 @@ export const ThirdRankIcon = (props) => (
 </g>
 </g>
 <defs>
-<filter id="filter0_d_122_215" x="0.669922" y="0.862061" width="225.365" height="256.811" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter0_d_122_215" x="0.669922" y="0.862061" width="225.365" height="256.811" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="4"/>
 <feGaussianBlur stdDeviation="2"/>
@@ -618,8 +618,8 @@ export const ThirdRankIcon = (props) => (
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_122_215"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_122_215" result="shape"/>
 </filter>
-<filter id="filter1_iii_122_215" x="4.54492" y="0.770605" width="130.307" height="90.1564" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter1_iii_122_215" x="4.54492" y="0.770605" width="130.307" height="90.1564" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.1" dy="-0.1"/>
@@ -640,8 +640,8 @@ export const ThirdRankIcon = (props) => (
 <feColorMatrix type="matrix" values="0 0 0 0 0.372549 0 0 0 0 0.607843 0 0 0 0 0.960784 0 0 0 1 0"/>
 <feBlend mode="normal" in2="effect2_innerShadow_122_215" result="effect3_innerShadow_122_215"/>
 </filter>
-<filter id="filter2_iii_122_215" x="91.8271" y="0.762061" width="130.307" height="90.1654" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter2_iii_122_215" x="91.8271" y="0.762061" width="130.307" height="90.1654" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.1" dy="-0.1"/>
@@ -662,8 +662,8 @@ export const ThirdRankIcon = (props) => (
 <feColorMatrix type="matrix" values="0 0 0 0 0.372549 0 0 0 0 0.607843 0 0 0 0 0.960784 0 0 0 1 0"/>
 <feBlend mode="normal" in2="effect2_innerShadow_122_215" result="effect3_innerShadow_122_215"/>
 </filter>
-<filter id="filter3_iii_122_215" x="87.3891" y="116.415" width="54.084" height="81.3342" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter3_iii_122_215" x="87.3891" y="116.415" width="54.084" height="81.3342" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="-0.15" dy="0.15"/>
@@ -685,52 +685,52 @@ export const ThirdRankIcon = (props) => (
 <feBlend mode="normal" in2="effect2_innerShadow_122_215" result="effect3_innerShadow_122_215"/>
 </filter>
 <radialGradient id="paint0_radial_122_215" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(87.9458 84.4524) rotate(-123.321) scale(41.4745 154.89)">
-<stop stop-color="#3669D9"/>
-<stop offset="1" stop-color="#3669D9" stop-opacity="0"/>
+<stop stopColor="#3669D9"/>
+<stop offset="1" stopColor="#3669D9" stopOpacity="0"/>
 </radialGradient>
 <linearGradient id="paint1_linear_122_215" x1="29.1913" y1="-4.00345" x2="45.3633" y2="36.2681" gradientUnits="userSpaceOnUse">
-<stop stop-color="#3D89EC"/>
-<stop offset="1" stop-color="#3D89EC" stop-opacity="0"/>
+<stop stopColor="#3D89EC"/>
+<stop offset="1" stopColor="#3D89EC" stopOpacity="0"/>
 </linearGradient>
 <radialGradient id="paint2_radial_122_215" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(138.761 84.4592) rotate(-57.2654) scale(27.4667 60.2478)">
-<stop stop-color="#3669D9"/>
-<stop offset="1" stop-color="#3669D9" stop-opacity="0"/>
+<stop stopColor="#3669D9"/>
+<stop offset="1" stopColor="#3669D9" stopOpacity="0"/>
 </radialGradient>
 <linearGradient id="paint3_linear_122_215" x1="197.513" y1="-4.00299" x2="181.341" y2="36.2686" gradientUnits="userSpaceOnUse">
-<stop stop-color="#3D89EC"/>
-<stop offset="1" stop-color="#3D89EC" stop-opacity="0"/>
+<stop stopColor="#3D89EC"/>
+<stop offset="1" stopColor="#3D89EC" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint4_linear_122_215" x1="111.782" y1="41.4041" x2="114.818" y2="43.0888" gradientUnits="userSpaceOnUse">
-<stop stop-color="#1A6DD8"/>
-<stop offset="1" stop-color="#1A6DD8" stop-opacity="0"/>
+<stop stopColor="#1A6DD8"/>
+<stop offset="1" stopColor="#1A6DD8" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint5_linear_122_215" x1="184.284" y1="112.352" x2="100.074" y2="189.345" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F6BC7F"/>
-<stop offset="1" stop-color="#A76740"/>
+<stop stopColor="#F6BC7F"/>
+<stop offset="1" stopColor="#A76740"/>
 </linearGradient>
 <linearGradient id="paint6_linear_122_215" x1="82.8316" y1="254.07" x2="103.247" y2="135.678" gradientUnits="userSpaceOnUse">
-<stop stop-color="#B05B5B"/>
-<stop offset="1" stop-color="#B05B5B" stop-opacity="0"/>
+<stop stopColor="#B05B5B"/>
+<stop offset="1" stopColor="#B05B5B" stopOpacity="0"/>
 </linearGradient>
 <linearGradient id="paint7_linear_122_215" x1="185.78" y1="145.462" x2="114.463" y2="145.462" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CD8858"/>
-<stop offset="1" stop-color="#D28D59"/>
+<stop stopColor="#CD8858"/>
+<stop offset="1" stopColor="#D28D59"/>
 </linearGradient>
 <linearGradient id="paint8_linear_122_215" x1="71.5709" y1="176.905" x2="185.294" y2="142.491" gradientUnits="userSpaceOnUse">
-<stop stop-color="#D38E5F"/>
-<stop offset="1" stop-color="#BE794E"/>
+<stop stopColor="#D38E5F"/>
+<stop offset="1" stopColor="#BE794E"/>
 </linearGradient>
 <radialGradient id="paint9_radial_122_215" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(140.396 148.79) rotate(156.644) scale(102.678 87.4939)">
-<stop offset="0.837" stop-color="#E5AC75" stop-opacity="0"/>
-<stop offset="1" stop-color="#E5AC75"/>
+<stop offset="0.837" stopColor="#E5AC75" stopOpacity="0"/>
+<stop offset="1" stopColor="#E5AC75"/>
 </radialGradient>
 <radialGradient id="paint10_radial_122_215" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(105.736 167.25) rotate(-41.2945) scale(80.7588 77.5443)">
-<stop offset="0.91" stop-color="#B36441" stop-opacity="0"/>
-<stop offset="1" stop-color="#B36441"/>
+<stop offset="0.91" stopColor="#B36441" stopOpacity="0"/>
+<stop offset="1" stopColor="#B36441"/>
 </radialGradient>
 <radialGradient id="paint11_radial_122_215" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(112.491 153.454) rotate(37.9313) scale(76.0286 86.1588)">
-<stop offset="0.926" stop-color="#AB662B" stop-opacity="0"/>
-<stop offset="1" stop-color="#AB662B"/>
+<stop offset="0.926" stopColor="#AB662B" stopOpacity="0"/>
+<stop offset="1" stopColor="#AB662B"/>
 </radialGradient>
 </defs>
 </svg>
@@ -944,28 +944,28 @@ export const CoinIcon = ({w,h}) => (
 <path d="M35.2941 10.2941C35.2941 15.9794 27.3941 20.5882 17.6471 20.5882C7.9 20.5882 0 15.9794 0 10.2941C0 4.60882 7.9 0 17.6471 0C27.3941 0 35.2941 4.60882 35.2941 10.2941Z" fill="url(#paint5_linear_120_246)"/>
 <defs>
 <linearGradient id="paint0_linear_120_246" x1="9.36177" y1="37.7943" x2="15.3618" y2="50.9002" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FFA43D"/>
-<stop offset="1" stop-color="#FB5937"/>
+<stop stopColor="#FFA43D"/>
+<stop offset="1" stopColor="#FB5937"/>
 </linearGradient>
 <linearGradient id="paint1_linear_120_246" x1="35.3441" y1="44.1087" x2="16.4824" y2="17.6587" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF8A69"/>
-<stop offset="1" stop-color="#FFCD0F"/>
+<stop stopColor="#FF8A69"/>
+<stop offset="1" stopColor="#FFCD0F"/>
 </linearGradient>
 <linearGradient id="paint2_linear_120_246" x1="9.36177" y1="26.0294" x2="15.3618" y2="39.1353" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FFA43D"/>
-<stop offset="1" stop-color="#FB5937"/>
+<stop stopColor="#FFA43D"/>
+<stop offset="1" stopColor="#FB5937"/>
 </linearGradient>
 <linearGradient id="paint3_linear_120_246" x1="35.3441" y1="32.3443" x2="16.4824" y2="5.8943" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF8A69"/>
-<stop offset="1" stop-color="#FFCD0F"/>
+<stop stopColor="#FF8A69"/>
+<stop offset="1" stopColor="#FFCD0F"/>
 </linearGradient>
 <linearGradient id="paint4_linear_120_246" x1="9.36177" y1="14.2645" x2="15.3618" y2="27.3704" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FFA43D"/>
-<stop offset="1" stop-color="#FB5937"/>
+<stop stopColor="#FFA43D"/>
+<stop offset="1" stopColor="#FB5937"/>
 </linearGradient>
 <linearGradient id="paint5_linear_120_246" x1="35.3441" y1="20.5794" x2="16.4824" y2="-5.87059" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF8A69"/>
-<stop offset="1" stop-color="#FFCD0F"/>
+<stop stopColor="#FF8A69"/>
+<stop offset="1" stopColor="#FFCD0F"/>
 </linearGradient>
 </defs>
 </svg>
@@ -982,43 +982,43 @@ export const ClockIcon = ({w,h}) => (
 <path d="M6.27422 49.5181L12.5249 43.2675L10.1983 40.9409L3.94767 47.1915C3.7949 47.3443 3.67372 47.5256 3.59105 47.7252C3.50837 47.9248 3.46582 48.1388 3.46582 48.3548C3.46582 48.5708 3.50837 48.7848 3.59105 48.9844C3.67372 49.1839 3.7949 49.3653 3.94767 49.5181C4.10043 49.6708 4.28179 49.792 4.48138 49.8747C4.68098 49.9574 4.8949 49.9999 5.11094 49.9999C5.32698 49.9999 5.54091 49.9574 5.7405 49.8747C5.9401 49.792 6.12146 49.6708 6.27422 49.5181Z" fill="url(#paint5_linear_120_234)"/>
 <path d="M50.8391 26.3135C50.8391 39.395 40.2341 50 27.1525 50C14.0709 50 3.46582 39.395 3.46582 26.3135C3.46582 13.2319 14.0709 2.62695 27.1525 2.62695C40.2341 2.62695 50.8391 13.2319 50.8391 26.3135Z" fill="url(#paint6_linear_120_234)"/>
 <path d="M47.5485 26.3132C47.5485 37.5775 38.416 46.7099 27.1517 46.7099C15.8874 46.7099 6.75488 37.5775 6.75488 26.3132C6.75488 15.049 15.8874 5.9165 27.1517 5.9165C38.416 5.9165 47.5485 15.049 47.5485 26.3132Z" fill="url(#paint7_linear_120_234)"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M25.5082 11.8381C26.4162 11.8381 27.1531 12.575 27.1531 13.483V26.3132H36.0356C36.4718 26.3132 36.8902 26.4865 37.1987 26.795C37.5072 27.1035 37.6805 27.5219 37.6805 27.9581C37.6805 28.3944 37.5072 28.8128 37.1987 29.1212C36.8902 29.4297 36.4718 29.603 36.0356 29.603H25.5082C24.6002 29.603 23.8633 28.8661 23.8633 27.9581V13.483C23.8633 12.575 24.6002 11.8381 25.5082 11.8381Z" fill="url(#paint8_linear_120_234)"/>
+<path fillRule="evenodd" clip-rule="evenodd" d="M25.5082 11.8381C26.4162 11.8381 27.1531 12.575 27.1531 13.483V26.3132H36.0356C36.4718 26.3132 36.8902 26.4865 37.1987 26.795C37.5072 27.1035 37.6805 27.5219 37.6805 27.9581C37.6805 28.3944 37.5072 28.8128 37.1987 29.1212C36.8902 29.4297 36.4718 29.603 36.0356 29.603H25.5082C24.6002 29.603 23.8633 28.8661 23.8633 27.9581V13.483C23.8633 12.575 24.6002 11.8381 25.5082 11.8381Z" fill="url(#paint8_linear_120_234)"/>
 <defs>
 <linearGradient id="paint0_linear_120_234" x1="55.7104" y1="19.8876" x2="36.8085" y2="4.42551" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF6F47"/>
-<stop offset="1" stop-color="#FFCD0F"/>
+<stop stopColor="#FF6F47"/>
+<stop offset="1" stopColor="#FFCD0F"/>
 </linearGradient>
 <radialGradient id="paint1_radial_120_234" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(29.7681 25.9083) rotate(-44.9998) scale(29.7759)">
-<stop offset="0.644" stop-color="#FF6F47"/>
-<stop offset="0.942" stop-color="#FF6F47" stop-opacity="0"/>
+<stop offset="0.644" stopColor="#FF6F47"/>
+<stop offset="0.942" stopColor="#FF6F47" stopOpacity="0"/>
 </radialGradient>
 <linearGradient id="paint2_linear_120_234" x1="22.7874" y1="21.9115" x2="3.88549" y2="6.44939" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF6F47"/>
-<stop offset="1" stop-color="#FFCD0F"/>
+<stop stopColor="#FF6F47"/>
+<stop offset="1" stopColor="#FFCD0F"/>
 </linearGradient>
 <radialGradient id="paint3_radial_120_234" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(28.7699 27.9322) rotate(-135) scale(29.7759)">
-<stop offset="0.659" stop-color="#FF6F47"/>
-<stop offset="0.949" stop-color="#FF6F47" stop-opacity="0"/>
+<stop offset="0.659" stopColor="#FF6F47"/>
+<stop offset="0.949" stopColor="#FF6F47" stopOpacity="0"/>
 </radialGradient>
 <linearGradient id="paint4_linear_120_234" x1="5.45681" y1="36.955" x2="7.30698" y2="53.2908" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CAD2D9"/>
-<stop offset="1" stop-color="#70777D"/>
+<stop stopColor="#CAD2D9"/>
+<stop offset="1" stopColor="#70777D"/>
 </linearGradient>
 <linearGradient id="paint5_linear_120_234" x1="5.45703" y1="36.955" x2="7.3072" y2="53.2908" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CAD2D9"/>
-<stop offset="1" stop-color="#70777D"/>
+<stop stopColor="#CAD2D9"/>
+<stop offset="1" stopColor="#70777D"/>
 </linearGradient>
 <linearGradient id="paint6_linear_120_234" x1="11.3614" y1="-0.00488252" x2="35.0478" y2="52.6319" gradientUnits="userSpaceOnUse">
-<stop stop-color="#1EC8B0"/>
-<stop offset="1" stop-color="#2764E7"/>
+<stop stopColor="#1EC8B0"/>
+<stop offset="1" stopColor="#2764E7"/>
 </linearGradient>
 <linearGradient id="paint7_linear_120_234" x1="12.9621" y1="1.48186" x2="39.5672" y2="58.2388" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FDFDFD"/>
-<stop offset="1" stop-color="#DEDEFF"/>
+<stop stopColor="#FDFDFD"/>
+<stop offset="1" stopColor="#DEDEFF"/>
 </linearGradient>
 <linearGradient id="paint8_linear_120_234" x1="29.152" y1="15.5464" x2="36.7895" y2="28.2766" gradientUnits="userSpaceOnUse">
-<stop stop-color="#1EC8B0"/>
-<stop offset="1" stop-color="#2764E7"/>
+<stop stopColor="#1EC8B0"/>
+<stop offset="1" stopColor="#2764E7"/>
 </linearGradient>
 </defs>
 </svg>

@@ -185,8 +185,8 @@ const OptionsSection = React.memo(({
       </div>
 
       <div className="w-full flex-1 flex flex-col py-6 px-10">
-        <div className="w-full flex-1  flex items-center justify-center">
-          {question.media && <Image src={question.media} className="" alt="" width={400} height={400} />}
+        <div className="w-full mb-2 flex-1 max-h-[300px] flex items-center justify-center">
+          {question.media && <Image src={question.media} className="h-full" alt="" width={400} height={400} />}
         </div>
         <div className="w-full text-white text-xl text-center bg-blue_1 py-6 rounded-[10px] ">
           {question.question}
@@ -488,7 +488,7 @@ const Page = () => {
   const teacher = useSelector((root: RootState) => root.teacher.currentGame);
   const [submittedLength, setSubmittedLength] = useState(0);
   const [isAllStudentsSubmitted, setIsAllPlayersSubmitted] = useState(false)
-console.log(isAllStudentsSubmitted);
+  console.log(isAllStudentsSubmitted);
 
   useEffect(() => {
     if (socket) {
@@ -545,6 +545,8 @@ console.log(isAllStudentsSubmitted);
   const nextQuestion = () => {
     const nextIndex = currentQuestionIndex + 1;
     const isLastQuestion = nextIndex >= teacher?.quiz.questions.length;
+    console.log(teacher?.quiz.questions.length, isLastQuestion, nextIndex
+    );
 
     if (isLastQuestion) {
       setStage(4);
@@ -553,7 +555,7 @@ console.log(isAllStudentsSubmitted);
         currentStage: {
           stage: 4,
           question: teacher?.quiz.questions[currentQuestionIndex]._id,
-          isLastStage: true, // Ensure no further questions appear
+          isLastStage: true,
         },
       });
     } else {
@@ -566,7 +568,7 @@ console.log(isAllStudentsSubmitted);
         currentStage: {
           stage: 1,
           question: teacher?.quiz.questions[nextIndex]._id, // Use updated index
-          isLastStage: nextIndex + 1 === teacher?.quiz.questions.length,
+          isLastStage: isLastQuestion,
         },
       });
     }

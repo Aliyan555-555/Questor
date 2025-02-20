@@ -12,8 +12,8 @@ import { useRouter } from 'next/navigation';
 const InitialLoading = () => {
 
   return (
-    <div className="w-screen gap-4 flex-col h-screen flex bg-black/15 items-center justify-center ">
-      <div className=' bg-blue_1 text-white text-6xl font-bold rounded-[10px] px-16 py-5'>
+    <div className="w-screen overflow-hidden px-4 gap-4 flex-col h-screen flex bg-black/15 items-center justify-center ">
+      <div className=' bg-blue_1 text-center text-white text-4xl md:text-6xl font-bold rounded-[10px] max-sm:w-full md:px-16 py-5'>
         Get Ready!
       </div>
     </div>

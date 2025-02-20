@@ -127,7 +127,7 @@ const Student = () => {
 
   return (
     <div
-      className="w-screen bg-[#E9E2B6] h-screen relative flex-col bg-cover bg-center bg-no-repeat flex items-center justify-center"    >
+      className="w-screen overflow-hidden bg-[#E9E2B6] px-4 h-screen relative flex-col bg-cover bg-center bg-no-repeat flex items-center justify-center"    >
     
 
     <div className="bg-white px-8 py-10 flex items-center justify-start gap-10 flex-col rounded-[10px]">

@@ -163,7 +163,7 @@ const Page = () => {
   }, []);
 
   return (
-    <div  className="w-screen overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
+    <div  className="w-screen px-4 overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
       {loading ? (
         <Loader h={100} w={100} />
       ) : (
@@ -191,7 +191,7 @@ const Page = () => {
       <div className="bg-[#E9E2B6] p-4 rounded-[10px] text-3xl font-semibold mt-3  text-black">
       <h3 className="">{student?.student.nickname}</h3>
       </div>
-      <div className="bg-[#E9E2B6] rounded-[10px] mt-3 p-6 text-black text-2xl">
+      <div className="bg-[#E9E2B6] text-center rounded-[10px] mt-3 p-6 text-black text-2xl">
       <p>
         You&lsquo;re in! See your nickname on screen?
       </p>
