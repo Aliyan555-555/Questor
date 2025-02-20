@@ -258,7 +258,7 @@ const Teacher = () => {
           </div>
           <div className="flex flex-col gap-3 h-full py-4 justify-center">
             <div className="bg-white rounded-[10px] text-blue_1 font-bold text-xl px-4 py-2">
-              Join at : www.questor.io
+              Join at : http://dev.meteoricsolutions.com:8000/play/connect/to/game
             </div>
             <div onClick={handleCopyClick} className="flex gap-4 items-center justify-center">
               <p className="text-blue_1 bg-white font-bold text-xl rotate-[-90deg] px-2 py-1 rounded-[10px]">
@@ -268,8 +268,6 @@ const Teacher = () => {
             </div>
           </div>
         </div>
-
-        {/* Waiting Section */}
         <div className="w-full flex flex-col flex-grow py-4 items-center bg-white rounded-bl-[10px] rounded-br-[10px] overflow-hidden">
           <h2 className="text-3xl text-blue_1 font-semibold">Waiting for players...</h2>
           <div className="flex-1 w-full flex justify-center items-center overflow-hidden">
@@ -278,13 +276,13 @@ const Teacher = () => {
               width={100}
               height={300}
               className="w-auto h-[200px] md:h-[250px] lg:h-[300px] object-contain"
-              src={"/images/UI/waiting.gif"}
+              src={"/images/animatedPNG.png"}
             />
           </div>
         </div>
 
         {/* Start Button */}
-        <Button onClick={handleStart} disabled={game.students.length === 0} className="!bg-red_1 disabled:opacity-80 !mt-3 !rounded-[10px] !w-full !py-3 !uppercase !font-black !text-3xl !text-white">
+        <Button onClick={handleStart} disabled={game?.students.length === 0} className="!bg-red_1 disabled:opacity-80 !mt-3 !rounded-[10px] !w-full !py-3 !uppercase !font-black !text-3xl !text-white">
           Start
         </Button>
       </div>
@@ -332,14 +330,14 @@ const Teacher = () => {
           </svg>
         </IconButton>
         {
-          game.students.length === 0 && (
+          game?.students.length === 0 && (
             <div className="w-full h-full flex items-center text-4xl font-semibold text-white justify-center">
               <h3>Waiting for students...</h3>
             </div>
           )
         }
         {
-          game.students.map((student,index) => (
+          game?.students.map((student,index) => (
              
             <div key={student._id} className="flex flex-col items-center justify-center">
               <div
