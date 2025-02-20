@@ -29,8 +29,11 @@ const Signup = () => {
     toast.info("signup with credentials logic not implemented yet")
   }
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
-      <div className="w-[90%] md:w-[450px] h-auto py-10 px-6 bg-white rounded-lg shadow-lg flex flex-col items-center gap-6">
+    <div  style={{backgroundImage:"url(/images/UI/authBG.png)"}} className="w-screen bg-cover bg-top h-screen flex items-center justify-center ">
+      <div style={{boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}} className="w-[90%] md:w-[450px] h-auto py-8 px-6 bg-white rounded-lg flex flex-col items-center gap-4">
+         <div className="w-full flex items-center justify-center">
+                <Image src={'/images/UI/fullLogo.png'} alt="Questor" width={150} height={100} /> 
+                </div>
         <h3 className="text-2xl font-bold text-gray-800">
           Create Your Account
         </h3>
@@ -50,7 +53,7 @@ const Signup = () => {
               placeholder="Enter your full name"
               name="name"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FBA732]"
             />
           </div>
 
@@ -67,7 +70,7 @@ const Signup = () => {
               placeholder="Enter your email"
               name="email"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FBA732]"
             />
           </div>
 
@@ -84,7 +87,7 @@ const Signup = () => {
               placeholder="Create a password"
               name="password"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FBA732]"
             />
           </div>
 
@@ -92,7 +95,7 @@ const Signup = () => {
           onClick={handleSignupWithCredentials}
             type="submit"
             variant="contained"
-            className="!w-full !py-3 !bg-indigo-500 !text-white !font-medium !text-lg !rounded-lg !normal-case hover:!bg-indigo-600 focus:!ring-2 focus:!ring-indigo-400"
+            className="!w-full !py-3 !bg-[#FBA732] !text-black font-semibold !text-lg !rounded-lg !normal-case hover:!bg-[#ff9b10] focus:!ring-0"
           >
             Sign up
           </Button>
@@ -123,7 +126,7 @@ const Signup = () => {
           Already have an account?{" "}
           <Link
             href="/auth/login"
-            className="text-indigo-500 font-medium hover:underline"
+            className="text-[#10BBF9] font-medium hover:underline"
           >
             Log in
           </Link>

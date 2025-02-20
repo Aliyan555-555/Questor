@@ -1,6 +1,6 @@
 "use client";
 import { useSocket } from '@/src/hooks/useSocket';
-import { CircleIcon, DiamondIcon, IsCorrectIcon, IsWrongIcon, KahootIcon, SliderIcon, SquareIcon, StudentSideRankIcon, TriangleIcon, TrueFalseIcon, TypeAnswerIcon } from '@/src/lib/svg';
+import { CircleIcon, ClockIcon, DiamondIcon, IsCorrectIcon, IsWrongIcon,SquareIcon, StudentSideRankIcon, TriangleIcon } from '@/src/lib/svg';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/src/redux/store';
@@ -10,17 +10,17 @@ import { useRouter } from 'next/navigation';
 
 
 const InitialLoading = () => {
-  
+
   return (
     <div className="w-screen gap-4 flex-col h-screen flex bg-black/15 items-center justify-center ">
-      <h3 className="text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100">Get Ready!</h3>
-      <svg id="spinner_svg__Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 140 140" enableBackground="new 0 0 140 140" xmlSpace="preserve" color="#fff" aria-label="Please wait" className="animate-spin  w-[130px] h-[130px]"><g><circle opacity="0" fill="#FFFFFF" cx="70" cy="70" r="70"></circle><g><path fill="#FFFFFF" d="M70,0C31.3,0,0,31.3,0,70h35c0-19.3,15.7-35,35-35s35,15.7,35,35h35C140,31.3,108.7,0,70,0z"></path></g></g></svg>
-      <h3 className="text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100">Loaing...</h3>
+      <div className=' bg-blue_1 text-white text-6xl font-bold rounded-[10px] px-16 py-5'>
+        Get Ready!
+      </div>
     </div>
   )
 }
 
-const WaitingForQuestion = ({ index, question }) => {
+const WaitingForQuestion = ({ index}) => {
   const [count, setCount] = useState(5);
   useEffect(() => {
     if (count <= 0) return;
@@ -39,13 +39,7 @@ const WaitingForQuestion = ({ index, question }) => {
         <div className="h-[50px] absolute left-4 bg-white text-black font-semibold w-[50px] rounded-full flex items-center justify-center text-xl">
           {index !== null ? index : "1"}
         </div>
-        <div className="flex py-2 items-center justify-center px-4 gap-2 bg-white text-black rounded-[50px]">
-          {question.type === "quiz" && <KahootIcon w={30} h={30} />}
-          {question.type === "true/false" && <TrueFalseIcon h={30} w={30} />}
-          {question.type === "slider" && <SliderIcon w={30} h={30} />}
-          {question.type === "typeanswer" && <TypeAnswerIcon h={30} w={30} />}
-          <h5 className="font-semibold text-lg capitalize">{question.type}</h5>
-        </div>
+
       </div>
 
       {/* Countdown Section */}
@@ -127,25 +121,17 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
     { icon: <CircleIcon width={130} height={130} /> },
     { icon: <SquareIcon width={130} height={130} /> },
   ];
-  const colors = ["red", "blue", "#C79200", "green"];
+  const colors = ["#9B059C", "#FD9800", "#1B3BA0", "#036100"];
 
   return (
-    <div className="w-screen h-screen flex flex-col text-white">
-      {/* Timer and Question Type */}
+    <div className="w-screen h-screen flex flex-col ">
       <div className="w-full flex h-[60px] justify-center items-center py-2 relative">
-        <div className="h-[50px] absolute left-4 bg-white text-black font-semibold w-[50px] rounded-full flex items-center justify-center text-xl">
-          {count !== null ? count : "0"}
-        </div>
-        <div className="flex py-2 items-center justify-center px-4 gap-2 bg-white text-black rounded-[50px]">
-          {question.type === "quiz" && <KahootIcon w={30} h={30} />}
-          {question.type === "true/false" && <TrueFalseIcon h={30} w={30} />}
-          {question.type === "slider" && <SliderIcon w={30} h={30} />}
-          {question.type === "typeanswer" && <TypeAnswerIcon h={30} w={30} />}
-          <h5 className="font-semibold text-lg capitalize">{question.type}</h5>
+        <div className="bg-white flex font-bold gap-5 w-fit px-5 py-2 text-xl items-center justify-center rounded-[100px] ">
+          <ClockIcon w={30} h={30} />
+          <p>{count}</p>
         </div>
       </div>
 
-      {/* Options Section */}
       {!isResult && count !== null && count > 0 && (
         <div className="w-full pb-4 pt-2 px-2 md:px-6 h-full grid grid-cols-2 grid-rows-2 gap-2">
           {options.map((option, index) => (
@@ -160,8 +146,6 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
           ))}
         </div>
       )}
-
-      {/* Result Section */}
       {isResult && (
         <div className="w-full h-full flex items-center justify-center">
           {isTimeUp ? (
@@ -198,7 +182,7 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
                 </div>
               </div>
               <div className="w-[250px] bg-black/60 rounded-md py-3 text-xl text-white font-bold text-center">
-                +{result.score.toFixed(0)}
+                +{result.currentScore.toFixed(0)}
               </div>
             </div>
           ) : (
@@ -223,11 +207,13 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
 const RankStage = ({ student }) => {
   return (
     <div className={"w-screen h-screen flex flex-col text-white items-center justify-center"}>
-      <AnimatedAvatar avatarData={student.avatar} avatarItems={student.item} bg='#9094' h='150px' w='150px' chin={false} />
-      <h1 className="text-4xl font-semibold text-white">{student.nickname}</h1>
-      <h2 className="text-xl font-semibold text-white">Score: {student.score.toFixed(0) ?? 0}</h2>
-      <h2 className="text-xl font-semibold text-white">Rank: {student.rank}</h2>
-
+      <div className='flex flex-col min-w-[350px] items-center gap-2 justify-center bg-blue_1 rounded-[10px] py-6 '>
+        <h1 className="text-4xl font-semibold text-white">{student.nickname}</h1>
+        <AnimatedAvatar avatarData={student.avatar} avatarItems={student.item} bg='#4686EC' h='120px' w='120px' chin={false} />
+        <h2 className="text-xl font-semibold text-white">Score: {student.score.toFixed(0) ?? 0}</h2>
+        <h2 className="text-xl font-semibold text-white">Rank: {student.rank}</h2>
+        <h2 className="text-xl font-semibold text-white">Remarkable Win!</h2>
+      </div>
     </div>
   )
 }
@@ -239,8 +225,8 @@ const Page = () => {
   const [result, setResult] = useState(null);
   const dispatch = useDispatch();
   const navigation = useRouter();
-  console.log("🚀 ~ Page ~ student:", student)
   const socket = useSocket();
+
   useEffect(() => {
     if (socket) {
       socket.on("populateCurrentStage", (data) => {
@@ -256,15 +242,16 @@ const Page = () => {
         }
       });
       socket.on("result", (data) => {
-        setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score })
+        setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore })
         dispatch(setScore(data.score));
       });
       socket.on("userInRoom", (data) => {
-      if (!data.status){
-        navigation.push('/play/connect/to/game');
-      }
+        if (!data.status) {
+          if (stage !== 4 || stage !== 3) {
+            navigation.push('/play/connect/to/game');
+          }
+        }
       });
-
     }
     return () => {
       socket?.off("populateCurrentStage");
@@ -287,22 +274,23 @@ const Page = () => {
   }, []);
   useEffect(() => {
     if (socket && student?.student?.room?._id) {
-     if (stage !== 4){
-      setInterval(() => {
-        socket.emit("checkUserInRoom", {
-          roomId: student.student.room._id,
-          studentData: student,
-          token: student?.refreshToken ?? null,
-        });
-      }, 1000);
-     }
+      if (stage !== 4 || stage !== 3) {
+        setInterval(() => {
+          socket.emit("checkUserInRoom", {
+            roomId: student.student.room._id,
+            studentData: student,
+            token: student?.refreshToken ?? null,
+            stage
+          });
+        }, 1000);
+      }
     }
   });
 
   return (
     <div className={"w-screen h-screen flex flex-col items-center justify-center"}>
       {!stage && <InitialLoading />}
-      {stage === 1 && <WaitingForQuestion question={{ ...question, type: 'quiz' }} index={index} />}
+      {stage === 1 && <WaitingForQuestion  index={index} />}
       {stage === 2 && <QuestionOptionSection result={result} student={student.student} question={question} socket={socket} options={question.options} />}
       {stage === 4 && <RankStage student={student.student} />}
       <div className='w-full bg-white flex relative justify-between p-1 h-[50px]'>

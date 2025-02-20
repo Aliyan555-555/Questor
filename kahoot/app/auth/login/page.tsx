@@ -31,8 +31,11 @@ const Login = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
-      <div className="w-[90%] md:w-[450px] h-auto py-10 px-6 bg-white rounded-lg shadow-lg flex flex-col items-center gap-6">
+    <div style={{backgroundImage:"url(/images/UI/authBG.png)"}} className="w-screen bg-cover bg-top h-screen flex items-center justify-center ">
+      <div style={{boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}} className="w-[90%] md:w-[450px] h-auto py-9 px-6 bg-white rounded-lg  flex flex-col items-center gap-5">
+        <div className="w-full flex items-center justify-center">
+        <Image src={'/images/UI/fullLogo.png'} alt="Questor" width={150} height={100} /> 
+        </div>
         <h3 className="text-2xl font-bold text-gray-800">Welcome Back!</h3>
         <p className="text-sm text-gray-600">Please log in to continue.</p>
 
@@ -50,7 +53,7 @@ const Login = () => {
               placeholder="Enter your email"
               name="email"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FBA732]"
             />
           </div>
 
@@ -67,7 +70,7 @@ const Login = () => {
               placeholder="Enter your password"
               name="password"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FBA732]"
             />
           </div>
 
@@ -75,7 +78,7 @@ const Login = () => {
             // type="submit"
             onClick={handleLoginWithCredential}
             variant="contained"
-            className="!w-full !py-3 !bg-indigo-500 !text-white !font-medium !text-lg !rounded-lg !normal-case hover:!bg-indigo-600 focus:!ring-2 focus:!ring-indigo-400"
+            className="!w-full !py-2 font-semibold !bg-[#FBA732] !text-black !text-xl !rounded-[10px] !normal-case hover:!bg-[#ffa11e] focus:!ring-0"
           >
             Log in
           </Button>
@@ -95,8 +98,8 @@ const Login = () => {
             <Image
               src="/images/icon/google.svg"
               alt="Google Icon"
-              width={24}
-              height={24}
+              width={27}
+              height={27}
             />
           </div>
           <span className="ml-6">Continue with Google</span>
@@ -106,7 +109,7 @@ const Login = () => {
           Don’t have an account?{" "}
           <Link
             href={redirect?`/auth/signup?redirect=${redirect}&redirect_url=${redirectUrl}`:'/auth/signup'}
-            className="text-indigo-500 font-medium hover:underline"
+            className="text-[#10BBF9] font-medium hover:underline"
           >
             Sign up
           </Link>

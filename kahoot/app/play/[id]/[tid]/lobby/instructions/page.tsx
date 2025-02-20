@@ -76,7 +76,7 @@ const Page = () => {
       studentData: student,
       token:student?.refreshToken ?? null,
     });
-   }, 4000);
+   }, 5000);
 
     socket?.on("changedYourCharacter", (data) => {
       dispatch(changeCharacters({ ...data.student.avatar }));
@@ -173,7 +173,7 @@ const Page = () => {
           onClick={() => setDrawerIsActive(!drawerIsActive)}
           className="relative w-fit h-fit"
         >
-          <div className="absolute z-[1000000] top-[-20px] text-black right-[-20px] p-2 rounded-full bg-white">
+          <div className="absolute z-[1000000] top-[-20px] text-black right-[-20px] p-2 rounded-full bg-[#FBA732]">
             <GrEdit size={25} />
           </div>
           {student?.student && (
@@ -182,15 +182,20 @@ const Page = () => {
               avatarItems={student.student.item}
               w={"128px"}
               h={"128px"}
+              bg="#4686EC"
               // chin={true}
             />
           )}
         </motion.div>
       )}
-      <h3 className="mb-2 bg-[#00000057] mt-3 px-4 py-2 drop-shadow-2xl">{student?.student.nickname}</h3>
-      <p className="text-center bg-[#00000057] px-4 py-2 text-3xl md:text-4xl">
+      <div className="bg-[#E9E2B6] p-4 rounded-[10px] text-3xl font-semibold mt-3  text-black">
+      <h3 className="">{student?.student.nickname}</h3>
+      </div>
+      <div className="bg-[#E9E2B6] rounded-[10px] mt-3 p-6 text-black text-2xl">
+      <p>
         You&lsquo;re in! See your nickname on screen?
       </p>
+      </div>
       <motion.div
         ref={drawerRef}
         initial={{ translateY: "110%" }}

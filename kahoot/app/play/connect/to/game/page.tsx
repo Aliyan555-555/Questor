@@ -9,7 +9,6 @@ import { join } from "@/src/redux/schema/student";
 import { useSocket } from "@/src/hooks/useSocket";
 import { Student as StudentDate } from "@/src/types";
 import Image from "next/image";
-import imageLoader from "@/src/components/ImageLoader";
 
 const Student = () => {
   // const params = useParams();
@@ -128,31 +127,27 @@ const Student = () => {
 
   return (
     <div
-      className="w-screen h-screen relative flex-col bg-cover bg-center bg-no-repeat flex items-center justify-center gap-10"    >
-      <Image
-        src={"/images/NKbg.png"}
-        alt="bg"
-        width={1000}
-        height={1000}
-        loader={imageLoader}
-        className="absolute z-0 object-cover object-center top-0 left-0 w-screen h-screen"
-      />
-      <h2 className="text-3xl relative z-10 font-black text-white">Questor</h2>
-      <div className="md:w-[400px]  relative z-10 flex flex-col p-4 gap-2 bg-white">
+      className="w-screen bg-[#E9E2B6] h-screen relative flex-col bg-cover bg-center bg-no-repeat flex items-center justify-center"    >
+    
+
+    <div className="bg-white px-8 py-10 flex items-center justify-start gap-10 flex-col rounded-[10px]">
+      
+      <Image src={'/images/UI/fullLogo.png'} alt="Quester" width={200} height={100}  />
+      <div className="md:w-[400px]  relative z-10 flex flex-col gap-4 bg-white">
         {pinVerified ? (
           <>
             <input
               type="text"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              className="w-full border-2 border-gray-300 p-4 text-xl font-semibold text-gray-400 focus:outline-none rounded-lg placeholder:text-center placeholder:text-xl placeholder:font-semibold"
+              className="w-full border-2 border-[#FBA732] p-4 text-xl font-semibold text-gray-400 focus:outline-none rounded-lg placeholder:text-center placeholder:text-xl placeholder:font-semibold"
               placeholder="Your Nickname"
             />
             <Button
               onClick={joinRoom}
-              className="!w-full !p-4 !rounded-lg !text-white !bg-gray-800 !text-xl !font-semibold"
+              className="!w-full !p-4 !rounded-lg !text-black !bg-[#FBA732] !text-xl !font-semibold"
             >
-              Enter
+              Go!
             </Button>
           </>
         ) : (
@@ -161,18 +156,19 @@ const Student = () => {
               type="text"
               value={pin}
               onChange={(e) => setPin(e.target.value)}
-              className="w-full border-2 border-gray-300 p-4 text-xl font-semibold text-gray-400 focus:outline-none rounded-lg placeholder:text-center placeholder:text-xl placeholder:font-semibold"
+              className="w-full border-2 border-[#FBA732] p-4 text-xl font-semibold text-gray-400 focus:outline-none rounded-lg placeholder:text-center placeholder:text-xl placeholder:font-semibold"
               placeholder="Game PIN"
             />
             <Button
               onClick={verifyPin}
-              className="!w-full !p-4 !rounded-lg !text-white !bg-gray-800 !text-xl !font-semibold"
+              className="!w-full !p-4 !rounded-lg !text-black !bg-[#FBA732] !text-xl !font-semibold"
             >
-              Enter
+              Go!
             </Button>
           </>
         )}
       </div>
+    </div>
     </div>
   );
 };

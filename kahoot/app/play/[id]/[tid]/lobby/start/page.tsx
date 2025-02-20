@@ -33,7 +33,7 @@ const Start: React.FC = () => {
       return () => clearInterval(interval);
     }
   }, [counter, navigation, teacher?.quiz]);
-console.log(teacher);
+  console.log(teacher);
   return (
     <div style={{ backgroundImage: `url(${teacher?.quiz.theme.image})` }} className="w-screen h-screen flex items-center justify-center">
       {isVisible ? (
@@ -42,9 +42,9 @@ console.log(teacher);
           animate={bounceScaleAnimation}
           transition={bounceTransition}
           onAnimationComplete={() => setIsVisible(false)}
-          className="w-screen bg-white py-4 text-center text-black text-5xl font-bold"
+          className="w-[60%] h-[300px] rounded-[10px] bg-blue_1 text-white py-4 text-center flex items-center justify-center text-5xl font-bold"
         >
-          {teacher?.quiz.name}
+          <p>          {teacher?.quiz.name}</p>
         </motion.div>
       ) : (
         <div className="text-white w-[200px] h-[200px] flex items-center justify-center relative text-6xl font-bold">
@@ -53,7 +53,7 @@ console.log(teacher);
             initial={CounterRoundInitial}
             animate={{ rotate: `${rotate}deg` }}
             transition={CounterRoundTransition}
-            className="w-[200px] h-[200px]  absolute top-0 left-0  bg-purple-500 flex items-center justify-center"
+            className="w-[200px] h-[200px]  absolute top-0 left-0  bg-blue_1 flex items-center justify-center"
           ></motion.div>{" "}
           <motion.p
             animate={{ scale: [1.2, 0, 1.2] }} // Scale down, then scale up

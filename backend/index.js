@@ -3,11 +3,9 @@ import http from "http";
 import { Server } from "socket.io";
 import bodyParser from "body-parser";
 import cors from "cors";
-import axios from "axios";
-import { ObjectId } from "mongodb";
 import AuthRouter from "./routers/auth.route.js";
 import connectToMongodb from "./database/index.js";
-import dotenv, { populate } from "dotenv";
+import dotenv from "dotenv";
 import quizModel from "./model/quiz.model.js";
 import ThemeRouter from "./routers/theme.route.js";
 import QuizRouter from "./routers/quiz.router.js";
@@ -17,8 +15,8 @@ import { questionModel } from "./model/question.model.js";
 import { roomModel } from "./model/room.model.js";
 import { itemModel } from "./model/item.model.js";
 import { studentModel } from "./model/studentModel.js";
+import { questionResultModel } from "./model/questionResult.model.js";
 dotenv.config();
-
 const app = express();
 connectToMongodb();
 const allowedOrigins = [
@@ -28,7 +26,6 @@ const allowedOrigins = [
   "http://dev.meteoricsolutions.com:9000",
   process.env.FRONTEND_URL,
 ];
-
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -41,11 +38,9 @@ const corsOptions = {
   allowedHeaders: ["Content-Type"],
   credentials: true,
 };
-
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
-
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -55,19 +50,6 @@ const io = new Server(server, {
   pingInterval: 25000,
   pingTimeout: 50000,
 });
-
-// const getAvatars = async () => {
-//   try {
-//     const res = await axios.get(
-//       "https://apis.kahoot.it/game-reward-service/api/v1/config/avatar"
-//     );
-//     return res.data;
-//   } catch (error) {
-//     console.log("Error fetching avatars:", error);
-//     return { avatars: [], items: [] };
-//   }
-// };
-
 app.get("/api/v1/avatars", async (req, res) => {
   try {
     const avatars = await avatarModel.find();
@@ -82,9 +64,7 @@ app.get("/api/v1/avatars", async (req, res) => {
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1", ThemeRouter);
 app.use("/api/v1/quiz", QuizRouter);
-const rooms = {};
 const roomPins = {};
-
 const generatePin = () => {
   let pin;
   do {
@@ -92,7 +72,6 @@ const generatePin = () => {
   } while (roomPins[pin]);
   return pin;
 };
-
 io.on("connection", (socket) => {
   socket.on("createRoom", async ({ quizId, teacherId }) => {
     try {
@@ -101,36 +80,28 @@ io.on("connection", (socket) => {
         socket: socket.id,
         quiz: quizId,
       };
-
-      // Check if the teacher already has an active room
       const activeRooms = await roomModel.find({
         teacher: teacherId,
         status: { $in: ["waiting", "started"] },
+        host:socket.id,
         isActive: true,
       });
-
-      if (activeRooms.length > 0) {
+      if (activeRooms.length !== 0) {
         console.log(activeRooms);
         return socket.emit("error", {
           message: "This teacher is already hosting a room",
         });
       }
-
-      // Find the quiz and populate its questions and theme
       const selectedQuiz = await quizModel
         .findById(socket.teacher.quiz)
         .populate("questions")
         .populate("theme");
-
       if (!selectedQuiz) {
         return socket.emit("error", { message: "Quiz not found" });
       }
-
       if (!selectedQuiz.questions.length) {
         return socket.emit("error", { message: "Quiz has no questions" });
       }
-
-      // Create a new room
       let newRoom = await roomModel.create({
         host: socket.teacher.socket,
         quiz: socket.teacher.quiz,
@@ -149,7 +120,6 @@ io.on("connection", (socket) => {
         path: "quiz",
         populate: [{ path: "questions" }, { path: "theme" }],
       });
-
       socket.teacher.room = newRoom._id;
       socket.join(newRoom._id.toString());
       socket.emit("roomCreated", {
@@ -157,15 +127,17 @@ io.on("connection", (socket) => {
         pin: newRoom.pin,
         data: newRoom,
       });
-
+       setInterval(() => {
+        console.log(socket.rooms);
+      }, 1000);
       console.log(`Room created: ${newRoom._id} with PIN: ${newRoom.pin}`);
     } catch (error) {
       console.error("Error creating room:", error);
       socket.emit("error", { message: "Server error", error: error.message });
     }
   });
-
   socket.on("joinRoom", async ({ pin, roomId, studentId, nickname }) => {
+
     try {
       console.log(`🔍 Checking room: ${roomId}`);
 
@@ -330,14 +302,11 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Server error", error: error.message });
     }
   });
-
   socket.on("checkCurrentStage", async ({ id }) => {
-
     const room = await roomModel.findById(id).populate({
       path: "currentStage",
       populate: { path: "question" }, // Populate question inside currentStage
     });
-
     if (!room) {
       socket.emit("currentStage", { status: false });
       return;
@@ -357,7 +326,7 @@ io.on("connection", (socket) => {
       );
       await room.populate({
         path: "currentStage",
-        populate: { path: "question" }, // Populate question inside currentStage
+        populate: { path: "question" },
       });
 
       if (!room) {
@@ -377,7 +346,6 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Server error", error: error.message });
     }
   });
-
   socket.on("verifyPin", async ({ pin }) => {
     const room = await roomModel.findOne({ pin: pin });
     if (room) {
@@ -391,7 +359,6 @@ io.on("connection", (socket) => {
       socket.emit("pinVerified", { status: false, message: "Invalid PIN" });
     }
   });
-
   socket.on("calculate_ranks", async (data) => {
     const room = await roomModel.findById(data.roomId).populate([
       {
@@ -451,7 +418,6 @@ io.on("connection", (socket) => {
       data: room,
     });
   });
-
   socket.on("start", async (roomId) => {
     console.log(roomId);
     const room = await roomModel.findByIdAndUpdate(
@@ -481,47 +447,76 @@ io.on("connection", (socket) => {
         path: "students",
         populate: [{ path: "avatar" }, { path: "item" }],
       });
-  
+
       if (!room) {
         console.error(`Room with ID ${data.room} not found.`);
         return;
       }
-  
+
       const question = await questionModel.findById(data.question);
       if (!question) {
         console.error(`Question with ID ${data.question} not found.`);
         return;
       }
-  
+
       const student = await studentModel.findById(data.student);
       if (!student) {
         console.error(`Student with ID ${data.student} not found.`);
         return;
       }
-  
       let getScore = 0;
       let isCorrect = false;
-  
+      const isAttempted = await questionResultModel.findOne({room:room._id,student:data.student,question:data.question});
+      if (isAttempted) {
+        console.log(`Student ${student._id} has already attempted this question.`);
+        return;
+      }
       if (data.isTimeUp) {
-        console.log(`Student ${student._id} ran out of time for question ${question._id}.`);
-        // If time is up, mark the answer as incorrect and set score to 0
+        console.log(
+          `Student ${student._id} ran out of time for question ${question._id}.`
+        );
+        await questionResultModel.create({
+          room: room._id,
+          quiz: room.quiz,
+          student: data.student,
+          question: data.question,
+          score: getScore,
+          totalScore: student.score,
+          status: "timeUp",
+        });
         getScore = 0;
       } else {
-        // Normal answer processing
         isCorrect = question.answerIndex.every((index) =>
           data.options.includes(question.options[index])
         );
-  
         if (isCorrect) {
           const totalMarks = question.maximumMarks;
           const perSecondMarks = totalMarks / question.duration;
-          getScore = data.timeRemaining * perSecondMarks;
-  
+          getScore = question.duration * perSecondMarks;
           student.score += getScore;
+          await questionResultModel.create({
+            room: room._id,
+            quiz: room.quiz,
+            student: data.student,
+            question: data.question,
+            score: getScore,
+            totalScore: student.score,
+            status: "correct",
+          });
           await student.save();
+        } else {
+          await questionResultModel.create({
+            room: room._id,
+            quiz: room.quiz,
+            student: data.student,
+            question: data.question,
+            score: getScore,
+            totalScore: student.score,
+            status: "wrong",
+          });
         }
       }
-  
+
       // Assign ranks
       const assignRanks = (students) => {
         return students
@@ -534,28 +529,27 @@ io.on("connection", (socket) => {
                 : index + 1,
           }));
       };
-  
+
       const rankedStudents = assignRanks(room.students);
 
-      io.to(room._id.toString()).emit('receiveStudentResult',{
-        student:student._id,
-        score:getScore,
-        question:question._id
-      })
-  
+      io.to(room._id.toString()).emit("receiveStudentResult", {
+        student: student._id,
+        score: student.score,
+        question: question._id,
+      });
+
       socket.emit("result", {
         question: question._id,
         isCorrect,
         isTimeUp: data.isTimeUp,
         rank: rankedStudents.find((s) => s._id.equals(student._id))?.rank || 0,
-        score: getScore,
+        currentScore:getScore,
+        score: student.score,
       });
     } catch (error) {
       console.error("❌ Error processing answer submission:", error);
     }
   });
-  
-
   socket.on("student_waiting", () => {
     // console.log("student_waiting")
     io.emit("student_waiting");
@@ -574,20 +568,20 @@ io.on("connection", (socket) => {
     const sockets = await io.in(roomId).fetchSockets();
     return room && room.has(socketId);
   };
-  socket.on("checkUserInRoom", async ({ roomId, studentData, token }) => {
-    
+  socket.on("checkUserInRoom", async ({ roomId, studentData, token,stage =0 }) => {
     const room = await roomModel.findById(roomId);
     if (!room) {
-      socket.emit("userInRoom", {status:false});
+      socket.emit("userInRoom", { status: false });
       console.error(`Room with ID ${roomId} not found.`);
       return;
     }
 
+
     const studentExist = room.students.includes(studentData.student._id);
-    if (studentExist && room.status !==  "completed") {
-      socket.emit("userInRoom", {status:true});
+    if (studentExist) {
+      socket.emit("userInRoom", { status: true });
     } else {
-      socket.emit("userInRoom",{status:false});
+      socket.emit("userInRoom", { status: false });
     }
   });
   socket.on("changeCharacter", async (data) => {
@@ -1067,7 +1061,6 @@ io.on("connection", (socket) => {
     }
   });
 });
-
 const PORT = process.env.PORT || 9000;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

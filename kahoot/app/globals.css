@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -77,4 +78,42 @@
     100% {
         transform:matrix(1,0,0,1,0,-12);
     }
+}
+
+
+
+@keyframes colorTransition {
+  0% {
+    color: #D62829; /* Red */
+    transform: scale(1);
+  }
+  50% {
+    color: #FFD700; /* Gold */
+    transform: scale(1.25);
+  }
+  100% {
+    color: #D62829;
+    transform: scale(1);
+  }
+}
+
+@keyframes dotAnimation {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(0px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) translateY(0px);
+  }
+}
+
+.animate-color-transition {
+  animation: colorTransition 2s ease-in-out infinite; /* Smooth color and scaling */
+  display: inline-block;
+}
+
+.animate-dot {
+  animation: dotAnimation 1.5s ease-in-out infinite; /* Smooth appearing effect */
+  display: inline-block;
 }
