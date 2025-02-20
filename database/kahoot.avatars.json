@@ -1,0 +1,1360 @@
+[{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc153"
+  },
+  "name": "Snake",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#3E6D07ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#00000000",
+    "pupilColor": "#422344ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#F8E5A2ff",
+    "eyebrowColor": "#422344ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/11061_resource_1738057699391.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc154"
+  },
+  "name": "Sun",
+  "colors": {
+    "lipColor": "#631F18ff",
+    "bodyColor": "#00000000",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#9B3320ff",
+    "pupilColor": "#9B3320ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#FBB45Fff",
+    "eyeballColor": "#FEF6B6ff",
+    "eyebrowColor": "#9B3320ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/4900_1687425515517.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc155"
+  },
+  "name": "Moon",
+  "colors": {
+    "lipColor": "#3D3351ff",
+    "bodyColor": "#00000000",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#3E3451ff",
+    "pupilColor": "#362E4Cff",
+    "teethColor": "#00000000",
+    "tongueColor": "#9985BAff",
+    "eyeballColor": "#9985BAff",
+    "eyebrowColor": "#655680ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/4950_1687425617735.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc156"
+  },
+  "name": "Bear",
+  "colors": {
+    "lipColor": "#472D1Dff",
+    "bodyColor": "#835B42ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#5D3B29ff",
+    "pupilColor": "#422E27ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#F8E5A2ff",
+    "eyebrowColor": "#472D1Dff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/4200_1687425411654.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc157"
+  },
+  "name": "Robot",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#4E87C4ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#00000000",
+    "pupilColor": "#1E1E1Eff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFff",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5000_1687425723079.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc158"
+  },
+  "name": "Alien",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#1EC31Eff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#00000000",
+    "pupilColor": "#00000000",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFff",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5050_1687425815345.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc159"
+  },
+  "name": "Tiger",
+  "colors": {
+    "lipColor": "#5A3A24ff",
+    "bodyColor": "#E37D23ff",
+    "chinColor": "#F9E4B3ff",
+    "teethType": "#FFFFFFff",
+    "mouthColor": "#A34B1Eff",
+    "pupilColor": "#000000ff",
+    "teethColor": "#FFFFFFff",
+    "tongueColor": "#E84C4Cff",
+    "eyeballColor": "#FFFFFFff",
+    "eyebrowColor": "#5A3A24ff",
+    "eyeBorderColor": "#000000ff"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5150_1687425923954.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc15a"
+  },
+  "name": "Dog",
+  "colors": {
+    "lipColor": "#472D1Dff",
+    "bodyColor": "#C49A6Cff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#5D3B29ff",
+    "pupilColor": "#422E27ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#E84C4Cff",
+    "eyeballColor": "#F8E5A2ff",
+    "eyebrowColor": "#472D1Dff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5200_1687426011261.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc15b"
+  },
+  "name": "Spaceship",
+  "colors": {
+    "lipColor": "#680101ff",
+    "bodyColor": "#00000000",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#680101ff",
+    "pupilColor": "#680101ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E42545ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#931818ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/4850_1687425342269.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc15c"
+  },
+  "name": "Retro Bot",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#3A2935ff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#004700",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#00000000",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5100_1687426404021.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc15d"
+  },
+  "name": "Space Bot",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#D5EFFBff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#9BFCFFff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#00000000",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5150_1687426463919.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc15e"
+  },
+  "name": "Polar bear",
+  "colors": {
+    "lipColor": "#383b4dff",
+    "bodyColor": "#e5e4e0ff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#383b4dff",
+    "pupilColor": "#5e6278ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#67619eff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#87828eff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2350_1703158777099.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc15f"
+  },
+  "name": "Penguin",
+  "colors": {
+    "lipColor": "#754626ff",
+    "bodyColor": "#473F51ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#442828ff",
+    "pupilColor": "#4C262Cff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E42545ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#352E3Dff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2300_1687264243758.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc160"
+  },
+  "name": "Snowman",
+  "colors": {
+    "lipColor": "#65608Dff",
+    "bodyColor": "#DADFF2ff",
+    "chinColor": "#ACA2E0ff",
+    "teethType": "transparent",
+    "mouthColor": "#65608Dff",
+    "pupilColor": "#433B34ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#B26A81ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#65608Dff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5380_1703159018280.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc161"
+  },
+  "name": "Reindeer",
+  "colors": {
+    "lipColor": "#7F5332ff",
+    "bodyColor": "#9E4D25ff",
+    "chinColor": "#E2965Dff",
+    "teethType": "normal",
+    "mouthColor": "#3F1805ff",
+    "pupilColor": "#3F1805ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E42545ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#6C3200ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5373_1702041807735.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc162"
+  },
+  "name": "Christmas tree",
+  "colors": {
+    "lipColor": "#052B0Dff",
+    "bodyColor": "#003D0Fff",
+    "chinColor": "#E2965Dff",
+    "teethType": "normal",
+    "mouthColor": "#052B0Dff",
+    "pupilColor": "#052B0Dff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#008846ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#003D0Fff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5374_1702041852241.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc163"
+  },
+  "name": "Gingerbread cookie",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#00000000",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#00000000",
+    "pupilColor": "#763600ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#894303ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5375_1702041885545.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc164"
+  },
+  "name": "Woodchuck",
+  "colors": {
+    "lipColor": "#9E5300ff",
+    "bodyColor": "#EF8B07ff",
+    "chinColor": "#D27000ff",
+    "teethType": "buck",
+    "mouthColor": "#9E5300ff",
+    "pupilColor": "#000000ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E42444ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#D27000ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1600_1687261880794.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc165"
+  },
+  "name": "Moose",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#c86a54ff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#331a18ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#7e3525ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1500_1687262183309.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc166"
+  },
+  "name": "Dog",
+  "colors": {
+    "lipColor": "#060000ff",
+    "bodyColor": "#efb28aff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#060000ff",
+    "pupilColor": "#060000ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#e42444ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#62372dff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1700_1687262323708.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc167"
+  },
+  "name": "Cat",
+  "colors": {
+    "lipColor": "#591719ff",
+    "bodyColor": "#f48b00ff",
+    "chinColor": "#00000000",
+    "teethType": "fangs",
+    "mouthColor": "#591719ff",
+    "pupilColor": "#6c1c1cff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#e42444ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#e56700ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1750_1687262746170.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc168"
+  },
+  "name": "Mouse",
+  "colors": {
+    "lipColor": "#693737ff",
+    "bodyColor": "#D8825Bff",
+    "chinColor": "#D39871ff",
+    "teethType": "buck",
+    "mouthColor": "#471714ff",
+    "pupilColor": "#451B0Fff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E23927ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#87351Fff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1800_1687262880499.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc169"
+  },
+  "name": "Rabbit",
+  "colors": {
+    "lipColor": "#894c4cff",
+    "bodyColor": "#a38274ff",
+    "chinColor": "#c6a395ff",
+    "teethType": "buck",
+    "mouthColor": "#381e1eff",
+    "pupilColor": "#285170ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#e42444ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#957462ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1850_1687263030569.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc16a"
+  },
+  "name": "Fox",
+  "colors": {
+    "lipColor": "#723728ff",
+    "bodyColor": "#EF4529ff",
+    "chinColor": "#00000000",
+    "teethType": "fangs",
+    "mouthColor": "#6B1D17ff",
+    "pupilColor": "#54180Cff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E23927ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#723728ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1900_1687263101178.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc16b"
+  },
+  "name": "Wolf",
+  "colors": {
+    "lipColor": "#3e4249ff",
+    "bodyColor": "#828893ff",
+    "chinColor": "#cfcccfff",
+    "teethType": "fangs",
+    "mouthColor": "#6b1d17ff",
+    "pupilColor": "#2b2b2bff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#e23927ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#535b66ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1950_1687263268322.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc16c"
+  },
+  "name": "Raccoon",
+  "colors": {
+    "lipColor": "#452737ff",
+    "bodyColor": "#44313Bff",
+    "chinColor": "#E4C3BCff",
+    "teethType": "fangs",
+    "mouthColor": "#471714ff",
+    "pupilColor": "#351C2Aff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E23927ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#351C2Aff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2000_1687263347010.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc16d"
+  },
+  "name": "Panda",
+  "colors": {
+    "lipColor": "#1e1119ff",
+    "bodyColor": "#301c28ff",
+    "chinColor": "#d9dbddff",
+    "teethType": "normal",
+    "mouthColor": "#1e1119ff",
+    "pupilColor": "#1e1119ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#e42444ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#301c28ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2050_1687263494068.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc16e"
+  },
+  "name": "Frog",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#929608ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#00000000",
+    "pupilColor": "#3E0300ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#EFDA48ff",
+    "eyebrowColor": "#565400ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2100_1687263733877.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc16f"
+  },
+  "name": "Eagle",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#575960ff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#081E19ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#5DA898ff",
+    "eyebrowColor": "#C1BAB4ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/11095_resource_1738331923584.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc170"
+  },
+  "name": "Owl",
+  "colors": {
+    "lipColor": "#894415ff",
+    "bodyColor": "#AE4A0Dff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#6C1200ff",
+    "pupilColor": "#3A3032ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#D70041ff",
+    "eyeballColor": "#FFF470ff",
+    "eyebrowColor": "#590C00ff",
+    "eyeBorderColor": "#FF8500ff"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2150_1687263985947.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc171"
+  },
+  "name": "Chicken",
+  "colors": {
+    "lipColor": "#EF5223ff",
+    "bodyColor": "#FDBE33ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#591719ff",
+    "pupilColor": "#6D1D1Dff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E42545ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#F79820ff",
+    "eyeBorderColor": "#FDBE33ff"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2200_1687264102508.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc172"
+  },
+  "name": "Turkey",
+  "colors": {
+    "lipColor": "#941017ff",
+    "bodyColor": "#892012ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#31263Cff",
+    "pupilColor": "#31263Cff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E42545ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#941017ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2250_1687264173911.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc173"
+  },
+  "name": "Camel",
+  "colors": {
+    "lipColor": "#7B4105ff",
+    "bodyColor": "#FFCF81ff",
+    "chinColor": "#C99252ff",
+    "teethType": "normal",
+    "mouthColor": "#602406ff",
+    "pupilColor": "#22334Fff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#D70041ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#7b4105ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2400_1687264446914.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc174"
+  },
+  "name": "Tiger",
+  "colors": {
+    "lipColor": "#561801ff",
+    "bodyColor": "#d64505ff",
+    "chinColor": "#ccccccff",
+    "teethType": "fangs",
+    "mouthColor": "#6b1d17ff",
+    "pupilColor": "#2b2b2bff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#e23927ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#561801ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2500_1687264607196.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc175"
+  },
+  "name": "Koala",
+  "colors": {
+    "lipColor": "#262f42ff",
+    "bodyColor": "#897c95ff",
+    "chinColor": "#a486a1ff",
+    "teethType": "normal",
+    "mouthColor": "#262f42ff",
+    "pupilColor": "#414b66ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#e42444ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#414b66ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2550_1687264671655.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc176"
+  },
+  "name": "Kangaroo",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#C96225ff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#702519ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#702519ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2600_1687264751137.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc177"
+  },
+  "name": "Horse",
+  "colors": {
+    "lipColor": "#541300ff",
+    "bodyColor": "#C45B2Cff",
+    "chinColor": "#CEC3BCff",
+    "teethType": "normal",
+    "mouthColor": "#541300ff",
+    "pupilColor": "#541300ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#D70041ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#6F1800ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2650_1687264861402.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc178"
+  },
+  "name": "Unicorn",
+  "colors": {
+    "lipColor": "#3A3032ff",
+    "bodyColor": "#EEE6E8ff",
+    "chinColor": "#BB8593ff",
+    "teethType": "normal",
+    "mouthColor": "#6C1200ff",
+    "pupilColor": "#3A3032ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#D70041ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#AD8D96ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2700_1687264926797.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc179"
+  },
+  "name": "Dragon",
+  "colors": {
+    "lipColor": "#3E7E00ff",
+    "bodyColor": "#3E7E00ff",
+    "chinColor": "#8ECC00ff",
+    "teethType": "fangs",
+    "mouthColor": "#3E7E00ff",
+    "pupilColor": "#4B7E00ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#D70041ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#3E7E00ff",
+    "eyeBorderColor": "#619E00ff"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2800_1687265175082.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc17a"
+  },
+  "name": "Monster",
+  "colors": {
+    "lipColor": "#441E3Fff",
+    "bodyColor": "#7C296Dff",
+    "chinColor": "#D3ABDCff",
+    "teethType": "fangs",
+    "mouthColor": "#441E3Fff",
+    "pupilColor": "#441E3Fff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E08B5Dff",
+    "eyeballColor": "#FFA878ff",
+    "eyebrowColor": "#701f62ff",
+    "eyeBorderColor": "#7C296Dff"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2850_1687265249509.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc17b"
+  },
+  "name": "Faun",
+  "colors": {
+    "lipColor": "#861222ff",
+    "bodyColor": "#CC4F5Cff",
+    "chinColor": "#F9AFA9ff",
+    "teethType": "fangs",
+    "mouthColor": "#861222ff",
+    "pupilColor": "#00A9BDff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#CC4F5Cff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#861222ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2900_1687265318688.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc17c"
+  },
+  "name": "Brain",
+  "colors": {
+    "lipColor": "#97235Eff",
+    "bodyColor": "#97235Eff",
+    "chinColor": "#E05B93ff",
+    "teethType": "#00000000",
+    "mouthColor": "#97235Eff",
+    "pupilColor": "#97235Eff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#D70041ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#97235Eff",
+    "eyeBorderColor": "#F56CA5ff"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2950_1698237541062.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc17d"
+  },
+  "name": "Zombie",
+  "colors": {
+    "lipColor": "#3D3938ff",
+    "bodyColor": "#007E83ff",
+    "chinColor": "#00A1ACff",
+    "teethType": "buck",
+    "mouthColor": "#3D3938ff",
+    "pupilColor": "#9BBC9Eff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E42545ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#076D6Dff",
+    "eyeBorderColor": "#845151ff"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/3000_1687265495343.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc17e"
+  },
+  "name": "Skeleton",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#002831ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#002831ff",
+    "pupilColor": "#002831ff",
+    "teethColor": "#F5F8F4ff",
+    "tongueColor": "#C14D66ff",
+    "eyeballColor": "#368B9Cff",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/3050_1687265571857.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc17f"
+  },
+  "name": "Planet Earth",
+  "colors": {
+    "lipColor": "#043F56ff",
+    "bodyColor": "#00000000",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#043F56ff",
+    "pupilColor": "#043F56ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#D70041ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#005F8Dff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2750_1687265031465.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc180"
+  },
+  "name": "Whale",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#00000000",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#213e5eFF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#213e5eFF",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5473_resource_1717148477844.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5eb27a0c0c557538bc181"
+  },
+  "name": "Octopus",
+  "colors": {
+    "lipColor": "#D14255ff",
+    "bodyColor": "#6B3F8Bff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#D14255ff",
+    "pupilColor": "#6B3F8Bff",
+    "teethColor": "#F5F8F4ff",
+    "tongueColor": "#C14D66ff",
+    "eyeballColor": "#368B9Cff",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5474_1717148477844.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc183"
+  },
+  "name": "Lion",
+  "colors": {
+    "lipColor": "#471913FF",
+    "bodyColor": "#ffae7bFF",
+    "chinColor": "#ceb997FF",
+    "teethType": "fangs",
+    "mouthColor": "#471913FF",
+    "pupilColor": "#471913FF",
+    "teethColor": "#FFFFFFFF",
+    "tongueColor": "#e23927FF",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#471913FF",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5475_resource_1717148923083.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc184"
+  },
+  "name": "Crocodile",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#766c1dFF",
+    "chinColor": "#7f7249FF",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#512714FF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#ffdb76FF",
+    "eyebrowColor": "#512714FF",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5476_resource_1717148964630.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc185"
+  },
+  "name": "Elephant",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#00000000",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#3a2c2cFF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#3d4c54FF",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5477_resource_1717149040129.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc186"
+  },
+  "name": "Shark",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#00000000",
+    "chinColor": "#5ca4b9FF",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#000000FF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#004b63FF",
+    "eyeBorderColor": "#478fa000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5478_resource_1717149082609.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc187"
+  },
+  "name": "Wolf",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#5e5e5eFF",
+    "chinColor": "#979797FF",
+    "teethType": "fangs",
+    "mouthColor": "#00000000",
+    "pupilColor": "#000000FF",
+    "teethColor": "#FFFFFFFF",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#353535FF",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5479_resource_1717149120125.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc188"
+  },
+  "name": "Monkey",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#8b5e3cFF",
+    "chinColor": "#e1b07fFF",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#442917FF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#442917FF",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5480_resource_1717149165330.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc189"
+  },
+  "name": "Rabbit",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#d8d8d8FF",
+    "chinColor": "#FFFFFFFF",
+    "teethType": "buckteeth",
+    "mouthColor": "#00000000",
+    "pupilColor": "#000000FF",
+    "teethColor": "#FFFFFFFF",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5481_resource_1717149203203.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc18a"
+  },
+  "name": "Panda",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#FFFFFF",
+    "chinColor": "#FFFFFF",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#000000FF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5482_resource_1717149240129.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc18b"
+  },
+  "name": "Owl",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#9b6a3dFF",
+    "chinColor": "#c7a17aFF",
+    "teethType": "none",
+    "mouthColor": "#00000000",
+    "pupilColor": "#000000FF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#ffdb76FF",
+    "eyebrowColor": "#5b3e2bFF",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5483_resource_1717149283322.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc18c"
+  },
+  "name": "Tiger",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#ff9800FF",
+    "chinColor": "#FFFFFF",
+    "teethType": "fangs",
+    "mouthColor": "#00000000",
+    "pupilColor": "#000000FF",
+    "teethColor": "#FFFFFFFF",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5484_resource_1717149324322.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ece7a0c0c557538bc18d"
+  },
+  "name": "Fox",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#e67e22FF",
+    "chinColor": "#FFFFFF",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#000000FF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5485_resource_1717149367200.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc18f"
+  },
+  "name": "Sheep",
+  "colors": {
+    "lipColor": "#772A28FF",
+    "bodyColor": "#C7D0D8FF",
+    "chinColor": "#EAB388FF",
+    "teethType": "normal",
+    "mouthColor": "#772A28FF",
+    "pupilColor": "#3A2619FF",
+    "teethColor": "#FFFFFFFF",
+    "tongueColor": "#F95858FF",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#C4C4C4FF",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5441_resource_1724923725660.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc190"
+  },
+  "name": "Pumpkin",
+  "colors": {
+    "lipColor": "#79140Eff",
+    "bodyColor": "#380403ff",
+    "chinColor": "#DB5316ff",
+    "teethType": "fangs",
+    "mouthColor": "#79140Eff",
+    "pupilColor": "#380403ff",
+    "teethColor": "#FF842Cff",
+    "tongueColor": "#DB5316ff",
+    "eyeballColor": "#79140Eff",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5472_resource_1727691162694.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc191"
+  },
+  "name": "Cursed pumpkin",
+  "colors": {
+    "lipColor": "#1E081Cff",
+    "bodyColor": "#1E081Cff",
+    "chinColor": "#9700BCff",
+    "teethType": "fangs",
+    "mouthColor": "#1E081Cff",
+    "pupilColor": "#F2B707ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#ffffffff",
+    "eyeballColor": "#1E081Cff",
+    "eyebrowColor": "#1E081Cff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10650_resource_1727697157166.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc192"
+  },
+  "name": "Black cat",
+  "colors": {
+    "lipColor": "#1A1A1Aff",
+    "bodyColor": "#3D3D3Dff",
+    "chinColor": "#4D4D4Dff",
+    "teethType": "fangs",
+    "mouthColor": "#1A1A1Aff",
+    "pupilColor": "#000000ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#3A3A3Aff",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#1A1A1Aff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10651_resource_1727697533813.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc193"
+  },
+  "name": "Yeti",
+  "colors": {
+    "lipColor": "#141312ff",
+    "bodyColor": "#FEF5A3ff",
+    "chinColor": "#B2B2B2ff",
+    "teethType": "fangs",
+    "mouthColor": "#141312ff",
+    "pupilColor": "#F5A3F7ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#B2B2B2ff",
+    "eyeballColor": "#141312ff",
+    "eyebrowColor": "#B2B2B2ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10652_resource_1727698444653.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc194"
+  },
+  "name": "Cat",
+  "colors": {
+    "lipColor": "#1D1301ff",
+    "bodyColor": "#FCE8A0ff",
+    "chinColor": "#FBEB90ff",
+    "teethType": "fangs",
+    "mouthColor": "#1D1301ff",
+    "pupilColor": "#F2C5A0ff",
+    "teethColor": "#F4D9B8ff",
+    "tongueColor": "#F2C5A0ff",
+    "eyeballColor": "#FBEB90ff",
+    "eyebrowColor": "#F4D9B8ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10653_resource_1727698764511.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc195"
+  },
+  "name": "Dragon",
+  "colors": {
+    "lipColor": "#6C2C19ff",
+    "bodyColor": "#5C5F5Fff",
+    "chinColor": "#717B7Bff",
+    "teethType": "fangs",
+    "mouthColor": "#6C2C19ff",
+    "pupilColor": "#4C3027ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#717B7Bff",
+    "eyeballColor": "#6C2C19ff",
+    "eyebrowColor": "#6C2C19ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10654_resource_1727699078189.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc196"
+  },
+  "name": "Alien",
+  "colors": {
+    "lipColor": "#39521Dff",
+    "bodyColor": "#5C5F5Fff",
+    "chinColor": "#8C6D6Dff",
+    "teethType": "fangs",
+    "mouthColor": "#39521Dff",
+    "pupilColor": "#566F4Dff",
+    "teethColor": "#A5A5A5ff",
+    "tongueColor": "#8C6D6Dff",
+    "eyeballColor": "#39521Dff",
+    "eyebrowColor": "#A5A5A5ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10655_resource_1727699354872.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc197"
+  },
+  "name": "Gnome",
+  "colors": {
+    "lipColor": "#6A3131ff",
+    "bodyColor": "#A8C4A1ff",
+    "chinColor": "#F1F1F1ff",
+    "teethType": "fangs",
+    "mouthColor": "#6A3131ff",
+    "pupilColor": "#616161ff",
+    "teethColor": "#A9A9A9ff",
+    "tongueColor": "#A8C4A1ff",
+    "eyeballColor": "#616161ff",
+    "eyebrowColor": "#6A3131ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10656_resource_1727701518657.svg"
+},
+{
+  "_id": {
+    "$oid": "67a5ee3ca0c0c557538bc198"
+  },
+  "name": "Vampire",
+  "colors": {
+    "lipColor": "#E6AC1Eff",
+    "bodyColor": "#AA4455ff",
+    "chinColor": "#AB6C6Dff",
+    "teethType": "fangs",
+    "mouthColor": "#E6AC1Eff",
+    "pupilColor": "#770000ff",
+    "teethColor": "#DDDDDDff",
+    "tongueColor": "#770000ff",
+    "eyeballColor": "#770000ff",
+    "eyebrowColor": "#AA4455ff",
+    "eyeBorderColor": "#00000000"
+  },
+  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10657_resource_1727701798224.svg"
+}]
