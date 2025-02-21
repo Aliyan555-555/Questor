@@ -19,7 +19,8 @@ const teacherSlice = createSlice({
       state.currentGame = null;
     },
     updateStudentScore(state,actions){
-    state.currentGame.students.find(student => student._id === actions.payload.student).score += actions.payload.score
+    state.currentGame.students.find(student => student._id === actions.payload.student).score = actions.payload.score
+    state.currentGame.students.find(student => student._id === actions.payload.student).rank = actions.payload.rank
     },
     setStudents(state, actions) {
       if (state.currentGame) {

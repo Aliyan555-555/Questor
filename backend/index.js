@@ -365,13 +365,27 @@ io.on("connection", (socket) => {
       if (decode) {
         const room = await roomModel.findById(decode.roomId).populate([
           {
+            path: "quiz",
+            populate: [{ path: "questions" }, { path: "theme" }],
+          },
+          {
             path: "students",
+            populate: [
+              { path: "avatar" },
+              { path: "item" },
+              {
+                path: "quiz",
+                populate: [{ path: "questions" }, { path: "theme" }],
+              },
+              { path: "room" },
+            ],
           },
         ]);
-        if (room && room.status !== "completed") {
+        if (room) {
           const isStudentExist = room.students.find(
-            (s) => s._id === decode.studentId
+            (s) => s._id.toString() === decode.studentId
           );
+          console.log("trying to reconnect", room, isStudentExist);
           if (isStudentExist) {
             const student = await studentModel
               .findById(decode.studentId)
@@ -387,24 +401,61 @@ io.on("connection", (socket) => {
                 },
                 {
                   path: "quiz",
+                  populate:[
+                    {
+                      path: "questions",
+                    },
+                    {
+                      path: "theme",
+                    },
+                  ]
                 },
               ]);
             if (student) {
               student.isActive = true;
+              room.students.push(student._id);
               await student.save();
-              socket.join(decode.roomId);
-              socket.emit("reconnectionAttept", {
+              await room.save();
+              await room.populate({
+                path: "students",
+                populate: [
+                  { path: "avatar" },
+                  { path: "item" },
+                  {
+                    path: "quiz",
+                    populate: [
+                      {
+                        path: "questions",
+                      },
+                      {
+                        path: "theme",
+                      },
+                    ],
+                  },
+                ],
+              });
+              socket.join(room._id.toString());
+              io.to(room._id.toString()).emit("studentJoined", {
+                students: room.students,
+                data: room,
+              });
+              socket.emit("reconnectionAttempt", {
                 status: true,
                 currentStage: room.currentStage,
+                roomStatus:room.status,
                 student,
               });
-              console.log( {
+              console.log({
                 status: true,
                 currentStage: room.currentStage,
-                student,
+                join:{
+                  roomId:room._id,
+                  student,
+                  refreshToken:token
+                }
               });
             } else {
-              socket.emit("reconnectionAttept", {
+              socket.emit("reconnectionAttempt", {
                 status: false,
                 message: "student not exist",
               });
@@ -412,25 +463,25 @@ io.on("connection", (socket) => {
             }
           }
         } else {
-          socket.emit("reconnectionAttept", {
+          socket.emit("reconnectionAttempt", {
             status: false,
-            message: "Room alrady completed",
+            message: "Room already completed",
           });
-          console.log("Room alrady completed");
+          console.log("Room already completed");
         }
       } else {
-        socket.emit("reconnectionAttept", {
+        socket.emit("reconnectionAttempt", {
           status: false,
-          message: "user token not perper",
+          message: "user token not perfect",
         });
-        console.log("user token not perper");
+        console.log("user token not perfect");
       }
     } else {
-      socket.emit("reconnectionAttept", {
+      socket.emit("reconnectionAttempt", {
         status: false,
-        message: "token or time not proided",
+        message: "token or time not provided",
       });
-      console.log("token or time not proided");
+      console.log("token or time not provided");
     }
   });
   socket.on("calculate_ranks", async (data) => {
@@ -572,7 +623,7 @@ io.on("connection", (socket) => {
         if (isCorrect) {
           const totalMarks = question.maximumMarks;
           const perSecondMarks = totalMarks / question.duration;
-          getScore = question.duration * perSecondMarks;
+          getScore = data.timeSpent * perSecondMarks;
           student.score += getScore;
           await questionResultModel.create({
             room: room._id,
@@ -596,8 +647,6 @@ io.on("connection", (socket) => {
           });
         }
       }
-
-      // Assign ranks
       const assignRanks = (students) => {
         return students
           .sort((a, b) => b.score - a.score)
@@ -611,18 +660,20 @@ io.on("connection", (socket) => {
       };
 
       const rankedStudents = assignRanks(room.students);
-
+      const currentStudentRank = rankedStudents.find(s => s._id.toString() === student._id.toString())?.rank;
+      console.log("🚀 ~ socket.on ~ rankedStudents:", rankedStudents);
       io.to(room._id.toString()).emit("receiveStudentResult", {
         student: student._id,
         score: student.score,
         question: question._id,
+        rank: currentStudentRank,
       });
 
       socket.emit("result", {
         question: question._id,
         isCorrect,
         isTimeUp: data.isTimeUp,
-        rank: rankedStudents.find((s) => s._id.equals(student._id))?.rank || 0,
+        rank:currentStudentRank,
         currentScore: getScore,
         score: student.score,
       });
@@ -1072,7 +1123,7 @@ io.on("connection", (socket) => {
       });
     }
   });
-  socket.on("disconnect", async (rason) => {
+  socket.on("disconnect", async (reason) => {
     if (socket.teacher) {
       const room = await roomModel.deleteMany({
         teacher: socket.teacher._id,
@@ -1083,33 +1134,10 @@ io.on("connection", (socket) => {
       return;
     }
     console.log("Client disconnected reason:", socket.id);
-    // for (const roomId in rooms) {
-    //   console.log(rooms[roomId].hostId, socket.id);
-    //   if (rooms[roomId].hostId === socket.id) {
-    //     delete rooms[roomId];
-    //     // delete roomPins[rooms[roomId].pin];
-    //     // console.log(`Room deleted: ${roomId}`);
-    //     // console.log(rooms)
-    //     io.to(roomId).emit("roomDeleted", { roomId });
-    //     return;
-    //   }
 
-    // const students = rooms[roomId].students;
-    // const index = students.findIndex((student) => student._id === socket.id);
-    // if (index !== -1) {
-    //   students.splice(index, 1);
-    //   io.to(roomId).emit("studentJoined", { students });
-    //   rooms[roomId].kahoot.students = rooms[roomId].kahoot.students.filter(
-    //     (s) => s._id !== socket.id
-    //   );
-
-    //   console.log(`Student removed from room: ${roomId}`);
-    // }
-    // socket.emit("reconnecting", { id: socket.id, room: rooms[roomId] });
-    // }
     if (socket.student) {
       try {
-        const student = await studentModel.findById(socket.student._id);
+        const student = await studentModel.findById(socket.student._id)
 
         if (!student) {
           console.error("❌ Student not found.");

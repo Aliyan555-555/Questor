@@ -6,6 +6,7 @@ import {
   changeCharacterAccessories,
   changeCharacters,
   disconnect,
+  join,
   setAccessories,
   setAvatars,
 } from "@/src/redux/schema/student";
@@ -51,6 +52,10 @@ const Page = () => {
   );
 
   useEffect(() => {
+    if (!student){
+      navigation.push(`/play/connect/to/game`);
+      return
+    }
     const handleStudentJoined = (students: string) => {
       console.log(students);
     };
@@ -68,16 +73,10 @@ const Page = () => {
     });
 
     socket?.on("studentJoined", handleStudentJoined);
-    socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });    
-    setTimeout(() => {
+    // socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });    
+  
 
-      socket?.emit("checkUserInRoom", {
-        roomId: student.student.room._id,
-        studentData: student,
-        token: student?.refreshToken ?? null,
-      });
-    }, 5000);
-    socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });
+     
 
     socket?.on("changedYourCharacter", (data) => {
       dispatch(changeCharacters({ ...data.student.avatar }));
@@ -94,13 +93,14 @@ const Page = () => {
         dispatch(disconnect());
       }, 2000);
     });
-    socket?.on("reconnectionAttept", (data) => {
-      if (data.status) {
+    // socket?.on("reconnectionAttempt", (data) => {
+    //   if (data.status) {
+    //     dispatch(join(data.join));
 
-      } else {
-        toast.error(data.message);
-      }
-    })
+    //   } else {
+    //     toast.error(data.message);
+    //   }
+    // })
     setTimeout(() => setLoading(false), 1000);
 
     // const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -165,13 +165,16 @@ const Page = () => {
   );
 
   useEffect(() => {
-    if (socket) {
-      console.log(socket);
-    }
-    socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });
+
     fetch();
   }, []);
-
+useEffect(() => {
+  socket?.emit("checkUserInRoom", {
+    roomId: student.student.room._id,
+    studentData: student,
+    token: student?.refreshToken ?? null,
+  });
+},[socket]);
   return (
     <div className="w-screen px-4 overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
       {loading ? (

@@ -507,7 +507,12 @@ const Page = () => {
       socket.on("receiveStudentResult", (data) => {
         const currentQuestionId = teacher.quiz.questions[currentQuestionIndex]._id;
         if (currentQuestionId === data.question) {
-          dispatch(updateStudentScore({ student: data.student, score: data.score }));
+          let a = 1
+           if (a === 1){
+            console.log("Score",data.score);
+            dispatch(updateStudentScore({ student: data.student, score: data.score,rank:data.score }));
+            a=0;
+           }
 
           setSubmittedLength((prev) => {
             const newSubmittedLength = prev + 1;
@@ -548,7 +553,7 @@ const Page = () => {
     console.log(teacher?.quiz.questions.length, isLastQuestion, nextIndex
     );
 
-    if (isLastQuestion) {
+    if (isLastQuestion && stage === 3) {
       setStage(4);
       socket?.emit('changeStage', {
         room: teacher._id,
@@ -582,7 +587,7 @@ const Page = () => {
           currentStage: {
             stage: 2,
             question: teacher?.quiz.questions[currentQuestionIndex]._id,
-            isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length,
+            isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length && stage === 3,
           },
         });
       }, 8000);

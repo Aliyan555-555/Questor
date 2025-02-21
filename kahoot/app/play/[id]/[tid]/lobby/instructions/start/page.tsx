@@ -1,6 +1,6 @@
 "use client";
 import { useSocket } from '@/src/hooks/useSocket';
-import { CircleIcon, ClockIcon, DiamondIcon, IsCorrectIcon, IsWrongIcon,SquareIcon, StudentSideRankIcon, TriangleIcon } from '@/src/lib/svg';
+import { CircleIcon, ClockIcon, DiamondIcon, IsCorrectIcon, IsWrongIcon, SquareIcon, StudentSideRankIcon, TriangleIcon } from '@/src/lib/svg';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/src/redux/store';
@@ -20,7 +20,7 @@ const InitialLoading = () => {
   )
 }
 
-const WaitingForQuestion = ({ index}) => {
+const WaitingForQuestion = ({ index }) => {
   const [count, setCount] = useState(5);
   useEffect(() => {
     if (count <= 0) return;
@@ -69,15 +69,18 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
   const [count, setCount] = useState<number | null>(null);
   const [isResult, setIsResult] = useState<boolean>(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const [stopCount, setStopCount] = useState(false);
   const [duration, setDuration] = useState(0);
   const [selectedOption, setSelectedOption] = useState([]);
 
   useEffect(() => {
     if (socket) {
-      socket.on("setCount", ({ count, duration }) => {
-        setCount(count);
-        setDuration(duration);
-      });
+      if (!stopCount) {
+        socket.on("setCount", ({ count, duration }) => {
+          setCount(count);
+          setDuration(duration);
+        });
+      }
     }
 
     if (count === 0 && !isResult) {
@@ -92,7 +95,7 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
         timeRemaining: 0,
         isTimeUp: true,
       });
-
+      setStopCount(true);
       setIsResult(true);
     }
 
@@ -104,6 +107,7 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
   const handleSubmitAnswer = (option) => {
     setSelectedOption([option]);
     setIsResult(true);
+    setStopCount(true);
     socket.emit("submit_answer", {
       question: question._id,
       options: [option],
@@ -242,8 +246,8 @@ const Page = () => {
         }
       });
       socket.on("result", (data) => {
-        setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore })
-        dispatch(setScore(data.score));
+        setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore,rank: data.rank });
+        dispatch(setScore({score:data.score,rank:data.rank}));
       });
       socket.on("userInRoom", (data) => {
         if (!data.status) {
@@ -275,22 +279,22 @@ const Page = () => {
   useEffect(() => {
     if (socket && student?.student?.room?._id) {
       if (stage !== 4 || stage !== 3) {
-        setInterval(() => {
-          socket.emit("checkUserInRoom", {
-            roomId: student.student.room._id,
-            studentData: student,
-            token: student?.refreshToken ?? null,
-            stage
-          });
-        }, 1000);
+
+        socket.emit("checkUserInRoom", {
+          roomId: student.student.room._id,
+          studentData: student,
+          token: student?.refreshToken ?? null,
+          stage
+        });
+
       }
     }
-  });
+  }, [socket]);
 
   return (
     <div className={"w-screen h-screen flex flex-col items-center justify-center"}>
       {!stage && <InitialLoading />}
-      {stage === 1 && <WaitingForQuestion  index={index} />}
+      {stage === 1 && <WaitingForQuestion index={index} />}
       {stage === 2 && <QuestionOptionSection result={result} student={student.student} question={question} socket={socket} options={question.options} />}
       {stage === 4 && <RankStage student={student.student} />}
       <div className='w-full bg-white flex relative justify-between p-1 h-[50px]'>

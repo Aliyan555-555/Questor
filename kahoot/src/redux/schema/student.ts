@@ -46,6 +46,7 @@ interface CurrentGame {
     _id: string;
     nickname: string;
     score: number;
+    rank:number;
     quiz:{
       theme:{
         image:string;
@@ -115,7 +116,8 @@ const studentSlice = createSlice({
   initialState,
   reducers: {
     setScore (state,action) {
-      state.currentGame.student.score = action.payload;
+      state.currentGame.student.score = action.payload.score;
+      state.currentGame.student.rank = action.payload.rank;
     },
     join(state, action) {
       state.currentGame = action.payload;

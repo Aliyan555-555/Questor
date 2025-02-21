@@ -2,6 +2,7 @@ export interface Student {
   _id: string;
   nickname: string;
   score: number;
+  rank: number;
   item:{
     _id:string;
     resource:string

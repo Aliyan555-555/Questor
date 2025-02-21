@@ -49,13 +49,22 @@ const Teacher = () => {
     }
 
     if (socket) {
-      socket.on("studentJoined", ({ students, data }) => {
+      socket.on("studentJoined", ({ students, data,currentStudent }) => {
 
-        dispatch(update({ ...data }));
-        console.log(data);
-        dispatch(setStudents(students))
-        console.log('data', students)
-        console.log('game', game)
+        if (currentStudent){
+          const studentExist = game.students.find(students => students._id === currentStudent._id);
+        if (!studentExist){
+          dispatch(update({ ...data }));
+          dispatch(setStudents(students))
+        }
+
+        }else{
+          dispatch(update({ ...data }));
+          console.log(data);
+          dispatch(setStudents(students))
+          console.log('data', students)
+          console.log('game', game)
+        }
 
       });
 
@@ -94,8 +103,6 @@ const Teacher = () => {
   const createRoom = () => {
     socket?.emit("createRoom", { quizId, teacherId });
   };
-  // console.log(url);
-
   useEffect(() => {
     if (socket) {
       createRoom();
@@ -203,46 +210,6 @@ const Teacher = () => {
   console.log(game)
   return (
     <div style={{ backgroundImage: `url(${game?.quiz.theme.image})` }} className="w-screen bg-opacity-65 h-screen bg-cover p-2 flex flex-col items-center justify-center  relative bg-no-repeat bg-top">
-      {/* <div className="w-[50%] absolute top-2   h-[130px] flex gap-2 ">
-        <div className="flex-1 flex items-center h-full bg-white">
-          <div className="flex flex-col justify-center p-2">
-            <h4 className=" font-bold text-xl ">Game PIN</h4>
-            {!loading ? (
-              <h2
-                className="text-6xl hover:bg-gray-100 cursor-pointer font-black "
-                onClick={handleCopyClick}
-                title="Copy PIN"
-              >
-                {pin}
-              </h2>
-            ) : (
-              <Loader w={40} h={40} />
-            )}
-          </div>
-        </div>
-        <div className="h-full items-center justify-center flex p-2 w-[130px] bg-white">
-          {loading ? (
-            <Loader w={60} h={60} />
-          ) : (
-            <QRCode
-              size={256}
-              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-              value={QRUrl}
-              fgColor={"red"}
-              viewBox={`0 0 256 256`}
-            />
-          )}
-        </div>
-      </div> */}
-      {/* <div className="w-screen mb-[200px] flex justify-end items-center px-2">
-        <Button
-          onClick={handleStart}
-          disabled={game?.students.length === 0}
-          className="!text-xl !text-black !capitalize !font-semibold !bg-white !px-4 !py-2 !rounded-lg"
-        >
-          start
-        </Button>
-      </div> */}
       <div className="md:w-[40%] lg:w-[40%] flex flex-col h-full max-h-[92%] overflow-hidden">
         {/* QR Code and PIN Section */}
         <div className="w-full bg-blue_1 rounded-tl-[10px] rounded-tr-[10px] flex px-10 py-2 items-center justify-between">
@@ -292,9 +259,7 @@ const Teacher = () => {
 
 
       <div className="absolute bottom-2 w-screen left-0 flex items-center justify-end gap-2">
-        {
-          pin !== "" && <AudioPlayer fileName={'lobby-classic-game.webm'} />
-        }
+        {pin !== "" && <AudioPlayer fileName={'lobby-classic-game.webm'} />}
         <div onClick={() => setStudentListDrawer((prev) => !prev)} className="bg-[#0000009a] flex w-[90px] rounded-lg px-1 py-[8px] items-center text-[30px] text-white font-bold">
           <MemberIcon />
           {game?.students.length}
@@ -306,10 +271,6 @@ const Teacher = () => {
           <MdFullscreen fontSize={40} />
         </div>
       </div>
-
-
-
-      {/* Main Popup */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8, y: "100%", zIndex: 0 }}
         animate={{
@@ -351,55 +312,9 @@ const Teacher = () => {
             </div>
           ))
         }
-
-
-
-
-
-
-
-
-
-
       </motion.div>
-
-
-
-
-
-
-
     </div>
   );
 };
 
 export default Teacher;
-
-
-// {/* <div className="w-screen  flex items-center justify-center">
-//       {/* <AnimatedAvatar /> */}
-//         {game?.students.length === 0 ? (
-//           <div className="text-6xl bg-[#46178F] w-fit rounded-md py-4 px-10 text-center font-semibold text-white">
-//             Waiting for players…
-//           </div>
-//         ) : (
-//           <div className=" w-full flex-wrap flex items-center justify-center gap-2">
-//             {game?.students.map((student, i) => (
-//               <div
-//                 key={i}
-//                 className="px-3 py-2  flex items-center gap-2 text-2xl font-semibold rounded-lg bg-[#0000009a] text-white"
-//               >
-//                 {/* <PixelArtCard
-//                   key={i}
-//                   random={true}
-//                   size={60}
-//                   tags={["human-female", "human-male"]}
-//                 /> */}
-
-//                 <AnimatedAvatar w={'70px'} h={'70px'} avatarData={student.avatar} avatarItems={student.item}/>
-//                 <p> {student.nickname}</p>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </div> */}
