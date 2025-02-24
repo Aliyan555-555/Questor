@@ -1,6 +1,6 @@
 "use client"
 import { RootState } from '@/src/redux/store';
-import { Avatar, IconButton, Tabs, Tab, Box, Button } from '@mui/material';
+import { IconButton, Tabs, Tab, Box, Button } from '@mui/material';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
