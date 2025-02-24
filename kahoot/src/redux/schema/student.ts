@@ -59,6 +59,7 @@ interface CurrentGame {
     room:{
       _id:string;
     },
+    isActive:boolean;
     avatar: Avatar;
   };
 }
@@ -123,7 +124,7 @@ const studentSlice = createSlice({
       state.currentGame = action.payload;
     },
     update(state, action) {
-      state.currentGame = { ...action.payload };
+      state.currentGame = {...state.currentGame,...action.payload };
     },
     disconnect(state) {
       state.currentGame = null;

@@ -9,6 +9,7 @@ import {
   join,
   setAccessories,
   setAvatars,
+  update,
 } from "@/src/redux/schema/student";
 import { RootState } from "@/src/redux/store";
 import { GrEdit } from "react-icons/gr";
@@ -20,6 +21,7 @@ import { motion } from "framer-motion";
 import { fetchAvatars } from "@/src/redux/api";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { Backdrop } from "@mui/material";
 
 const Page = () => {
   const characters = useSelector((root: RootState) => root.student.avatars);
@@ -52,7 +54,7 @@ const Page = () => {
   );
 
   useEffect(() => {
-    if (!student){
+    if (!student) {
       navigation.push(`/play/connect/to/game`);
       return
     }
@@ -73,10 +75,10 @@ const Page = () => {
     });
 
     socket?.on("studentJoined", handleStudentJoined);
-    // socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });    
-  
 
-     
+
+
+
 
     socket?.on("changedYourCharacter", (data) => {
       dispatch(changeCharacters({ ...data.student.avatar }));
@@ -93,14 +95,19 @@ const Page = () => {
         dispatch(disconnect());
       }, 2000);
     });
-    // socket?.on("reconnectionAttempt", (data) => {
-    //   if (data.status) {
-    //     dispatch(join(data.join));
+    socket?.on('inactive', (data) => {
+      console.log("🚀 ~ socket?.on Inactive ~ data:", data)
+      dispatch(update(data));
+      socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });
+    })
+    socket?.on("reconnectionAttempt", (data) => {
+      if (data.status) {
+        dispatch(join(data.join));
 
-    //   } else {
-    //     toast.error(data.message);
-    //   }
-    // })
+      } else {
+        toast.error(data.message);
+      }
+    })
     setTimeout(() => setLoading(false), 1000);
 
     // const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -152,7 +159,6 @@ const Page = () => {
     },
     [socket, student]
   );
-
   const handleChangeCharacterAccessories = useCallback(
     (selectedAvatarAccessories: string) => {
       socket?.emit("changeCharacterAccessories", {
@@ -165,16 +171,15 @@ const Page = () => {
   );
 
   useEffect(() => {
-
     fetch();
   }, []);
-useEffect(() => {
-  socket?.emit("checkUserInRoom", {
-    roomId: student.student.room._id,
-    studentData: student,
-    token: student?.refreshToken ?? null,
-  });
-},[socket]);
+  useEffect(() => {
+    socket?.emit("checkUserInRoom", {
+      roomId: student.student.room._id,
+      studentData: student,
+      token: student?.refreshToken ?? null,
+    });
+  }, [socket]);
   return (
     <div className="w-screen px-4 overflow-hidden flex-col relative text-4xl font-semibold text-white h-screen flex items-center justify-center">
       {loading ? (
@@ -273,6 +278,15 @@ useEffect(() => {
             ))}
         </div>
       </motion.div>
+
+
+      {
+        !student.student.isActive && (
+          <Backdrop open={true} className="!z-[100000000000]">
+
+          </Backdrop>
+        )
+      }
     </div>
   );
 };

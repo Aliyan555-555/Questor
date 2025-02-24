@@ -1160,6 +1160,7 @@ io.on("connection", (socket) => {
             path: "students",
             populate: [{ path: "avatar" }, { path: "item" }, { path: "quiz" }],
           });
+          socket.emit('inactive',{student: student});
           socket.leave(room._id.toString());
           io.to(room._id.toString()).emit("studentJoined", {
             students: room.students,

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/src/redux/store';
 import AnimatedAvatar from '@/src/components/animated/AnimatedAvatar';
-import { setScore } from '../../../../../../../src/redux/schema/student';
+import { setScore, update } from '../../../../../../../src/redux/schema/student';
 import { useRouter } from 'next/navigation';
 
 
@@ -246,8 +246,13 @@ const Page = () => {
         }
       });
       socket.on("result", (data) => {
-        setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore,rank: data.rank });
-        dispatch(setScore({score:data.score,rank:data.rank}));
+        setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore, rank: data.rank });
+        dispatch(setScore({ score: data.score, rank: data.rank }));
+      });
+      socket?.on('inactive', (data) => {
+        console.log("🚀 ~ socket?.on Inactive ~ data:", data)
+        dispatch(update(data));
+        socket?.emit('tryReconnect', { token: student.refreshToken, time: new Date().toTimeString() });
       });
       socket.on("userInRoom", (data) => {
         if (!data.status) {

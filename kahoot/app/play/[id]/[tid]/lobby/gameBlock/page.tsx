@@ -482,7 +482,7 @@ RankSection.displayName = "RankSection"
 const Page = () => {
   const socket = useSocket();
   const dispatch = useDispatch();
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState<number>(1);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const navigation = useRouter();
   const teacher = useSelector((root: RootState) => root.teacher.currentGame);
@@ -587,7 +587,7 @@ const Page = () => {
           currentStage: {
             stage: 2,
             question: teacher?.quiz.questions[currentQuestionIndex]._id,
-            isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length && stage === 3,
+            isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length && Number(stage) === 3,
           },
         });
       }, 8000);
