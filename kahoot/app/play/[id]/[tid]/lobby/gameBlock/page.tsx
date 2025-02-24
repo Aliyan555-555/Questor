@@ -487,12 +487,13 @@ const Page = () => {
   const navigation = useRouter();
   const teacher = useSelector((root: RootState) => root.teacher.currentGame);
   const [submittedLength, setSubmittedLength] = useState(0);
-  const [isAllStudentsSubmitted, setIsAllPlayersSubmitted] = useState(false)
+  const [isAllStudentsSubmitted, setIsAllPlayersSubmitted] = useState(false);
+
   console.log(isAllStudentsSubmitted);
 
   useEffect(() => {
     if (socket) {
-      socket.emit('checkCurrentStage', { id: teacher._id });
+      socket.emit('checkCurrentStage', { id: teacher._id,index:currentQuestionIndex });
       socket.on('currentStage', (data) => {
         if (!data.status) {
           navigation.push(`/play/${teacher.quiz._id}`);
@@ -559,6 +560,7 @@ const Page = () => {
         room: teacher._id,
         currentStage: {
           stage: 4,
+          index:23,
           question: teacher?.quiz.questions[currentQuestionIndex]._id,
           isLastStage: true,
         },
@@ -572,6 +574,8 @@ const Page = () => {
         room: teacher._id,
         currentStage: {
           stage: 1,
+          index:23,
+
           question: teacher?.quiz.questions[nextIndex]._id, // Use updated index
           isLastStage: isLastQuestion,
         },
@@ -586,6 +590,7 @@ const Page = () => {
           room: teacher._id,
           currentStage: {
             stage: 2,
+            index:23,
             question: teacher?.quiz.questions[currentQuestionIndex]._id,
             isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length && Number(stage) === 3,
           },

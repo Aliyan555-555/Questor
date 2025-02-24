@@ -624,10 +624,10 @@ const Create = () => {
               <div className="w-full flex flex-wrap py-5 px-3 gap-3">
                 <div
                   onClick={() => document.getElementById('option1').focus()}
-                  className={`w-[49%] h-[100px] select-none p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
+                  className={`w-[49%] h-[100px] select-none p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#9D069C]" : "bg-white"
                     }`}
                 >
-                  <div className="h-full bg-[#D01937] w-fit px-1 flex items-center rounded-md">
+                  <div className="h-full bg-[#9D069C] w-fit px-2 flex items-center rounded-md">
                     <TriangleIcon height={40} width={40} />
                   </div>
                   <div className="h-full flex-1">
@@ -680,10 +680,10 @@ const Create = () => {
                 </div>
                 <div
                   onClick={() => document.getElementById('option2').focus()}
-                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
+                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#FD9800]" : "bg-white"
                     }`}
                 >
-                  <div className="h-full bg-[#1368CE] w-fit px-1 flex items-center rounded-md">
+                  <div className="h-full bg-[#FD9800] w-fit px-2 flex items-center rounded-md">
                     <DiamondIcon height={40} width={40} />
                   </div>
                   <div className="h-full flex-1">
@@ -735,10 +735,10 @@ const Create = () => {
                 </div>
                 <div
                   onClick={() => document.getElementById('option3').focus()}
-                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[2] ? "bg-[#D89E00]" : "bg-white"
+                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[2] ? "bg-[#1B3BA0]" : "bg-white"
                     }`}
                 >
-                  <div className="h-full bg-[#D89E00] w-fit px-1 flex items-center rounded-md">
+                  <div className="h-full bg-[#1B3BA0] w-fit px-2 flex items-center rounded-md">
                     <CircleIcon height={40} width={40} />
                   </div>
                   <div className="h-full flex-1">
@@ -792,10 +792,10 @@ const Create = () => {
                 </div>
                 <div
                   onClick={() => document.getElementById('option4').focus()}
-                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[3] ? "bg-[#26890C]" : "bg-white"
+                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[3] ? "bg-[#046000]" : "bg-white"
                     }`}
                 >
-                  <div className="h-full bg-[#26890C] w-fit px-1 flex items-center rounded-md">
+                  <div className="h-full bg-[#046000] w-fit px-2 flex items-center rounded-md">
                     <SquareIcon height={40} width={40} />
                   </div>
                   <div className="h-full flex-1">
@@ -854,10 +854,10 @@ const Create = () => {
               <div className="w-full flex flex-wrap py-5 px-3 gap-3">
                 <div
 
-                  className={`w-[49%] h-[100px] select-none p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#D01937]" : "bg-white"
+                  className={`w-[49%] h-[100px] select-none p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#9D069C]" : "bg-white"
                     }`}
                 >
-                  <div className="h-full bg-[#D01937] w-fit px-1 flex items-center rounded-md">
+                  <div className="h-full bg-[#9D069C] w-fit px-2 flex items-center rounded-md">
                     <TriangleIcon height={40} width={40} />
                   </div>
                   <div className="h-full flex-1">
@@ -896,10 +896,10 @@ const Create = () => {
                 </div>
                 <div
 
-                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#1368CE]" : "bg-white"
+                  className={`w-[49%] h-[100px] p-1 flex rounded-md transition-colors duration-300  ${selectedQuestionData?.options[1] ? "bg-[#FD9800]" : "bg-white"
                     }`}
                 >
-                  <div className="h-full bg-[#1368CE] w-fit px-1 flex items-center rounded-md">
+                  <div className="h-full bg-[#FD9800] w-fit px-2 flex items-center rounded-md">
                     <DiamondIcon height={40} width={40} />
                   </div>
                   <div className="h-full flex-1">

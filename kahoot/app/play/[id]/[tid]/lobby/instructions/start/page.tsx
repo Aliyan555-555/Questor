@@ -237,11 +237,15 @@ const Page = () => {
         if (data.status) {
           if (data.data.isLastStage) {
             setQuestion(data.data.question);
+            setIndex(data.data.index + 1);
+            console.log("Current question index ...............",data.data.index);
             setStage(4);
           } else {
             setQuestion(data.data.question);
             setStage(data.data.stage);
-            setIndex(1)
+            console.log("Current question index ...............",data.data.index);
+            setIndex(data.data.index + 1);
+            // setIndex(1)
           }
         }
       });

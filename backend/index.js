@@ -301,7 +301,7 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Server error", error: error.message });
     }
   });
-  socket.on("checkCurrentStage", async ({ id }) => {
+  socket.on("checkCurrentStage", async ({ id,index }) => {
     const room = await roomModel.findById(id).populate({
       path: "currentStage",
       populate: { path: "question" }, // Populate question inside currentStage
@@ -312,7 +312,7 @@ io.on("connection", (socket) => {
     }
     socket.emit("currentStage", { status: true, data: room.currentStage });
     io.to(room._id.toString()).emit("populateCurrentStage", {
-      data: room.currentStage,
+      data: {...room.currentStage,index},
       status: true,
     });
   });
@@ -320,7 +320,7 @@ io.on("connection", (socket) => {
     try {
       const room = await roomModel.findByIdAndUpdate(
         data.room,
-        { currentStage: data.currentStage },
+        { currentStage: {question:data.currentStage.question,isLastStage:data.currentStage.isLastStage,stage:data.currentStage.stage,} },
         { new: true }
       );
       await room.populate({
@@ -336,7 +336,7 @@ io.on("connection", (socket) => {
 
       if (room.currentStage.question._id) {
         io.to(room._id.toString()).emit("populateCurrentStage", {
-          data: room.currentStage,
+          data: {...room.currentStage,index:data.currentStage.index} ,
           status: true,
         });
       }
