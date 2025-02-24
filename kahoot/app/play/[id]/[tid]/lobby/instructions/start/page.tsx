@@ -211,8 +211,8 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
 const RankStage = ({ student }) => {
   return (
     <div className={"w-screen h-screen flex flex-col text-white items-center justify-center"}>
-      <div className='flex flex-col min-w-[350px] items-center gap-2 justify-center bg-blue_1 rounded-[10px] py-6 '>
-        <h1 className="text-4xl font-semibold text-white">{student.nickname}</h1>
+      <div className='flex px-8 flex-col min-w-[350px] items-center gap-2 justify-center bg-blue_1 rounded-[10px] py-6 '>
+        <h1 className="text-3xl font-semibold text-white">{student.nickname}</h1>
         <AnimatedAvatar avatarData={student.avatar} avatarItems={student.item} bg='#4686EC' h='120px' w='120px' chin={false} />
         <h2 className="text-xl font-semibold text-white">Score: {student.score.toFixed(0) ?? 0}</h2>
         <h2 className="text-xl font-semibold text-white">Rank: {student.rank}</h2>

@@ -26,6 +26,7 @@ import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@mui/material";
+import { truncateString } from "@/src/lib/services";
 
 const QuestionSection = React.memo(
   ({
@@ -313,6 +314,13 @@ const RankSection = React.memo(
       });
     }, []);
 
+    const firstRankStudent = students.find(students => students.rank === 1)
+    console.log("🚀 ~ firstRankStudent:", firstRankStudent)
+    const secondRankStudent = students.find(students => students.rank === 2)
+    console.log("🚀 ~ secondRankStudent:", secondRankStudent)
+    const thirdRankStudent = students.find(students => students.rank === 3)
+    console.log("🚀 ~ thirdRankStudent:", thirdRankStudent)
+
     useEffect(() => {
       setTimeout(() => {
         createConfetti();
@@ -359,7 +367,7 @@ const RankSection = React.memo(
               times: [0, 0.3, 0.6, 1],
               ease: "easeInOut",
             }}
-            className="w-[300px] h-[400px] z-[100] relative bg-fill bg-center flex items-center flex-col rounded-lg text-white "
+            className="w-[300px] px-6 h-[400px] z-[100] relative bg-fill bg-center flex items-center flex-col rounded-lg text-white "
           >
             <motion.div
               initial={{ opacity: 0, translateY: 20 }}
@@ -376,8 +384,8 @@ const RankSection = React.memo(
               )}
             </motion.div>
             <SecondRankIcon className="w-[50%] " />
-            <h3 className="text-4xl font-bold">
-              {students.length >= 2 && students[1].nickname}
+            <h3 className="text-2xl leading-8 text-center font-bold">
+              {students.length >= 2 && truncateString(students[1].nickname,20)}
             </h3>
             <p className="text-2xl font-semibold py-4">
               {students.length >= 2 && students[1].score.toFixed(0)}
@@ -397,7 +405,7 @@ const RankSection = React.memo(
             }}
             animate={{ translateY: ["600px", "150px", "150px", "150px"] }}
             transition={{ delay: 10, duration: 5, ease: "easeInOut" }}
-            className="w-[300px] z-[1000] bg-fill bg-center h-[400px] relative  flex items-center flex-col rounded-lg text-white "
+            className="w-[300px] px-6 z-[1000] bg-fill bg-center h-[400px] relative  flex items-center flex-col rounded-lg text-white "
           >
             <motion.div
               initial={{ opacity: 0, translateY: 20 }}
@@ -417,8 +425,8 @@ const RankSection = React.memo(
               )}
             </motion.div>
             <FirstRankIcon className="w-[50%] " />
-            <h3 className="text-4xl font-bold">
-              {students.length >= 1 && students[0].nickname}
+            <h3 className="text-2xl leading-8 text-center font-bold">
+              {students.length >= 1 && truncateString(students[0].nickname,20)}
             </h3>
             <p className="text-2xl font-semibold py-4">
               {students.length >= 1 && students[0].score.toFixed(0)}
@@ -448,7 +456,7 @@ const RankSection = React.memo(
               times: [0, 0.3, 0.6, 1], // Corrected to match keyframes
               ease: "easeInOut",
             }}
-            className="w-[300px] h-[400px] relative bg-fill bg-center flex items-center flex-col rounded-lg text-white "
+            className="w-[300px] px-6 h-[400px] relative bg-fill bg-center flex items-center flex-col rounded-lg text-white "
           >
             <ThirdRankIcon className="w-[50%] " />
             <motion.div
@@ -465,8 +473,8 @@ const RankSection = React.memo(
                 />
               )}
             </motion.div>
-            <h3 className="text-4xl font-bold">
-              {students.length >= 3 && students[2].nickname}
+            <h3 className="text-2xl leading-8 text-center font-bold">
+              {students.length >= 3 && truncateString(students[2].nickname,20)}
             </h3>
             <p className="text-2xl font-semibold py-4">
               {students.length >= 3 && students[2].score.toFixed(0)}

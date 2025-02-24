@@ -660,6 +660,7 @@ io.on("connection", (socket) => {
       };
 
       const rankedStudents = assignRanks(room.students);
+      console.log("🚀 ~ socket.on ~ rankedStudents:", rankedStudents.map(s => s.nickname +"__"+ s.rank))
       const currentStudentRank = rankedStudents.find(s => s._id.toString() === student._id.toString())?.rank;
       console.log("🚀 ~ socket.on ~ rankedStudents:", rankedStudents);
       io.to(room._id.toString()).emit("receiveStudentResult", {
@@ -952,7 +953,7 @@ io.on("connection", (socket) => {
     } catch (error) {
       socket.emit("feched_quiz", {
         status: false,
-        message: "Something want wrong",
+        message: "Something went wrong",
       });
     }
   });

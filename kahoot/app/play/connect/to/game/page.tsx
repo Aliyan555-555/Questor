@@ -138,6 +138,7 @@ const Student = () => {
           <>
             <input
               type="text"
+              maxLength={20}
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               className="w-full border-2 border-[#FBA732] p-4 text-xl font-semibold text-gray-400 focus:outline-none rounded-lg placeholder:text-center placeholder:text-xl placeholder:font-semibold"

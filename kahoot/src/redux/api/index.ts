@@ -168,7 +168,7 @@ export const getAllQuizzesByUserId = async (id: string) => {
     return res.data;
   } catch (error) {
     console.log("Error fetching Quizzes", error);
-    toast.error("Something want wrong");
+    toast.error("Something went wrong");
   }
 };
 export const getAllPublicQuizzes = async () => {
@@ -177,6 +177,6 @@ export const getAllPublicQuizzes = async () => {
     return res.data;
   } catch (error) {
     console.log("Error fetching Quizzes", error);
-    toast.error("Something want wrong");
+    toast.error("Something went wrong");
   }
 };
