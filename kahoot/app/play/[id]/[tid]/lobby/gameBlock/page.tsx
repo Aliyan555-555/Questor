@@ -79,7 +79,7 @@ const QuestionSection = React.memo(
         <motion.div
           animate={{ opacity: 1 }}
           transition={{ delay: 3, duration: 0.1 }}
-          className="w-full font-semibold text-center mt-[300px] py-6 opacity-0 text-5xl leading-[60px] bg-blue_1 text-white"
+          className="w-full font-semibold text-center mt-[300px] py-6 opacity-0 text-4xl bg-blue_1 text-white"
         >
           {question}
         </motion.div>
@@ -560,7 +560,7 @@ const Page = () => {
         room: teacher._id,
         currentStage: {
           stage: 4,
-          index:23,
+          index:currentQuestionIndex,
           question: teacher?.quiz.questions[currentQuestionIndex]._id,
           isLastStage: true,
         },
@@ -574,7 +574,7 @@ const Page = () => {
         room: teacher._id,
         currentStage: {
           stage: 1,
-          index:23,
+          index:currentQuestionIndex,
 
           question: teacher?.quiz.questions[nextIndex]._id, // Use updated index
           isLastStage: isLastQuestion,
@@ -590,7 +590,7 @@ const Page = () => {
           room: teacher._id,
           currentStage: {
             stage: 2,
-            index:23,
+            index:currentQuestionIndex,
             question: teacher?.quiz.questions[currentQuestionIndex]._id,
             isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length && Number(stage) === 3,
           },
