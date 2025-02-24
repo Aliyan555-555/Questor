@@ -8,6 +8,7 @@ import { getAllPublicQuizzes, getAllQuizzesByUserId } from '@/src/redux/api';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import imageLoader from '@/src/components/ImageLoader';
+import ProfileAvatar from '@/src/components/ProfileAvatar';
 
 interface QuizType {
   _id: string;
@@ -76,7 +77,7 @@ const Home = () => {
 
                   Join</Button>
               </Link>
-              <Avatar />
+           <ProfileAvatar />
             </>
           ) : (
             <>
