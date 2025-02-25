@@ -80,19 +80,15 @@ const SettingsModel = ({ data, handleSaveSettings }) => {
   return (
     <div
       onClick={isOpen ? handleIsClose : handleIsOpen}
-      className="relative cursor-pointer flex py-1 justify-between border-2 border-gray-300 rounded-lg w-[300px] px-2 h-full"
+      className="relative cursor-pointer flex py-1 justify-between border-2 border-white  w-full rounded-[10px] px-2 h-full"
     >
       <input
         type="text"
         readOnly
         value={data?.name}
         placeholder="Enter title here"
-        className="bg-transparent font-semibold focus:outline-none focus:border-none cursor-pointer"
+        className="bg-transparent text-white font-semibold focus:outline-none focus:border-none cursor-pointer"
       />
-      <button className="text-sm !bg-gray-100 rounded-md font-semibold px-3 text-black">
-        Settings
-      </button>
-
       <Backdrop open={isOpen} className="z-50" onClick={handleClickOutside}>
         <div
           className="w-[85%] flex flex-col h-[95%] bg-white rounded-lg"

@@ -178,13 +178,13 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
             <div className="flex flex-col gap-4 items-center justify-center">
               <h2 className="text-3xl font-black text-slate-100">Correct</h2>
               <IsCorrectIcon />
-              <div className="flex text-center justify-end">
+              {/* <div className="flex text-center justify-end">
                 <p className="text-xl font-semibold">Answer Streak</p>
                 <div className="w-[24px] h-[24px] flex items-center justify-center relative">
                   <span className="text-lg z-10 relative font-bold text-white">{result.rank}</span>
                   <StudentSideRankIcon />
                 </div>
-              </div>
+              </div> */}
               <div className="w-[250px] bg-black/60 rounded-md py-3 text-xl text-white font-bold text-center">
                 +{result.currentScore.toFixed(0)}
               </div>

@@ -131,31 +131,38 @@ const OptionsSection = React.memo(({
     }
   };
 
-  console.log(data)
   useEffect(() => {
     if (!socket || !data) return;
 
-    const timer = setInterval(() => {
-      setDuration((prev) => {
-        if (prev <= 0) {
-          clearInterval(timer);
-          setIsTimesUp(true);
-          return 0;
-        }
-        const newCount = prev - 1;
-        socket.emit("setCount", { roomId: data._id, count: newCount, duration: data?.quiz.questions[currentQuestionIndex].duration });
-        return newCount;
-      });
-    }, 1000);
+    let timer: NodeJS.Timeout;
+
+    if (!isTimesUp) {
+      timer = setInterval(() => {
+        setDuration((prev) => {
+          if (prev <= 0) {
+            clearInterval(timer);
+            setIsTimesUp(true);
+            return 0;
+          }
+          const newCount = prev - 1;
+          socket.emit("setCount", {
+            roomId: data._id,
+            count: newCount,
+            duration: data?.quiz.questions[currentQuestionIndex].duration
+          });
+          return newCount;
+        });
+      }, 1000);
+    }
 
     return () => clearInterval(timer);
-  }, [socket, data]);
-
+  }, [socket, data, isTimesUp]);
   useEffect(() => {
-    if (data.students.length === submittedLength) {
+    if (data?.students.length === submittedLength) {
       setIsTimesUp(true);
     }
-  });
+  }, [submittedLength, data]); // Runs when `submittedLength` updates
+
   useEffect(() => {
     if (isTimesUp) {
       playAudio("GameOver.mp3", false);
@@ -385,7 +392,7 @@ const RankSection = React.memo(
             </motion.div>
             <SecondRankIcon className="w-[50%] " />
             <h3 className="text-2xl leading-8 text-center font-bold">
-              {students.length >= 2 && truncateString(students[1].nickname,20)}
+              {students.length >= 2 && truncateString(students[1].nickname, 20)}
             </h3>
             <p className="text-2xl font-semibold py-4">
               {students.length >= 2 && students[1].score.toFixed(0)}
@@ -426,7 +433,7 @@ const RankSection = React.memo(
             </motion.div>
             <FirstRankIcon className="w-[50%] " />
             <h3 className="text-2xl leading-8 text-center font-bold">
-              {students.length >= 1 && truncateString(students[0].nickname,20)}
+              {students.length >= 1 && truncateString(students[0].nickname, 20)}
             </h3>
             <p className="text-2xl font-semibold py-4">
               {students.length >= 1 && students[0].score.toFixed(0)}
@@ -474,7 +481,7 @@ const RankSection = React.memo(
               )}
             </motion.div>
             <h3 className="text-2xl leading-8 text-center font-bold">
-              {students.length >= 3 && truncateString(students[2].nickname,20)}
+              {students.length >= 3 && truncateString(students[2].nickname, 20)}
             </h3>
             <p className="text-2xl font-semibold py-4">
               {students.length >= 3 && students[2].score.toFixed(0)}
@@ -501,7 +508,7 @@ const Page = () => {
 
   useEffect(() => {
     if (socket) {
-      socket.emit('checkCurrentStage', { id: teacher._id,index:currentQuestionIndex });
+      socket.emit('checkCurrentStage', { id: teacher._id, index: currentQuestionIndex });
       socket.on('currentStage', (data) => {
         if (!data.status) {
           navigation.push(`/play/${teacher.quiz._id}`);
@@ -517,11 +524,11 @@ const Page = () => {
         const currentQuestionId = teacher.quiz.questions[currentQuestionIndex]._id;
         if (currentQuestionId === data.question) {
           let a = 1
-           if (a === 1){
-            console.log("Score",data.score);
-            dispatch(updateStudentScore({ student: data.student, score: data.score,rank:data.score }));
-            a=0;
-           }
+          if (a === 1) {
+            console.log("Score", data.score);
+            dispatch(updateStudentScore({ student: data.student, score: data.score, rank: data.score }));
+            a = 0;
+          }
 
           setSubmittedLength((prev) => {
             const newSubmittedLength = prev + 1;
@@ -568,7 +575,7 @@ const Page = () => {
         room: teacher._id,
         currentStage: {
           stage: 4,
-          index:currentQuestionIndex,
+          index: currentQuestionIndex,
           question: teacher?.quiz.questions[currentQuestionIndex]._id,
           isLastStage: true,
         },
@@ -582,7 +589,7 @@ const Page = () => {
         room: teacher._id,
         currentStage: {
           stage: 1,
-          index:currentQuestionIndex,
+          index: currentQuestionIndex,
 
           question: teacher?.quiz.questions[nextIndex]._id, // Use updated index
           isLastStage: isLastQuestion,
@@ -598,7 +605,7 @@ const Page = () => {
           room: teacher._id,
           currentStage: {
             stage: 2,
-            index:currentQuestionIndex,
+            index: currentQuestionIndex,
             question: teacher?.quiz.questions[currentQuestionIndex]._id,
             isLastStage: currentQuestionIndex + 1 === teacher?.quiz.questions.length && Number(stage) === 3,
           },
