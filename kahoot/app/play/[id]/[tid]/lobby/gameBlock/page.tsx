@@ -14,6 +14,7 @@ import {
 } from "@/src/lib/svg";
 import { RootState } from "@/src/redux/store";
 import { useConfetti } from "@stevent-team/react-party";
+import { IoExitOutline } from "react-icons/io5";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +26,7 @@ import { MdFullscreen } from "react-icons/md";
 import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { truncateString } from "@/src/lib/services";
 
 const QuestionSection = React.memo(
@@ -311,6 +312,7 @@ const RankSection = React.memo(
       speed: 1.9,
     });
     const [students, setStudents] = useState<Student[]>([]);
+    const navigation = useRouter()
     useEffect(() => {
       socket?.emit("calculate_ranks", {
         roomId: data._id,
@@ -336,6 +338,11 @@ const RankSection = React.memo(
 
     return (
       <div className="w-full h-full relative flex flex-col items-center justify-center  text-white">
+        <div className="w-full flex justify-end px-3">
+          <IconButton onClick={() => navigation.push('/')} className="!bg-red-500 !p-5">
+          <IoExitOutline color="white" fontSize={30}  />
+          </IconButton>
+        </div>
         <canvas
           ref={canvasProps.ref as React.RefObject<HTMLCanvasElement>}
           style={canvasProps.style as React.CSSProperties}
@@ -508,6 +515,7 @@ const Page = () => {
 
   useEffect(() => {
     if (socket) {
+      // socket.emit('isRoomPlayable',{room:teacher._id});
       socket.emit('checkCurrentStage', { id: teacher._id, index: currentQuestionIndex });
       socket.on('currentStage', (data) => {
         if (!data.status) {
