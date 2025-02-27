@@ -14,17 +14,24 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: cd backend
-    - run: npm ci
-    - run: cd kahoot
-    - run: npm ci
-    - run: npm run build 
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install Dependencies and Build Backend
+        run: |
+          cd backend
+          npm ci
+
+      - name: Install Dependencies and Build Frontend
+        run: |
+          cd kahoot
+          npm ci
+          npm run build
