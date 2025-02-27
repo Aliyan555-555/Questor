@@ -34,5 +34,5 @@ jobs:
       - name: Install Dependencies and Build Frontend
         run: |
           cd kahoot
-          npm ci
+          npm i --force
           npm run build
