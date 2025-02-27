@@ -27,11 +27,11 @@ jobs:
 
       - name: Install Dependencies and Build Backend
         run: |
-          cd backend
+          cd /kahoot/backend
           npm ci
 
       - name: Install Dependencies and Build Frontend
         run: |
-          cd kahoot
+          cd cd /kahoot/kahoot
           npm ci
           npm run build
