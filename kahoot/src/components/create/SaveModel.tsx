@@ -12,8 +12,8 @@ interface ErrorType {
   question: string;
   media: string;
 }
-export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
-  open: boolean; close: () => void; errors: ErrorType[]; id: string | null;ReturnToHome:(value:string) => void
+export const SaveModel = ({ open, close, errors, id, ReturnToHome }: {
+  open: boolean; close: () => void; errors: ErrorType[]; id: string | null; ReturnToHome: (value: string) => void
 }) => {
   const navigation = useRouter();
 
@@ -27,25 +27,25 @@ export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="w-full select-none max-w-[600px] p-6 bg-white/20 backdrop-blur-lg rounded-2xl shadow-2xl flex flex-col gap-6 border border-white/20"
+        className="w-full select-none max-w-[600px] p-14 bg-[#E9E2B6] backdrop-blur-lg rounded-[10px] shadow-2xl flex flex-col gap-6 border border-white/20"
       >
         {/* Title Section */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white">{errors.length > 0 ? "This Questor can't be played" : "Your Questor is ready"}</h2>
-          {errors.length > 0 && <p className="text-sm text-gray-300 mt-2">
+          <h2 className="text-2xl font-semibold text-black">{errors.length > 0 ? "This Questor can't be played" : "Your Questor is ready"}</h2>
+          {errors.length > 0 && <p className="text-sm text-black mt-2">
             All questions need to be completed before you can start playing.
           </p>}
         </div>
 
         {/* Errors List */}
         {errors.length > 0 && <div className="w-full max-h-[350px] scroll-smooth overflow-y-auto space-y-4 scrollbar-hide">
-          { errors.map((error, index) => (
+          {errors.map((error, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
-              className="flex items-center gap-4 p-4 bg-red-500/10 backdrop-blur-md border border-red-500/40 rounded-xl shadow-md hover:shadow-lg transition-shadow"
+              className="flex items-center gap-4 p-4 bg-[#FCBF4A] backdrop-blur-md border border-[#fbaa13] rounded-xl shadow-md hover:shadow-lg transition-shadow"
             >
               {/* Image */}
               <div className="w-[80px] h-[80px] flex-shrink-0 overflow-hidden rounded-lg border border-white/20">
@@ -60,11 +60,11 @@ export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
 
               {/* Error Details */}
               <div className="flex-1 gap-3 text-white">
-                <h3 className="capitalize font-semibold text-sm text-red-300">
+                <h3 className="capitalize font-semibold text-sm text-black">
                   {error.index} - {error.type}
                 </h3>
                 <p className="text-sm font-medium">{error.question}</p>
-                <p className="text-sm rounded-sm font-semibold py-[2px] px-[3px] mt-1 bg-red-600/40 border border-red-500 text-white">
+                <p className="text-sm rounded-sm font-semibold py-[2px] px-[3px] mt-1 bg-red-600 border border-red-500 text-white">
                   {error.message}
                 </p>
               </div>
@@ -88,14 +88,16 @@ export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
         {/* Actions */}
         {errors.length > 0 && <div className="flex gap-4">
           <Button
+
             onClick={close}
-            className="!w-1/2 !bg-gray-600 !text-white !font-semibold !capitalize !py-3 !rounded-lg !transition-all"
+            sx={{border:'2px solid #002F49'}}
+            className="!w-1/2  !border-[#002F49] !text-[#002F49] !font-semibold !capitalize !py-3 !rounded-lg !transition-all"
           >
             Back to Edit
           </Button>
           <Button
-            onClick={() =>{ReturnToHome('draft');close();}}
-            className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
+            onClick={() => { ReturnToHome('draft'); close(); }}
+            className="!w-1/2 !bg-[#002F49] !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
           >
             Keep as Draft
           </Button>
@@ -108,8 +110,8 @@ export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
             Back to Edit
           </Button>
           <Button
-            onClick={() =>{ReturnToHome('active');close();}}
-            
+            onClick={() => { ReturnToHome('active'); close(); }}
+
             className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
           >
             Publish

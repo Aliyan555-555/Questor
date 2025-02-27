@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { MdOutlineSettings } from "react-icons/md";
 import GalleryModel from "./GalleryModel";
 
-const SettingsModel = ({ data, handleSaveSettings }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const SettingsModel = ({ data, handleSaveSettings,isOpen, setIsOpen }) => {
+  // const [] = useState(false);
   const [selectedFile, setSelectedFile] = useState(data?.coverImage);
   const [isImageCropModelOpen] = useState(false);
   const [isGallrayOpen, setIsGalleryOpen] = useState(false);
