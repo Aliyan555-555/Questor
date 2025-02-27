@@ -9,6 +9,10 @@ const UserSchema = new Schema({
     type:String,
     required:true
   },
+  password:{
+    type:String,
+    default:"",
+  },
   providerId:{
     type: String,
   },
@@ -21,7 +25,6 @@ const UserSchema = new Schema({
   }
 });
 
-// Middleware to handle email case insensitivity
 UserSchema.path("email").validate(async (value) => {
   const emailCount = await mongoose.models.User.countDocuments({
     email: value,

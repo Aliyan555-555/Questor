@@ -7,7 +7,10 @@
   animation: avatar-animation-eyebrow-left 0.7s infinite ease-in-out;
   transform-origin: center;
 }
-
+*{
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+}
 @keyframes avatar-animation-eyebrow-left{
   0% {
     transform: matrix(

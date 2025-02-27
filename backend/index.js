@@ -21,6 +21,7 @@ const app = express();
 connectToMongodb();
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://localhost:4000",
   "http://localhost:8000",
   "http://dev.meteoricsolutions.com:8000",
   "http://dev.meteoricsolutions.com:9000",
@@ -1134,7 +1135,7 @@ io.on("connection", (socket) => {
       console.log(room);
       return;
     }
-    console.log("Client disconnected reason:", socket.id);
+    
 
     if (socket.student) {
       try {

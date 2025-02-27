@@ -134,7 +134,7 @@ const SettingsModel = ({ data, handleSaveSettings }) => {
                 >
                   <div className="flex flex-col gap-1">
                     <h2 className="text-sm font-bold">Title</h2>
-                    <p>Enter a title for your kahoot</p>
+                    <p>Enter a title for your Questor</p>
                     <input
                       type="text"
                       value={quizData.name}
@@ -150,7 +150,7 @@ const SettingsModel = ({ data, handleSaveSettings }) => {
                       <span className="text-gray-400">(Optional)</span>
                     </h2>
                     <p>
-                      Provide a short description for your kahoot to increase
+                      Provide a short description for your Questor to increase
                       visibility
                     </p>
                     <textarea
@@ -174,7 +174,7 @@ const SettingsModel = ({ data, handleSaveSettings }) => {
                   className="w-full flex flex-col gap-2 bg-white rounded-lg p-4"
                 >
                   <h2 className="text-sm font-bold">Visibility</h2>
-                  <p>Choose who can see this kahoot.</p>
+                  <p>Choose who can see this Questor.</p>
                   <div
                     className="w-full flex select-none p-2"
                     onClick={() =>
@@ -237,7 +237,7 @@ const SettingsModel = ({ data, handleSaveSettings }) => {
                   className="w-full flex flex-col gap-1 bg-white rounded-lg p-4"
                 >
                   <h2 className="text-sm font-bold">Cover Image</h2>
-                  <p>Add a cover image to make your kahoot stand out.</p>
+                  <p>Add a cover image to make your Questor stand out.</p>
                   <div
                     onClick={() => setIsGalleryOpen(true)}
                     className={`border-2 border-dashed 

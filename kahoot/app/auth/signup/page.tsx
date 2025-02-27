@@ -1,11 +1,11 @@
 "use client";
-import { LoginWithGoogle } from "@/src/redux/api";
+import { LoginWithGoogle, RegisterWithCredentials } from "@/src/redux/api";
 import { RootState } from "@/src/redux/store";
 import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -13,8 +13,19 @@ const Signup = () => {
   const user = useSelector((root: RootState) => root.student);
   const dispatch = useDispatch();
   const navigation = useRouter();
+  const [message] = useState("");
+  const [error, setError] = useState("");
   const query = useSearchParams();
   const redirect = query.get("redirect");
+  const [credentials, setCredentials] = useState({
+    name: null,
+    email: null,
+    password: null
+  })
+
+  const handleChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  }
   const redirectUrl = query.get("redirect_url");
   const handleGoogleLogin = async () => {
     if (user.isAuthenticated) {
@@ -26,18 +37,26 @@ const Signup = () => {
   };
 
   const handleSignupWithCredentials = async () => {
-    toast.info("signup with credentials logic not implemented yet")
+    if (!credentials.email || !credentials.password || !credentials.name) {
+      setError("Please fill in all fields");
+      return;
+    } else {
+      await RegisterWithCredentials(navigation, credentials, redirect, redirectUrl, setError)
+    }
+
   }
   return (
-    <div  style={{backgroundImage:"url(/images/UI/authBG.png)"}} className="w-screen bg-cover bg-top h-screen flex items-center justify-center ">
-      <div style={{boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}} className="w-[90%] md:w-[450px] h-auto py-8 px-6 bg-white rounded-lg flex flex-col items-center gap-4">
-         <div className="w-full flex items-center justify-center">
-                <Image src={'/images/UI/fullLogo.png'} alt="Questor" width={150} height={100} /> 
-                </div>
+    <div style={{ backgroundImage: "url(/images/UI/authBG.png)" }} className="w-screen bg-cover bg-top h-screen flex items-center justify-center ">
+      <div style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }} className="w-[90%] md:w-[450px] h-auto py-8 px-6 bg-white rounded-lg flex flex-col items-center gap-4">
+        <div className="w-full flex items-center justify-center">
+          <Image src={'/images/UI/fullLogo.png'} alt="Questor" width={150} height={100} />
+        </div>
         <h3 className="text-2xl font-bold text-gray-800">
           Create Your Account
         </h3>
         <p className="text-sm text-gray-600">Sign up to get started!</p>
+        {message && <p className="text-sm text-green-600 bg-green-100 px-3 py-2 rounded-md">{message}</p>}
+        {error && <p className="text-sm text-red-500 bg-red-100 px-3 py-2 rounded-md">{error}</p>}
 
         <form className="w-full flex flex-col gap-4">
           <div className="w-full">
@@ -50,6 +69,7 @@ const Signup = () => {
             <input
               type="text"
               id="name"
+              onChange={handleChange}
               placeholder="Enter your full name"
               name="name"
               required
@@ -67,6 +87,7 @@ const Signup = () => {
             <input
               type="email"
               id="email"
+              onChange={handleChange}
               placeholder="Enter your email"
               name="email"
               required
@@ -85,6 +106,7 @@ const Signup = () => {
               type="password"
               id="password"
               placeholder="Create a password"
+              onChange={handleChange}
               name="password"
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FBA732]"
@@ -92,8 +114,7 @@ const Signup = () => {
           </div>
 
           <Button
-          onClick={handleSignupWithCredentials}
-            type="submit"
+            onClick={handleSignupWithCredentials}
             variant="contained"
             className="!w-full !py-3 !bg-[#FBA732] !text-black font-semibold !text-lg !rounded-lg !normal-case hover:!bg-[#ff9b10] focus:!ring-0"
           >

@@ -180,3 +180,76 @@ export const getAllPublicQuizzes = async () => {
     toast.error("Something went wrong");
   }
 };
+
+export const LoginWithCredential = async (
+  dispatch,
+  navigation,
+  credentials,
+  isRedirect,
+  redirectUrl,
+  setError,
+) => {
+  const res = await API_DOMAIN.post("/api/v1/auth/login", credentials);
+  console.log(res);
+  if (res.data.status) {
+    dispatch(login(res.data.data));
+    toast.success("Successfully logged in");
+    if (isRedirect) {
+      return navigation.push(redirectUrl);
+    } else {
+      return navigation.push("/");
+    }
+  } else {
+    setError(res.data.message);
+  }
+};
+
+export const ForgetPassword = async (email: string) => {
+  try {
+    const res = await API_DOMAIN.post("/api/v1/auth/forget", { email: email });
+    return res.data;
+  } catch (error) {
+    toast.error(error);
+  }
+};
+
+export const UpdatePassword = async (email: string, password: string) => {
+  try {
+    const res = await API_DOMAIN.post("/api/v1/auth/forget/password", {
+      email: email,
+      password: password,
+    });
+    return res.data;
+  } catch (error) {
+    toast.error(error);
+  }
+};
+
+export const RegisterWithCredentials = async (
+  // dispatch,
+  navigation,
+  credentials,
+  isRedirect,
+  redirectUrl,
+  setError,
+  // setMessage
+) => {
+  try {
+
+    const res = await API_DOMAIN.post("/api/v1/auth/registration", credentials);
+    console.log(res);
+    if (res.data.status) {
+      // dispatch(login(res.data.data));
+      // toast.success("Successfully registered");
+      if (isRedirect) {
+        return navigation.push(`/auth/login?redirect=true&redirect_url=${redirectUrl}`);
+      } else {
+        return navigation.push("/auth/login");
+      }
+    } else {
+      setError(res.data.message);
+    }
+  } catch (error) {
+    toast.error(error);
+  }
+};

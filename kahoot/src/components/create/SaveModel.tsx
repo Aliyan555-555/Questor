@@ -31,7 +31,7 @@ export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
       >
         {/* Title Section */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white">{errors.length > 0 ? "This kahoot can't be played" : "Your kahoot is ready"}</h2>
+          <h2 className="text-3xl font-bold text-white">{errors.length > 0 ? "This Questor can't be played" : "Your Questor is ready"}</h2>
           {errors.length > 0 && <p className="text-sm text-gray-300 mt-2">
             All questions need to be completed before you can start playing.
           </p>}
@@ -80,7 +80,7 @@ export const SaveModel = ({ open, close, errors, id,ReturnToHome}: {
             </div>
             <div className="flex  flex-col justify-center">
               <h2 className="font-bold">Host live</h2>
-              <p className="font-semibold">Host a live kahoot now</p>
+              <p className="font-semibold">Host a live Questor now</p>
             </div>
           </div>
         </div>}

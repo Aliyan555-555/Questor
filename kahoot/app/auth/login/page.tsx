@@ -1,11 +1,11 @@
 "use client";
-import { LoginWithGoogle } from "@/src/redux/api";
+import { LoginWithCredential, LoginWithGoogle } from "@/src/redux/api";
 import { RootState } from "@/src/redux/store";
 import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -14,8 +14,14 @@ const Login = () => {
   const navigation = useRouter();
   const query = useSearchParams();
   const redirect = query.get("redirect")
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const redirectUrl = query.get("redirect_url");
   const user = useSelector((root: RootState) => root.student);
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  })
 
   const handleGoogleLogin = async () => {
     if (user.isAuthenticated) {
@@ -26,18 +32,25 @@ const Login = () => {
     await LoginWithGoogle(dispatch, navigation, isRedirect, redirectUrl);
   };
 
-  const handleLoginWithCredential = () => {
-    toast.info("Login with credential logic not implemented yet");
-  }
-
+  const handleLoginWithCredential = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!credentials.email || !credentials.password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    const isRedirect = redirect === "true";
+    await LoginWithCredential(dispatch, navigation, credentials, isRedirect, redirectUrl, setError);
+  };
   return (
-    <div style={{backgroundImage:"url(/images/UI/authBG.png)"}} className="w-screen bg-cover bg-top h-screen flex items-center justify-center ">
-      <div style={{boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"}} className="w-[90%] md:w-[450px] h-auto py-9 px-6 bg-white rounded-lg  flex flex-col items-center gap-5">
+    <div style={{ backgroundImage: "url(/images/UI/authBG.png)" }} className="w-screen bg-cover bg-top h-screen flex items-center justify-center ">
+      <div style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }} className="w-[90%] md:w-[450px] h-auto py-9 px-6 bg-white rounded-lg  flex flex-col items-center gap-5">
         <div className="w-full flex items-center justify-center">
-        <Image src={'/images/UI/fullLogo.png'} alt="Questor" width={150} height={100} /> 
+          <Image src={'/images/UI/fullLogo.png'} alt="Questor" width={150} height={100} />
         </div>
         <h3 className="text-2xl font-bold text-gray-800">Welcome Back!</h3>
         <p className="text-sm text-gray-600">Please log in to continue.</p>
+        {message && <p className="text-sm text-green-600 bg-green-100 px-3 py-2 rounded-md">{message}</p>}
+        {error && <p className="text-sm text-red-500 bg-red-100 px-3 py-2 rounded-md">{error}</p>}
 
         <form className="w-full flex flex-col gap-4">
           <div className="w-full">
@@ -52,6 +65,8 @@ const Login = () => {
               id="email"
               placeholder="Enter your email"
               name="email"
+              value={credentials.email}
+              onChange={(e) => { setCredentials({ ...credentials, email: e.target.value }); setError(""); setMessage("") }}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FBA732]"
             />
@@ -69,16 +84,22 @@ const Login = () => {
               id="password"
               placeholder="Enter your password"
               name="password"
+              value={credentials.password}
+              onChange={(e) => { setCredentials({ ...credentials, password: e.target.value }); setError(""); setMessage("") }}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FBA732]"
             />
           </div>
-
+          <div className="w-full flex justify-end">
+            <Link href={'/auth/forget'} className="text-sm font-semibold text-[#10BBF9]">
+              Forget Password?
+            </Link>
+          </div>
           <Button
             // type="submit"
             onClick={handleLoginWithCredential}
             variant="contained"
-            className="!w-full !py-2 font-semibold !bg-[#FBA732] !text-black !text-xl !rounded-[10px] !normal-case hover:!bg-[#ffa11e] focus:!ring-0"
+            className="!w-full !py-2 !font-semibold !bg-[#FBA732] !text-black !text-xl !rounded-[10px] !normal-case hover:!bg-[#ffa11e] focus:!ring-0"
           >
             Log in
           </Button>
@@ -108,7 +129,7 @@ const Login = () => {
         <p className="text-sm text-gray-600">
           Don’t have an account?{" "}
           <Link
-            href={redirect?`/auth/signup?redirect=${redirect}&redirect_url=${redirectUrl}`:'/auth/signup'}
+            href={redirect ? `/auth/signup?redirect=${redirect}&redirect_url=${redirectUrl}` : '/auth/signup'}
             className="text-[#10BBF9] font-medium hover:underline"
           >
             Sign up
