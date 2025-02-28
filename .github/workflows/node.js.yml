@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Dependencies and Build Backend
         run: |
-          ls -1
+          pm2 stop all
           cd backend
           npm ci
 
@@ -40,4 +40,4 @@ jobs:
 
       - name: Restart PM2 services
         run: |
-          pm2 restart all
+          pm2 start all
