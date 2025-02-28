@@ -36,3 +36,6 @@ jobs:
           cd kahoot
           npm i --force
           npm run build
+      - name: Restart PM2 services
+        run: |
+          pm2 restart all 
