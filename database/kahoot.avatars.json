@@ -1,26 +1,6 @@
 [{
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc153"
-  },
-  "name": "Snake",
-  "colors": {
-    "lipColor": "#00000000",
-    "bodyColor": "#3E6D07ff",
-    "chinColor": "#00000000",
-    "teethType": "#00000000",
-    "mouthColor": "#00000000",
-    "pupilColor": "#422344ff",
-    "teethColor": "#00000000",
-    "tongueColor": "#00000000",
-    "eyeballColor": "#F8E5A2ff",
-    "eyebrowColor": "#422344ff",
-    "eyeBorderColor": "#00000000"
-  },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/11061_resource_1738057699391.svg"
-},
-{
-  "_id": {
-    "$oid": "67a5eb27a0c0c557538bc154"
+    "$oid": "67c16a69231d3af375ef2392"
   },
   "name": "Sun",
   "colors": {
@@ -34,13 +14,23 @@
     "tongueColor": "#FBB45Fff",
     "eyeballColor": "#FEF6B6ff",
     "eyebrowColor": "#9B3320ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2393"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/4900_1687425515517.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729276/4900_1687425515517_ynvsng.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.474Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.474Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc155"
+    "$oid": "67c16a69231d3af375ef2394"
   },
   "name": "Moon",
   "colors": {
@@ -54,113 +44,143 @@
     "tongueColor": "#9985BAff",
     "eyeballColor": "#9985BAff",
     "eyebrowColor": "#655680ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2395"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/4950_1687425617735.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729356/4950_1687425617735_yfvvvc.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.477Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.477Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc156"
+    "$oid": "67c16a69231d3af375ef2396"
   },
-  "name": "Bear",
+  "name": "Meteor",
   "colors": {
-    "lipColor": "#472D1Dff",
-    "bodyColor": "#835B42ff",
+    "lipColor": "#3F010Aff",
+    "bodyColor": "#00000000",
     "chinColor": "#00000000",
     "teethType": "#00000000",
-    "mouthColor": "#5D3B29ff",
-    "pupilColor": "#422E27ff",
+    "mouthColor": "#391216ff",
+    "pupilColor": "#391216ff",
     "teethColor": "#00000000",
-    "tongueColor": "#00000000",
-    "eyeballColor": "#F8E5A2ff",
-    "eyebrowColor": "#472D1Dff",
-    "eyeBorderColor": "#00000000"
+    "tongueColor": "#EFED7Fff",
+    "eyeballColor": "#EFED7Fff",
+    "eyebrowColor": "#451315ff",
+    "eyeBorderColor": "#F89B54ff",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2397"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/4200_1687425411654.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729414/5000_1687425843244_la4krx.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.478Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.478Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc157"
+    "$oid": "67c16a69231d3af375ef2398"
   },
-  "name": "Robot",
+  "name": "Planet",
   "colors": {
-    "lipColor": "#00000000",
-    "bodyColor": "#4E87C4ff",
+    "lipColor": "#3E0463ff",
+    "bodyColor": "#00000000",
     "chinColor": "#00000000",
     "teethType": "#00000000",
-    "mouthColor": "#00000000",
-    "pupilColor": "#1E1E1Eff",
+    "mouthColor": "#401F61ff",
+    "pupilColor": "#401F61ff",
     "teethColor": "#00000000",
-    "tongueColor": "#00000000",
-    "eyeballColor": "#FFFFFFff",
-    "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "tongueColor": "#D71E44ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#401F61ff",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2399"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5000_1687425723079.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729436/5050_1687426309061_nqadsp.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.478Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.478Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc158"
+    "$oid": "67c16a69231d3af375ef239a"
   },
   "name": "Alien",
   "colors": {
+    "lipColor": "#004C19ff",
+    "bodyColor": "#39B25Eff",
+    "chinColor": "#41B634ff",
+    "teethType": "normal",
+    "mouthColor": "#004C19ff",
+    "pupilColor": "#4B5150ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#E39E68ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef239b"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729502/4750_1687425186719_sudbcx.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.479Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.479Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef239c"
+  },
+  "name": "UFO",
+  "colors": {
     "lipColor": "#00000000",
-    "bodyColor": "#1EC31Eff",
+    "bodyColor": "#00000000",
     "chinColor": "#00000000",
     "teethType": "#00000000",
     "mouthColor": "#00000000",
-    "pupilColor": "#00000000",
+    "pupilColor": "#006768ff",
     "teethColor": "#00000000",
     "tongueColor": "#00000000",
-    "eyeballColor": "#FFFFFFff",
-    "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "eyeballColor": "#C2EFAFff",
+    "eyebrowColor": "#025957ff",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef239d"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5050_1687425815345.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729516/4800_1687425262697_l6lxiz.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.479Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.479Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc159"
-  },
-  "name": "Tiger",
-  "colors": {
-    "lipColor": "#5A3A24ff",
-    "bodyColor": "#E37D23ff",
-    "chinColor": "#F9E4B3ff",
-    "teethType": "#FFFFFFff",
-    "mouthColor": "#A34B1Eff",
-    "pupilColor": "#000000ff",
-    "teethColor": "#FFFFFFff",
-    "tongueColor": "#E84C4Cff",
-    "eyeballColor": "#FFFFFFff",
-    "eyebrowColor": "#5A3A24ff",
-    "eyeBorderColor": "#000000ff"
-  },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5150_1687425923954.svg"
-},
-{
-  "_id": {
-    "$oid": "67a5eb27a0c0c557538bc15a"
-  },
-  "name": "Dog",
-  "colors": {
-    "lipColor": "#472D1Dff",
-    "bodyColor": "#C49A6Cff",
-    "chinColor": "#00000000",
-    "teethType": "#00000000",
-    "mouthColor": "#5D3B29ff",
-    "pupilColor": "#422E27ff",
-    "teethColor": "#00000000",
-    "tongueColor": "#E84C4Cff",
-    "eyeballColor": "#F8E5A2ff",
-    "eyebrowColor": "#472D1Dff",
-    "eyeBorderColor": "#00000000"
-  },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5200_1687426011261.svg"
-},
-{
-  "_id": {
-    "$oid": "67a5eb27a0c0c557538bc15b"
+    "$oid": "67c16a69231d3af375ef239e"
   },
   "name": "Spaceship",
   "colors": {
@@ -174,13 +194,23 @@
     "tongueColor": "#E42545ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#931818ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef239f"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/4850_1687425342269.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729575/4850_1687425342269_jpg7vt.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.479Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.479Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc15c"
+    "$oid": "67c16a69231d3af375ef23a0"
   },
   "name": "Retro Bot",
   "colors": {
@@ -194,13 +224,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#00000000",
     "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23a1"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5100_1687426404021.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729588/5100_1687426404021_uxvtqk.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.479Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.479Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc15d"
+    "$oid": "67c16a69231d3af375ef23a2"
   },
   "name": "Space Bot",
   "colors": {
@@ -214,13 +254,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#00000000",
     "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23a3"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5150_1687426463919.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729648/5150_1687426463919_ftghcn.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc15e"
+    "$oid": "67c16a69231d3af375ef23a4"
   },
   "name": "Polar bear",
   "colors": {
@@ -234,13 +284,23 @@
     "tongueColor": "#67619eff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#87828eff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23a5"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2350_1703158777099.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729659/2350_1703158777099_irraxe.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc15f"
+    "$oid": "67c16a69231d3af375ef23a6"
   },
   "name": "Penguin",
   "colors": {
@@ -254,13 +314,23 @@
     "tongueColor": "#E42545ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#352E3Dff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23a7"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2300_1687264243758.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729703/2300_1687264243758_xe0tmp.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc160"
+    "$oid": "67c16a69231d3af375ef23a8"
   },
   "name": "Snowman",
   "colors": {
@@ -274,13 +344,23 @@
     "tongueColor": "#B26A81ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#65608Dff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23a9"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5380_1703159018280.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729715/5380_1703159018280_dpz5kr.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc161"
+    "$oid": "67c16a69231d3af375ef23aa"
   },
   "name": "Reindeer",
   "colors": {
@@ -294,13 +374,23 @@
     "tongueColor": "#E42545ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#6C3200ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23ab"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5373_1702041807735.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740729869/5373_1702041807735_aokod7.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.480Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc162"
+    "$oid": "67c16a69231d3af375ef23ac"
   },
   "name": "Christmas tree",
   "colors": {
@@ -314,13 +404,23 @@
     "tongueColor": "#008846ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#003D0Fff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23ad"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5374_1702041852241.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737491/5374_1702041852241_x5ra7s.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc163"
+    "$oid": "67c16a69231d3af375ef23ae"
   },
   "name": "Gingerbread cookie",
   "colors": {
@@ -334,13 +434,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#894303ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23af"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5375_1702041885545.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737582/5375_1702041885545_bqwyim.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc164"
+    "$oid": "67c16a69231d3af375ef23b0"
   },
   "name": "Woodchuck",
   "colors": {
@@ -354,13 +464,23 @@
     "tongueColor": "#E42444ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#D27000ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23b1"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1600_1687261880794.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737619/1600_1687261880794_nmgral.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc165"
+    "$oid": "67c16a69231d3af375ef23b2"
   },
   "name": "Moose",
   "colors": {
@@ -374,13 +494,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#7e3525ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23b3"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1500_1687262183309.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737666/1500_1687262183309_ssrjka.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc166"
+    "$oid": "67c16a69231d3af375ef23b4"
   },
   "name": "Dog",
   "colors": {
@@ -394,13 +524,23 @@
     "tongueColor": "#e42444ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#62372dff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23b5"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1700_1687262323708.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737754/1700_1687262323708_cqilvf.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc167"
+    "$oid": "67c16a69231d3af375ef23b6"
   },
   "name": "Cat",
   "colors": {
@@ -414,13 +554,23 @@
     "tongueColor": "#e42444ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#e56700ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23b7"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1750_1687262746170.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737810/1750_1687262746170_wrjlqq.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc168"
+    "$oid": "67c16a69231d3af375ef23b8"
   },
   "name": "Mouse",
   "colors": {
@@ -434,13 +584,23 @@
     "tongueColor": "#E23927ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#87351Fff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23b9"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1800_1687262880499.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737849/1800_1687262880499_oxbjhm.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc169"
+    "$oid": "67c16a69231d3af375ef23ba"
   },
   "name": "Rabbit",
   "colors": {
@@ -454,13 +614,23 @@
     "tongueColor": "#e42444ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#957462ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23bb"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1850_1687263030569.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737886/1850_1687263030569_skpbj6.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc16a"
+    "$oid": "67c16a69231d3af375ef23bc"
   },
   "name": "Fox",
   "colors": {
@@ -474,13 +644,23 @@
     "tongueColor": "#E23927ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#723728ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23bd"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1900_1687263101178.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737914/1900_1687263101178_aiscso.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc16b"
+    "$oid": "67c16a69231d3af375ef23be"
   },
   "name": "Wolf",
   "colors": {
@@ -494,13 +674,23 @@
     "tongueColor": "#e23927ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#535b66ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23bf"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/1950_1687263268322.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737938/1950_1687263268322_d48qcu.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc16c"
+    "$oid": "67c16a69231d3af375ef23c0"
   },
   "name": "Raccoon",
   "colors": {
@@ -514,13 +704,23 @@
     "tongueColor": "#E23927ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#351C2Aff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23c1"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2000_1687263347010.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740737979/2000_1687263347010_xtcjgp.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc16d"
+    "$oid": "67c16a69231d3af375ef23c2"
   },
   "name": "Panda",
   "colors": {
@@ -534,13 +734,53 @@
     "tongueColor": "#e42444ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#301c28ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23c3"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2050_1687263494068.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738015/2050_1687263494068_an2tlu.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc16e"
+    "$oid": "67c16a69231d3af375ef23c4"
+  },
+  "name": "Snake",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#3E6D07ff",
+    "chinColor": "#00000000",
+    "teethType": "#00000000",
+    "mouthColor": "#00000000",
+    "pupilColor": "#422344ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#F8E5A2ff",
+    "eyebrowColor": "#422344ff",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23c5"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738050/11061_resource_1738057699391_qgvlgf.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.481Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef23c6"
   },
   "name": "Frog",
   "colors": {
@@ -554,13 +794,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#EFDA48ff",
     "eyebrowColor": "#565400ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23c7"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2100_1687263733877.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738084/2100_1687263733877_ihs6n3.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc16f"
+    "$oid": "67c16a69231d3af375ef23c8"
   },
   "name": "Eagle",
   "colors": {
@@ -574,13 +824,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#5DA898ff",
     "eyebrowColor": "#C1BAB4ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23c9"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/11095_resource_1738331923584.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738120/11095_resource_1738331923584_n11nrw.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc170"
+    "$oid": "67c16a69231d3af375ef23ca"
   },
   "name": "Owl",
   "colors": {
@@ -594,13 +854,23 @@
     "tongueColor": "#D70041ff",
     "eyeballColor": "#FFF470ff",
     "eyebrowColor": "#590C00ff",
-    "eyeBorderColor": "#FF8500ff"
+    "eyeBorderColor": "#FF8500ff",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23cb"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2150_1687263985947.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738149/2150_1687263985947_tml4hl.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc171"
+    "$oid": "67c16a69231d3af375ef23cc"
   },
   "name": "Chicken",
   "colors": {
@@ -614,13 +884,23 @@
     "tongueColor": "#E42545ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#F79820ff",
-    "eyeBorderColor": "#FDBE33ff"
+    "eyeBorderColor": "#FDBE33ff",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23cd"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2200_1687264102508.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738307/2200_1687264102508_odkanu.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc172"
+    "$oid": "67c16a69231d3af375ef23ce"
   },
   "name": "Turkey",
   "colors": {
@@ -634,13 +914,23 @@
     "tongueColor": "#E42545ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#941017ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23cf"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2250_1687264173911.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738338/2250_1687264173911_zbitz9.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc173"
+    "$oid": "67c16a69231d3af375ef23d0"
   },
   "name": "Camel",
   "colors": {
@@ -654,13 +944,23 @@
     "tongueColor": "#D70041ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#7b4105ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23d1"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2400_1687264446914.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738369/2400_1687264446914_ww0zuv.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc174"
+    "$oid": "67c16a69231d3af375ef23d2"
   },
   "name": "Tiger",
   "colors": {
@@ -674,13 +974,23 @@
     "tongueColor": "#e23927ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#561801ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23d3"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2500_1687264607196.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738393/2500_1687264607196_aeroas.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc175"
+    "$oid": "67c16a69231d3af375ef23d4"
   },
   "name": "Koala",
   "colors": {
@@ -694,13 +1004,23 @@
     "tongueColor": "#e42444ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#414b66ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23d5"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2550_1687264671655.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738421/2550_1687264671655_oxmtby.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc176"
+    "$oid": "67c16a69231d3af375ef23d6"
   },
   "name": "Kangaroo",
   "colors": {
@@ -714,13 +1034,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#702519ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23d7"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2600_1687264751137.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738449/2600_1687264751137_xjqmij.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc177"
+    "$oid": "67c16a69231d3af375ef23d8"
   },
   "name": "Horse",
   "colors": {
@@ -734,13 +1064,23 @@
     "tongueColor": "#D70041ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#6F1800ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23d9"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2650_1687264861402.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738462/2650_1687264861402_tlkjxe.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc178"
+    "$oid": "67c16a69231d3af375ef23da"
   },
   "name": "Unicorn",
   "colors": {
@@ -754,13 +1094,23 @@
     "tongueColor": "#D70041ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#AD8D96ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23db"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2700_1687264926797.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738495/2700_1687264926797_k3tldv.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc179"
+    "$oid": "67c16a69231d3af375ef23dc"
   },
   "name": "Dragon",
   "colors": {
@@ -774,13 +1124,23 @@
     "tongueColor": "#D70041ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#3E7E00ff",
-    "eyeBorderColor": "#619E00ff"
+    "eyeBorderColor": "#619E00ff",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23dd"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2800_1687265175082.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738521/2800_1687265175082_xoo3hr.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc17a"
+    "$oid": "67c16a69231d3af375ef23de"
   },
   "name": "Monster",
   "colors": {
@@ -794,13 +1154,23 @@
     "tongueColor": "#E08B5Dff",
     "eyeballColor": "#FFA878ff",
     "eyebrowColor": "#701f62ff",
-    "eyeBorderColor": "#7C296Dff"
+    "eyeBorderColor": "#7C296Dff",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23df"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2850_1687265249509.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738550/2850_1687265249509_mdxmgm.svg\n",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc17b"
+    "$oid": "67c16a69231d3af375ef23e0"
   },
   "name": "Faun",
   "colors": {
@@ -814,13 +1184,23 @@
     "tongueColor": "#CC4F5Cff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#861222ff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23e1"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2900_1687265318688.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738578/2900_1687265318688_rp6gou.svg\n",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc17c"
+    "$oid": "67c16a69231d3af375ef23e2"
   },
   "name": "Brain",
   "colors": {
@@ -834,13 +1214,23 @@
     "tongueColor": "#D70041ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#97235Eff",
-    "eyeBorderColor": "#F56CA5ff"
+    "eyeBorderColor": "#F56CA5ff",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23e3"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2950_1698237541062.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738604/2950_1698237541062_floxtc.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc17d"
+    "$oid": "67c16a69231d3af375ef23e4"
   },
   "name": "Zombie",
   "colors": {
@@ -854,13 +1244,23 @@
     "tongueColor": "#E42545ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#076D6Dff",
-    "eyeBorderColor": "#845151ff"
+    "eyeBorderColor": "#845151ff",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23e5"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/3000_1687265495343.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738645/3000_1687265495343_qxjtjc.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc17e"
+    "$oid": "67c16a69231d3af375ef23e6"
   },
   "name": "Skeleton",
   "colors": {
@@ -874,13 +1274,23 @@
     "tongueColor": "#C14D66ff",
     "eyeballColor": "#368B9Cff",
     "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23e7"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/3050_1687265571857.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738689/3050_1687265571857_stfx9e.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.482Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc17f"
+    "$oid": "67c16a69231d3af375ef23e8"
   },
   "name": "Planet Earth",
   "colors": {
@@ -894,13 +1304,23 @@
     "tongueColor": "#D70041ff",
     "eyeballColor": "#ffffffff",
     "eyebrowColor": "#005F8Dff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23e9"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/2750_1687265031465.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738720/2750_1687265031465_mfkedc.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc180"
+    "$oid": "67c16a69231d3af375ef23ea"
   },
   "name": "Whale",
   "colors": {
@@ -914,33 +1334,53 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#FFFFFFFF",
     "eyebrowColor": "#213e5eFF",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23eb"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5473_resource_1717148477844.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738748/5473_resource_1717148477844_o9pltj.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5eb27a0c0c557538bc181"
+    "$oid": "67c16a69231d3af375ef23ec"
   },
   "name": "Octopus",
   "colors": {
-    "lipColor": "#D14255ff",
-    "bodyColor": "#6B3F8Bff",
+    "lipColor": "#00000000",
+    "bodyColor": "#00000000",
     "chinColor": "#00000000",
-    "teethType": "#00000000",
-    "mouthColor": "#D14255ff",
-    "pupilColor": "#6B3F8Bff",
-    "teethColor": "#F5F8F4ff",
-    "tongueColor": "#C14D66ff",
-    "eyeballColor": "#368B9Cff",
-    "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#493666FF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#493666FF",
+    "eyeBorderColor": "#7f679eFF",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23ed"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5474_1717148477844.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738776/5474_resource_1717148524054_lzy5zr.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ece7a0c0c557538bc183"
+    "$oid": "67c16a69231d3af375ef23ee"
   },
   "name": "Lion",
   "colors": {
@@ -954,13 +1394,23 @@
     "tongueColor": "#e23927FF",
     "eyeballColor": "#FFFFFFFF",
     "eyebrowColor": "#471913FF",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23ef"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5475_resource_1717148923083.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738785/5475_resource_1717148923083_vjh5w9.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ece7a0c0c557538bc184"
+    "$oid": "67c16a69231d3af375ef23f0"
   },
   "name": "Crocodile",
   "colors": {
@@ -974,13 +1424,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#ffdb76FF",
     "eyebrowColor": "#512714FF",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23f1"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5476_resource_1717148964630.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738817/5476_resource_1717148964630_u45svo.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ece7a0c0c557538bc185"
+    "$oid": "67c16a69231d3af375ef23f2"
   },
   "name": "Elephant",
   "colors": {
@@ -994,13 +1454,23 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#FFFFFFFF",
     "eyebrowColor": "#3d4c54FF",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23f3"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5477_resource_1717149040129.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738858/5477_resource_1717149040129_qst64q.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ece7a0c0c557538bc186"
+    "$oid": "67c16a69231d3af375ef23f4"
   },
   "name": "Shark",
   "colors": {
@@ -1014,153 +1484,233 @@
     "tongueColor": "#00000000",
     "eyeballColor": "#FFFFFFFF",
     "eyebrowColor": "#004b63FF",
-    "eyeBorderColor": "#478fa000"
+    "eyeBorderColor": "#478fa000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23f5"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5478_resource_1717149082609.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738913/5478_resource_1717149082609_sppkmy.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ece7a0c0c557538bc187"
+    "$oid": "67c16a69231d3af375ef23f6"
   },
-  "name": "Wolf",
+  "name": "Giraffe",
   "colors": {
-    "lipColor": "#00000000",
-    "bodyColor": "#5e5e5eFF",
-    "chinColor": "#979797FF",
-    "teethType": "fangs",
-    "mouthColor": "#00000000",
-    "pupilColor": "#000000FF",
+    "lipColor": "#412015FF",
+    "bodyColor": "#d38a3cFF",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#412015FF",
+    "pupilColor": "#412015FF",
     "teethColor": "#FFFFFFFF",
-    "tongueColor": "#00000000",
+    "tongueColor": "#d70041FF",
     "eyeballColor": "#FFFFFFFF",
-    "eyebrowColor": "#353535FF",
-    "eyeBorderColor": "#00000000"
+    "eyebrowColor": "#68341aFF",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23f7"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5479_resource_1717149120125.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738922/5479_resource_1717149208753_bcsgbn.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ece7a0c0c557538bc188"
+    "$oid": "67c16a69231d3af375ef23f8"
   },
-  "name": "Monkey",
+  "name": "Sloth",
+  "colors": {
+    "lipColor": "#191317FF",
+    "bodyColor": "#59312dFF",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#191317FF",
+    "pupilColor": "#351a1aFF",
+    "teethColor": "#FFFFFFFF",
+    "tongueColor": "#e42444FF",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#351a1aFF",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23f9"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740738936/5464_resource_1717147301225_sfig0g.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef23fa"
+  },
+  "name": "Capybara",
   "colors": {
     "lipColor": "#00000000",
-    "bodyColor": "#8b5e3cFF",
-    "chinColor": "#e1b07fFF",
+    "bodyColor": "#b2785fFF",
+    "chinColor": "#00000000",
     "teethType": "normal",
     "mouthColor": "#00000000",
-    "pupilColor": "#442917FF",
+    "pupilColor": "#3d3026FF",
     "teethColor": "#00000000",
     "tongueColor": "#00000000",
     "eyeballColor": "#FFFFFFFF",
-    "eyebrowColor": "#442917FF",
-    "eyeBorderColor": "#00000000"
+    "eyebrowColor": "#8e5238FF",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23fb"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5480_resource_1717149165330.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739019/5463_resource_1717146875392_niaf4c.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ece7a0c0c557538bc189"
+    "$oid": "67c16a69231d3af375ef23fc"
   },
-  "name": "Rabbit",
+  "name": "Zebra",
   "colors": {
-    "lipColor": "#00000000",
-    "bodyColor": "#d8d8d8FF",
-    "chinColor": "#FFFFFFFF",
-    "teethType": "buckteeth",
-    "mouthColor": "#00000000",
-    "pupilColor": "#000000FF",
-    "teethColor": "#FFFFFFFF",
-    "tongueColor": "#00000000",
-    "eyeballColor": "#FFFFFFFF",
-    "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
-  },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5481_resource_1717149203203.svg"
-},
-{
-  "_id": {
-    "$oid": "67a5ece7a0c0c557538bc18a"
-  },
-  "name": "Panda",
-  "colors": {
-    "lipColor": "#00000000",
-    "bodyColor": "#FFFFFF",
-    "chinColor": "#FFFFFF",
+    "lipColor": "#412015FF",
+    "bodyColor": "#424242FF",
+    "chinColor": "#69564eFF",
     "teethType": "normal",
-    "mouthColor": "#00000000",
-    "pupilColor": "#000000FF",
-    "teethColor": "#00000000",
-    "tongueColor": "#00000000",
-    "eyeballColor": "#FFFFFFFF",
-    "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
-  },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5482_resource_1717149240129.svg"
-},
-{
-  "_id": {
-    "$oid": "67a5ece7a0c0c557538bc18b"
-  },
-  "name": "Owl",
-  "colors": {
-    "lipColor": "#00000000",
-    "bodyColor": "#9b6a3dFF",
-    "chinColor": "#c7a17aFF",
-    "teethType": "none",
-    "mouthColor": "#00000000",
-    "pupilColor": "#000000FF",
-    "teethColor": "#00000000",
-    "tongueColor": "#00000000",
-    "eyeballColor": "#ffdb76FF",
-    "eyebrowColor": "#5b3e2bFF",
-    "eyeBorderColor": "#00000000"
-  },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5483_resource_1717149283322.svg"
-},
-{
-  "_id": {
-    "$oid": "67a5ece7a0c0c557538bc18c"
-  },
-  "name": "Tiger",
-  "colors": {
-    "lipColor": "#00000000",
-    "bodyColor": "#ff9800FF",
-    "chinColor": "#FFFFFF",
-    "teethType": "fangs",
-    "mouthColor": "#00000000",
-    "pupilColor": "#000000FF",
+    "mouthColor": "#412015FF",
+    "pupilColor": "#383232FF",
     "teethColor": "#FFFFFFFF",
-    "tongueColor": "#00000000",
+    "tongueColor": "#d70041FF",
     "eyeballColor": "#FFFFFFFF",
-    "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "eyebrowColor": "#262121FF",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23fd"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5484_resource_1717149324322.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739032/5462_resource_1717146769221_kpgnju.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ece7a0c0c557538bc18d"
+    "$oid": "67c16a69231d3af375ef23fe"
   },
-  "name": "Fox",
+  "name": "Goat",
   "colors": {
-    "lipColor": "#00000000",
-    "bodyColor": "#e67e22FF",
-    "chinColor": "#FFFFFF",
+    "lipColor": "#7C645FFF",
+    "bodyColor": "#82513EFF",
+    "chinColor": "#D5BBA9FF",
     "teethType": "normal",
-    "mouthColor": "#00000000",
-    "pupilColor": "#000000FF",
-    "teethColor": "#00000000",
-    "tongueColor": "#00000000",
+    "mouthColor": "#593224FF",
+    "pupilColor": "#35241FFF",
+    "teethColor": "#FFFFFFFF",
+    "tongueColor": "#D70041FF",
     "eyeballColor": "#FFFFFFFF",
-    "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "eyebrowColor": "#35241FFF",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef23ff"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5485_resource_1717149367200.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739071/5435_resource_1724923159196_tzeegj.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc18f"
+    "$oid": "67c16a69231d3af375ef2400"
+  },
+  "name": "Bee",
+  "colors": {
+    "lipColor": "#6F2D1FFF",
+    "bodyColor": "#E87D34FF",
+    "chinColor": "#F38D3FFF",
+    "teethType": "normal",
+    "mouthColor": "#35121FFF",
+    "pupilColor": "#244E67FF",
+    "teethColor": "#00000000",
+    "tongueColor": "#F95858FF",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#3C0919FF",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2401"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739088/5436_resource_1724923298520_e7n1h3.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef2402"
+  },
+  "name": "Rat",
+  "colors": {
+    "lipColor": "#516368FF",
+    "bodyColor": "#5B696DFF",
+    "chinColor": "#A7ADAFFF",
+    "teethType": "buck",
+    "mouthColor": "#292E30FF",
+    "pupilColor": "#3A2E2AFF",
+    "teethColor": "#FFFFFFFF",
+    "tongueColor": "#C44D78FF",
+    "eyeballColor": "#FFFFFFFF",
+    "eyebrowColor": "#5B696DFF",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2403"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739097/4000_1698237621956_nonboh.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef2404"
   },
   "name": "Sheep",
   "colors": {
@@ -1174,13 +1724,23 @@
     "tongueColor": "#F95858FF",
     "eyeballColor": "#FFFFFFFF",
     "eyebrowColor": "#C4C4C4FF",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2405"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5441_resource_1724923725660.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739144/5441_resource_1724923725660_ggktkj.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc190"
+    "$oid": "67c16a69231d3af375ef2406"
   },
   "name": "Pumpkin",
   "colors": {
@@ -1194,13 +1754,23 @@
     "tongueColor": "#DB5316ff",
     "eyeballColor": "#79140Eff",
     "eyebrowColor": "#00000000",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2407"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/5472_resource_1727691162694.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739184/5472_resource_1727691162694_z0ujgo.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc191"
+    "$oid": "67c16a69231d3af375ef2408"
   },
   "name": "Cursed pumpkin",
   "colors": {
@@ -1214,13 +1784,23 @@
     "tongueColor": "#ffffffff",
     "eyeballColor": "#1E081Cff",
     "eyebrowColor": "#1E081Cff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2409"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10650_resource_1727697157166.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739234/10650_resource_1727697157166_cuxduz.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc192"
+    "$oid": "67c16a69231d3af375ef240a"
   },
   "name": "Black cat",
   "colors": {
@@ -1234,127 +1814,347 @@
     "tongueColor": "#3A3A3Aff",
     "eyeballColor": "#FFFFFFFF",
     "eyebrowColor": "#1A1A1Aff",
-    "eyeBorderColor": "#00000000"
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef240b"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10651_resource_1727697533813.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739279/10651_resource_1727697533813_trvtqj.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc193"
+    "$oid": "67c16a69231d3af375ef240c"
   },
-  "name": "Yeti",
+  "name": "Cursed mummy",
   "colors": {
-    "lipColor": "#141312ff",
-    "bodyColor": "#FEF5A3ff",
-    "chinColor": "#B2B2B2ff",
+    "lipColor": "#1E081Cff",
+    "bodyColor": "#1E081Cff",
+    "chinColor": "#00000000",
     "teethType": "fangs",
-    "mouthColor": "#141312ff",
-    "pupilColor": "#F5A3F7ff",
+    "mouthColor": "#1E081Cff",
+    "pupilColor": "#F2B707ff",
     "teethColor": "#ffffffff",
-    "tongueColor": "#B2B2B2ff",
-    "eyeballColor": "#141312ff",
-    "eyebrowColor": "#B2B2B2ff",
-    "eyeBorderColor": "#00000000"
+    "tongueColor": "#ffffffff",
+    "eyeballColor": "#401238ff",
+    "eyebrowColor": "#1E081Cff",
+    "eyeBorderColor": "#1E081Cff",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef240d"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10652_resource_1727698444653.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739291/10652_resource_1740140026770_hydksg.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc194"
+    "$oid": "67c16a69231d3af375ef240e"
   },
-  "name": "Cat",
+  "name": "Acorn",
   "colors": {
-    "lipColor": "#1D1301ff",
-    "bodyColor": "#FCE8A0ff",
-    "chinColor": "#FBEB90ff",
-    "teethType": "fangs",
-    "mouthColor": "#1D1301ff",
-    "pupilColor": "#F2C5A0ff",
-    "teethColor": "#F4D9B8ff",
-    "tongueColor": "#F2C5A0ff",
-    "eyeballColor": "#FBEB90ff",
-    "eyebrowColor": "#F4D9B8ff",
-    "eyeBorderColor": "#00000000"
-  },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10653_resource_1727698764511.svg"
-},
-{
-  "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc195"
-  },
-  "name": "Dragon",
-  "colors": {
-    "lipColor": "#6C2C19ff",
-    "bodyColor": "#5C5F5Fff",
-    "chinColor": "#717B7Bff",
-    "teethType": "fangs",
-    "mouthColor": "#6C2C19ff",
-    "pupilColor": "#4C3027ff",
+    "lipColor": "#4A1611ff",
+    "bodyColor": "#380E0Dff",
+    "chinColor": "#A92900ff",
+    "teethType": "buck",
+    "mouthColor": "#1E081Cff",
+    "pupilColor": "#4A1611ff",
     "teethColor": "#ffffffff",
-    "tongueColor": "#717B7Bff",
-    "eyeballColor": "#6C2C19ff",
-    "eyebrowColor": "#6C2C19ff",
-    "eyeBorderColor": "#00000000"
+    "tongueColor": "#D35500ff",
+    "eyeballColor": "#F9CAAAff",
+    "eyebrowColor": "#4A1611ff",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef240f"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10654_resource_1727699078189.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739318/10779_resource_1730369955920_n4xuxj.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.483Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc196"
+    "$oid": "67c16a69231d3af375ef2410"
   },
-  "name": "Alien",
+  "name": "Mushroom",
   "colors": {
-    "lipColor": "#39521Dff",
-    "bodyColor": "#5C5F5Fff",
-    "chinColor": "#8C6D6Dff",
-    "teethType": "fangs",
-    "mouthColor": "#39521Dff",
-    "pupilColor": "#566F4Dff",
-    "teethColor": "#A5A5A5ff",
-    "tongueColor": "#8C6D6Dff",
-    "eyeballColor": "#39521Dff",
-    "eyebrowColor": "#A5A5A5ff",
-    "eyeBorderColor": "#00000000"
+    "lipColor": "#935542ff",
+    "bodyColor": "#A01C12ff",
+    "chinColor": "#D48773ff",
+    "teethType": "buck",
+    "mouthColor": "#3D0B1Bff",
+    "pupilColor": "#4A1611ff",
+    "teethColor": "#ffffffff",
+    "tongueColor": "#FF5F1Fff",
+    "eyeballColor": "#FFEFDCff",
+    "eyebrowColor": "#4A1611ff",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2411"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10655_resource_1727699354872.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739357/10780_resource_1730370129082_ojt8ul.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc197"
+    "$oid": "67c16a69231d3af375ef2412"
   },
-  "name": "Gnome",
+  "name": "Rex",
   "colors": {
-    "lipColor": "#6A3131ff",
-    "bodyColor": "#A8C4A1ff",
-    "chinColor": "#F1F1F1ff",
+    "lipColor": "#00000000",
+    "bodyColor": "#3e4718ff",
+    "chinColor": "#7c844aff",
     "teethType": "fangs",
-    "mouthColor": "#6A3131ff",
-    "pupilColor": "#616161ff",
-    "teethColor": "#A9A9A9ff",
-    "tongueColor": "#A8C4A1ff",
-    "eyeballColor": "#616161ff",
-    "eyebrowColor": "#6A3131ff",
-    "eyeBorderColor": "#00000000"
+    "mouthColor": "#00000000",
+    "pupilColor": "#422344ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#ffedb3ff",
+    "eyebrowColor": "#422344ff",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2413"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10656_resource_1727701518657.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739368/10781_resource_1730370308117_g9jzsd.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
 },
 {
   "_id": {
-    "$oid": "67a5ee3ca0c0c557538bc198"
+    "$oid": "67c16a69231d3af375ef2414"
   },
-  "name": "Vampire",
+  "name": "Marshmallow",
   "colors": {
-    "lipColor": "#E6AC1Eff",
-    "bodyColor": "#AA4455ff",
-    "chinColor": "#AB6C6Dff",
-    "teethType": "fangs",
-    "mouthColor": "#E6AC1Eff",
-    "pupilColor": "#770000ff",
-    "teethColor": "#DDDDDDff",
-    "tongueColor": "#770000ff",
-    "eyeballColor": "#770000ff",
-    "eyebrowColor": "#AA4455ff",
-    "eyeBorderColor": "#00000000"
+    "lipColor": "#786482ff",
+    "bodyColor": "#efe4edff",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#2e2235ff",
+    "pupilColor": "#3e1007ff",
+    "teethColor": "#00000000",
+    "tongueColor": "#d4c3d4ff",
+    "eyeballColor": "#ffffffff",
+    "eyebrowColor": "#2d0a03ff",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2415"
+    }
   },
-  "resource": "https://assets-cdn.kahoot.it/assetmanagement/avatar-assets/10657_resource_1727701798224.svg"
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739401/10782_resource_1730370494317_czea72.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef2416"
+  },
+  "name": "Disco ball",
+  "colors": {
+    "lipColor": "#4c273cff",
+    "bodyColor": "#00000000",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#4c273cff",
+    "pupilColor": "#4c273cff",
+    "teethColor": "#00000000",
+    "tongueColor": "#a1d6e8ff",
+    "eyeballColor": "#f3feffff",
+    "eyebrowColor": "#4c273cff",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2417"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739413/10783_resource_1730370633350_zmuabf.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef2418"
+  },
+  "name": "Basic bot",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#BCD4E0FF",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#98F9FFFF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#00000000",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2419"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739449/11041_resource_1736436325135_aqy0kg.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef241a"
+  },
+  "name": "Baby Robo",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#F2DFCCFF",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#98F9FFFF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#00000000",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef241b"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739490/11042_resource_1736436340402_jpghaz.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef241c"
+  },
+  "name": "Robo Junior",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#F3C58EFF",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#98F9FFFF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#00000000",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef241d"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739522/11043_resource_1736436352603_zhfubn.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef241e"
+  },
+  "name": "Robo",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#A85B27FF",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#98F9FFFF",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#00000000",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef241f"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739529/11044_resource_1736436364214_rk8jmf.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c16a69231d3af375ef2420"
+  },
+  "name": "Robo Prime",
+  "colors": {
+    "lipColor": "#00000000",
+    "bodyColor": "#161513FF",
+    "chinColor": "#00000000",
+    "teethType": "normal",
+    "mouthColor": "#00000000",
+    "pupilColor": "#00000000",
+    "teethColor": "#00000000",
+    "tongueColor": "#00000000",
+    "eyeballColor": "#00000000",
+    "eyebrowColor": "#00000000",
+    "eyeBorderColor": "#00000000",
+    "_id": {
+      "$oid": "67c16a69231d3af375ef2421"
+    }
+  },
+  "resource": "https://res.cloudinary.com/dtupoan8j/image/upload/v1740739567/11045_resource_1736436373863_aozdis.svg",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:48:57.484Z"
+  }
 }]
