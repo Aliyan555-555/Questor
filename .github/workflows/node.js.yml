@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    if: contains(github.event.head_commit.message, 'deploy-production')
 
     runs-on: self-hosted
 
@@ -19,11 +20,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-      #     cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: Install Dependencies and Build Backend
         run: |
@@ -36,6 +37,7 @@ jobs:
           cd kahoot
           npm i --force
           npm run build
+
       - name: Restart PM2 services
         run: |
-          pm2 restart all 
+          pm2 restart all
