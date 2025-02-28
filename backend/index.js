@@ -10,12 +10,15 @@ import quizModel from "./model/quiz.model.js";
 import ThemeRouter from "./routers/theme.route.js";
 import QuizRouter from "./routers/quiz.router.js";
 import jwt from "jsonwebtoken";
+import fs from "fs"
 import { avatarModel } from "./model/avatar.model.js";
 import { questionModel } from "./model/question.model.js";
 import { roomModel } from "./model/room.model.js";
 import { itemModel } from "./model/item.model.js";
 import { studentModel } from "./model/studentModel.js";
 import { questionResultModel } from "./model/questionResult.model.js";
+import cloudinary from 'cloudinary'
+import axios from "axios";
 dotenv.config();
 const app = express();
 connectToMongodb();
@@ -51,6 +54,119 @@ const io = new Server(server, {
   pingInterval: 25000,
   pingTimeout: 50000,
 });
+
+// cloudinary.config({
+//     cloud_name: 'dtupoan8j',
+//     api_key: '296578617586721',
+//     api_secret: 'EZHf8x3k8wa0pIPmBMFP_pWt-ps'
+// });
+
+// const uploadSVGsToCloudinary = async (urls) => {
+//     for (const url of urls) {
+//         try {
+//             const response = await axios.get(url, { responseType: 'arraybuffer' });
+//             const filePath = `temp.svg`;
+//             fs.writeFileSync(filePath, response.data);
+
+//             const result = await cloudinary.uploader.upload(filePath, {
+//                 folder: 'kahoot_assets',
+//                 resource_type: 'image'
+//             });
+
+//             fs.unlinkSync(filePath);
+//             console.log(`Uploaded: ${result.secure_url}`);
+//         } catch (error) {
+//             console.error(`Error uploading ${url}:`, error.message);
+//         }
+//     }
+// };
+
+// const svgLinks = [
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5467_1727690559757.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5469_1740140173510.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5470_1727690815219.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5471_1740140205809.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10661_1727700841814.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10774_1730399348865.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10775_1730367927366.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10776_1730367944879.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10777_1730399330104.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10778_1730367976256.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/10789_1730373768087.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3450_1687269197432.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3500_1687269220753.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5378_1703158570992.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5377_1703158472399.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5376_1703158436435.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5370_1702041455710.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5369_1703158343397.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5402_1707384002357.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4100_1687269448758.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/4050_1687269430367.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5371_1702041483493.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5372_1702041509608.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5368_1702041393090.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1550_1687269078451.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3100_1687269059480.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3150_1687269099928.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3200_1687269116316.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3250_1687269133335.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3300_1687269151601.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3350_1687269166103.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3400_1687269182679.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3550_1687269235273.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5300_1698239529151.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/5309_1700056603841.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3600_1687269252628.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1250_1688567264808.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1300_1688567298716.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1350_1688567323860.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/1400_1688567354560.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3650_1687269273457.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3700_1687269290383.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3750_1687269310146.svg",
+//   "https://assets-cdn.kahoot.it/assetmanagement/item-assets/3800_1687269336404.svg"
+// ];
+
+
+// uploadSVGsToCloudinary(svgLinks);
+
+// const fetch_avatars = async () => {
+//   try {
+//     const res = await axios.get(
+//       "https://apis.kahoot.it/game-reward-service/api/v1/config/avatar"
+//     );
+//     const avatars = res.data.avatars.map(({ name, resource, colors }) => ({
+//       name,
+//      colors: {
+//         lipColor:colors.lipColor,
+//         bodyColor:colors.bodyColor,
+//         chinColor:colors.chinColor,
+//         teethType:colors.teethType, 
+//         mouthColor:colors.mouthColor,
+//         pupilColor:colors.pupilColor,
+//         teethColor:colors.teethColor,
+//         tongueColor:colors.tongueColor,
+//         eyeballColor:colors.eyeballColor,
+//         eyebrowColor:colors.eyebrowColor,
+//         eyeBorderColor:colors.eyeBorderColor,
+//       },
+//       resource,
+//     }));
+//     const items = res.data.items.map(({resource}) => ({
+//       resource,
+//     }))
+//     const a = await avatarModel.insertMany(avatars);
+//     const b = await itemModel.insertMany(items);
+
+//     console.log("Avatars and items fetched and inserted successfully");
+//   } catch (error) {
+//     console.error("Error fetching avatars", error);
+//   }
+// };
+
+
+// fetch_avatars();
 app.get("/api/v1/avatars", async (req, res) => {
   try {
     const avatars = await avatarModel.find();
@@ -302,7 +418,7 @@ io.on("connection", (socket) => {
       socket.emit("error", { message: "Server error", error: error.message });
     }
   });
-  socket.on("checkCurrentStage", async ({ id,index }) => {
+  socket.on("checkCurrentStage", async ({ id, index }) => {
     const room = await roomModel.findById(id).populate({
       path: "currentStage",
       populate: { path: "question" }, // Populate question inside currentStage
@@ -313,7 +429,7 @@ io.on("connection", (socket) => {
     }
     socket.emit("currentStage", { status: true, data: room.currentStage });
     io.to(room._id.toString()).emit("populateCurrentStage", {
-      data: {...room.currentStage,index},
+      data: { ...room.currentStage, index },
       status: true,
     });
   });
@@ -321,7 +437,13 @@ io.on("connection", (socket) => {
     try {
       const room = await roomModel.findByIdAndUpdate(
         data.room,
-        { currentStage: {question:data.currentStage.question,isLastStage:data.currentStage.isLastStage,stage:data.currentStage.stage,} },
+        {
+          currentStage: {
+            question: data.currentStage.question,
+            isLastStage: data.currentStage.isLastStage,
+            stage: data.currentStage.stage,
+          },
+        },
         { new: true }
       );
       await room.populate({
@@ -337,7 +459,7 @@ io.on("connection", (socket) => {
 
       if (room.currentStage.question._id) {
         io.to(room._id.toString()).emit("populateCurrentStage", {
-          data: {...room.currentStage,index:data.currentStage.index} ,
+          data: { ...room.currentStage, index: data.currentStage.index },
           status: true,
         });
       }
@@ -402,14 +524,14 @@ io.on("connection", (socket) => {
                 },
                 {
                   path: "quiz",
-                  populate:[
+                  populate: [
                     {
                       path: "questions",
                     },
                     {
                       path: "theme",
                     },
-                  ]
+                  ],
                 },
               ]);
             if (student) {
@@ -443,17 +565,17 @@ io.on("connection", (socket) => {
               socket.emit("reconnectionAttempt", {
                 status: true,
                 currentStage: room.currentStage,
-                roomStatus:room.status,
+                roomStatus: room.status,
                 student,
               });
               console.log({
                 status: true,
                 currentStage: room.currentStage,
-                join:{
-                  roomId:room._id,
+                join: {
+                  roomId: room._id,
                   student,
-                  refreshToken:token
-                }
+                  refreshToken: token,
+                },
               });
             } else {
               socket.emit("reconnectionAttempt", {
@@ -661,8 +783,13 @@ io.on("connection", (socket) => {
       };
 
       const rankedStudents = assignRanks(room.students);
-      console.log("🚀 ~ socket.on ~ rankedStudents:", rankedStudents.map(s => s.nickname +"__"+ s.rank))
-      const currentStudentRank = rankedStudents.find(s => s._id.toString() === student._id.toString())?.rank;
+      console.log(
+        "🚀 ~ socket.on ~ rankedStudents:",
+        rankedStudents.map((s) => s.nickname + "__" + s.rank)
+      );
+      const currentStudentRank = rankedStudents.find(
+        (s) => s._id.toString() === student._id.toString()
+      )?.rank;
       console.log("🚀 ~ socket.on ~ rankedStudents:", rankedStudents);
       io.to(room._id.toString()).emit("receiveStudentResult", {
         student: student._id,
@@ -675,7 +802,7 @@ io.on("connection", (socket) => {
         question: question._id,
         isCorrect,
         isTimeUp: data.isTimeUp,
-        rank:currentStudentRank,
+        rank: currentStudentRank,
         currentScore: getScore,
         score: student.score,
       });
@@ -1135,11 +1262,10 @@ io.on("connection", (socket) => {
       console.log(room);
       return;
     }
-    
 
     if (socket.student) {
       try {
-        const student = await studentModel.findById(socket.student._id)
+        const student = await studentModel.findById(socket.student._id);
 
         if (!student) {
           console.error("❌ Student not found.");
@@ -1162,7 +1288,7 @@ io.on("connection", (socket) => {
             path: "students",
             populate: [{ path: "avatar" }, { path: "item" }, { path: "quiz" }],
           });
-          socket.emit('inactive',{student: student});
+          socket.emit("inactive", { student: student });
           socket.leave(room._id.toString());
           io.to(room._id.toString()).emit("studentJoined", {
             students: room.students,

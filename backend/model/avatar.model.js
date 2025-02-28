@@ -5,18 +5,17 @@ const ColorsSchema = new mongoose.Schema({
   lipColor: {
     type: String,
     required: true,
-    match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/, // Hex color validation
   },
-  bodyColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
-  chinColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
+  bodyColor: { type: String, required: true },
+  chinColor: { type: String, required: true },
   teethType: { type: String, required: true }, // Assuming this is a type, not a color
-  mouthColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
-  pupilColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
-  teethColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
-  tongueColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
-  eyeballColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
-  eyebrowColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
-  eyeBorderColor: { type: String, required: true, match: /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/ },
+  mouthColor: { type: String, required: true },
+  pupilColor: { type: String, required: true },
+  teethColor: { type: String, required: true },
+  tongueColor: { type: String, required: true },
+  eyeballColor: { type: String, required: true },
+  eyebrowColor: { type: String, required: true },
+  eyeBorderColor: { type: String, required: true },
 });
 
 // Main Avatar Schema

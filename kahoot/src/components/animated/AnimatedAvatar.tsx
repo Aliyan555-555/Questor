@@ -54,7 +54,7 @@ const AnimatedAvatar: React.FC<AnimatedAvatarProps> = React.memo(
           <Image
             width={200}
             height={200}
-            src={avatarData.resource}
+            src={avatarData.resource.trim()}
             alt="Avatar"
             className="w-full h-full relative z-10"
             onLoadingComplete={() => setLoading(false)}
@@ -63,7 +63,7 @@ const AnimatedAvatar: React.FC<AnimatedAvatarProps> = React.memo(
             <Image
               width={200}
               height={200}
-              src={avatarItems.resource}
+              src={avatarItems.resource.trim()}
               alt="Item"
               className="absolute w-full h-full top-0 left-0"
               style={{ zIndex: 1000 }}

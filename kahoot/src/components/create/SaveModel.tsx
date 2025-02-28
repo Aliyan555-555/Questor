@@ -105,14 +105,14 @@ export const SaveModel = ({ open, close, errors, id, ReturnToHome }: {
         {errors.length === 0 && <div className="flex gap-4">
           <Button
             onClick={close}
-            className="!w-1/2 !bg-gray-600 !text-white !font-semibold !capitalize !py-3 !rounded-lg !transition-all"
+            className="!w-1/2  !border-[#002F49] !text-[#002F49] !font-semibold !capitalize !py-3 !rounded-lg !transition-all"
           >
             Back to Edit
           </Button>
           <Button
             onClick={() => { ReturnToHome('active'); close(); }}
 
-            className="!w-1/2 !bg-blue-500/80 !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
+            className="!w-1/2 !bg-[#002F49] !text-white !font-semibold !capitalize !py-3 !rounded-lg !hover:bg-blue-600 !transition-all"
           >
             Publish
           </Button>
