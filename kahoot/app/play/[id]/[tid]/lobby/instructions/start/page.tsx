@@ -7,6 +7,8 @@ import { RootState } from '@/src/redux/store';
 import AnimatedAvatar from '@/src/components/animated/AnimatedAvatar';
 import { setScore, update } from '../../../../../../../src/redux/schema/student';
 import { useRouter } from 'next/navigation';
+import { IconButton } from '@mui/material';
+import { IoExitOutline } from 'react-icons/io5';
 
 
 const InitialLoading = () => {
@@ -209,8 +211,14 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
 };
 
 const RankStage = ({ student }) => {
+  const navigation = useRouter();
   return (
-    <div className={"w-screen h-screen flex flex-col text-white items-center justify-center"}>
+    <div className={"w-screen h-screen flex flex-col text-white items-center justify-center relative"}>
+       <div className="w-full  absolute top-2 right-2 flex justify-end ">
+          <IconButton onClick={() => navigation.push('/')} className="!bg-red-500 !p-5">
+            <IoExitOutline color="white" fontSize={30} />
+          </IconButton>
+        </div>
       <div className='flex px-8 flex-col min-w-[350px] items-center gap-2 justify-center bg-blue_1 rounded-[10px] py-6 '>
         <h1 className="text-3xl font-semibold text-white">{student.nickname}</h1>
         <AnimatedAvatar avatarData={student.avatar} avatarItems={student.item} bg='#4686EC' h='120px' w='120px' chin={false} />
@@ -287,7 +295,7 @@ const Page = () => {
   }, []);
   useEffect(() => {
     if (socket && student?.student?.room?._id) {
-      if (stage !== 4 || stage !== 3) {
+      if (stage !== 4) {
 
         socket.emit("checkUserInRoom", {
           roomId: student.student.room._id,

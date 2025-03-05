@@ -19,7 +19,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { useSocket } from "@/src/hooks/useSocket";
-import { updateStudentScore } from "@/src/redux/schema/teacher";
+import { update, updateStudentScore } from "@/src/redux/schema/teacher";
 import { Socket } from "socket.io-client";
 import { Question, Student, Teacher } from "@/src/types";
 import { MdFullscreen } from "react-icons/md";
@@ -159,7 +159,7 @@ const OptionsSection = React.memo(({
     return () => clearInterval(timer);
   }, [socket, data, isTimesUp]);
   useEffect(() => {
-    if (data?.students.length === submittedLength) {
+    if (data?.students.filter((s) => s.isActive).length === submittedLength) {
       setIsTimesUp(true);
     }
   }, [submittedLength, data]); // Runs when `submittedLength` updates
@@ -249,6 +249,7 @@ const ScoreBoard = React.memo(({
   const students = [...data.students]
     .filter((student) => typeof student.score === "number" && !isNaN(student.score))
     .sort((a, b) => Number(b.score.toFixed(0)) - Number(a.score.toFixed(0)));
+  console.log("🚀 ~ students: active status", students.filter((student) => !student.isActive));
   return (
     <div className="w-full p-4 flex flex-col items-center h-full relative">
       {/* <button
@@ -276,7 +277,7 @@ const ScoreBoard = React.memo(({
               key={student._id || Math.random()} // Ensure unique keys
               className="rounded-xl text-2xl flex items-center justify-between font-semibold text-black w-full p-1"
               style={{
-                backgroundColor: index % 2 === 0 ? "#0C0211" : "#002F49", // Alternating colors
+                backgroundColor: student.isActive ? index % 2 === 0 ? "#0C0211" : "#002F49" : 'red', // Alternating colors
               }}
             >
               <div className="flex items-center">
@@ -337,10 +338,10 @@ const RankSection = React.memo(
     }, []);
 
     return (
-      <div className="w-full h-full relative flex flex-col items-center justify-center  text-white">
-        <div className="w-full flex justify-end px-3">
+      <div className="w-full h-full relative flex flex-col items-center  justify-center  text-white">
+        <div className="w-full flex absolute top-2 right-2 justify-end ">
           <IconButton onClick={() => navigation.push('/')} className="!bg-red-500 !p-5">
-          <IoExitOutline color="white" fontSize={30}  />
+            <IoExitOutline color="white" fontSize={30} />
           </IconButton>
         </div>
         <canvas
@@ -516,6 +517,10 @@ const Page = () => {
   useEffect(() => {
     if (socket) {
       // socket.emit('isRoomPlayable',{room:teacher._id});
+      socket.on("studentJoined", (data) => {
+        dispatch(update({ students: data.students }))
+      })
+
       socket.emit('checkCurrentStage', { id: teacher._id, index: currentQuestionIndex });
       socket.on('currentStage', (data) => {
         if (!data.status) {

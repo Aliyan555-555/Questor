@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <StoreProvider>
-        <PersistGate loading={<Loading/>} persistor={persistor}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
           <body
           // //  className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
@@ -26,6 +26,6 @@ export default function RootLayout({
           </body>
         </PersistGate>
       </StoreProvider>
-      </html>
+    </html>
   );
 }

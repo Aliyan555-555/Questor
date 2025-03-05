@@ -1284,10 +1284,24 @@ io.on("connection", (socket) => {
             (s) => s.toString() !== student._id.toString()
           );
           await room.save();
-          await room.populate({
-            path: "students",
-            populate: [{ path: "avatar" }, { path: "item" }, { path: "quiz" }],
-          });
+          await room.populate([
+            {
+              path: "quiz",
+              populate: [{ path: "questions" }, { path: "theme" }],
+            },
+            {
+              path: "students",
+              populate: [
+                { path: "avatar" },
+                { path: "item" },
+                {
+                  path: "quiz",
+                  populate: [{ path: "questions" }, { path: "theme" }],
+                },
+                { path: "room" },
+              ],
+            },
+          ]);
           socket.emit("inactive", { student: student });
           socket.leave(room._id.toString());
           io.to(room._id.toString()).emit("studentJoined", {
@@ -1295,6 +1309,21 @@ io.on("connection", (socket) => {
           });
           console.log(
             `🚪 Student ${student._id} removed from room ${room._id}`
+          );
+        }else if (room.status === "started"){
+         
+          await room.populate({
+            path: "students",
+            populate: [{ path: "avatar" }, { path: "item" }, { path: "quiz" }],
+          });
+          socket.emit("inactive", { student: student });
+          socket.leave(room._id.toString());
+          io.to(room._id.toString()).emit("studentJoined", {
+            data:room,
+            students: room.students,
+          });
+          console.log(
+            `�� Student ${student._id} cannot be removed from room ${room._id} because it's in progress.`
           );
         }
       } catch (error) {

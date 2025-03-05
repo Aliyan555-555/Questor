@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import imageLoader from '@/src/components/ImageLoader';
 import ProfileAvatar from '@/src/components/ProfileAvatar';
+import ClientComponentSEO from '@/src/components/ClientComponentSEO';
 
 interface QuizType {
   _id: string;
@@ -18,6 +19,7 @@ interface QuizType {
   coverImage: string;
   status: string;
 }
+
 
 const Home = () => {
   const user = useSelector((root: RootState) => root.student);
@@ -44,6 +46,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    // throw new Error("Error in backend response!!")
     if (user.isAuthenticated && user.user) {
       fetchQuizzes();
     }
@@ -55,6 +58,7 @@ const Home = () => {
 
   return (
     <div className='w-full min-h-screen '>
+  <ClientComponentSEO title={"Questor"} />
       <div className='w-full flex justify-between py-10 px-10 bg-white'>
         <div className='flex gap-4 items-center'>
           <Image src={'/images/UI/QuestorIcon.svg'} alt='Questor' width={35} height={35} />

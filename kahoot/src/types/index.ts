@@ -1,26 +1,28 @@
 export interface Student {
   _id: string;
+  isActive: boolean;
   nickname: string;
   score: number;
   rank: number;
-  item:{
-    _id:string;
-    resource:string
-  },
+  item: {
+    _id: string;
+    resource: string;
+  };
   avatar: {
     _id: string;
-  resource: string;
-  colors: {
-    chinColor: string;
-    mouthColor: string;
-    tongueColor: string;
-    teethColor: string;
-    eyeBorderColor:string;
-    pupilColor:string;
-    eyeballColor:string;
-    eyebrowColor:string;
-    bodyColor:string;
-  };
+    resource: string;
+
+    colors: {
+      chinColor: string;
+      mouthColor: string;
+      tongueColor: string;
+      teethColor: string;
+      eyeBorderColor: string;
+      pupilColor: string;
+      eyeballColor: string;
+      eyebrowColor: string;
+      bodyColor: string;
+    };
   };
 }
 
@@ -31,9 +33,9 @@ export interface Teacher {
     name: string;
     questions: Question[];
     students: Student[];
-    theme:{
-      image:string
-    }
+    theme: {
+      image: string;
+    };
   };
   students: Student[];
   // currentStage:{},
@@ -47,7 +49,7 @@ export interface Question {
   options: string[];
   showQuestionDuration: number;
   duration: number;
-  isMultiSelect:boolean;
+  isMultiSelect: boolean;
   maximumMarks: number;
   answerIndex: number[];
   type: string;

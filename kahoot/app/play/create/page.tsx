@@ -221,6 +221,11 @@ const Create = () => {
       socket?.emit("delete_question_in_quiz", { questionId, _id: id });
     }
   };
+
+
+
+
+
   const handleUpdateQuiz = (quizData) => {
     // const isSame = JSON.stringify(quizData) === JSON.stringify(data);
 
@@ -244,6 +249,13 @@ const Create = () => {
     }
   };
 
+
+
+
+
+
+
+  
   useEffect(() => {
     if (data && data.questions?.length > 0) {
       setSelectedQuestionData(

@@ -8,7 +8,7 @@ import { MemberIcon } from "@/src/lib/svg";
 import QRCode from "react-qr-code";
 import { Button, IconButton } from "@mui/material";
 import { useSocket } from "@/src/hooks/useSocket";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from "react-redux";
 import { created, disconnect, update, setStudents, changeStudentCharacter, changeStudentCharacterAccessories } from "@/src/redux/schema/teacher";
@@ -82,11 +82,11 @@ const Teacher = () => {
       })
       socket.on("started", (data) => {
         dispatch(update(data));
-        toast.success("Quiz started!");
+        // toast.success("Quiz started!");
       });
-      socket.on("error", (data) => {
-        toast.error(data.message);
-      })
+      // socket.on("error", (data) => {
+      //   // toast.error(data.message);
+      // })
       socket.on("roomDeleted", () => {
         dispatch(disconnect())
       })
@@ -101,6 +101,10 @@ const Teacher = () => {
   }, [socket]);
 
   const createRoom = () => {
+    if (!user.isAuthenticated) {
+      navigation.push(`/auth/login?redirect=true&redirect_url=${window.location.origin}${path}`);
+      return
+    }
     socket?.emit("createRoom", { quizId, teacherId });
   };
   useEffect(() => {
@@ -161,20 +165,20 @@ const Teacher = () => {
   });
 
   const handleCopyClick = () => {
-    if (!pin) {
-      toast.error("No PIN to copy!");
-      return;
-    }
+    // if (!pin) {
+    //   toast.error("No PIN to copy!");
+    //   return;
+    // }
 
     if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
       navigator.clipboard
         .writeText(pin)
         .then(() => {
-          toast.success("PIN copied to clipboard!");
+          // toast.success("PIN copied to clipboard!");
         })
         .catch((err) => {
           console.error("Failed to copy PIN: ", err);
-          toast.error("Failed to copy PIN. Please try again.");
+          // toast.error("Failed to copy PIN. Please try again.");
         });
     } else {
       // Fallback for older browsers
@@ -189,14 +193,14 @@ const Teacher = () => {
 
         const successful = document.execCommand("copy");
         if (successful) {
-          toast.success("PIN copied to clipboard!");
+          // toast.success("PIN copied to clipboard!");
         } else {
           throw new Error("Fallback copy failed");
         }
         document.body.removeChild(textArea);
       } catch (err) {
         console.error("Fallback copy failed: ", err);
-        toast.error("Failed to copy PIN. Please try again.");
+        // toast.error("Failed to copy PIN. Please try again.");
       }
     }
   };
