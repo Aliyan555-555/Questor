@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import { useParams, usePathname, useRouter } from "next/navigation";
-import {  MdFullscreen } from "react-icons/md";
+import { MdFullscreen } from "react-icons/md";
 import { MemberIcon } from "@/src/lib/svg";
 import QRCode from "react-qr-code";
 import { Button, IconButton } from "@mui/material";
@@ -47,18 +47,17 @@ const Teacher = () => {
       navigation.push(`/auth/login?redirect=true&redirect_url=${window.location.origin}${path}`);
       return
     }
-
     if (socket) {
-      socket.on("studentJoined", ({ students, data,currentStudent }) => {
+      socket.on("studentJoined", ({ students, data, currentStudent }) => {
 
-        if (currentStudent){
+        if (currentStudent) {
           const studentExist = game.students.find(students => students._id === currentStudent._id);
-        if (!studentExist){
-          dispatch(update({ ...data }));
-          dispatch(setStudents(students))
-        }
+          if (!studentExist) {
+            dispatch(update({ ...data }));
+            dispatch(setStudents(students))
+          }
 
-        }else{
+        } else {
           dispatch(update({ ...data }));
           console.log(data);
           dispatch(setStudents(students))
@@ -82,11 +81,8 @@ const Teacher = () => {
       })
       socket.on("started", (data) => {
         dispatch(update(data));
-        // toast.success("Quiz started!");
       });
-      // socket.on("error", (data) => {
-      //   // toast.error(data.message);
-      // })
+
       socket.on("roomDeleted", () => {
         dispatch(disconnect())
       })
@@ -113,41 +109,24 @@ const Teacher = () => {
     }
   }, [socket]);
   const enterFullscreen = () => {
-    const element = document.documentElement; // Fullscreen the entire page
+    const element = document.documentElement;
     if (element.requestFullscreen) {
       element.requestFullscreen();
     }
-    // else if (element.webkitRequestFullscreen) {
-    //   // For Chrome, Safari, and Opera
-    //   element?.webkitRequestFullscreen();
-    // } else if (element.msRequestFullscreen) {
-    //   // For IE/Edge
-    //   element.msRequestFullscreen();
-    // }
+
   };
 
   const exitFullscreen = () => {
     if (document.exitFullscreen) {
       document.exitFullscreen();
     }
-    // else if (document.mozCancelFullScreen) {
-    //   // Firefox
-    //   document.mozCancelFullScreen();
-    // } else if (document.webkitExitFullscreen) {
-    //   // Chrome, Safari and Opera
-    //   document.webkitExitFullscreen();
-    // } else if (document.msExitFullscreen) {
-    //   // IE/Edge
-    //   document.msExitFullscreen();
-    // }
+
   };
 
   const toggleFullscreen = () => {
     if (
       !document.fullscreenElement
-      // !document.mozFullScreenElement &&
-      // !document.webkitFullscreenElement &&
-      // !document.msFullscreenElement
+
     ) {
       enterFullscreen();
     } else {
@@ -165,16 +144,10 @@ const Teacher = () => {
   });
 
   const handleCopyClick = () => {
-    // if (!pin) {
-    //   toast.error("No PIN to copy!");
-    //   return;
-    // }
-
     if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
       navigator.clipboard
         .writeText(pin)
         .then(() => {
-          // toast.success("PIN copied to clipboard!");
         })
         .catch((err) => {
           console.error("Failed to copy PIN: ", err);
@@ -258,10 +231,6 @@ const Teacher = () => {
         </Button>
       </div>
 
-
-
-
-
       <div className="absolute bottom-2 w-screen left-0 flex items-center justify-end gap-2">
         {pin !== "" && <AudioPlayer fileName={'lobby-classic-game.webm'} />}
         <div onClick={() => setStudentListDrawer((prev) => !prev)} className="bg-[#0000009a] flex w-[90px] rounded-lg px-1 py-[8px] items-center text-[30px] text-white font-bold">
@@ -302,13 +271,13 @@ const Teacher = () => {
           )
         }
         {
-          game?.students.map((student,index) => (
-             
+          game?.students.map((student, index) => (
+
             <div key={student._id} className="flex flex-col items-center justify-center">
               <div
-              className="rounded-full p-2"
-               style={{ backgroundColor: drawerItemColor[index % drawerItemColor.length] }} // Cycles through colors
-              > 
+                className="rounded-full p-2"
+                style={{ backgroundColor: drawerItemColor[index % drawerItemColor.length] }} // Cycles through colors
+              >
                 <AnimatedAvatar avatarData={student.avatar} bg="transparent" avatarItems={student.item} chin={false} h="100px" w="100px" />
               </div>
               <h4 className="text-white text-xl ">{student.nickname}</h4>

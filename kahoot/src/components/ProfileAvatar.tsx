@@ -30,7 +30,7 @@ const ProfileAvatar = () => {
 
     return (
         <>
-            <IconButton onClick={handleClick}>
+            <IconButton className='!bg-red-300 !p-0' onClick={handleClick}>
                 <Avatar />
             </IconButton>
             <Menu

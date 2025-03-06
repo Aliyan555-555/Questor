@@ -59,7 +59,6 @@ const Create = () => {
   const navigation = useRouter();
   const id = query.get("id");
   const [isThemeOpen, setIsThemeOpen] = useState(false);
-
   const fetch = async () => {
     const res = await GetAllThemes();
     if (res?.status) {
@@ -127,7 +126,6 @@ const Create = () => {
           toast.error("Failed to create quiz.");
         }
       });
-
       socket.on("fetched_quiz", (quizData) => {
         if (quizData.status) {
           dispatch(setCurrentDraft(quizData.data));
@@ -135,7 +133,6 @@ const Create = () => {
           toast.error("Failed to fetch quiz data.");
         }
       });
-
       socket.on("deleted_question_in_quiz", (quizData) => {
         dispatch(updateCurrentDraft({ ...quizData.data }));
         setSelectedQuestion(
@@ -149,14 +146,12 @@ const Create = () => {
       socket.on("set_question_value", (quizData) => {
         dispatch(updateCurrentDraft({ ...quizData.data }));
       });
-
       socket.on("updated_question_media", (quizData) => {
         if (quizData.status) {
           dispatch(updateQuestionMedia({ ...quizData.data }));
           setSelectedQuestionData(quizData.data)
         }
       });
-
       socket.on("updated_question", (quizData) => {
         if (quizData.status) {
           console.log(quizData.data);
@@ -164,7 +159,6 @@ const Create = () => {
           setSelectedQuestionData(quizData.data);
         }
       });
-
       socket.on("updated_theme", (quizData) => {
         if (quizData.status) {
           dispatch(updateCurrentDraft({ ...quizData.data }));
@@ -181,11 +175,9 @@ const Create = () => {
         }
       });
     }
-
     if (id && !data) {
       socket?.emit("fetch_quiz", { _id: id });
     }
-
     return () => {
       if (socket) {
         socket.off("updated_quiz");
@@ -212,7 +204,6 @@ const Create = () => {
       socket?.emit("update_question", question);
     }
   };
-
   const handleDeleteQuestion = (questionId: string) => {
     if (!id || !questionId) {
       return toast.error("Invalid question or quiz ID.");
@@ -221,17 +212,8 @@ const Create = () => {
       socket?.emit("delete_question_in_quiz", { questionId, _id: id });
     }
   };
-
-
-
-
-
   const handleUpdateQuiz = (quizData) => {
-    // const isSame = JSON.stringify(quizData) === JSON.stringify(data);
-
     socket?.emit("update_quiz", quizData);
-
-    // socket?.emit("update_quiz",quizData)
   };
   const handleSetQuestion = (value: string) => {
     if (!selectedQuestion) {
@@ -248,14 +230,6 @@ const Create = () => {
       handleSetQuestion(inputValue);
     }
   };
-
-
-
-
-
-
-
-  
   useEffect(() => {
     if (data && data.questions?.length > 0) {
       setSelectedQuestionData(
@@ -264,10 +238,8 @@ const Create = () => {
         )[0]
       );
       setInputValue(data?.questions.filter((question) => question._id === selectedQuestion)[0]?.question ?? "")
-
     }
   }, [selectedQuestion]);
-
   const handleChangeMedia = (qid: string | null, quizId: string, media: string) => {
     socket?.emit("update_question_media", {
       questionId: qid,
@@ -309,7 +281,6 @@ const Create = () => {
       });
     }
   };
-
   const handleQuestionSorting = (
     questionsArray: Array<{
       id: number;
@@ -338,7 +309,6 @@ const Create = () => {
     });
     // dispatch(setCurrentDraft({...data, questions: updatedQuestions}));
   };
-
   const handleSaveSettings = (quizData: CurrentDraft) => {
     handleUpdateQuiz({ ...data, ...quizData });
   };
@@ -353,7 +323,6 @@ const Create = () => {
             media: q.media !== "" ? q.media : "/images/defaultCover.png",
             message: '',
           };
-
           if (!q.question || q.question.trim() === "") {
             acc.push({ ...error, message: "Enter a valid question" });
           } else if (!q.options || !Array.isArray(q.options) || q.options.length < 2) {
@@ -365,32 +334,24 @@ const Create = () => {
           } else if (!q.isMultiSelect && q.answerIndex.length > 1) {
             acc.push({ ...error, message: "Single select questions must have only one correct answer." });
           }
-
           return acc;
         }, []);
-
         return updatedErrors;
       });
     }
   }, [data, id]);
-
   const handleChangeQuizStatus = () => {
     socket?.emit("update_quiz_status", { status: 'active', _id: id });
   }
-
   const ReturnToHome = (status) => {
     handleUpdateQuiz({ ...data, status: status });
     navigation.push('/')
   }
-
   if (id !== data?._id) {
     return (
       <Loading />
     )
   };
-
-
-
 
   return (
     <div className="w-screen bg-white h-screen flex flex-col">

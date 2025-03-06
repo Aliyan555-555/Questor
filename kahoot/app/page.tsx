@@ -20,7 +20,6 @@ interface QuizType {
   status: string;
 }
 
-
 const Home = () => {
   const user = useSelector((root: RootState) => root.student);
   const [quizzes, setQuizzes] = useState<QuizType[]>([]);
@@ -28,11 +27,9 @@ const Home = () => {
   const [publicQuizzes, setPublicQuizzes] = useState<QuizType[]>([]);
   const [tabValue, setTabValue] = useState(0);
   const navigation = useRouter();
-
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-
   const fetchQuizzes = async () => {
     const userId = user?.user?._id ?? "";
     const res = await getAllQuizzesByUserId(userId);
@@ -46,7 +43,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // throw new Error("Error in backend response!!")
     if (user.isAuthenticated && user.user) {
       fetchQuizzes();
     }
@@ -58,30 +54,31 @@ const Home = () => {
 
   return (
     <div className='w-full min-h-screen '>
-  <ClientComponentSEO title={"Questor"} />
-      <div className='w-full flex justify-between py-10 px-10 bg-white'>
-        <div className='flex gap-4 items-center'>
+      <ClientComponentSEO title={"Questor"} />
+      <div className='w-full flex justify-between py-5 md:py-7 px-3 md:px-10 bg-white'>
+        <div className='flex gap-2 md:gap-4 items-center'>
           <Image src={'/images/UI/QuestorIcon.svg'} alt='Questor' width={35} height={35} />
-          <h2 className='text-2xl font-bold'>Dashboard</h2>
+          <h2 className=' hidden sm:flex text-2xl font-bold'>Dashboard</h2>
         </div>
-        <div className='flex gap-4'>
+        <div className='flex gap-2 md:gap-4 items-center'>
           {user.isAuthenticated ? (
             <>
               <Link href={'/play/create'}>
-                <Button variant='contained' className='!capitalize !px-4 !py-2 !flex !gap-2 !bg-yalow_1 !text-black !text-lg !font-semibold' color='primary'> <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <Button variant='contained' className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-yalow_1 !text-black !text-base md:!text-lg !font-semibold' color='primary'> 
+                  <svg className='w-[20px] h-[20px] md:w-[25px] md:h-[25px]' viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12.5 0C5.5957 0 0 5.5957 0 12.5C0 19.4043 5.5957 25 12.5 25C19.4043 25 25 19.4043 25 12.5C25 5.5957 19.4043 0 12.5 0ZM19.79 13.54C19.79 14.1162 19.3262 14.5801 18.75 14.5801H14.585V18.75C14.585 19.3262 14.1211 19.79 13.5449 19.79H11.46C10.8838 19.79 10.4199 19.3213 10.4199 18.75V14.585H6.25C5.67383 14.585 5.20996 14.1162 5.20996 13.5449V11.46C5.20996 10.8838 5.67383 10.4199 6.25 10.4199H10.415V6.25C10.415 5.67383 10.8789 5.20996 11.4551 5.20996H13.54C14.1162 5.20996 14.5801 5.67871 14.5801 6.25V10.415H18.75C19.3262 10.415 19.79 10.8838 19.79 11.4551V13.54Z" fill="black" />
                 </svg>
                   Create</Button>
               </Link>
               <Link href={'/play/connect/to/game'}>
-                <Button className='!capitalize !px-4 !py-2 !flex !gap-2 !bg-red_1 !text-white !text-lg !font-semibold' variant='contained' color='secondary'  >
-                  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <Button className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-red_1 !text-white !text-base md:!text-lg !font-semibold'variant='contained' color='secondary'  >
+                  <svg className='w-[20px] h-[20px] md:w-[25px] md:h-[25px]'  viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.7188 0.78125C5.24687 0.78125 0 6.02812 0 12.5C0 18.9719 5.24687 24.2188 11.7188 24.2188C18.1906 24.2188 23.4375 18.9719 23.4375 12.5C23.4375 6.02812 18.1906 0.78125 11.7188 0.78125ZM11.7188 19.1406L5.46875 13.1621H9.70977V5.85938H13.7273V13.1621H17.9688L11.7188 19.1406Z" fill="#F8F4FB" />
                   </svg>
 
                   Join</Button>
               </Link>
-           <ProfileAvatar />
+              <ProfileAvatar />
             </>
           ) : (
             <>
@@ -95,28 +92,28 @@ const Home = () => {
           )}
         </div>
       </div>
-
       <div className='w-full flex  items-center justify-center'>
-        <Box sx={{ width: '95%', bgcolor: '#002F49', borderRadius: '100px', padding: '0px 10px' }}>
+        <Box sx={{ width: '95%', bgcolor: '#002F49', borderRadius: '100px'}}
+        className="px-1 md:px-3"
+        >
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
             variant="fullWidth"
             className='!text-white'
-
             sx={{
-              "& .MuiTabs-indicator": { display: "none" }, // Hide default indicator
-              "& .MuiTab-root": { color: "#FFFFFF" }, // Default unselected color
-              "& .Mui-selected": { color: "#FBA732 !important" }, // Selected tab color
+              "& .MuiTabs-indicator": { display: "none" },
+              "& .MuiTab-root": { color: "#FFFFFF" },
+              "& .Mui-selected": { color: "#FBA732 !important" },
             }}
           >
             <Tab
               onClick={() => setCurrentTabIndex(1)}
               iconPosition='start'
+              className='!text-nowrap !text-xs'
               icon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M5 2.99993C5.00065 2.56341 5.09655 2.1323 5.28101 1.73667C5.46547 1.34104 5.73405 0.990437 6.06799 0.70932C6.40194 0.428204 6.79321 0.22335 7.2145 0.109055C7.63578 -0.00523893 8.07694 -0.0262202 8.50717 0.0475762C8.9374 0.121372 9.34635 0.288168 9.70546 0.536323C10.0646 0.784477 10.3652 1.10801 10.5864 1.48435C10.8076 1.86068 10.944 2.28075 10.986 2.71523C11.0281 3.14971 10.9749 3.58815 10.83 3.99993H15C15.2652 3.99993 15.5196 4.10528 15.7071 4.29282C15.8946 4.48035 16 4.73471 16 4.99993V9.16993C16.4524 9.01052 16.9364 8.96192 17.4115 9.02821C17.8866 9.09449 18.3388 9.27372 18.7303 9.55087C19.1218 9.82801 19.4412 10.195 19.6616 10.621C19.8819 11.0471 19.997 11.5198 19.997 11.9994C19.997 12.4791 19.8819 12.9518 19.6616 13.3778C19.4412 13.8039 19.1218 14.1708 18.7303 14.448C18.3388 14.7251 17.8866 14.9044 17.4115 14.9706C16.9364 15.0369 16.4524 14.9883 16 14.8289V18.9999C16 19.2651 15.8946 19.5195 15.7071 19.707C15.5196 19.8946 15.2652 19.9999 15 19.9999H1C0.734784 19.9999 0.48043 19.8946 0.292893 19.707C0.105357 19.5195 0 19.2651 0 18.9999V4.99993C0 4.73471 0.105357 4.48035 0.292893 4.29282C0.48043 4.10528 0.734784 3.99993 1 3.99993H5.17C5.06 3.68693 5 3.34993 5 2.99993Z" fill={currentTabIndex === 1 ? "#FBA732" : "white"} />
               </svg>} label="Your Quizzes"
-              // className='!font-black !text-[#FCBF4A] '
               sx={{ textTransform: "capitalize", display: 'flex' }}
             />
             <Tab
