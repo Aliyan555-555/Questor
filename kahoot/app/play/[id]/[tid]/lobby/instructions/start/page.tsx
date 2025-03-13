@@ -241,6 +241,9 @@ const Page = () => {
 
   useEffect(() => {
     if (socket) {
+      socket?.on("roomDeleted",() => {
+        navigation.push(`/play/connect/to/game`);
+      })
       socket.on("populateCurrentStage", (data) => {
         if (data.status) {
           if (data.data.isLastStage) {

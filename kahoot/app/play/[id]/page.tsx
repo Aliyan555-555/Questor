@@ -226,7 +226,7 @@ const Teacher = () => {
         </div>
 
         {/* Start Button */}
-        <Button onClick={handleStart} disabled={game?.students.length === 0} className="!bg-red_1 disabled:opacity-80 !mt-3 !rounded-[10px] !w-full !py-3 !uppercase !font-black !text-3xl !text-white">
+        <Button onClick={handleStart} disabled={game?.students.length === 0} className="!bg-red_1 disabled:opacity-80 !mt-3 !rounded-[10px] !w-full !py-3 !uppercase !font-black !text-3xl !text-white !z-[1000]">
           Start
         </Button>
       </div>

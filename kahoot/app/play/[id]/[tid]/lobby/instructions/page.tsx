@@ -88,6 +88,9 @@ const Page = React.memo(() => {
     });
 
     socket?.on("studentJoined", handleStudentJoined);
+    socket?.on("roomDeleted",() => {
+      navigation.push(`/play/connect/to/game`);
+    })
 
 
 

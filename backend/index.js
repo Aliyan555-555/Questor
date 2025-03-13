@@ -1259,6 +1259,7 @@ io.on("connection", (socket) => {
         status: { $in: ["waiting", "started"] },
         isActive: true,
       });
+      io.emit("roomDeleted")
       console.log(room);
       return;
     }
@@ -1322,9 +1323,8 @@ io.on("connection", (socket) => {
             data:room,
             students: room.students,
           });
-          console.log(
-            `�� Student ${student._id} cannot be removed from room ${room._id} because it's in progress.`
-          );
+
+      
         }
       } catch (error) {
         console.error("❌ Error removing student:", error);
@@ -1334,5 +1334,5 @@ io.on("connection", (socket) => {
 });
 const PORT = process.env.PORT || 9000;
 server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on link http://localhost:${PORT}`);
 });
