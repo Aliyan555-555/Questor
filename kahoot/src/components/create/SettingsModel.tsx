@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { MdOutlineSettings } from "react-icons/md";
 import GalleryModel from "./GalleryModel";
 
-const SettingsModel = ({ data, handleSaveSettings,isOpen, setIsOpen }) => {
+const SettingsModel = ({ data, handleSaveSettings, isOpen, setIsOpen }) => {
   // const [] = useState(false);
   const [selectedFile, setSelectedFile] = useState(data?.coverImage);
   const [isImageCropModelOpen] = useState(false);
   const [isGallrayOpen, setIsGalleryOpen] = useState(false);
   const [quizData, setQuizData] = useState<{
     name: string; description: string;
-    isPrivet:boolean;
+    isPrivet: boolean;
     coverImage: string;
   }>({
     name: data?.name,
@@ -162,8 +162,9 @@ const SettingsModel = ({ data, handleSaveSettings,isOpen, setIsOpen }) => {
                           description: e.target.value,
                         })
                       }
-                      className="px-4 py-2 border rounded-md border-gray-300 w-full focus:outline-none"
+                      className="px-4 py-2 border rounded-md border-gray-300 w-full focus:outline-none resize-none max-h-[6rem] overflow-hidden"
                     ></textarea>
+
                   </div>
                 </div>
                 <div

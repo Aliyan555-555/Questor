@@ -18,3 +18,13 @@ export const GetAllPublicQuizzes = async (req, res) => {
     res.status(500).json({ message: error.message, status: false });
   }
 }
+
+export const DeleteQuizBuyId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await quizModel.findByIdAndDelete(id);
+    res.status(200).json({ message: "Quiz Deleted Successfully", status: true });
+  } catch (error) {
+    res.status(500).json({ message: error.message, status: false });
+  }
+}

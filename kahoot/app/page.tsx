@@ -1,10 +1,10 @@
 "use client"
 import { RootState } from '@/src/redux/store';
-import { IconButton, Tabs, Tab, Box, Button } from '@mui/material';
+import { IconButton, Tabs, Tab, Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CircularProgress } from '@mui/material';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getAllPublicQuizzes, getAllQuizzesByUserId } from '@/src/redux/api';
+import { DeleteQuizById, getAllPublicQuizzes, getAllQuizzesByUserId } from '@/src/redux/api';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import imageLoader from '@/src/components/ImageLoader';
@@ -12,6 +12,7 @@ import ProfileAvatar from '@/src/components/ProfileAvatar';
 import { PiSignInBold } from "react-icons/pi";
 import ClientComponentSEO from '@/src/components/ClientComponentSEO';
 import { IoMdPersonAdd } from "react-icons/io";
+import { MdOutlineDelete } from 'react-icons/md';
 
 interface QuizType {
   _id: string;
@@ -63,15 +64,15 @@ const Home = () => {
           {user.isAuthenticated ? (
             <>
               <Link href={'/play/create'}>
-                <Button variant='contained' className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-yalow_1 !text-black !text-base md:!text-lg !font-semibold' color='primary'> 
+                <Button variant='contained' className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-yalow_1 !text-black !text-base md:!text-lg !font-semibold' color='primary'>
                   <svg className='w-[20px] h-[20px] md:w-[25px] md:h-[25px]' viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12.5 0C5.5957 0 0 5.5957 0 12.5C0 19.4043 5.5957 25 12.5 25C19.4043 25 25 19.4043 25 12.5C25 5.5957 19.4043 0 12.5 0ZM19.79 13.54C19.79 14.1162 19.3262 14.5801 18.75 14.5801H14.585V18.75C14.585 19.3262 14.1211 19.79 13.5449 19.79H11.46C10.8838 19.79 10.4199 19.3213 10.4199 18.75V14.585H6.25C5.67383 14.585 5.20996 14.1162 5.20996 13.5449V11.46C5.20996 10.8838 5.67383 10.4199 6.25 10.4199H10.415V6.25C10.415 5.67383 10.8789 5.20996 11.4551 5.20996H13.54C14.1162 5.20996 14.5801 5.67871 14.5801 6.25V10.415H18.75C19.3262 10.415 19.79 10.8838 19.79 11.4551V13.54Z" fill="black" />
-                </svg>
+                    <path d="M12.5 0C5.5957 0 0 5.5957 0 12.5C0 19.4043 5.5957 25 12.5 25C19.4043 25 25 19.4043 25 12.5C25 5.5957 19.4043 0 12.5 0ZM19.79 13.54C19.79 14.1162 19.3262 14.5801 18.75 14.5801H14.585V18.75C14.585 19.3262 14.1211 19.79 13.5449 19.79H11.46C10.8838 19.79 10.4199 19.3213 10.4199 18.75V14.585H6.25C5.67383 14.585 5.20996 14.1162 5.20996 13.5449V11.46C5.20996 10.8838 5.67383 10.4199 6.25 10.4199H10.415V6.25C10.415 5.67383 10.8789 5.20996 11.4551 5.20996H13.54C14.1162 5.20996 14.5801 5.67871 14.5801 6.25V10.415H18.75C19.3262 10.415 19.79 10.8838 19.79 11.4551V13.54Z" fill="black" />
+                  </svg>
                   Create</Button>
               </Link>
               <Link href={'/play/connect/to/game'}>
-                <Button className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-red_1 !text-white !text-base md:!text-lg !font-semibold'variant='contained' color='secondary'  >
-                  <svg className='w-[20px] h-[20px] md:w-[25px] md:h-[25px]'  viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <Button className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-red_1 !text-white !text-base md:!text-lg !font-semibold' variant='contained' color='secondary'  >
+                  <svg className='w-[20px] h-[20px] md:w-[25px] md:h-[25px]' viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.7188 0.78125C5.24687 0.78125 0 6.02812 0 12.5C0 18.9719 5.24687 24.2188 11.7188 24.2188C18.1906 24.2188 23.4375 18.9719 23.4375 12.5C23.4375 6.02812 18.1906 0.78125 11.7188 0.78125ZM11.7188 19.1406L5.46875 13.1621H9.70977V5.85938H13.7273V13.1621H17.9688L11.7188 19.1406Z" fill="#F8F4FB" />
                   </svg>
 
@@ -82,26 +83,26 @@ const Home = () => {
           ) : (
             <>
               <Link href={'/play/connect/to/game'}>
-                <Button className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-red_1 !text-white !text-base md:!text-lg !font-semibold'variant='contained' color='secondary'  >
-                  <svg className='w-[20px] h-[20px] md:w-[25px] md:h-[25px]'  viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <Button className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-red_1 !text-white !text-base md:!text-lg !font-semibold' variant='contained' color='secondary'  >
+                  <svg className='w-[20px] h-[20px] md:w-[25px] md:h-[25px]' viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.7188 0.78125C5.24687 0.78125 0 6.02812 0 12.5C0 18.9719 5.24687 24.2188 11.7188 24.2188C18.1906 24.2188 23.4375 18.9719 23.4375 12.5C23.4375 6.02812 18.1906 0.78125 11.7188 0.78125ZM11.7188 19.1406L5.46875 13.1621H9.70977V5.85938H13.7273V13.1621H17.9688L11.7188 19.1406Z" fill="#F8F4FB" />
                   </svg>
 
                   Join</Button>
               </Link>
               <Link href={'/auth/login'}>
-                <Button variant='contained' color='primary' className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-[#002F49] !text-white !text-base md:!text-lg !font-semibold' ><PiSignInBold fontSize={20}/>Login</Button>
+                <Button variant='contained' color='primary' className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-[#002F49] !text-white !text-base md:!text-lg !font-semibold' ><PiSignInBold fontSize={20} />Login</Button>
               </Link>
               <Link href={'/auth/signup'}>
-                <Button variant='contained' color='primary'  className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-[#FBA732] !text-black !text-base md:!text-lg !font-semibold ' ><IoMdPersonAdd fontSize={20} />Sign up</Button>
+                <Button variant='contained' color='primary' className='!capitalize !px-3 md:!px-4 !py-1 md:!py-2 !flex !gap-1 md:!gap-2 !bg-[#FBA732] !text-black !text-base md:!text-lg !font-semibold ' ><IoMdPersonAdd fontSize={20} />Sign up</Button>
               </Link>
             </>
           )}
         </div>
       </div>
       <div className='w-full flex  items-center justify-center'>
-        <Box sx={{ width: '95%', bgcolor: '#002F49', borderRadius: '100px'}}
-        className="!px-1 md:!px-3 max-sm:!flex max-sm:!items-center !justify-center"
+        <Box sx={{ width: '95%', bgcolor: '#002F49', borderRadius: '100px' }}
+          className="!px-1 md:!px-3 max-sm:!flex max-sm:!items-center !justify-center"
         >
           <Tabs
             value={tabValue}
@@ -161,13 +162,13 @@ const Home = () => {
         </Box>
       </div>
       <TabPanel value={tabValue} index={0}>
-        <QuizList quizzes={quizzes.filter(f => f.status === 'active')} handleRedirectToEdit={handleRedirectToEdit} />
+        <QuizList setQuizzes={setQuizzes} quizzes={quizzes.filter(f => f.status === 'active')} handleRedirectToEdit={handleRedirectToEdit} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <QuizList quizzes={quizzes.filter(f => f.status === 'draft')} isDraft={true} handleRedirectToEdit={handleRedirectToEdit} />
+        <QuizList setQuizzes={setQuizzes} quizzes={quizzes.filter(f => f.status === 'draft')} isDraft={true} handleRedirectToEdit={handleRedirectToEdit} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <QuizList quizzes={publicQuizzes} isEdit={false} isDraft={false} />
+        <QuizList setQuizzes={setQuizzes} quizzes={publicQuizzes} isEdit={false} isDraft={false} />
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
         <div className='p-6 text-gray-500'>Your favorite quizzes will appear here.</div>
@@ -175,21 +176,25 @@ const Home = () => {
     </div>
   );
 };
-const QuizList = ({ quizzes, handleRedirectToEdit, isDraft = false, isEdit = true }: { quizzes: QuizType[], handleRedirectToEdit?: (id: string) => void, isEdit?: boolean, isDraft?: boolean }) => {
+const QuizList = ({ quizzes, handleRedirectToEdit, isDraft = false, setQuizzes, isEdit = true }: { quizzes: QuizType[], handleRedirectToEdit?: (id: string) => void, isEdit?: boolean, isDraft?: boolean; setQuizzes: Dispatch<SetStateAction<QuizType[]>> }) => {
   return (
     <div className='w-full flex gap-5 p-5 flex-wrap'>
       {quizzes.length > 0 ? quizzes.map(quiz => (
         <div key={quiz._id} style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px" }} className='w-[250px] bg-white rounded-lg overflow-hidden relative'>
-          {isEdit && <IconButton
-            onClick={() => handleRedirectToEdit(quiz._id)}
-            className='!bg-[#FBA732] !text-black !top-3 !right-3 !absolute'
-          >
+          <div className='absolute top-0 right-0 p-1 flex flex-col items-end gap-2'>
+            {isEdit && <IconButton
+              onClick={() => handleRedirectToEdit(quiz._id)}
+              className='!bg-[#FBA732] !text-black '
+            >
 
 
-            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 14.66V18.41H3.75L14.81 7.35L11.06 3.6L0 14.66ZM18.41 3.75L14.66 0L12.13 2.54L15.88 6.29L18.41 3.75Z" fill="#002F49" />
-            </svg>
-          </IconButton>}
+              <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 14.66V18.41H3.75L14.81 7.35L11.06 3.6L0 14.66ZM18.41 3.75L14.66 0L12.13 2.54L15.88 6.29L18.41 3.75Z" fill="#002F49" />
+              </svg>
+            </IconButton>}
+            <DeleteButton quizzes={quizzes} setQuizzes={setQuizzes} id={quiz._id} />
+
+          </div>
           {isDraft ? (
             <div>
               <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
@@ -228,5 +233,63 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
+
+
+const DeleteButton = ({ id, setQuizzes, quizzes }) => {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    if (!loading) setOpen(false); // Prevent closing while loading
+  };
+
+  const handleConfirmDelete = async () => {
+    setLoading(true);
+    try {
+      const res = await DeleteQuizById(id);
+      if (res?.status) {
+        setQuizzes(quizzes.filter(f => f._id !== id));
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    } finally {
+      setLoading(false);
+      handleClose();
+    }
+  };
+
+  return (
+    <>
+      <IconButton onClick={handleOpen} className="!bg-red_1 !text-white">
+        <MdOutlineDelete />
+      </IconButton>
+
+      {/* Material UI Dialog for Confirmation */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle className="!font-bold">Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this item? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} className="!bg-[#002F49] !px-4 !text-white" disabled={loading}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirmDelete}
+            className="!bg-red_1"
+            variant="contained"
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} className="!text-white !p-[1px] " /> : "Delete"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
 
 export default Home;

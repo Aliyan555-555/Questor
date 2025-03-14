@@ -94,7 +94,7 @@ const Create = () => {
         name: "Untitled Quiz",
         description: "Add a description here.",
         creator: user._id,
-        theme: "678e32b0d9b1cabe37ad6411",
+        theme: "67d29d6e1586140c2c8f7966",
       });
     } catch (error) {
       console.error(error);
@@ -961,11 +961,11 @@ const Create = () => {
                 </IconButton>
               </div>
               <div className="w-full flex flex-wrap h-[90vh] overflow-y-scroll justify-center gap-3">
-                {themes.map((theme) => (
+                {themes.map((theme,i) => (
                   <div
-                    key={theme._id}
+                    key={i}
                     onClick={() => handleChangeTheme(theme._id)}
-                    className={`w-[110px]  border-[3px] rounded-md p-1 ${theme._id === data?.theme._id
+                    className={`w-[110px]  border-[3px] rounded-md p-1 ${theme?._id === data?.theme?._id
                       ? "border-blue-600"
                       : "border-transparent"
                       } hover:border-gray-400  h-[110px] `}
