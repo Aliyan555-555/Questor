@@ -1,20 +1,21 @@
 [{
   "_id": {
-    "$oid": "6793992b5e28878e767db1cd"
+    "$oid": "67a08be560cebeaf87970697"
   },
   "duration": 30,
   "showQuestionDuration": 2000,
   "type": "quiz",
-  "media": "https://images.pexels.com/photos/30309178/pexels-photo-30309178.jpeg?auto=compress&cs=tinysrgb&h=350",
-  "isMultiSelect": true,
+  "media": "https://images.unsplash.com/photo-1738330094149-03cc30132bbb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w2OTk5NTl8MHwxfGFsbHwxM3x8fHx8fHx8MTczODU3NDIzMXw&ixlib=rb-4.0.3&q=85",
+  "isMultiSelect": false,
   "maximumMarks": 1000,
-  "question": "",
+  "question": "sdxfdsfsdf",
   "options": [
-    "sdfsad",
-    "dsadasd",
-    "sadasds",
-    "sadsdas"
+    "dfs",
+    "dsfds",
+    "fsdf",
+    "fdsfds"
   ],
+  "answerText": null,
   "answerIndex": [
     0
   ],
@@ -24,33 +25,57 @@
 },
 {
   "_id": {
-    "$oid": "67939dce5e28878e767db22d"
-  },
-  "duration": 30,
-  "showQuestionDuration": 2000,
-  "type": "quiz",
-  "media": "",
-  "isMultiSelect": false,
-  "maximumMarks": 1000,
-  "question": "",
-  "options": [
-    "",
-    "",
-    "",
-    ""
-  ],
-  "answerIndex": [],
-  "attemptStudents": [],
-  "results": [],
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "67939e425e28878e767db23d"
+    "$oid": "67a0991d60cebeaf8797128c"
   },
   "duration": 30,
   "showQuestionDuration": 2000,
   "type": "true/false",
+  "media": "https://images.pexels.com/photos/30371848/pexels-photo-30371848.jpeg?auto=compress&cs=tinysrgb&h=350",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "aliyansdfdf",
+  "options": [
+    "True",
+    "False"
+  ],
+  "answerText": null,
+  "answerIndex": [
+    1
+  ],
+  "attemptStudents": [],
+  "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a1a0d6dd2ddd2d8c726ade"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "ffffgfgdfgdfgfdgfdgf",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "attemptStudents": [],
+  "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a1a292dd2ddd2d8c727dff"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
   "media": "",
   "isMultiSelect": false,
   "maximumMarks": 1000,
@@ -61,6 +86,7 @@
     "",
     ""
   ],
+  "answerText": null,
   "answerIndex": [],
   "attemptStudents": [],
   "results": [],
@@ -68,21 +94,22 @@
 },
 {
   "_id": {
-    "$oid": "67974e135e28878e767db29f"
+    "$oid": "67a1df95cbfd950a0b7947b4"
   },
   "duration": 30,
   "showQuestionDuration": 2000,
-  "type": "typeanswer",
-  "media": "",
+  "type": "quiz",
+  "media": "https://images.pexels.com/photos/30434882/pexels-photo-30434882.jpeg?auto=compress&cs=tinysrgb&h=350",
   "isMultiSelect": false,
   "maximumMarks": 1000,
-  "question": "",
+  "question": "dfddd",
   "options": [
-    "sdasd",
-    "asdd",
-    "sdas",
-    "sdasd"
+    "ffd",
+    "bbbbbbbbbbbbbbb",
+    "fdg",
+    " edsfsdfsfd"
   ],
+  "answerText": null,
   "answerIndex": [
     0
   ],
@@ -92,51 +119,7 @@
 },
 {
   "_id": {
-    "$oid": "679760755e28878e767db33e"
-  },
-  "duration": 30,
-  "showQuestionDuration": 2000,
-  "type": "quiz",
-  "media": "",
-  "isMultiSelect": false,
-  "maximumMarks": 1000,
-  "question": "",
-  "options": [
-    "",
-    "",
-    "",
-    ""
-  ],
-  "answerIndex": [],
-  "attemptStudents": [],
-  "results": [],
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "679773375e28878e767db3b5"
-  },
-  "duration": 30,
-  "showQuestionDuration": 2000,
-  "type": "quiz",
-  "media": "",
-  "isMultiSelect": false,
-  "maximumMarks": 1000,
-  "question": "",
-  "options": [
-    "",
-    "",
-    "",
-    ""
-  ],
-  "answerIndex": [],
-  "attemptStudents": [],
-  "results": [],
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "679773425e28878e767db3bb"
+    "$oid": "67a1e3d3db3feec141fc4d03"
   },
   "duration": 30,
   "showQuestionDuration": 2000,
@@ -151,6 +134,7 @@
     "",
     ""
   ],
+  "answerText": null,
   "answerIndex": [],
   "attemptStudents": [],
   "results": [],
@@ -158,31 +142,57 @@
 },
 {
   "_id": {
-    "$oid": "6797751b870cc549d9d21f9d"
+    "$oid": "67a1e945db3feec141fc4d0c"
   },
   "duration": 10,
   "showQuestionDuration": 2000,
-  "type": "typeanswer",
-  "media": "",
-  "isMultiSelect": true,
+  "type": "quiz",
+  "media": "https://images.pexels.com/photos/163077/mario-yoschi-figures-funny-163077.jpeg?auto=compress&cs=tinysrgb&h=350",
+  "isMultiSelect": false,
   "maximumMarks": 1000,
-  "question": "",
+  "question": "whis is name this cartton?",
   "options": [
-    "",
-    "",
-    "",
-    ""
+    "fgdf",
+    "g",
+    "e",
+    "f"
   ],
-  "answerIndex": [],
+  "answerText": null,
+  "answerIndex": [
+    0
+  ],
   "attemptStudents": [],
   "results": [],
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "67977520870cc549d9d21fa3"
+    "$oid": "67a1e9a0db3feec141fc4db6"
   },
-  "duration": 55,
+  "duration": 10,
+  "showQuestionDuration": 2000,
+  "type": "true/false",
+  "media": "https://images.pexels.com/photos/3411134/pexels-photo-3411134.jpeg?auto=compress&cs=tinysrgb&h=350",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "true false",
+  "options": [
+    "True",
+    "False"
+  ],
+  "answerText": null,
+  "answerIndex": [
+    0
+  ],
+  "attemptStudents": [],
+  "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a1f966db3feec141fc4e2f"
+  },
+  "duration": 30,
   "showQuestionDuration": 2000,
   "type": "quiz",
   "media": "",
@@ -195,8 +205,458 @@
     "",
     ""
   ],
+  "answerText": null,
   "answerIndex": [],
   "attemptStudents": [],
   "results": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67af3725786d51c4d1ead36b"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "https://images.unsplash.com/photo-1739467561973-e5015d7f9561?crop=entropy&cs=srgb&fm=jpg&ixid=M3w2OTk5NTl8MHwxfGFsbHw1fHx8fHx8fHwxNzM5NTM1Mzk4fA&ixlib=rb-4.0.3&q=85",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "what",
+  "options": [
+    "dc",
+    "s",
+    "sd",
+    "as"
+  ],
+  "answerText": null,
+  "answerIndex": [
+    0
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67af3729786d51c4d1ead370"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "https://images.pexels.com/photos/8216678/pexels-photo-8216678.jpeg?auto=compress&cs=tinysrgb&h=350",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "dff",
+  "options": [
+    "epp",
+    "ewe",
+    "qwe",
+    "weqw"
+  ],
+  "answerText": null,
+  "answerIndex": [
+    0
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b70ef64723c4a1e48911f3"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "https://images.unsplash.com/photo-1740560595023-15a496695e15?crop=entropy&cs=srgb&fm=jpg&ixid=M3w2OTk5NTl8MHwxfGFsbHwxNnx8fHx8fHx8MTc0MDk4NzA3OXw&ixlib=rb-4.0.3&q=85",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b70ef84723c4a1e48911f9"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "https://images.unsplash.com/photo-1740412662676-a3b16d74ee86?crop=entropy&cs=srgb&fm=jpg&ixid=M3w2OTk5NTl8MHwxfGFsbHwyfHx8fHx8fHwxNzQxMDY5MzI2fA&ixlib=rb-4.0.3&q=85",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": " hello ",
+  "options": [
+    "dd",
+    "u",
+    "f",
+    " v "
+  ],
+  "answerText": null,
+  "answerIndex": [
+    3
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bd5795d8ab0f2ae0d4f4f7"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0488869b9f6a291c3290c"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c04a6a69b9f6a291c32953"
+  },
+  "duration": 5,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c04f3169b9f6a291c32a4b"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c160b969b9f6a291c32bea"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c160cb69b9f6a291c32bfc"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "sds",
+    "dsd",
+    "ds",
+    "dsd"
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c55ac70ff67dac8cdeb20c"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c55bab0ff67dac8cdeb21e"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "dsdas",
+  "options": [
+    "dddssfsdfsd",
+    "sdsdsdd",
+    "sd",
+    "dsd"
+  ],
+  "answerText": null,
+  "answerIndex": [
+    0
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c80a9bc37eaac0b6a855a9"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c80aa0c37eaac0b6a855b0"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d29d988d4fe522291565d9"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d29de98d4fe522291565e1"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d29e598d4fe522291565fb"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d29e668d4fe52229156609"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d29ed48d4fe5222915661c"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d2a060fb882acea2dcce8c"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d2a105fb882acea2dccea8"
+  },
+  "duration": 30,
+  "showQuestionDuration": 2000,
+  "type": "quiz",
+  "media": "",
+  "isMultiSelect": false,
+  "maximumMarks": 1000,
+  "question": "",
+  "options": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "answerText": null,
+  "answerIndex": [],
   "__v": 0
 }]

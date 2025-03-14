@@ -1,390 +1,72 @@
 [{
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6411"
+    "$oid": "67d29d6e1586140c2c8f795b"
   },
-  "image": "/images/theme/1.webp"
+  "image": "/images/theme/1.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6412"
+    "$oid": "67d29d6e1586140c2c8f795c"
   },
-  "image": "/images/theme/2.webp"
+  "image": "/images/theme/2.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6413"
+    "$oid": "67d29d6e1586140c2c8f795d"
   },
-  "image": "/images/theme/3.webp"
+  "image": "/images/theme/3.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6414"
+    "$oid": "67d29d6e1586140c2c8f795e"
   },
-  "image": "/images/theme/4.webp"
+  "image": "/images/theme/4.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6415"
+    "$oid": "67d29d6e1586140c2c8f795f"
   },
-  "image": "/images/theme/5.webp"
+  "image": "/images/theme/5.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6416"
+    "$oid": "67d29d6e1586140c2c8f7960"
   },
-  "image": "/images/theme/6.webp"
+  "image": "/images/theme/6.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6417"
+    "$oid": "67d29d6e1586140c2c8f7961"
   },
-  "image": "/images/theme/7.webp"
+  "image": "/images/theme/7.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6418"
+    "$oid": "67d29d6e1586140c2c8f7962"
   },
-  "image": "/images/theme/8.webp"
+  "image": "/images/theme/8.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6419"
+    "$oid": "67d29d6e1586140c2c8f7963"
   },
-  "image": "/images/theme/9.webp"
+  "image": "/images/theme/9.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad641a"
+    "$oid": "67d29d6e1586140c2c8f7964"
   },
-  "image": "/images/theme/10.webp"
+  "image": "/images/theme/10.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad641b"
+    "$oid": "67d29d6e1586140c2c8f7965"
   },
-  "image": "/images/theme/11.webp"
+  "image": "/images/theme/11.jpg"
 },
 {
   "_id": {
-    "$oid": "678e32b0d9b1cabe37ad641c"
+    "$oid": "67d29d6e1586140c2c8f7966"
   },
-  "image": "/images/theme/12.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad641d"
-  },
-  "image": "/images/theme/13.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad641e"
-  },
-  "image": "/images/theme/14.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad641f"
-  },
-  "image": "/images/theme/15.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6420"
-  },
-  "image": "/images/theme/16.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6421"
-  },
-  "image": "/images/theme/17.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6422"
-  },
-  "image": "/images/theme/18.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6423"
-  },
-  "image": "/images/theme/19.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6424"
-  },
-  "image": "/images/theme/20.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6425"
-  },
-  "image": "/images/theme/21.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6426"
-  },
-  "image": "/images/theme/22.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6427"
-  },
-  "image": "/images/theme/23.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6428"
-  },
-  "image": "/images/theme/24.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6429"
-  },
-  "image": "/images/theme/25.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad642a"
-  },
-  "image": "/images/theme/26.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad642b"
-  },
-  "image": "/images/theme/27.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad642c"
-  },
-  "image": "/images/theme/28.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad642d"
-  },
-  "image": "/images/theme/29.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad642e"
-  },
-  "image": "/images/theme/30.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad642f"
-  },
-  "image": "/images/theme/31.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6430"
-  },
-  "image": "/images/theme/32.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6431"
-  },
-  "image": "/images/theme/33.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6432"
-  },
-  "image": "/images/theme/34.webp"
-},
-{
-  "_id": {
-    "$oid": "678e32b0d9b1cabe37ad6433"
-  },
-  "image": "/images/theme/35.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8d6"
-  },
-  "image": "/images/theme/36.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8d7"
-  },
-  "image": "/images/theme/37.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8d8"
-  },
-  "image": "/images/theme/38.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8d9"
-  },
-  "image": "/images/theme/39.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8da"
-  },
-  "image": "/images/theme/40.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8db"
-  },
-  "image": "/images/theme/41.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8dc"
-  },
-  "image": "/images/theme/42.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8dd"
-  },
-  "image": "/images/theme/43.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8de"
-  },
-  "image": "/images/theme/44.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8df"
-  },
-  "image": "/images/theme/45.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e0"
-  },
-  "image": "/images/theme/46.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e1"
-  },
-  "image": "/images/theme/47.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e2"
-  },
-  "image": "/images/theme/48.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e3"
-  },
-  "image": "/images/theme/49.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e4"
-  },
-  "image": "/images/theme/50.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e5"
-  },
-  "image": "/images/theme/51.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e6"
-  },
-  "image": "/images/theme/52.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e7"
-  },
-  "image": "/images/theme/53.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e8"
-  },
-  "image": "/images/theme/54.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8e9"
-  },
-  "image": "/images/theme/55.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8ea"
-  },
-  "image": "/images/theme/56.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8eb"
-  },
-  "image": "/images/theme/57.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8ec"
-  },
-  "image": "/images/theme/58.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8ed"
-  },
-  "image": "/images/theme/59.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8ee"
-  },
-  "image": "/images/theme/60.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8ef"
-  },
-  "image": "/images/theme/61.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8f0"
-  },
-  "image": "/images/theme/62.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8f1"
-  },
-  "image": "/images/theme/63.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8f2"
-  },
-  "image": "/images/theme/64.webp"
-},
-{
-  "_id": {
-    "$oid": "679360de2f8a60f7ee3ee8f3"
-  },
-  "image": "/images/theme/65.webp"
+  "image": "/images/theme/12.jpg"
 }]
