@@ -52,6 +52,8 @@ const Home = () => {
   const handleRedirectToEdit = (id: string) => {
     navigation.push(`/play/create?id=${id}`);
   };
+
+
   return (
     <div className='w-full min-h-screen '>
       <ClientComponentSEO title={"Questor"} />
@@ -60,6 +62,7 @@ const Home = () => {
           <Image src={'/images/UI/QuestorIcon.svg'} alt='Questor' width={35} height={35} />
           <h2 className=' hidden sm:flex text-2xl font-bold'>Dashboard</h2>
         </div>
+        {/*  */}
         <div className='flex gap-2 md:gap-4 items-center'>
           {user.isAuthenticated ? (
             <>
