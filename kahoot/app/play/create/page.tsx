@@ -40,7 +40,7 @@ import imageLoader from "@/src/components/ImageLoader";
 import useOutsideClick from "@/src/hooks/useClickoutside";
 
 const Create = () => {
-  const socket = useSocket();
+  const {socket} = useSocket();
   const [isSettingModelOpen,setIsSettingModelOpen] = useState(false);
   const [savingErrors, setSavingErrors] = useState<ErrorType[]>([])
   const [isOpenGallery, setIsOpenGallery] = useState(false);

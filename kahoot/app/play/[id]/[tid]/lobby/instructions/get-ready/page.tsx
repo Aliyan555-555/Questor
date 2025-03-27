@@ -21,7 +21,7 @@ interface CurrentQuestion {
 }
 
 const Page = () => {
-  const socket = useSocket();
+  const {socket} = useSocket();
   const params = useParams();
   const teacherId = params.tid;
   const quizId = params.id;

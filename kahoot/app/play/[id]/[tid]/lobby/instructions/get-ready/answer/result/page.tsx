@@ -7,7 +7,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Results = () => {
-  const socket = useSocket();
+  const {socket} = useSocket();
   const params = useParams();
   const quizId = params.id;
   const teacherId = params.tid;

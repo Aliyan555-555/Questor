@@ -15,7 +15,7 @@ const Student = () => {
   const query = useSearchParams();
   const router = useRouter();
   const dispatch = useDispatch();
-  const socket = useSocket();
+  const {socket} = useSocket();
   const [roomId, setRoomId] = useState<null | string>(null);
   const [teacherId,setTeacherId] = useState<null | string>(null)
   const [nickname, setNickname] = useState("");

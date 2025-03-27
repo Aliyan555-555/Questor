@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 export default function RootLayout({ children }) {
     const student = useSelector((root: RootState) => root.student.currentGame?.student);
-    const socket = useSocket();
+    const {socket} = useSocket();
     const navigation = useRouter();
     
 

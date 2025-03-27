@@ -503,7 +503,7 @@ const RankSection = React.memo(
 RankSection.displayName = "RankSection"
 
 const Page = () => {
-  const socket = useSocket();
+  const {socket} = useSocket();
   const dispatch = useDispatch();
   const [stage, setStage] = useState<number>(1);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

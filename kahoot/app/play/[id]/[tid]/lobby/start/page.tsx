@@ -35,7 +35,7 @@ const Start: React.FC = () => {
   }, [counter, navigation, teacher?.quiz]);
   console.log(teacher);
   return (
-    <div style={{ backgroundImage: `url(${teacher?.quiz.theme.image})` }} className="w-screen h-screen flex items-center justify-center">
+    <div style={{ backgroundImage: `url(${teacher?.quiz.theme.image})` }} className="w-screen h-screen flex bg-cover bg-no-repeat items-center justify-center">
       {isVisible ? (
         <motion.div
           initial={bounceInitialScale}

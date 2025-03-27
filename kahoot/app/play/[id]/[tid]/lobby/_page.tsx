@@ -15,7 +15,7 @@ const Student = () => {
   const query = useSearchParams();
   const router = useRouter();
   const dispatch = useDispatch();
-  const socket = useSocket();
+  const {socket} = useSocket();
   // function getTeacherId(inputString: string) {
   //   const parts = inputString.split("-");
   //   return parts[0];

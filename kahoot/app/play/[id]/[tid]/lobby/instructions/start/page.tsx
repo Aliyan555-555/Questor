@@ -230,40 +230,48 @@ const RankStage = ({ student }) => {
   )
 }
 const Page = () => {
-  const [stage, setStage] = useState(null);
   const student = useSelector((root: RootState) => root.student.currentGame);
-  const [question, setQuestion] = useState(null);
+  const [currentTime] = useState(new Date().toLocaleTimeString());
   const [index, setIndex] = useState(1);
   const [result, setResult] = useState(null);
   const dispatch = useDispatch();
   const navigation = useRouter();
-  const socket = useSocket();
+  const {socket,isConnected} = useSocket();
+  const [question, setQuestion] = useState(student.student.room.currentStage.question ?? null);
+  const [stage, setStage] = useState(student.student.room.currentStage.stage ?? null);
+
+
+  const handlePopulateCurrentStage = (data) => {
+    if (data.status) {
+      if (data.data.isLastStage) {
+        setQuestion(data.data.question);
+        setIndex(data.data.index + 1);
+        setStage(4);
+      } else {
+        setQuestion(data.data.question);
+        setStage(data.data.stage);
+        setIndex(data.data.index + 1);
+      }
+    }
+  };
+
+  const handleResult = (data) => {
+    setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore, rank: data.rank });
+    dispatch(setScore({ score: data.score, rank: data.rank }));
+  };
 
   useEffect(() => {
+    console.log(socket?"Socket is connected":"Socket is not connected");
     if (socket) {
+      const logSocketEvents = (event: string, data) => {
+        console.log(`Socket event: ${event}`, data);
+      };
+
       socket?.on("roomDeleted",() => {
         navigation.push(`/play/connect/to/game`);
       })
-      socket.on("populateCurrentStage", (data) => {
-        if (data.status) {
-          if (data.data.isLastStage) {
-            setQuestion(data.data.question);
-            setIndex(data.data.index + 1);
-            console.log("Current question index ...............",data.data.index);
-            setStage(4);
-          } else {
-            setQuestion(data.data.question);
-            setStage(data.data.stage);
-            console.log("Current question index ...............",data.data.index);
-            setIndex(data.data.index + 1);
-            // setIndex(1)
-          }
-        }
-      });
-      socket.on("result", (data) => {
-        setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore, rank: data.rank });
-        dispatch(setScore({ score: data.score, rank: data.rank }));
-      });
+      socket.on("populateCurrentStage",handlePopulateCurrentStage)
+      socket.on("result",handleResult)
       socket?.on('inactive', (data) => {
         console.log("🚀 ~ socket?.on Inactive ~ data:", data)
         dispatch(update(data));
@@ -281,8 +289,11 @@ const Page = () => {
       socket?.off("populateCurrentStage");
       socket?.off("result");
       socket?.off("userInRoom");
+      socket?.off("inactive");
+      socket?.off("reconnect_refresh_token");
+      socket?.off("roomDeleted");
     }
-  }, []);
+  }, [socket, currentTime, stage, student]);
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -299,17 +310,25 @@ const Page = () => {
   useEffect(() => {
     if (socket && student?.student?.room?._id) {
       if (stage !== 4) {
-
         socket.emit("checkUserInRoom", {
           roomId: student.student.room._id,
           studentData: student,
           token: student?.refreshToken ?? null,
           stage
         });
-
       }
     }
   }, [socket]);
+
+  useEffect(() => {
+    if (!isConnected){
+      socket?.emit("reconnect_refresh_token",{refreshToken:student.refreshToken});
+      console.log("send Reconnecting request to the server on :" +currentTime);
+      console.log("socket status :" + socket);
+    }
+})
+
+
 
   return (
     <div className={"w-screen h-screen flex flex-col items-center justify-center"}>

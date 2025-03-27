@@ -43,7 +43,7 @@ const Page = React.memo(() => {
 
   const [drawerIsActive, setDrawerIsActive] = useState(false);
   const drawerRef = useRef<HTMLDivElement | null>(null);
-  const socket = useSocket();
+  const {socket} = useSocket();
   const params = useParams();
   console.log(params.id, params.tid)
   const navigation = useRouter();

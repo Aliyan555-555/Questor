@@ -14,7 +14,7 @@ const Ranking = () => {
   const quizId = params.id;
   // const navigation = useRouter();
   const student = useSelector((root: RootState) => root.student.currentGame);
-  const socket = useSocket();
+  const {socket} = useSocket();
   
   const [studentResult, setStudentResult] = useState<{
     nickname: string;

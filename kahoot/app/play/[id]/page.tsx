@@ -18,7 +18,7 @@ import AnimatedAvatar from "@/src/components/animated/AnimatedAvatar";
 import Image from "next/image";
 const Teacher = () => {
   const user = useSelector((root: RootState) => root.student)
-  const socket = useSocket();
+  const { socket } = useSocket();
   const path = usePathname()
   // const [loading, setLoading] = useState(true);
   const game = useSelector((root: RootState) => root.teacher.currentGame);
@@ -38,9 +38,6 @@ const Teacher = () => {
     "#E9E2B6",
     "#3A7CDF",
     "#FCBF4A",
-
-
-
   ]
   useEffect(() => {
     if (!user.isAuthenticated) {
@@ -66,6 +63,8 @@ const Teacher = () => {
         }
 
       });
+
+      
 
       socket.on("roomCreated", ({ roomId, pin, data }) => {
         setRoomId(roomId);
@@ -109,6 +108,7 @@ const Teacher = () => {
     }
   }, [socket]);
   const enterFullscreen = () => {
+    console.log(socket);
     const element = document.documentElement;
     if (element.requestFullscreen) {
       element.requestFullscreen();
@@ -150,15 +150,13 @@ const Teacher = () => {
         .then(() => {
         })
         .catch((err) => {
-          console.error("Failed to copy PIN: ", err);
-          // toast.error("Failed to copy PIN. Please try again.");
+
         });
     } else {
-      // Fallback for older browsers
       try {
         const textArea = document.createElement("textarea");
         textArea.value = pin;
-        textArea.style.position = "fixed"; // Prevents scrolling to bottom
+        textArea.style.position = "fixed";
         textArea.style.opacity = "0"; // Makes it invisible
         document.body.appendChild(textArea);
         textArea.focus();
@@ -166,14 +164,14 @@ const Teacher = () => {
 
         const successful = document.execCommand("copy");
         if (successful) {
-          // toast.success("PIN copied to clipboard!");
+
         } else {
           throw new Error("Fallback copy failed");
         }
         document.body.removeChild(textArea);
       } catch (err) {
         console.error("Fallback copy failed: ", err);
-        // toast.error("Failed to copy PIN. Please try again.");
+
       }
     }
   };
@@ -187,8 +185,8 @@ const Teacher = () => {
   console.log(game)
   return (
     <div style={{ backgroundImage: `url(${game?.quiz.theme.image})` }} className="w-screen bg-opacity-65 h-screen bg-cover p-2 flex flex-col items-center justify-center  relative bg-no-repeat bg-top">
+
       <div className="md:w-[40%] lg:w-[40%] flex flex-col h-full max-h-[92%] overflow-hidden">
-        {/* QR Code and PIN Section */}
         <div className="w-full bg-blue_1 rounded-tl-[10px] rounded-tr-[10px] flex px-10 py-2 items-center justify-between">
           <div className="p-2 border border-white bg-white rounded-[10px]">
             <QRCode
@@ -208,12 +206,12 @@ const Teacher = () => {
               <p className="text-blue_1 bg-white font-bold text-xl rotate-[-90deg] px-2 py-1 rounded-[10px]">
                 PIN
               </p>
-              <div className="font-black text-white text-6xl">{pin}</div>
+              <div className="font-black text-white text-6xl">{pin ? pin : "Loading PIN..."}</div>
             </div>
           </div>
         </div>
         <div className="w-full flex flex-col flex-grow py-4 items-center bg-white rounded-bl-[10px] rounded-br-[10px] overflow-hidden">
-          <h2 className="text-3xl text-blue_1 font-semibold">Waiting for players...</h2>
+          <h2 className="text-lg sm:2xl lg:text-3xl text-blue_1 text-center  font-semibold">Waiting for players...</h2>
           <div className="flex-1 w-full flex justify-center items-center overflow-hidden">
             <Image
               alt="Waiting"
@@ -226,7 +224,7 @@ const Teacher = () => {
         </div>
 
         {/* Start Button */}
-        <Button onClick={handleStart} disabled={game?.students.length === 0} className="!bg-red_1 disabled:opacity-80 !mt-3 !rounded-[10px] !w-full !py-3 !uppercase !font-black !text-3xl !text-white !z-[1000]">
+        <Button onClick={handleStart} disabled={game?.students.length === 0} className="!bg-red_1 disabled:opacity-80 !mt-3 !rounded-[10px] !w-full !py-3 !uppercase !font-black !text-3xl !text-white ">
           Start
         </Button>
       </div>

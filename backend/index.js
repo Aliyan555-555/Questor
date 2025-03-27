@@ -10,15 +10,17 @@ import quizModel from "./model/quiz.model.js";
 import ThemeRouter from "./routers/theme.route.js";
 import QuizRouter from "./routers/quiz.router.js";
 import jwt from "jsonwebtoken";
-import fs from "fs"
+import fs from "fs";
 import { avatarModel } from "./model/avatar.model.js";
 import { questionModel } from "./model/question.model.js";
 import { roomModel } from "./model/room.model.js";
 import { itemModel } from "./model/item.model.js";
 import { studentModel } from "./model/studentModel.js";
 import { questionResultModel } from "./model/questionResult.model.js";
-import cloudinary from 'cloudinary'
+import cloudinary from "cloudinary";
 import axios from "axios";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 dotenv.config();
 const app = express();
 connectToMongodb();
@@ -38,13 +40,30 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
   credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: "sessions",
+    }),
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60,
+    },
+  })
+);
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -55,41 +74,6 @@ const io = new Server(server, {
   pingTimeout: 50000,
 });
 
-//   try {
-//     const res = await axios.get(
-//       "https://apis.kahoot.it/game-reward-service/api/v1/config/avatar"
-//     );
-//     const avatars = res.data.avatars.map(({ name, resource, colors }) => ({
-//       name,
-//      colors: {
-//         lipColor:colors.lipColor,
-//         bodyColor:colors.bodyColor,
-//         chinColor:colors.chinColor,
-//         teethType:colors.teethType, 
-//         mouthColor:colors.mouthColor,
-//         pupilColor:colors.pupilColor,
-//         teethColor:colors.teethColor,
-//         tongueColor:colors.tongueColor,
-//         eyeballColor:colors.eyeballColor,
-//         eyebrowColor:colors.eyebrowColor,
-//         eyeBorderColor:colors.eyeBorderColor,
-//       },
-//       resource,
-//     }));
-//     const items = res.data.items.map(({resource}) => ({
-//       resource,
-//     }))
-//     const a = await avatarModel.insertMany(avatars);
-//     const b = await itemModel.insertMany(items);
-
-//     console.log("Avatars and items fetched and inserted successfully");
-//   } catch (error) {
-//     console.error("Error fetching avatars", error);
-//   }
-// };
-
-
-// fetch_avatars();
 app.get("/api/v1/avatars", async (req, res) => {
   try {
     const avatars = await avatarModel.find();
@@ -112,9 +96,31 @@ const generatePin = () => {
   } while (roomPins[pin]);
   return pin;
 };
+
+io.use((socket, next) => {
+  // Use the session middleware for socket connections
+  session({
+    secret: process.env.SESSION_SECRET || "your_secret_key",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: "sessions",
+    }),
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60, // 1 hour
+    },
+  })(socket.request, {}, next);
+});
+
 io.on("connection", (socket) => {
   socket.on("createRoom", async ({ quizId, teacherId }) => {
     try {
+      if (!socket.request.session) {
+        console.log("Session not available");
+        return socket.emit("error", { message: "Session not available" });
+      }
       socket.teacher = {
         _id: teacherId,
         socket: socket.id,
@@ -162,19 +168,84 @@ io.on("connection", (socket) => {
       });
       socket.teacher.room = newRoom._id;
       socket.join(newRoom._id.toString());
+      socket.request.session.teacherId = socket.teacher._id;
+      socket.request.session.roomId = newRoom._id;
+      await socket.request.session.save();
       socket.emit("roomCreated", {
         roomId: newRoom._id,
         pin: newRoom.pin,
         data: newRoom,
       });
-      //  setInterval(() => {
-      //   console.log(socket.rooms);
-      // }, 1000);
-      console.log(`Room created: ${newRoom._id} with PIN: ${newRoom.pin}`);
     } catch (error) {
       console.error("Error creating room:", error);
       socket.emit("error", { message: "Server error", error: error.message });
     }
+  });
+  socket.on("reconnect_refresh_token", async ({ refreshToken }) => {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+    // console.log("🚀 ~ socket.on ~ decoded:", decoded)
+    const room = await roomModel.findById(decoded.roomId);
+    if (!room) {
+      return console.log("Room not found", decoded);
+    }
+    const student = await studentModel
+      .findById(decoded.studentId)
+      .populate([
+        { path: "quiz", populate: [{ path: "theme" }, { path: "questions" }] },
+        { path: "room" },
+        { path: "avatar" },
+        { path: "item" },
+        { path: "activeQuestion" },
+      ]
+    );
+    if (!student) {
+      return socket.emit("error", { message: "Student not found" });
+    }
+    student.isActive = true;
+    await student.save();
+    console.log("Reconnecting request", {
+      student: student.nickname,
+      room: room._id,
+      time: new Date().toLocaleString(),
+    });
+    await room.populate([
+      {
+        path: "quiz",
+        populate: [{ path: "questions" }, { path: "theme" }],
+      },
+      {
+        path: "students",
+        populate: [
+          { path: "avatar" },
+          { path: "item" },
+          {
+            path: "quiz",
+            populate: [{ path: "questions" }, { path: "theme" }],
+          },
+          { path: "room" },
+        ],
+      },
+    ]);
+    socket.join(room._id.toString());
+    socket.student = student;
+    socket.emit("joinedRoom", {
+      roomId: room._id,
+      student: student,
+      data: room,
+      refreshToken: jwt.sign(
+        {
+          roomId: room._id,
+          studentId: student._id,
+          nickname: student.nickname,
+        },
+        process.env.JWT_SECRET
+      ),
+    });
+    io.to(room._id.toString()).emit("studentJoined", {
+      students: room.students,
+      data: room,
+    });
+    console.log("Reconnected to the server");
   });
   socket.on("joinRoom", async ({ pin, roomId, studentId, nickname }) => {
     try {
@@ -199,7 +270,7 @@ io.on("connection", (socket) => {
         },
       ]);
       if (!room) {
-        console.log("❌ Room not found");
+        // console.log("❌ Room not found");
         return socket.emit("error", {
           message: "Room not found or invalid PIN",
         });
@@ -208,7 +279,7 @@ io.on("connection", (socket) => {
       console.log(`✅ Room found: ${room._id}`);
 
       if (room.status === "started") {
-        console.log("⚠️ Room has already started. Cannot join.");
+        // console.log("⚠️ Room has already started. Cannot join.");
         return socket.emit("nickname_error", {
           message: "The room has already started. You cannot join.",
         });
@@ -259,7 +330,7 @@ io.on("connection", (socket) => {
       );
 
       if (availableAvatars.length === 0) {
-        console.log("❌ No avatars available");
+        // console.log("❌ No avatars available");
         return socket.emit("error", { message: "No avatars available." });
       }
 
@@ -268,7 +339,7 @@ io.on("connection", (socket) => {
       const randomItem = items.length > 0 ? items[2]._id : null;
       const socketExist = room.students.find((s) => s.socketId === socket.id);
       if (socketExist) {
-        console.log("�� Socket already exists");
+        // console.log("�� Socket already exists");
         return socket.emit("error", { message: "Socket already exists" });
       }
 
@@ -326,6 +397,12 @@ io.on("connection", (socket) => {
         data: room,
       });
       socket.student = newStudent;
+      if (socket.student) {
+        // Store student session information
+        socket.request.session.studentId = socket.student._id;
+        socket.request.session.roomId = roomId;
+        await socket.request.session.save(); // Save the session
+      }
       socket.emit("joinedRoom", {
         roomId: room._id,
         student: populatedStudent,
@@ -1182,7 +1259,7 @@ io.on("connection", (socket) => {
         status: { $in: ["waiting", "started"] },
         isActive: true,
       });
-      io.emit("roomDeleted")
+      io.emit("roomDeleted");
       console.log(room);
       return;
     }
@@ -1234,8 +1311,7 @@ io.on("connection", (socket) => {
           console.log(
             `🚪 Student ${student._id} removed from room ${room._id}`
           );
-        }else if (room.status === "started"){
-         
+        } else if (room.status === "started") {
           await room.populate({
             path: "students",
             populate: [{ path: "avatar" }, { path: "item" }, { path: "quiz" }],
@@ -1243,11 +1319,9 @@ io.on("connection", (socket) => {
           socket.emit("inactive", { student: student });
           socket.leave(room._id.toString());
           io.to(room._id.toString()).emit("studentJoined", {
-            data:room,
+            data: room,
             students: room.students,
           });
-
-      
         }
       } catch (error) {
         console.error("❌ Error removing student:", error);
