@@ -182,70 +182,90 @@ io.on("connection", (socket) => {
     }
   });
   socket.on("reconnect_refresh_token", async ({ refreshToken }) => {
-    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
-    // console.log("🚀 ~ socket.on ~ decoded:", decoded)
-    const room = await roomModel.findById(decoded.roomId);
-    if (!room) {
-      return console.log("Room not found", decoded);
-    }
-    const student = await studentModel
-      .findById(decoded.studentId)
-      .populate([
+    try {
+      // Verify the refresh token
+      const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+      const room = await roomModel.findById(decoded.roomId);
+      
+      if (!room) {
+        console.error("Room not found", decoded);
+        return socket.emit("error", { message: "Room not found" });
+      }
+
+      // Fetch the student and populate necessary fields
+      const student = await studentModel.findById(decoded.studentId).populate([
         { path: "quiz", populate: [{ path: "theme" }, { path: "questions" }] },
-        { path: "room" },
+        { path: "room", populate: { path: "currentStage", populate: { path: "question" } } },
         { path: "avatar" },
         { path: "item" },
         { path: "activeQuestion" },
-      ]
-    );
-    if (!student) {
-      return socket.emit("error", { message: "Student not found" });
-    }
-    student.isActive = true;
-    await student.save();
-    console.log("Reconnecting request", {
-      student: student.nickname,
-      room: room._id,
-      time: new Date().toLocaleString(),
-    });
-    await room.populate([
-      {
-        path: "quiz",
-        populate: [{ path: "questions" }, { path: "theme" }],
-      },
-      {
-        path: "students",
-        populate: [
-          { path: "avatar" },
-          { path: "item" },
-          {
-            path: "quiz",
-            populate: [{ path: "questions" }, { path: "theme" }],
-          },
-          { path: "room" },
-        ],
-      },
-    ]);
-    socket.join(room._id.toString());
-    socket.student = student;
-    socket.emit("joinedRoom", {
-      roomId: room._id,
-      student: student,
-      data: room,
-      refreshToken: jwt.sign(
+      ]);
+
+      if (!student) {
+        console.error("Student not found", decoded);
+        return socket.emit("error", { message: "Student not found" });
+      }
+
+      // Update student status
+      student.isActive = true;
+      await student.save();
+
+      console.log("Reconnecting request", {
+        student: student.nickname,
+        room: room._id,
+        time: new Date().toLocaleString(),
+      });
+
+      // Populate room data
+      await room.populate([
         {
-          roomId: room._id,
-          studentId: student._id,
-          nickname: student.nickname,
+          path: "quiz",
+          populate: [{ path: "questions" }, { path: "theme" }],
         },
-        process.env.JWT_SECRET
-      ),
-    });
-    io.to(room._id.toString()).emit("studentJoined", {
-      students: room.students,
-      data: room,
-    });
-    console.log("Reconnected to the server");
+        {
+          path: "students",
+          populate: [
+            { path: "avatar" },
+            { path: "item" },
+            {
+              path: "quiz",
+              populate: [{ path: "questions" }, { path: "theme" }],
+            },
+            { path: "room" },
+          ],
+        },
+      ]);
+
+      // Join the student to the room
+      socket.join(room._id.toString());
+      socket.student = student;
+
+      // Emit joinedRoom event with updated data
+      socket.emit("joinedRoom", {
+        roomId: room._id,
+        student: student,
+        data: room,
+        refreshToken: jwt.sign(
+          {
+            roomId: room._id,
+            studentId: student._id,
+            nickname: student.nickname,
+          },
+          process.env.JWT_SECRET
+        ),
+      });
+
+      // Notify other students in the room
+      io.to(room._id.toString()).emit("studentJoined", {
+        students: room.students,
+        data: room,
+      });
+
+      console.log("Reconnected to the server");
+    } catch (error) {
+      console.error("Error during reconnection:", error);
+      socket.emit("error", { message: "Reconnection failed", error: error.message });
+    }
   });
   socket.on("joinRoom", async ({ pin, roomId, studentId, nickname }) => {
     try {

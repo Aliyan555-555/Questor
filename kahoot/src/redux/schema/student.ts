@@ -41,25 +41,30 @@ interface Question {
 
 interface CurrentGame {
   roomId: string;
-  refreshToken:string;
+  refreshToken: string;
   student: {
     _id: string;
     nickname: string;
     score: number;
-    rank:number;
-    quiz:{
-      theme:{
-        image:string;
-      }
-    }
+    rank: number;
+    quiz: {
+      theme: {
+        image: string;
+      };
+    };
     item: {
       _id: string;
       resource: string;
     };
-    room:{
-      _id:string;
-    },
-    isActive:boolean;
+    room: {
+      _id: string;
+      currentStage: {
+        question: string | Question;
+        isLastStage: boolean;
+        stage: number;
+      };
+    };
+    isActive: boolean;
     avatar: Avatar;
   };
 }
@@ -74,14 +79,13 @@ export interface CurrentDraft {
   name: string;
   isPrivet: boolean;
   description: string;
-  coverImage:string;
-  status:'draft' | 'active';
+  coverImage: string;
+  status: "draft" | "active";
   questions: Question[];
   theme: {
-      _id: string;
-      image: string;
-    }
-  
+    _id: string;
+    image: string;
+  };
 }
 
 interface StudentState {
@@ -116,7 +120,7 @@ const studentSlice = createSlice({
   name: "student",
   initialState,
   reducers: {
-    setScore (state,action) {
+    setScore(state, action) {
       state.currentGame.student.score = action.payload.score;
       state.currentGame.student.rank = action.payload.rank;
     },
@@ -124,7 +128,7 @@ const studentSlice = createSlice({
       state.currentGame = action.payload;
     },
     update(state, action) {
-      state.currentGame = {...state.currentGame,...action.payload };
+      state.currentGame = { ...state.currentGame, ...action.payload };
     },
     disconnect(state) {
       state.currentGame = null;
@@ -257,7 +261,6 @@ export const {
   changeCharacters,
   removeAccessory,
   setScore,
-
 } = studentSlice.actions;
 
 export default studentSlice.reducer;

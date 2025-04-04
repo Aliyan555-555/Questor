@@ -150,7 +150,7 @@ const Teacher = () => {
         .then(() => {
         })
         .catch((err) => {
-
+          console.log(err);
         });
     } else {
       try {

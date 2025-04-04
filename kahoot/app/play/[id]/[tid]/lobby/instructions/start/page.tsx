@@ -1,7 +1,7 @@
 "use client";
 import { useSocket } from '@/src/hooks/useSocket';
 import { CircleIcon, ClockIcon, DiamondIcon, IsCorrectIcon, IsWrongIcon, SquareIcon, StudentSideRankIcon, TriangleIcon } from '@/src/lib/svg';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/src/redux/store';
 import AnimatedAvatar from '@/src/components/animated/AnimatedAvatar';
@@ -9,7 +9,6 @@ import { setScore, update } from '../../../../../../../src/redux/schema/student'
 import { useRouter } from 'next/navigation';
 import { IconButton } from '@mui/material';
 import { IoExitOutline } from 'react-icons/io5';
-
 
 const InitialLoading = () => {
 
@@ -20,7 +19,7 @@ const InitialLoading = () => {
       </div>
     </div>
   )
-}
+};
 
 const WaitingForQuestion = ({ index }) => {
   const [count, setCount] = useState(5);
@@ -139,18 +138,25 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
       </div>
 
       {!isResult && count !== null && count > 0 && (
-        <div className="w-full pb-4 pt-2 px-2 md:px-6 h-full grid grid-cols-2 grid-rows-2 gap-2">
-          {options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => handleSubmitAnswer(option)}
-              style={{ backgroundColor: colors[index] }}
-              className="flex items-center border-b-8 border-l-4 border-r-8 border-t-4 border-[#0000003e] justify-center w-full h-[99%] md:h-full"
-            >
-              {icons[index]?.icon}
-            </button>
-          ))}
-        </div>
+        <React.Fragment>
+          <div className='w-full px-2 md:px-6  py-2'>
+            <div className="w-full text-white text-xl text-center bg-blue_1 py-6 rounded-[10px] ">
+              {question.question}
+            </div>
+          </div>
+          <div className="w-full pb-4  px-2 md:px-6 flex-1 grid grid-cols-2 grid-rows-2 gap-2">
+            {options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => handleSubmitAnswer(option)}
+                style={{ backgroundColor: colors[index] }}
+                className="flex items-center border-b-8 border-l-4 border-r-8 border-t-4 border-[#0000003e] justify-center w-full h-[99%] md:h-full"
+              >
+                {icons[index]?.icon}
+              </button>
+            ))}
+          </div>
+        </React.Fragment>
       )}
       {isResult && (
         <div className="w-full h-full flex items-center justify-center">
@@ -214,11 +220,11 @@ const RankStage = ({ student }) => {
   const navigation = useRouter();
   return (
     <div className={"w-screen h-screen flex flex-col text-white items-center justify-center relative"}>
-       <div className="w-full  absolute top-2 right-2 flex justify-end ">
-          <IconButton onClick={() => navigation.push('/')} className="!bg-red-500 !p-5">
-            <IoExitOutline color="white" fontSize={30} />
-          </IconButton>
-        </div>
+      <div className="w-full  absolute top-2 right-2 flex justify-end ">
+        <IconButton onClick={() => navigation.push('/')} className="!bg-red-500 !p-5">
+          <IoExitOutline color="white" fontSize={30} />
+        </IconButton>
+      </div>
       <div className='flex px-8 flex-col min-w-[350px] items-center gap-2 justify-center bg-blue_1 rounded-[10px] py-6 '>
         <h1 className="text-3xl font-semibold text-white">{student.nickname}</h1>
         <AnimatedAvatar avatarData={student.avatar} avatarItems={student.item} bg='#4686EC' h='120px' w='120px' chin={false} />
@@ -228,7 +234,8 @@ const RankStage = ({ student }) => {
       </div>
     </div>
   )
-}
+};
+
 const Page = () => {
   const student = useSelector((root: RootState) => root.student.currentGame);
   const [currentTime] = useState(new Date().toLocaleTimeString());
@@ -236,9 +243,9 @@ const Page = () => {
   const [result, setResult] = useState(null);
   const dispatch = useDispatch();
   const navigation = useRouter();
-  const {socket,isConnected} = useSocket();
+  const { socket, isConnected } = useSocket();
   const [question, setQuestion] = useState(student.student.room.currentStage.question ?? null);
-  const [stage, setStage] = useState(student.student.room.currentStage.stage ?? null);
+  const [stage, setStage] = useState<null | number>(student.student.room.currentStage.stage ?? null);
 
 
   const handlePopulateCurrentStage = (data) => {
@@ -254,24 +261,18 @@ const Page = () => {
       }
     }
   };
-
   const handleResult = (data) => {
     setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore, rank: data.rank });
     dispatch(setScore({ score: data.score, rank: data.rank }));
   };
-
   useEffect(() => {
-    console.log(socket?"Socket is connected":"Socket is not connected");
+    console.log(socket ? "Socket is connected" : "Socket is not connected");
     if (socket) {
-      const logSocketEvents = (event: string, data) => {
-        console.log(`Socket event: ${event}`, data);
-      };
-
-      socket?.on("roomDeleted",() => {
+      socket?.on("roomDeleted", () => {
         navigation.push(`/play/connect/to/game`);
       })
-      socket.on("populateCurrentStage",handlePopulateCurrentStage)
-      socket.on("result",handleResult)
+      socket.on("populateCurrentStage", handlePopulateCurrentStage)
+      socket.on("result", handleResult)
       socket?.on('inactive', (data) => {
         console.log("🚀 ~ socket?.on Inactive ~ data:", data)
         dispatch(update(data));
@@ -279,12 +280,14 @@ const Page = () => {
       });
       socket.on("userInRoom", (data) => {
         if (!data.status) {
-          if (stage !== 4 || stage !== 3) {
+          if (stage !== 4 && stage !== 3) {
             navigation.push('/play/connect/to/game');
           }
         }
       });
     }
+
+
     return () => {
       socket?.off("populateCurrentStage");
       socket?.off("result");
@@ -294,6 +297,7 @@ const Page = () => {
       socket?.off("roomDeleted");
     }
   }, [socket, currentTime, stage, student]);
+
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -321,20 +325,25 @@ const Page = () => {
   }, [socket]);
 
   useEffect(() => {
-    if (!isConnected){
-      socket?.emit("reconnect_refresh_token",{refreshToken:student.refreshToken});
-      console.log("send Reconnecting request to the server on :" +currentTime);
+    if (!isConnected) {
+      socket?.emit("reconnect_refresh_token", { refreshToken: student.refreshToken });
+      console.log("send Reconnecting request to the server on :" + currentTime);
       console.log("socket status :" + socket);
     }
-})
-
-
-
+  })
   return (
     <div className={"w-screen h-screen flex flex-col items-center justify-center"}>
       {!stage && <InitialLoading />}
       {stage === 1 && <WaitingForQuestion index={index} />}
-      {stage === 2 && <QuestionOptionSection result={result} student={student.student} question={question} socket={socket} options={question.options} />}
+      {stage === 2 && question && typeof question !== 'string' && (
+        <QuestionOptionSection 
+          result={result} 
+          student={student.student} 
+          question={question} 
+          socket={socket} 
+          options={question.options} 
+        />
+      )}
       {stage === 4 && <RankStage student={student.student} />}
       <div className='w-full bg-white flex relative justify-between p-1 h-[50px]'>
         <div className=" items-center relative flex">
@@ -349,6 +358,6 @@ const Page = () => {
       </div>
     </div>
   )
-}
+};
 
-export default Page
+export default Page;
