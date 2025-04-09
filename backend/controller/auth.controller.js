@@ -11,6 +11,8 @@ export const SocialAuth = async (req, res) => {
       existingUser = await userModel.create(user);
     }
 
+    await existingUser.populate("favorites");
+
     const token = jwt.sign(
       { email: existingUser.email, providerId: existingUser.providerId },
       "helloDev",
@@ -112,6 +114,7 @@ export const Login = async (req, res) => {
     const token = jwt.sign({ email: user.email, id: user._id }, JWT_SECRET, {
       expiresIn: "1d",
     });
+    user.populate("favorites");
     res.cookie("session", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -159,3 +162,33 @@ export const UpdatePassword = async(req, res) => {
     res.status(500).json({ status: false, message:error.message});
   }
 }
+
+export const AddOrRemoveFromFavorites = async (req, res) => {
+  try {
+    const { userId, quizId } = req.params;
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ status: false, message: "User not found" });
+    }
+
+    if (user.favorites.includes(quizId)) {
+      // If quiz is already in favorites, remove it
+      const updatedUser = await userModel.findByIdAndUpdate(
+        userId,
+        { $pull: { favorites: quizId } },
+        { new: true }
+      ).populate("favorites");
+      return res.status(200).json({ status: true, message: "Removed from favorites successfully", favorites: updatedUser.favorites });
+    } else {
+      // If quiz is not in favorites, add it
+      const updatedUser = await userModel.findByIdAndUpdate(
+        userId,
+        { $push: { favorites: quizId } },
+        { new: true }
+      ).populate("favorites");
+      return res.status(200).json({ status: true, message: "Added to favorites successfully",favorites: updatedUser.favorites });
+    }
+  } catch (error) {
+    res.status(500).json({ status: false, message: error.message, error });
+  }
+};

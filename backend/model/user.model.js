@@ -22,7 +22,13 @@ const UserSchema = new Schema({
   profileImage:{
     type: String,
     default: "https://asset.cloudinary.com/dtupoan8j/e155e87bd3a792bd964970dd61e6f693",
-  }
+  },
+  favorites:[
+    {
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"Quiz",
+    }
+  ]
 });
 
 UserSchema.path("email").validate(async (value) => {

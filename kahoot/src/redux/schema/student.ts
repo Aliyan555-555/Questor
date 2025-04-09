@@ -103,6 +103,7 @@ interface StudentState {
     providerName: string;
     email: string;
     password: string;
+    favorites: [];
   } | null;
 }
 
@@ -120,6 +121,34 @@ const studentSlice = createSlice({
   name: "student",
   initialState,
   reducers: {
+    changeQuestionValueInDraft(state, action) {
+      if (!state.currentDraft) return;
+
+      const { questionId, field, value } = action.payload;
+      const questionIndex = state.currentDraft.questions.findIndex(
+        (question) => question._id === questionId
+      );
+
+      if (questionIndex !== -1) {
+        state.currentDraft.questions[questionIndex][field] = value;
+      }
+    },
+
+    updateDraftQuestion (state,action){
+      if (!state.currentDraft) return;
+      const questionIndex = state.currentDraft.questions.findIndex(
+        (question) => question._id === action.payload._id
+      );
+
+      if (questionIndex !== -1) {
+        state.currentDraft.questions[questionIndex] = action.payload;
+      }
+    },
+    setFavorites(state, action) {
+      if (state.user) {
+        state.user.favorites = action.payload;
+      }
+    },
     setScore(state, action) {
       state.currentGame.student.score = action.payload.score;
       state.currentGame.student.rank = action.payload.rank;
@@ -242,14 +271,17 @@ export const {
   updateQuestionMedia,
   setCurrentDraft,
   clearCurrentDraft,
+  setFavorites,
   updateCurrentDraft,
   setThemes,
   setQuestionsIndex,
   login,
   logout,
+  changeQuestionValueInDraft,
   updateUser,
   update,
   disconnect,
+  updateDraftQuestion,
   setAvatars,
   addAvatar,
   updateAvatar,
@@ -261,6 +293,7 @@ export const {
   changeCharacters,
   removeAccessory,
   setScore,
+
 } = studentSlice.actions;
 
 export default studentSlice.reducer;

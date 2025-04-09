@@ -3,18 +3,20 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from "redux-persist/lib/storage";
 import studentReducer from "./schema/student";
 import teacherReducer from "./schema/teacher";
+import baseReducer from "./schema/baseSlice";
 
 // Create a persist config
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["student", "teacher"], // Persist only these reducers
+  whitelist: ["student", "teacher","base"], // Persist only these reducers
 };
 
 // Combine reducers
 const rootReducer = combineReducers({
   student: studentReducer,
   teacher: teacherReducer,
+  base:baseReducer
 });
 
 // Persist reducer

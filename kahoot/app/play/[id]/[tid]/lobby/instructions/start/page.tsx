@@ -184,7 +184,7 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
             </svg>
           ) : result.isCorrect ? (
             <div className="flex flex-col gap-4 items-center justify-center">
-              <h2 className="text-3xl font-black text-slate-100">Correct</h2>
+              <h2 className="text-3xl font-black z-50 text-slate-100">Correct</h2>
               <IsCorrectIcon />
               {/* <div className="flex text-center justify-end">
                 <p className="text-xl font-semibold">Answer Streak</p>

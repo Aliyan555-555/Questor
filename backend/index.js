@@ -129,13 +129,14 @@ io.on("connection", (socket) => {
       const activeRooms = await roomModel.find({
         teacher: teacherId,
         status: { $in: ["waiting", "started"] },
-        host: socket.id,
+        // host: socket.id,
         isActive: true,
       });
       if (activeRooms.length !== 0) {
         console.log(activeRooms);
         return socket.emit("error", {
           message: "This teacher is already hosting a room",
+          isReturnToHome:true
         });
       }
       const selectedQuiz = await quizModel
@@ -1044,9 +1045,12 @@ io.on("connection", (socket) => {
         });
         return;
       }
-      const question = quiz.questions.find(
-        (q) => q._id.toString() === data.questionId
+      const question = await questionModel.findOneAndUpdate(
+        { _id: data.questionId },
+        { question: data.value },
+        { new: true }
       );
+
       if (!question) {
         socket.emit("set_question_value", {
           status: false,
@@ -1055,13 +1059,11 @@ io.on("connection", (socket) => {
         return;
       }
 
-      question.question = data.value;
-      await question.save();
-
       socket.emit("set_question_value", {
         status: true,
         message: "Question updated successfully",
         data: quiz,
+        question
       });
     } catch (error) {
       console.error("Error updating question:", error);

@@ -3,8 +3,9 @@ import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase";
 import { AppDispatch } from "../store";
-import { login } from "../schema/student";
+import { login, setFavorites } from "../schema/student";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { setPublicQuizzes, setUserDraftQuizzes, setUserPublishedQuizzes } from "../schema/baseSlice";
 
 export const API_DOMAIN = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER,
@@ -162,24 +163,46 @@ export const FetchPexelsImages = async (
   }
 };
 
-export const getAllQuizzesByUserId = async (id: string) => {
+export const getAllQuizzesByUserId = async (id: string,dispatch:AppDispatch) => {
   try {
     const res = await API_DOMAIN.get(`/api/v1/quiz/get/quizzes/${id}`);
-    return res.data;
+    if (res.data.status){
+      const draftQuizzes = res.data.data.filter(
+        (quiz: { status: string }) => quiz.status === "draft"
+      );
+      const publishedQuizzes = res.data.data.filter(
+        (quiz: { status: string }) => quiz.status === "active"
+      );
+      dispatch(setUserDraftQuizzes(draftQuizzes));
+      dispatch(setUserPublishedQuizzes(publishedQuizzes));
+    }
   } catch (error) {
     console.log("Error fetching Quizzes", error);
     toast.error("Something went wrong");
   }
 };
-export const getAllPublicQuizzes = async () => {
+export const getAllPublicQuizzes = async (dispatch) => {
   try {
     const res = await API_DOMAIN.get(`/api/v1/quiz/get/public/quizzes`);
-    return res.data;
+   if (res.data.status){
+      dispatch(setPublicQuizzes(res.data.data));
+    }
   } catch (error) {
-    console.log("Error fetching Quizzes", error);
+    console.log(error);
     toast.error("Something went wrong");
   }
 };
+
+export const AddToFavorites = async (quizId: string, userId: string,dispatch:AppDispatch) => {
+  try {
+    const res = await API_DOMAIN.post(`/api/v1/auth/favorites/${userId}/${quizId}`);
+  if (res.data.status){
+      dispatch(setFavorites(res.data.favorites));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export const LoginWithCredential = async (
   dispatch,

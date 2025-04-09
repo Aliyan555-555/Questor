@@ -63,6 +63,12 @@ const Teacher = () => {
         }
 
       });
+      socket.on("error",(data) =>{
+        if (data.isReturnToHome){
+          navigation.push("/")
+          return
+        }
+      })
 
       
 

@@ -14,11 +14,12 @@ import {
   setCurrentDraft,
   setThemes,
   updateCurrentDraft,
+  updateDraftQuestion,
   updateQuestion,
   updateQuestionMedia,
 } from "@/src/redux/schema/student";
 import SettingsModel from "@/src/components/create/SettingsModel";
-import { Button, IconButton } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
 import Image from "next/image";
 import { MdDeleteOutline, MdOutlineDeleteForever } from "react-icons/md";
 import { ReactSortable } from "react-sortablejs";
@@ -40,13 +41,14 @@ import imageLoader from "@/src/components/ImageLoader";
 import useOutsideClick from "@/src/hooks/useClickoutside";
 
 const Create = () => {
-  const {socket} = useSocket();
-  const [isSettingModelOpen,setIsSettingModelOpen] = useState(false);
+  const { socket } = useSocket();
+  const [isExist, setIsExist] = useState(false);
+  const [isSettingModelOpen, setIsSettingModelOpen] = useState(false);
   const [savingErrors, setSavingErrors] = useState<ErrorType[]>([])
   const [isOpenGallery, setIsOpenGallery] = useState(false);
   const themes = useSelector((root: RootState) => root.student.themes);
   const [isSaveModelOpen, setIsSaveModelOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
   const [customizableBarIsOpen, setCustomizableBarIsOpen] = useState(true);
   const user = useSelector((root: RootState) => root.student.user);
   const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
@@ -144,7 +146,8 @@ const Create = () => {
       });
 
       socket.on("set_question_value", (quizData) => {
-        dispatch(updateCurrentDraft({ ...quizData.data }));
+        setSelectedQuestionData(quizData.question);
+        dispatch(updateDraftQuestion(quizData.question));
       });
       socket.on("updated_question_media", (quizData) => {
         if (quizData.status) {
@@ -193,7 +196,7 @@ const Create = () => {
   useEffect(() => {
     if (data && data.questions?.length > 0) {
       setSelectedQuestion(data.questions[0]._id);
-      setInputValue(data.questions[0].question);
+      // setInputValue(data.questions[0].question);
       setSelectedQuestionData(data.questions[0]);
     } else {
       setSelectedQuestion(null);
@@ -225,11 +228,11 @@ const Create = () => {
       value,
     });
   };
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleSetQuestion(inputValue);
-    }
-  };
+  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (event.key === "Enter") {
+  //     handleSetQuestion(inputValue);
+  //   }
+  // };
   useEffect(() => {
     if (data && data.questions?.length > 0) {
       setSelectedQuestionData(
@@ -237,7 +240,7 @@ const Create = () => {
           (question) => question._id === selectedQuestion
         )[0]
       );
-      setInputValue(data?.questions.filter((question) => question._id === selectedQuestion)[0]?.question ?? "")
+      // setInputValue(data?.questions.filter((question) => question._id === selectedQuestion)[0]?.question ?? "")
     }
   }, [selectedQuestion]);
   const handleChangeMedia = (qid: string | null, quizId: string, media: string) => {
@@ -272,7 +275,7 @@ const Create = () => {
       const updatedAnswerIndex = isSelected
         ? selectedQuestionData.answerIndex.filter(
           (index) => index !== optionIndex
-        ) // Remove the option if already selected
+        )
         : [...(selectedQuestionData?.answerIndex || []), optionIndex];
 
       handleUpdateQuestion({
@@ -373,7 +376,7 @@ const Create = () => {
 
           <Button
             onClick={() => {
-             setIsSettingModelOpen(true);
+              setIsSettingModelOpen(true);
             }}
             className="!bg-white !text-black  !font-semibold !px-4 !flex !gap-3 !py-2 !text-lg !text-md !rounded-[10px] !capitalize !tracking-wide"
           >
@@ -403,7 +406,7 @@ const Create = () => {
 
             Save
           </Button>
-          <Button onClick={() => ReturnToHome(data.status)} className="!bg-[#D62829] !text-white  !font-semibold !px-4 !flex !gap-3 !py-2 !text-lg !text-md !rounded-[10px] !capitalize !tracking-wide">
+          <Button onClick={() => setIsExist(true)} className="!bg-[#D62829] !text-white  !font-semibold !px-4 !flex !gap-3 !py-2 !text-lg !text-md !rounded-[10px] !capitalize !tracking-wide">
             <svg width="25" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2.5 20C1.8125 20 1.22417 19.7554 0.735 19.2662C0.245833 18.7771 0.000833333 18.1883 0 17.5V10C0 9.64583 0.12 9.34917 0.36 9.11C0.6 8.87083 0.896667 8.75083 1.25 8.75H8.75C9.4375 8.75 10.0262 8.50542 10.5162 8.01625C11.0062 7.52708 11.2508 6.93833 11.25 6.25V1.25C11.25 0.895833 11.37 0.599167 11.61 0.36C11.85 0.120833 12.1467 0.000833333 12.5 0H22.5C23.1875 0 23.7762 0.245 24.2662 0.735C24.7562 1.225 25.0008 1.81333 25 2.5V17.5C25 18.1875 24.7554 18.7762 24.2662 19.2662C23.7771 19.7562 23.1883 20.0008 22.5 20H2.5ZM13.75 7.5C13.3958 7.5 13.0992 7.62 12.86 7.86C12.6208 8.1 12.5008 8.39667 12.5 8.75V13.75C12.5 14.1042 12.62 14.4012 12.86 14.6412C13.1 14.8812 13.3967 15.0008 13.75 15C14.1033 14.9992 14.4004 14.8792 14.6412 14.64C14.8821 14.4008 15.0017 14.1042 15 13.75V11.7812L17.9687 14.75C18.2187 15 18.5104 15.125 18.8438 15.125C19.1771 15.125 19.4687 15 19.7187 14.75C19.9687 14.5 20.0937 14.2033 20.0937 13.86C20.0937 13.5167 19.9687 13.2196 19.7187 12.9687L16.75 10H18.75C19.1042 10 19.4012 9.88 19.6412 9.64C19.8812 9.4 20.0008 9.10333 20 8.75C19.9992 8.39667 19.8792 8.1 19.64 7.86C19.4008 7.62 19.1042 7.5 18.75 7.5H13.75ZM1.25 6.25C0.895833 6.25 0.599167 6.13 0.36 5.89C0.120833 5.65 0.000833333 5.35333 0 5V1.25C0 0.895833 0.12 0.599167 0.36 0.36C0.6 0.120833 0.896667 0.000833333 1.25 0H7.5C7.85417 0 8.15125 0.12 8.39125 0.36C8.63125 0.6 8.75083 0.896667 8.75 1.25V5C8.75 5.35417 8.63 5.65125 8.39 5.89125C8.15 6.13125 7.85333 6.25083 7.5 6.25H1.25Z" fill="#F8F4FB" />
             </svg>
@@ -598,11 +601,10 @@ const Create = () => {
           </div>
           <div className="w-full flex items-center justify-center py-3">
             <input
-              onBlur={() => handleSetQuestion(inputValue)}
+              // onBlur={() => handleSetQuestion(inputValue)}
 
-              onKeyDown={handleKeyDown}
-              value={inputValue}
-              onChange={(e) => { setInputValue(e.target.value); handleSetQuestion(inputValue) }}
+              value={selectedQuestionData?.question ??""}
+              onChange={(e) => { handleSetQuestion(e.target.value) }}
               style={{
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
@@ -961,7 +963,7 @@ const Create = () => {
                 </IconButton>
               </div>
               <div className="w-full flex flex-wrap h-[90vh] overflow-y-scroll justify-center gap-3">
-                {themes.map((theme,i) => (
+                {themes.map((theme, i) => (
                   <div
                     key={i}
                     onClick={() => handleChangeTheme(theme._id)}
@@ -1023,6 +1025,8 @@ const Create = () => {
                   }}
                 />
               </div>}
+
+
             </div>
           )}
         </motion.div>
@@ -1041,6 +1045,9 @@ const Create = () => {
         errors={savingErrors}
         ReturnToHome={ReturnToHome}
       />}
+      {
+        <ExitModel open={isExist} handleClose={() => setIsExist(false)} />
+      }
     </div>
   );
 };
@@ -1261,6 +1268,35 @@ const AddQuestionTypesDropdown = ({
 
 
 };
+
+const ExitModel = ({ open, handleClose }) => {
+  const navigation = useRouter()
+  const handleExit = () => {
+    navigation.push("/")
+  }
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle className="!font-bold">Confirm Exist</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Are you sure you want to exit? Any unsaved changes will be lost.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} className="!bg-[#002F49] !px-4 !text-white" >
+          Cancel
+        </Button>
+        <Button
+          onClick={handleExit}
+          className="!bg-red_1"
+          variant="contained"
+        >
+          Exit
+        </Button>
+      </DialogActions>
+    </Dialog>
+  )
+}
 
 interface ErrorType {
   index: number;

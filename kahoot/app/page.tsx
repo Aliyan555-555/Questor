@@ -2,9 +2,9 @@
 import { RootState } from '@/src/redux/store';
 import { IconButton, Tabs, Tab, Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CircularProgress } from '@mui/material';
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { DeleteQuizById, getAllPublicQuizzes, getAllQuizzesByUserId } from '@/src/redux/api';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddToFavorites, DeleteQuizById, getAllPublicQuizzes, getAllQuizzesByUserId } from '@/src/redux/api';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import imageLoader from '@/src/components/ImageLoader';
@@ -13,6 +13,7 @@ import { PiSignInBold } from "react-icons/pi";
 import ClientComponentSEO from '@/src/components/ClientComponentSEO';
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdOutlineDelete } from 'react-icons/md';
+import { FaStar } from 'react-icons/fa';
 
 interface QuizType {
   _id: string;
@@ -25,9 +26,12 @@ interface QuizType {
 
 const Home = () => {
   const user = useSelector((root: RootState) => root.student);
-  const [quizzes, setQuizzes] = useState<QuizType[]>([]);
+  const dispatch = useDispatch();
+  const publishQuizzes = useSelector((root: RootState) => root.base.userPublishedQuizzes);
+  const draftQuizzes = useSelector((root: RootState) => root.base.userDraftQuizzes);
+  const publicQuizzes = useSelector((root: RootState) => root.base.publicQuizzes);
+  const favoritesQuizzes = useSelector((root: RootState) => root.student.isAuthenticated ? root.student.user.favorites : []);
   const [currentTabIndex, setCurrentTabIndex] = useState(1);
-  const [publicQuizzes, setPublicQuizzes] = useState<QuizType[]>([]);
   const [tabValue, setTabValue] = useState(0);
   const navigation = useRouter();
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -35,14 +39,9 @@ const Home = () => {
   };
   const fetchQuizzes = async () => {
     const userId = user?.user?._id ?? "";
-    const res = await getAllQuizzesByUserId(userId);
-    const res1 = await getAllPublicQuizzes();
-    if (res1?.status) {
-      setPublicQuizzes(res1.data);
-    }
-    if (res?.status) {
-      setQuizzes(res.data);
-    }
+    await getAllQuizzesByUserId(userId, dispatch);
+    await getAllPublicQuizzes(dispatch);
+
   };
   useEffect(() => {
     if (user.isAuthenticated && user.user) {
@@ -165,25 +164,46 @@ const Home = () => {
         </Box>
       </div>
       <TabPanel value={tabValue} index={0}>
-        <QuizList setQuizzes={setQuizzes} quizzes={quizzes.filter(f => f.status === 'active')} handleRedirectToEdit={handleRedirectToEdit} />
+        <QuizList isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={publishQuizzes} handleRedirectToEdit={handleRedirectToEdit} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <QuizList setQuizzes={setQuizzes} quizzes={quizzes.filter(f => f.status === 'draft')} isDraft={true} handleRedirectToEdit={handleRedirectToEdit} />
+        <QuizList isFavoriteButton={false} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={draftQuizzes} isDraft={true} handleRedirectToEdit={handleRedirectToEdit} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <QuizList setQuizzes={setQuizzes} quizzes={publicQuizzes} isEdit={false} isDraft={false} />
+        <QuizList isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={publicQuizzes} isEdit={false} isDraft={false} />
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
-        <div className='p-6 text-gray-500'>Your favorite quizzes will appear here.</div>
+        <QuizList isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={favoritesQuizzes} isEdit={false} isDraft={false} />
       </TabPanel>
     </div>
   );
 };
-const QuizList = ({ quizzes, handleRedirectToEdit, isDraft = false, setQuizzes, isEdit = true }: { quizzes: QuizType[], handleRedirectToEdit?: (id: string) => void, isEdit?: boolean, isDraft?: boolean; setQuizzes: Dispatch<SetStateAction<QuizType[]>> }) => {
+const QuizList = ({ quizzes, handleRedirectToEdit, isDraft = false, isEdit = true, isFavoriteButton, isDelete, favoritesQuizzes }: { quizzes: QuizType[], handleRedirectToEdit?: (id: string) => void, isEdit?: boolean,isFavoriteButton:boolean; isDraft?: boolean; isDelete: boolean; favoritesQuizzes:QuizType[] }) => {
+
+  const dispatch = useDispatch();
+  const user = useSelector((root: RootState) => root.student.user);
+  const navigation = useRouter();
+  const isAuthenticated = useSelector((root: RootState) => root.student.isAuthenticated);
+
+  const handleAddToFavorites = async (quizId: string) => {
+    if (isAuthenticated) {
+      await AddToFavorites(quizId, user._id, dispatch);
+    } else {
+      navigation.push("/auth/login");
+    }
+  }
+  const isFavorite = (id: string) => {
+    return favoritesQuizzes.some((quiz: { _id: string }) => quiz._id === id);
+  };
   return (
     <div className='w-full flex gap-5 p-5 flex-wrap'>
       {quizzes.length > 0 ? quizzes.map(quiz => (
         <div key={quiz._id} style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px" }} className='w-[250px] bg-white rounded-lg overflow-hidden relative'>
+          {isFavoriteButton && <div className='absolute top-0 left-0 z-[50] p-1 flex flex-col items-start gap-2'>
+            <IconButton onClick={() => handleAddToFavorites(quiz._id)} className={`${isFavorite(quiz._id) ? "!bg-[#fBA732] !text-white" : "!bg-white !text-[#fBA732]"}`}>
+              <FaStar />
+            </IconButton>
+          </div>}
           <div className='absolute top-0 right-0 p-1 flex flex-col items-end gap-2'>
             {isEdit && <IconButton
               onClick={() => handleRedirectToEdit(quiz._id)}
@@ -195,7 +215,7 @@ const QuizList = ({ quizzes, handleRedirectToEdit, isDraft = false, setQuizzes, 
                 <path d="M0 14.66V18.41H3.75L14.81 7.35L11.06 3.6L0 14.66ZM18.41 3.75L14.66 0L12.13 2.54L15.88 6.29L18.41 3.75Z" fill="#002F49" />
               </svg>
             </IconButton>}
-            <DeleteButton quizzes={quizzes} setQuizzes={setQuizzes} id={quiz._id} />
+            {isDelete && <DeleteButton id={quiz._id} />}
 
           </div>
           {isDraft ? (
@@ -238,7 +258,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 
-const DeleteButton = ({ id, setQuizzes, quizzes }) => {
+const DeleteButton = ({ id }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -251,7 +271,7 @@ const DeleteButton = ({ id, setQuizzes, quizzes }) => {
     try {
       const res = await DeleteQuizById(id);
       if (res?.status) {
-        setQuizzes(quizzes.filter(f => f._id !== id));
+
         setLoading(false);
       }
     } catch (error) {
