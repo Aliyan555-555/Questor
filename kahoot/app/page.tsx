@@ -213,7 +213,7 @@ const QuizList = ({ setIsWaring,activeQuizzes, quizzes, handleRedirectToEdit, is
   };
 
   const handleSetIsWaring = () => {
-    activeQuizzes.length > 0 && setIsWaring(true)
+    if(activeQuizzes.length > 0 ) setIsWaring(true)
   }
   return (
     <div className='w-full flex gap-5 p-5 flex-wrap'>
