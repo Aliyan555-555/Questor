@@ -247,7 +247,7 @@ const QuizList = ({ setIsWaring, activeQuizzes, quizzes, handleRedirectToEdit, i
               </div>
             </div>
           ) : (
-            activeQuizzes.length ? <Link href={`/play/${quiz._id}`} onClick={(e) => activeQuizzes.length > 0 && e.preventDefault()} >
+            !activeQuizzes.length ? <Link href={`/play/${quiz._id}`} onClick={(e) => activeQuizzes.length > 0 && e.preventDefault()} >
               <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
               <div className='px-4 pt-4'>
                 <h2 className='text-lg font-semibold'>{quiz.name}</h2>
