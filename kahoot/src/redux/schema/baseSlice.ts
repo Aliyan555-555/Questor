@@ -16,6 +16,7 @@ interface BaseState {
     publicQuizzes: QuizType[];
     userDraftQuizzes: QuizType[];
     userPublishedQuizzes: QuizType[];
+    activeQuizzes: string[];
 }
 
 // Initial state with type safety
@@ -23,12 +24,16 @@ const initialState: BaseState = {
     publicQuizzes: [],
     userDraftQuizzes: [],
     userPublishedQuizzes: [],
+    activeQuizzes: [],
 };
 
 const baseSlice = createSlice({
     name: "base",
     initialState,
     reducers: {
+        setActiveQuizzes(state, action: PayloadAction<string[]>) {
+            state.activeQuizzes = action.payload;
+        },
         setPublicQuizzes(state, action: PayloadAction<QuizType[]>) {
             state.publicQuizzes = action.payload;
         },
@@ -57,6 +62,7 @@ export const {
     addPublicQuiz,
     addUserDraftQuiz,
     addUserPublishedQuiz,
+    setActiveQuizzes,
 } = baseSlice.actions;
 
 export default baseSlice.reducer;

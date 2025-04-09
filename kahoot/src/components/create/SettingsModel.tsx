@@ -14,7 +14,7 @@ const SettingsModel = ({ data, handleSaveSettings, isOpen, setIsOpen }) => {
     coverImage: string;
   }>({
     name: data?.name,
-    description: data?.discription,
+    description: data?.description,
     isPrivet: data?.isPrivet,
     coverImage: data?.coverImage,
 

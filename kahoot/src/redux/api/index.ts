@@ -5,7 +5,7 @@ import { auth, googleProvider } from "@/firebase";
 import { AppDispatch } from "../store";
 import { login, setFavorites } from "../schema/student";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { setPublicQuizzes, setUserDraftQuizzes, setUserPublishedQuizzes } from "../schema/baseSlice";
+import { setActiveQuizzes, setPublicQuizzes, setUserDraftQuizzes, setUserPublishedQuizzes } from "../schema/baseSlice";
 
 export const API_DOMAIN = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER,
@@ -193,6 +193,17 @@ export const getAllPublicQuizzes = async (dispatch) => {
   }
 };
 
+export const getActiveQuizzesByTeacherId = async (id: string,dispatch:AppDispatch) => {
+  try {
+    const res = await API_DOMAIN.get(`/api/v1/quiz/get/active/quizzes/${id}`);
+    if (res.data.status){
+      dispatch(setActiveQuizzes(res.data.data));
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong");
+  }
+}
 export const AddToFavorites = async (quizId: string, userId: string,dispatch:AppDispatch) => {
   try {
     const res = await API_DOMAIN.post(`/api/v1/auth/favorites/${userId}/${quizId}`);

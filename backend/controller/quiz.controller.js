@@ -1,4 +1,5 @@
 import quizModel from "../model/quiz.model.js";
+import { roomModel } from "../model/room.model.js";
 export const GetAllQuizzesByUserId = async (req, res) => {
   try {
     const { id } = req.params;
@@ -29,3 +30,24 @@ export const DeleteQuizBuyId = async (req, res) => {
     res.status(500).json({ message: error.message, status: false });
   }
 };
+
+
+export const GetActiveQuizzesById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const Quizzes = await quizModel.find({creator: id});
+    const QuizzesIds = Quizzes.map((quiz) => quiz._id);
+    const activeRooms = await roomModel.find({
+      quiz: { $in: QuizzesIds },
+      status: { $in: ["waiting", "started"] },
+      isActive: true,
+    });
+    const activeQuizzes = await quizModel.find({
+      _id: { $in: activeRooms.map((room) => room.quiz) },
+    });
+
+    res.status(200).json({ data: activeQuizzes.map(q => q._id), status: true });
+  } catch (error) {
+    res.status(500).json({ message: error.message, status: false });
+  }
+}
