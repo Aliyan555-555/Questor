@@ -31,7 +31,7 @@ const Home = () => {
   const draftQuizzes = useSelector((root: RootState) => root.base.userDraftQuizzes);
   const activeQuizzes = useSelector((root: RootState) => root.base.activeQuizzes);
   console.log("🚀 ~ Home ~ activeQuizzes:", activeQuizzes)
-  const [isWaring, setIsWaring] = useState(false);
+  // const [isWaring, setIsWaring] = useState(false);
 
   const publicQuizzes = useSelector((root: RootState) => root.base.publicQuizzes);
   const favoritesQuizzes = useSelector((root: RootState) => root.student.isAuthenticated ? root.student.user.favorites : []);
@@ -178,23 +178,23 @@ const Home = () => {
         </Box>
       </div>
       <TabPanel value={tabValue} index={0}>
-        <QuizList setIsWaring={setIsWaring} activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={publishQuizzes} handleRedirectToEdit={handleRedirectToEdit} />
+        <QuizList  activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={publishQuizzes} handleRedirectToEdit={handleRedirectToEdit} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <QuizList setIsWaring={setIsWaring} activeQuizzes={activeQuizzes} isFavoriteButton={false} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={draftQuizzes} isDraft={true} handleRedirectToEdit={handleRedirectToEdit} />
+        <QuizList  activeQuizzes={activeQuizzes} isFavoriteButton={false} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={draftQuizzes} isDraft={true} handleRedirectToEdit={handleRedirectToEdit} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <QuizList setIsWaring={setIsWaring} activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={publicQuizzes} isEdit={false} isDraft={false} />
+        <QuizList  activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={publicQuizzes} isEdit={false} isDraft={false} />
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
-        <QuizList setIsWaring={setIsWaring} activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={favoritesQuizzes} isEdit={false} isDraft={false} />
+        <QuizList  activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={favoritesQuizzes} isEdit={false} isDraft={false} />
       </TabPanel>
-      {isWaring && <WarningModel close={() => setIsWaring(false)} />}
+      {/* {isWaring && <WarningModel close={() => setIsWaring(false)} />} */}
     </div>
 
   );
 };
-const QuizList = ({ setIsWaring, activeQuizzes, quizzes, handleRedirectToEdit, isDraft = false, isEdit = true, isFavoriteButton, isDelete, favoritesQuizzes }: { quizzes: QuizType[], handleRedirectToEdit?: (id: string) => void, isEdit?: boolean, isFavoriteButton: boolean; activeQuizzes: string[]; isDraft?: boolean; isDelete: boolean; setIsWaring: React.Dispatch<React.SetStateAction<boolean>>; favoritesQuizzes: QuizType[] }) => {
+const QuizList = ({ activeQuizzes, quizzes, handleRedirectToEdit, isDraft = false, isEdit = true, isFavoriteButton, isDelete, favoritesQuizzes }: { quizzes: QuizType[], handleRedirectToEdit?: (id: string) => void, isEdit?: boolean, isFavoriteButton: boolean; activeQuizzes: string[]; isDraft?: boolean; isDelete: boolean; favoritesQuizzes: QuizType[] }) => {
 
   const dispatch = useDispatch();
   const user = useSelector((root: RootState) => root.student.user);
@@ -212,13 +212,11 @@ const QuizList = ({ setIsWaring, activeQuizzes, quizzes, handleRedirectToEdit, i
     return favoritesQuizzes.some((quiz: { _id: string }) => quiz._id === id);
   };
 
-  const handleSetIsWaring = () => {
-    if (activeQuizzes.length > 0) setIsWaring(true)
-  }
+
   return (
     <div className='w-full flex gap-5 p-5 flex-wrap'>
       {quizzes.length > 0 ? quizzes.map(quiz => (
-        <div onClick={handleSetIsWaring} key={quiz._id} style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px" }} className='w-[250px] bg-white rounded-lg overflow-hidden relative'>
+        <div key={quiz._id} style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px" }} className='w-[250px] bg-white rounded-lg overflow-hidden relative'>
           {isFavoriteButton && <div className='absolute top-0 left-0 z-[50] p-1 flex flex-col items-start gap-2'>
             <IconButton onClick={() => handleAddToFavorites(quiz._id)} className={`${isFavorite(quiz._id) ? "!bg-[#fBA732] !text-white" : "!bg-white !text-[#fBA732]"}`}>
               <FaStar />
@@ -247,17 +245,17 @@ const QuizList = ({ setIsWaring, activeQuizzes, quizzes, handleRedirectToEdit, i
               </div>
             </div>
           ) : (
-            !activeQuizzes.length ? <Link href={`/play/${quiz._id}`} onClick={(e) => activeQuizzes.length > 0 && e.preventDefault()} >
+            true? <Link href={`/play/${quiz._id}`} >
               <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
               <div className='px-4 pt-4'>
                 <h2 className='text-lg font-semibold'>{quiz.name}</h2>
                 <p className='text-gray-600 text-sm'>{quiz.description}</p>
               </div>
-              <div className='flex justify-end px-2 py-1'>
+              {/* <div className='flex justify-end px-2 py-1'>
                 {activeQuizzes.length > 0 && activeQuizzes.includes(quiz._id) && <div className='px-2 flex items-center justify-center py-[3px] font-semibold text-xs text-white bg-green-500 rounded-[50px]'>
                   Active
                 </div>}
-              </div>
+              </div> */}
             </Link> :
               <div >
                 <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
@@ -353,23 +351,23 @@ const DeleteButton = ({ id }) => {
 
 
 
-const WarningModel = ({ close }: { close: () => void }) => {
-  return (
-    <Dialog open={true} onClose={() => { }}>
-      <DialogTitle className="!font-bold">Warning</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          please close the active quiz before starting new one!
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={close} className="!bg-[#002F49] !px-4 !text-white">
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  )
-}
+// const WarningModel = ({ close }: { close: () => void }) => {
+//   return (
+//     <Dialog open={true} onClose={() => { }}>
+//       <DialogTitle className="!font-bold">Warning</DialogTitle>
+//       <DialogContent>
+//         <DialogContentText>
+//           please close the active quiz before starting new one!
+//         </DialogContentText>
+//       </DialogContent>
+//       <DialogActions>
+//         <Button onClick={close} className="!bg-[#002F49] !px-4 !text-white">
+//           Close
+//         </Button>
+//       </DialogActions>
+//     </Dialog>
+//   )
+// }
 
 
 export default Home;
