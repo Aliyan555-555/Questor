@@ -213,7 +213,7 @@ const QuizList = ({ setIsWaring,activeQuizzes, quizzes, handleRedirectToEdit, is
   };
 
   const handleSetIsWaring = () => {
-   if( activeQuizzes.length > 0 ) setIsWaring(true)
+    activeQuizzes.length > 0 && setIsWaring(true)
   }
   return (
     <div className='w-full flex gap-5 p-5 flex-wrap'>
@@ -247,8 +247,8 @@ const QuizList = ({ setIsWaring,activeQuizzes, quizzes, handleRedirectToEdit, is
               </div>
             </div>
           ) : (
-            // <Link href={`/play/${quiz._id}`}>
-            <div onClick={() => activeQuizzes.length === 0 && navigation.push(`/play/${quiz._id}`)}>
+            <Link href={`/play/${quiz._id}`} onClick={(e) => activeQuizzes.length > 0 && e.preventDefault()} >
+            {/* <div onClick={() => activeQuizzes.length === 0 && navigation.push(`/play/${quiz._id}`)}> */}
               <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
               <div className='px-4 pt-4'>
                 <h2 className='text-lg font-semibold'>{quiz.name}</h2>
@@ -259,7 +259,8 @@ const QuizList = ({ setIsWaring,activeQuizzes, quizzes, handleRedirectToEdit, is
                   Active
                 </div>}
               </div>
-            </div>
+            {/* </div> */}
+            </Link>
           )
           }
         </div>
