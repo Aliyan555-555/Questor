@@ -189,12 +189,12 @@ const Home = () => {
       <TabPanel value={tabValue} index={3}>
         <QuizList setIsWaring={setIsWaring} activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={favoritesQuizzes} isEdit={false} isDraft={false} />
       </TabPanel>
-     {isWaring && <WarningModel close={() =>setIsWaring(false)} />}
+      {isWaring && <WarningModel close={() => setIsWaring(false)} />}
     </div>
 
   );
 };
-const QuizList = ({ setIsWaring,activeQuizzes, quizzes, handleRedirectToEdit, isDraft = false, isEdit = true, isFavoriteButton, isDelete, favoritesQuizzes }: { quizzes: QuizType[], handleRedirectToEdit?: (id: string) => void, isEdit?: boolean, isFavoriteButton: boolean; activeQuizzes: string[]; isDraft?: boolean; isDelete: boolean;setIsWaring:React.Dispatch<React.SetStateAction<boolean>>; favoritesQuizzes: QuizType[] }) => {
+const QuizList = ({ setIsWaring, activeQuizzes, quizzes, handleRedirectToEdit, isDraft = false, isEdit = true, isFavoriteButton, isDelete, favoritesQuizzes }: { quizzes: QuizType[], handleRedirectToEdit?: (id: string) => void, isEdit?: boolean, isFavoriteButton: boolean; activeQuizzes: string[]; isDraft?: boolean; isDelete: boolean; setIsWaring: React.Dispatch<React.SetStateAction<boolean>>; favoritesQuizzes: QuizType[] }) => {
 
   const dispatch = useDispatch();
   const user = useSelector((root: RootState) => root.student.user);
@@ -213,12 +213,12 @@ const QuizList = ({ setIsWaring,activeQuizzes, quizzes, handleRedirectToEdit, is
   };
 
   const handleSetIsWaring = () => {
-    if(activeQuizzes.length > 0 ) setIsWaring(true)
+    if (activeQuizzes.length > 0) setIsWaring(true)
   }
   return (
     <div className='w-full flex gap-5 p-5 flex-wrap'>
       {quizzes.length > 0 ? quizzes.map(quiz => (
-        <div onClick={handleSetIsWaring}  key={quiz._id} style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px" }} className='w-[250px] bg-white rounded-lg overflow-hidden relative'>
+        <div onClick={handleSetIsWaring} key={quiz._id} style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px" }} className='w-[250px] bg-white rounded-lg overflow-hidden relative'>
           {isFavoriteButton && <div className='absolute top-0 left-0 z-[50] p-1 flex flex-col items-start gap-2'>
             <IconButton onClick={() => handleAddToFavorites(quiz._id)} className={`${isFavorite(quiz._id) ? "!bg-[#fBA732] !text-white" : "!bg-white !text-[#fBA732]"}`}>
               <FaStar />
@@ -247,8 +247,7 @@ const QuizList = ({ setIsWaring,activeQuizzes, quizzes, handleRedirectToEdit, is
               </div>
             </div>
           ) : (
-            <Link href={`/play/${quiz._id}`} onClick={(e) => activeQuizzes.length > 0 && e.preventDefault()} >
-            {/* <div onClick={() => activeQuizzes.length === 0 && navigation.push(`/play/${quiz._id}`)}> */}
+            activeQuizzes.length ? <Link href={`/play/${quiz._id}`} onClick={(e) => activeQuizzes.length > 0 && e.preventDefault()} >
               <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
               <div className='px-4 pt-4'>
                 <h2 className='text-lg font-semibold'>{quiz.name}</h2>
@@ -259,8 +258,19 @@ const QuizList = ({ setIsWaring,activeQuizzes, quizzes, handleRedirectToEdit, is
                   Active
                 </div>}
               </div>
-            {/* </div> */}
-            </Link>
+            </Link> :
+              <div >
+                <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
+                <div className='px-4 pt-4'>
+                  <h2 className='text-lg font-semibold'>{quiz.name}</h2>
+                  <p className='text-gray-600 text-sm'>{quiz.description}</p>
+                </div>
+                <div className='flex justify-end px-2 py-1'>
+                  {activeQuizzes.length > 0 && activeQuizzes.includes(quiz._id) && <div className='px-2 flex items-center justify-center py-[3px] font-semibold text-xs text-white bg-green-500 rounded-[50px]'>
+                    Active
+                  </div>}
+                </div>
+              </div>
           )
           }
         </div>
@@ -343,7 +353,7 @@ const DeleteButton = ({ id }) => {
 
 
 
-const WarningModel = ({close}:{close:() => void}) =>{
+const WarningModel = ({ close }: { close: () => void }) => {
   return (
     <Dialog open={true} onClose={() => { }}>
       <DialogTitle className="!font-bold">Warning</DialogTitle>
