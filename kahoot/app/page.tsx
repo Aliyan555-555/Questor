@@ -247,7 +247,7 @@ const QuizList = ({ activeQuizzes, quizzes, handleRedirectToEdit, isDraft = fals
           ) : (
             true? <Link href={`/play/${quiz._id}`} >
               <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
-              <div className='px-4 pt-4'>
+              <div className='p-4'>
                 <h2 className='text-lg font-semibold'>{quiz.name}</h2>
                 <p className='text-gray-600 text-sm'>{quiz.description}</p>
               </div>
