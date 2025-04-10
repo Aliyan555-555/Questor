@@ -94,7 +94,7 @@ const Home = () => {
 
                   Join</Button>
               </Link>
-              <ProfileAvatar />
+              <ProfileAvatar user={user.user} />
             </>
           ) : (
             <>
