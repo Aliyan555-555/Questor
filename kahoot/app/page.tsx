@@ -4,7 +4,7 @@ import { IconButton, Tabs, Tab, Box, Button, Dialog, DialogTitle, DialogContent,
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddToFavorites, DeleteQuizById, getActiveQuizzesByTeacherId, getAllPublicQuizzes, getAllQuizzesByUserId } from '@/src/redux/api';
+import { AddToFavorites, DeleteQuizById, getAllPublicQuizzes, getAllQuizzesByUserId } from '@/src/redux/api';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import imageLoader from '@/src/components/ImageLoader';
