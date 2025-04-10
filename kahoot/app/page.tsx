@@ -56,15 +56,15 @@ const Home = () => {
     navigation.push(`/play/create?id=${id}`);
   };
 
-  useEffect(() => {
-    if (user.isAuthenticated) {
-      const timer = setTimeout(() => {
-        getActiveQuizzesByTeacherId(user.user._id, dispatch);
-      }, 1000);
+  // useEffect(() => {
+  //   if (user.isAuthenticated) {
+  //     const timer = setTimeout(() => {
+  //       getActiveQuizzesByTeacherId(user.user._id, dispatch);
+  //     }, 1000);
 
-      return () => clearTimeout(timer); // Cleanup the timer on component unmount
-    }
-  });
+  //     return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  //   }
+  // });
 
 
   return (
@@ -76,7 +76,7 @@ const Home = () => {
           <h2 className=' hidden sm:flex text-2xl font-bold'>Dashboard</h2>
         </div>
         {/*  */}
-        <div className='flex gap-2 md:gap-4 items-center'>
+        <div className='flex gap-2 md:gap-3 items-center'>
           {user.isAuthenticated ? (
             <>
               <Link href={'/play/create'}>

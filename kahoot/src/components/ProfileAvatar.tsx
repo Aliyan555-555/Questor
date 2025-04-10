@@ -54,9 +54,10 @@ const ProfileAvatar = ({ user }: {
                 onClose={handleClose}
                 anchorOrigin={{ vertical: 'bottom',  horizontal: 'right', }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                style={{marginTop:5}}
+                style={{marginTop:5,marginRight:5}}
+                className='rounded-[10px]'
             >
-                <div className='flex  w-[280px] px-4 py-3'>
+                <div className='flex  w-[280px] px-4 pb-3 pt-2 mb-2 border-b border-gray-400'>
                     <Avatar className='!h-[50px] !w-[50px]' src={user.profileImage} />
                     <div className='flex-1 px-2 ' >
                         <h2 className='text-gray-700 text-lg text-ellipsis font-semibold'>{truncateString(user.name, 24)}</h2>
@@ -65,7 +66,7 @@ const ProfileAvatar = ({ user }: {
                 </div>
                 <MenuItem  className='!flex !items-center !justify-between !px-4 !gap-3 !text-gray-700 !font-semibold' >
                     <div className='flex gap-3 items-center py-1'>
-                        <div className='p-2 bg-[#BDBDBD] rounded-full flex items-center justify-center text-white '>
+                        <div className='p-2 bg-[#BDBDBD] text-md rounded-full flex items-center justify-center text-white '>
                         <FaUser fontSize={23} />
                         </div>
                         Edit Profile

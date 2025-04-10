@@ -30,6 +30,7 @@ const allowedOrigins = [
   "http://localhost:8000",
   "http://dev.meteoricsolutions.com:8000",
   "http://dev.meteoricsolutions.com:9000",
+  "http://questor.meteoricsolutions.com",
   process.env.FRONTEND_URL,
 ];
 const corsOptions = {
