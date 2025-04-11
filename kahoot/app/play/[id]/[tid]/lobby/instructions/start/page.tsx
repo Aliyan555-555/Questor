@@ -236,10 +236,29 @@ const RankStage = ({ student }) => {
   )
 };
 
+
+
+
+const Reconnecting = () => {
+  return (
+    <div className='flex-1 w-full flex items-center justify-center'>
+      <div className='h-fit w-fit p-10 bg-black/40 rounded-lg '>
+        <h2 className="text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100">
+          Reconnecting... 
+
+        </h2>
+        <p className="text-lg font-semibold text-white text-center mt-1">
+          Waiting for the teacher&apos;s response!
+        </p>
+
+      </div>
+    </div>
+  )
+}
 const Page = () => {
   const student = useSelector((root: RootState) => root.student.currentGame);
   const [currentTime] = useState(new Date().toLocaleTimeString());
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(5);
   const [result, setResult] = useState(null);
   const dispatch = useDispatch();
   const navigation = useRouter();
@@ -326,6 +345,7 @@ const Page = () => {
 
   useEffect(() => {
     if (!isConnected) {
+      setStage(5)
       socket?.emit("reconnect_refresh_token", { refreshToken: student.refreshToken });
       console.log("send Reconnecting request to the server on :" + currentTime);
       console.log("socket status :" + socket);
@@ -336,15 +356,16 @@ const Page = () => {
       {!stage && <InitialLoading />}
       {stage === 1 && <WaitingForQuestion index={index} />}
       {stage === 2 && question && typeof question !== 'string' && (
-        <QuestionOptionSection 
-          result={result} 
-          student={student.student} 
-          question={question} 
-          socket={socket} 
-          options={question.options} 
+        <QuestionOptionSection
+          result={result}
+          student={student.student}
+          question={question}
+          socket={socket}
+          options={question.options}
         />
       )}
       {stage === 4 && <RankStage student={student.student} />}
+      {stage === 5 && <Reconnecting />}
       <div className='w-full bg-white flex relative justify-between p-1 h-[50px]'>
         <div className=" items-center relative flex">
           <div className="absolute bottom-0">
@@ -361,3 +382,5 @@ const Page = () => {
 };
 
 export default Page;
+
+
