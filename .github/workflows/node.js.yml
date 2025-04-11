@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Dependencies and Build Backend
         run: |
-          pm2 stop all
+          pm2 stop all || true
           cd backend
           npm ci
 
@@ -38,6 +38,12 @@ jobs:
           npm i --force
           npm run build
 
-      - name: Restart PM2 services
+      - name: Restart PM2 services if not already running
         run: |
-          pm2 start all
+          if [ "$(pm2 list | grep online | wc -l)" -eq 0 ]; then
+            echo "No PM2 services are running. Attempting to resurrect..."
+            pm2 resurrect || pm2 start ecosystem.config.js
+          else
+            echo "PM2 services already running. Restarting all..."
+            pm2 restart all
+          fi
