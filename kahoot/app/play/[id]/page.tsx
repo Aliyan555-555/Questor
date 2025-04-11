@@ -273,7 +273,8 @@ const Teacher = () => {
               <h3>Waiting for students...</h3>
             </div>
           )
-        }
+        } 
+        {/* hello */}
         {
           game?.students.map((student, index) => (
 

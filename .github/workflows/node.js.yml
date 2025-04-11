@@ -20,13 +20,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Resurrect PM2 Processes if Needed
-        run: |
-          pm2 resurrect || echo "No previous PM2 state to restore."
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      #     cache: 'npm'
 
       - name: Install Dependencies and Build Backend
         run: |
-          pm2 stop all || echo "No PM2 apps running."
+          pm2 stop all
           cd backend
           npm ci
 
@@ -36,7 +38,6 @@ jobs:
           npm i --force
           npm run build
 
-      - name: Restart PM2 Services and Save
+      - name: Restart PM2 services
         run: |
           pm2 start all
-          pm2 save
