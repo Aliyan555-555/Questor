@@ -351,23 +351,5 @@ const DeleteButton = ({ id }) => {
 
 
 
-// const WarningModel = ({ close }: { close: () => void }) => {
-//   return (
-//     <Dialog open={true} onClose={() => { }}>
-//       <DialogTitle className="!font-bold">Warning</DialogTitle>
-//       <DialogContent>
-//         <DialogContentText>
-//           please close the active quiz before starting new one!
-//         </DialogContentText>
-//       </DialogContent>
-//       <DialogActions>
-//         <Button onClick={close} className="!bg-[#002F49] !px-4 !text-white">
-//           Close
-//         </Button>
-//       </DialogActions>
-//     </Dialog>
-//   )
-// }
-
 
 export default Home;

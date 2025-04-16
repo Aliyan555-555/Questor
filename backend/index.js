@@ -134,7 +134,7 @@ io.on("connection", (socket) => {
         // host: socket.id,
         isActive: true,
       });
-      if (activeRooms.length !== 0) {
+      if (activeRooms.length ) {
         console.log(activeRooms);
         return socket.emit("error", {
           message: "This teacher is already hosting a room",

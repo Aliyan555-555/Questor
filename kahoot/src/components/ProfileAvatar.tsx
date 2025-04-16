@@ -11,6 +11,7 @@ import { TbLogout } from "react-icons/tb";
 import { FaAngleRight, FaUser } from 'react-icons/fa';
 import { IoHelpOutline } from 'react-icons/io5';
 import { IoMdSettings } from 'react-icons/io';
+import Link from 'next/link';
 const ProfileAvatar = ({ user }: {
     user: {
         name: string;
@@ -45,16 +46,16 @@ const ProfileAvatar = ({ user }: {
 
     return (
         <>
-            <IconButton  onClick={handleClick} style={{ marginBottom: '8px' }}>
+            <IconButton onClick={handleClick} style={{ marginBottom: '8px' }}>
                 <Avatar src={user.profileImage} />
             </IconButton>
             <Menu
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                anchorOrigin={{ vertical: 'bottom',  horizontal: 'right', }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                style={{marginTop:5,marginRight:5}}
+                style={{ marginTop: 5, marginRight: 5 }}
                 className='rounded-[10px]'
             >
                 <div className='flex  w-[280px] px-4 pb-3 pt-2 mb-2 border-b border-gray-400'>
@@ -64,16 +65,16 @@ const ProfileAvatar = ({ user }: {
                         <h4 className='text-gray-700 text-sm text-ellipsis font-semibold'>{truncateString(user.email, 22)}</h4>
                     </div>
                 </div>
-                <MenuItem  className='!flex !items-center !justify-between !px-4 !gap-3 !text-gray-700 !font-semibold' >
+                <MenuItem onClick={() => router.push('/auth/profile')} className='!flex !items-center !justify-between !px-4 !gap-3 !text-gray-700 !font-semibold' >
                     <div className='flex gap-3 items-center py-1'>
                         <div className='p-2 bg-[#BDBDBD] text-md rounded-full flex items-center justify-center text-white '>
-                        <FaUser fontSize={23} />
+                            <FaUser fontSize={23} />
                         </div>
                         Edit Profile
                     </div>
                     <FaAngleRight fontSize={20} />
                 </MenuItem>
-                <MenuItem  className='!flex !items-center !justify-between !px-4 !gap-3 !text-gray-700 !font-semibold' >
+                <MenuItem className='!flex !items-center !justify-between !px-4 !gap-3 !text-gray-700 !font-semibold' >
                     <div className='flex gap-3 items-center py-1'>
                         <div className='p-2 bg-[#BDBDBD] rounded-full flex items-center justify-center text-white '>
                             <IoMdSettings fontSize={23} />
@@ -82,7 +83,7 @@ const ProfileAvatar = ({ user }: {
                     </div>
                     <FaAngleRight fontSize={20} />
                 </MenuItem>
-                <MenuItem  className='!flex !items-center !justify-between !px-4 !gap-3 !text-gray-700 !font-semibold' >
+                <MenuItem className='!flex !items-center !justify-between !px-4 !gap-3 !text-gray-700 !font-semibold' >
                     <div className='flex gap-3 items-center py-1'>
                         <div className='p-2 bg-[#BDBDBD] rounded-full flex items-center justify-center text-white '>
                             <IoHelpOutline fontSize={23} />

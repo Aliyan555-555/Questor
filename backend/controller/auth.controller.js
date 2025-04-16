@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import { userModel } from "../model/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import streamifier from "streamifier"
 import { sendOTPEmail } from "../nodemilar.js";
 export const SocialAuth = async (req, res) => {
   try {
@@ -149,19 +150,26 @@ export const ForgetPassword = async (req, res) => {
   }
 };
 
-
-export const UpdatePassword = async(req, res) => {
+export const UpdatePassword = async (req, res) => {
   try {
-    const {email, password} = req.body;
-    const user = await userModel.findOneAndUpdate({email}, {password: bcrypt.hashSync(password, 10)}, {new: true});
-    if(!user){
-      return res.status(404).json({status: false, message: "User not found with this email"});
+    const { email, password } = req.body;
+    const user = await userModel.findOneAndUpdate(
+      { email },
+      { password: bcrypt.hashSync(password, 10) },
+      { new: true }
+    );
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: false, message: "User not found with this email" });
     }
-    res.status(200).json({status: true, message: "Password updated successfully"});
+    res
+      .status(200)
+      .json({ status: true, message: "Password updated successfully" });
   } catch (error) {
-    res.status(500).json({ status: false, message:error.message});
+    res.status(500).json({ status: false, message: error.message });
   }
-}
+};
 
 export const AddOrRemoveFromFavorites = async (req, res) => {
   try {
@@ -173,22 +181,95 @@ export const AddOrRemoveFromFavorites = async (req, res) => {
 
     if (user.favorites.includes(quizId)) {
       // If quiz is already in favorites, remove it
-      const updatedUser = await userModel.findByIdAndUpdate(
-        userId,
-        { $pull: { favorites: quizId } },
-        { new: true }
-      ).populate("favorites");
-      return res.status(200).json({ status: true, message: "Removed from favorites successfully", favorites: updatedUser.favorites });
+      const updatedUser = await userModel
+        .findByIdAndUpdate(
+          userId,
+          { $pull: { favorites: quizId } },
+          { new: true }
+        )
+        .populate("favorites");
+      return res.status(200).json({
+        status: true,
+        message: "Removed from favorites successfully",
+        favorites: updatedUser.favorites,
+      });
     } else {
       // If quiz is not in favorites, add it
-      const updatedUser = await userModel.findByIdAndUpdate(
-        userId,
-        { $push: { favorites: quizId } },
-        { new: true }
-      ).populate("favorites");
-      return res.status(200).json({ status: true, message: "Added to favorites successfully",favorites: updatedUser.favorites });
+      const updatedUser = await userModel
+        .findByIdAndUpdate(
+          userId,
+          { $push: { favorites: quizId } },
+          { new: true }
+        )
+        .populate("favorites");
+      return res.status(200).json({
+        status: true,
+        message: "Added to favorites successfully",
+        favorites: updatedUser.favorites,
+      });
     }
   } catch (error) {
     res.status(500).json({ status: false, message: error.message, error });
+  }
+};
+
+
+// controllers/userController.js
+import cloudinary from '../config/cloudinary.js';
+
+export const EditProfile = async (req, res) => {
+  try {
+    const { email, name, prevEmail } = req.body;
+    let profileImageUrl = req.body.profileImage;
+
+    const userExist = await userModel.findOne({ email: prevEmail });
+    if (!userExist) {
+      return res.status(404).json({ message: 'Not found', status: false });
+    }
+
+    // If a new image is uploaded
+    if (req.file) {
+      const result = await cloudinary.uploader.upload_stream(
+        { folder: 'profile_pictures' },
+        async (error, result) => {
+          if (error) {
+            return res.status(500).json({ message: 'Upload failed', status: false });
+          }
+
+          const updatedUser = await userModel.findByIdAndUpdate(
+            userExist._id,
+            {
+              email,
+              name,
+              profileImage: result.secure_url,
+            },
+            { new: true }
+          );
+
+          return res.status(200).json({
+            message: 'User successfully updated',
+            status: true,
+            user: updatedUser,
+          });
+        }
+      );
+
+      // Convert buffer to stream for Cloudinary
+      streamifier.createReadStream(req.file.buffer).pipe(result);
+    } else {
+      const updatedUser = await userModel.findByIdAndUpdate(
+        userExist._id,
+        { email, name, profileImage: profileImageUrl },
+        { new: true }
+      );
+
+      return res.status(200).json({
+        message: 'User successfully updated',
+        status: true,
+        user: updatedUser,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', status: false,error:error.message});
   }
 };

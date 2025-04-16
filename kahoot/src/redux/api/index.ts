@@ -3,9 +3,14 @@ import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase";
 import { AppDispatch } from "../store";
-import { login, setFavorites } from "../schema/student";
+import { login, setFavorites, updateUser } from "../schema/student";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { setActiveQuizzes, setPublicQuizzes, setUserDraftQuizzes, setUserPublishedQuizzes } from "../schema/baseSlice";
+import {
+  setActiveQuizzes,
+  setPublicQuizzes,
+  setUserDraftQuizzes,
+  setUserPublishedQuizzes,
+} from "../schema/baseSlice";
 
 export const API_DOMAIN = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER,
@@ -163,10 +168,13 @@ export const FetchPexelsImages = async (
   }
 };
 
-export const getAllQuizzesByUserId = async (id: string,dispatch:AppDispatch) => {
+export const getAllQuizzesByUserId = async (
+  id: string,
+  dispatch: AppDispatch
+) => {
   try {
     const res = await API_DOMAIN.get(`/api/v1/quiz/get/quizzes/${id}`);
-    if (res.data.status){
+    if (res.data.status) {
       const draftQuizzes = res.data.data.filter(
         (quiz: { status: string }) => quiz.status === "draft"
       );
@@ -184,7 +192,7 @@ export const getAllQuizzesByUserId = async (id: string,dispatch:AppDispatch) => 
 export const getAllPublicQuizzes = async (dispatch) => {
   try {
     const res = await API_DOMAIN.get(`/api/v1/quiz/get/public/quizzes`);
-   if (res.data.status){
+    if (res.data.status) {
       dispatch(setPublicQuizzes(res.data.data));
     }
   } catch (error) {
@@ -193,27 +201,36 @@ export const getAllPublicQuizzes = async (dispatch) => {
   }
 };
 
-export const getActiveQuizzesByTeacherId = async (id: string,dispatch:AppDispatch) => {
+export const getActiveQuizzesByTeacherId = async (
+  id: string,
+  dispatch: AppDispatch
+) => {
   try {
     const res = await API_DOMAIN.get(`/api/v1/quiz/get/active/quizzes/${id}`);
-    if (res.data.status){
+    if (res.data.status) {
       dispatch(setActiveQuizzes(res.data.data));
     }
   } catch (error) {
     console.log(error);
     toast.error("Something went wrong");
   }
-}
-export const AddToFavorites = async (quizId: string, userId: string,dispatch:AppDispatch) => {
+};
+export const AddToFavorites = async (
+  quizId: string,
+  userId: string,
+  dispatch: AppDispatch
+) => {
   try {
-    const res = await API_DOMAIN.post(`/api/v1/auth/favorites/${userId}/${quizId}`);
-  if (res.data.status){
+    const res = await API_DOMAIN.post(
+      `/api/v1/auth/favorites/${userId}/${quizId}`
+    );
+    if (res.data.status) {
       dispatch(setFavorites(res.data.favorites));
     }
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const LoginWithCredential = async (
   dispatch,
@@ -221,7 +238,7 @@ export const LoginWithCredential = async (
   credentials,
   isRedirect,
   redirectUrl,
-  setError,
+  setError
 ) => {
   const res = await API_DOMAIN.post("/api/v1/auth/login", credentials);
   console.log(res);
@@ -265,18 +282,17 @@ export const RegisterWithCredentials = async (
   credentials,
   isRedirect,
   redirectUrl,
-  setError,
+  setError
   // setMessage
 ) => {
   try {
-
     const res = await API_DOMAIN.post("/api/v1/auth/registration", credentials);
     console.log(res);
     if (res.data.status) {
-      // dispatch(login(res.data.data));
-      // toast.success("Successfully registered");
       if (isRedirect) {
-        return navigation.push(`/auth/login?redirect=true&redirect_url=${redirectUrl}`);
+        return navigation.push(
+          `/auth/login?redirect=true&redirect_url=${redirectUrl}`
+        );
       } else {
         return navigation.push("/auth/login");
       }
@@ -288,6 +304,16 @@ export const RegisterWithCredentials = async (
   }
 };
 
+// export const EditProfile = async (data,dispatch:AppDispatch) => {
+//   try {
+//     const res = await API_DOMAIN.put("/api/v1/auth/edit",data);
+//     if (res.data.status){
+//       dispatch(updateUser(res.data.user))
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export const DeleteQuizById = async (id: string) => {
   try {
@@ -297,4 +323,4 @@ export const DeleteQuizById = async (id: string) => {
     toast.error("Something went wrong");
     console.log(error);
   }
-}
+};

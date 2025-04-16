@@ -43,7 +43,7 @@ const Page = React.memo(() => {
 
   const [drawerIsActive, setDrawerIsActive] = useState(false);
   const drawerRef = useRef<HTMLDivElement | null>(null);
-  const {socket} = useSocket();
+  const { socket } = useSocket();
   const params = useParams();
   console.log(params.id, params.tid)
   const navigation = useRouter();
@@ -88,7 +88,7 @@ const Page = React.memo(() => {
     });
 
     socket?.on("studentJoined", handleStudentJoined);
-    socket?.on("roomDeleted",() => {
+    socket?.on("roomDeleted", () => {
       navigation.push(`/play/connect/to/game`);
     })
 
@@ -180,7 +180,7 @@ const Page = React.memo(() => {
   );
   const handleChangeCharacterAccessories = useCallback(
     (selectedAvatarAccessories: string) => {
-      socket?.emit("changeCharacterAccessories", {
+      socket?.emit("changeCharzacterAccessories", {
         roomId: student?.roomId,
         selectedAccessoriesId: selectedAvatarAccessories,
         student: student?.student,
@@ -188,7 +188,6 @@ const Page = React.memo(() => {
     },
     [socket, student]
   );
-
   useEffect(() => {
     fetch();
   }, []);
@@ -205,7 +204,6 @@ const Page = React.memo(() => {
         <Loader h={100} w={100} />
       ) : (
         <motion.div
-          // animate={{ translateY: drawerIsActive ? "0" : "0" }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
           onClick={() => setDrawerIsActive(!drawerIsActive)}
           className="relative w-fit h-fit"
@@ -220,7 +218,6 @@ const Page = React.memo(() => {
               w={"128px"}
               h={"128px"}
               bg="#4686EC"
-            // chin={true}
             />
           )}
         </motion.div>
@@ -258,7 +255,6 @@ const Page = React.memo(() => {
             Accessories
           </button>
         </div>
-
         <div className="w-full py-10 overflow-y-auto scroll-smooth h-[85%] flex flex-wrap items-center justify-between gap-6 p-4 md:p-6">
           {isCharacter
             ? characters.map((c) => (
@@ -300,24 +296,18 @@ const Page = React.memo(() => {
             ))}
         </div>
       </motion.div>
-
-
       {
         !student.student.isActive && (
           <Backdrop open={true} className="!z-[100000000000]">
-
             <div className=" w-[90%] bg-white md:w-[50%]">
               <Link href={'/play/connect/to/game '}>
                 Rejoin</Link>
-
             </div>
-
           </Backdrop>
         )
       }
     </div>
   );
 })
-
 Page.displayName = "Page"
 export default Page;
