@@ -30,11 +30,13 @@ jobs:
         run: |
           pm2 resurrect
           pm2 stop all
+          pwd
           cd backend
           npm ci
 
       - name: Install Dependencies and Build Frontend
         run: |
+          pwd
           cd kahoot
           rm -rf .next
           npm i --force
