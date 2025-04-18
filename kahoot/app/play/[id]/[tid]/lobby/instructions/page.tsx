@@ -180,7 +180,7 @@ const Page = React.memo(() => {
   );
   const handleChangeCharacterAccessories = useCallback(
     (selectedAvatarAccessories: string) => {
-      socket?.emit("changeCharzacterAccessories", {
+      socket?.emit("changeCharacterAccessories", {
         roomId: student?.roomId,
         selectedAccessoriesId: selectedAvatarAccessories,
         student: student?.student,
