@@ -281,7 +281,6 @@ const Page = () => {
   const [question, setQuestion] = useState(student.student.room.currentStage.question ?? null);
   const [stage, setStage] = useState<null | number>(student.student.room.currentStage.stage ?? null);
 
-
   const handlePopulateCurrentStage = (data) => {
     if (data.status) {
       if (data.data.isLastStage) {
@@ -299,6 +298,7 @@ const Page = () => {
     setResult({ question: data.question, isCorrect: data.isCorrect, score: data.score, currentScore: data.currentScore, rank: data.rank });
     dispatch(setScore({ score: data.score, rank: data.rank }));
   };
+  // 
   useEffect(() => {
     console.log(socket ? "Socket is connected" : "Socket is not connected");
     if (socket) {
