@@ -28,6 +28,7 @@ jobs:
 
       - name: Install Dependencies and Build Backend
         run: |
+          pm2 resurrect
           pm2 stop all
           cd backend
           npm ci
@@ -35,6 +36,7 @@ jobs:
       - name: Install Dependencies and Build Frontend
         run: |
           cd kahoot
+          rm -rf .next
           npm i --force
           npm run build
 
