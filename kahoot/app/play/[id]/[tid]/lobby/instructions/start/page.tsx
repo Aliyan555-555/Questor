@@ -73,6 +73,8 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
   const [stopCount, setStopCount] = useState(false);
   const [duration, setDuration] = useState(0);
   const [selectedOption, setSelectedOption] = useState([]);
+  const [isLoadingResult, setIsLoadingResult] = useState(false);
+
 
   useEffect(() => {
     if (socket) {
@@ -108,7 +110,9 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
   const handleSubmitAnswer = (option) => {
     setSelectedOption([option]);
     setIsResult(true);
+    setIsLoadingResult(true); // <- Add this
     setStopCount(true);
+
     socket.emit("submit_answer", {
       question: question._id,
       options: [option],
@@ -120,6 +124,7 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
     });
   };
 
+
   const icons = [
     { icon: <TriangleIcon width={130} height={130} /> },
     { icon: <DiamondIcon width={130} height={130} /> },
@@ -127,6 +132,11 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
     { icon: <SquareIcon width={130} height={130} /> },
   ];
   const colors = ["#9B059C", "#FD9800", "#1B3BA0", "#036100"];
+  useEffect(() => {
+    if (result) {
+      setIsLoadingResult(false); // result has arrived
+    }
+  }, [result]);
 
   return (
     <div className="w-screen h-screen flex flex-col ">
@@ -160,7 +170,14 @@ const QuestionOptionSection = ({ socket, options, question, student, result }) =
       )}
       {isResult && (
         <div className="w-full h-full flex items-center justify-center">
-          {isTimeUp ? (
+          {isLoadingResult ? (
+            <div className='flex items-center justify-center flex-col'>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="100" height="100" style={{ shapeRendering: "auto", display: "block", background: "transparent" }} xmlnsXlink="http://www.w3.org/1999/xlink"><g><circle stroke-dasharray="164.93361431346415 56.97787143782138" r="35" stroke-width="24" stroke="#fefefe" fill="none" cy="50" cx="50">
+                <animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="0.591715976331361s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform>
+              </circle><g></g></g></svg>
+              <h3 className='text-3xl  font-bold text-white'>Loading...</h3>
+            </div>
+          ) : isTimeUp ? (
             <div className="flex flex-col gap-4 items-center justify-center">
               <h2 className="text-3xl font-black text-red-500">Time&lsquo;s Up!</h2>
               <IsWrongIcon />
@@ -241,24 +258,22 @@ const RankStage = ({ student }) => {
 
 const Reconnecting = () => {
   return (
-    <div className='flex-1 w-full flex items-center justify-center'>
-      <div className='h-fit w-fit p-10 bg-black/40 rounded-lg '>
-        <h2 className="text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100">
-          Reconnecting... 
-
+    <div className='flex-1 w-full flex items-center justify-center px-4'>
+      <div className='h-fit w-full max-w-md p-6 bg-black/40 rounded-lg'>
+        <h2 className="text-2xl md:text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_50%)] font-black text-slate-100 text-center">
+          Reconnecting...
         </h2>
-        <p className="text-lg font-semibold text-white text-center mt-1">
+        <p className="text-sm md:text-lg font-semibold text-white text-center mt-2">
           Waiting for the teacher&apos;s response!
         </p>
-
       </div>
     </div>
-  )
-}
+  );
+};
 const Page = () => {
   const student = useSelector((root: RootState) => root.student.currentGame);
   const [currentTime] = useState(new Date().toLocaleTimeString());
-  const [index, setIndex] = useState(5);
+  const [index, setIndex] = useState(1);
   const [result, setResult] = useState(null);
   const dispatch = useDispatch();
   const navigation = useRouter();

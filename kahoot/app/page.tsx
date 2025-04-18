@@ -30,9 +30,6 @@ const Home = () => {
   const publishQuizzes = useSelector((root: RootState) => root.base.userPublishedQuizzes);
   const draftQuizzes = useSelector((root: RootState) => root.base.userDraftQuizzes);
   const activeQuizzes = useSelector((root: RootState) => root.base.activeQuizzes);
-  console.log("🚀 ~ Home ~ activeQuizzes:", activeQuizzes)
-  // const [isWaring, setIsWaring] = useState(false);
-
   const publicQuizzes = useSelector((root: RootState) => root.base.publicQuizzes);
   const favoritesQuizzes = useSelector((root: RootState) => root.student.isAuthenticated ? root.student.user.favorites : []);
   const [currentTabIndex, setCurrentTabIndex] = useState(1);
@@ -71,11 +68,10 @@ const Home = () => {
     <div className='w-full min-h-screen '>
       <ClientComponentSEO title={"Questor"} />
       <div className='w-full flex justify-between py-5 md:py-7 px-3 md:px-10 bg-white'>
-        <div className='flex gap-2 md:gap-4 items-center'>
+        <Link href={'/'} className='flex gap-2 md:gap-4 items-center'>
           <Image src={'/images/UI/QuestorIcon.svg'} alt='Questor' width={35} height={35} />
           <h2 className=' hidden sm:flex text-2xl font-bold'>Dashboard</h2>
-        </div>
-        {/*  */}
+        </Link>
         <div className='flex gap-2 md:gap-3 items-center'>
           {user.isAuthenticated ? (
             <>
@@ -178,16 +174,16 @@ const Home = () => {
         </Box>
       </div>
       <TabPanel value={tabValue} index={0}>
-        <QuizList  activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={publishQuizzes} handleRedirectToEdit={handleRedirectToEdit} />
+        <QuizList activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={publishQuizzes} handleRedirectToEdit={handleRedirectToEdit} />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <QuizList  activeQuizzes={activeQuizzes} isFavoriteButton={false} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={draftQuizzes} isDraft={true} handleRedirectToEdit={handleRedirectToEdit} />
+        <QuizList activeQuizzes={activeQuizzes} isFavoriteButton={false} favoritesQuizzes={favoritesQuizzes} isDelete={true} quizzes={draftQuizzes} isDraft={true} handleRedirectToEdit={handleRedirectToEdit} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <QuizList  activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={publicQuizzes} isEdit={false} isDraft={false} />
+        <QuizList activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={publicQuizzes} isEdit={false} isDraft={false} />
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
-        <QuizList  activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={favoritesQuizzes} isEdit={false} isDraft={false} />
+        <QuizList activeQuizzes={activeQuizzes} isFavoriteButton={true} favoritesQuizzes={favoritesQuizzes} isDelete={false} quizzes={favoritesQuizzes} isEdit={false} isDraft={false} />
       </TabPanel>
       {/* {isWaring && <WarningModel close={() => setIsWaring(false)} />} */}
     </div>
@@ -245,7 +241,7 @@ const QuizList = ({ activeQuizzes, quizzes, handleRedirectToEdit, isDraft = fals
               </div>
             </div>
           ) : (
-            true? <Link href={`/play/${quiz._id}`} >
+            true ? <Link href={`/play/${quiz._id}`} >
               <Image src={quiz.coverImage} alt={quiz.name} width={250} height={150} className='w-full h-[150px] object-cover' loader={imageLoader} />
               <div className='p-4'>
                 <h2 className='text-lg font-semibold'>{quiz.name}</h2>

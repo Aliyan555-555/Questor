@@ -3,7 +3,7 @@ import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase";
 import { AppDispatch } from "../store";
-import { login, setFavorites, updateUser } from "../schema/student";
+import { login, setFavorites} from "../schema/student";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {
   setActiveQuizzes,

@@ -10,17 +10,19 @@ import quizModel from "./model/quiz.model.js";
 import ThemeRouter from "./routers/theme.route.js";
 import QuizRouter from "./routers/quiz.router.js";
 import jwt from "jsonwebtoken";
-import fs from "fs";
+// import fs from "fs";
 import { avatarModel } from "./model/avatar.model.js";
 import { questionModel } from "./model/question.model.js";
 import { roomModel } from "./model/room.model.js";
 import { itemModel } from "./model/item.model.js";
 import { studentModel } from "./model/studentModel.js";
 import { questionResultModel } from "./model/questionResult.model.js";
-import cloudinary from "cloudinary";
-import axios from "axios";
+// import cloudinary from "cloudinary";
+// import axios from "axios";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+// import { ResultModel } from "./model/result.model.js";
+import ReportsRouter from "./routers/reports.route.js";
 dotenv.config();
 const app = express();
 connectToMongodb();
@@ -76,6 +78,7 @@ const io = new Server(server, {
   pingTimeout: 50000,
 });
 
+
 app.get("/api/v1/avatars", async (req, res) => {
   try {
     const avatars = await avatarModel.find();
@@ -89,6 +92,8 @@ app.get("/api/v1/avatars", async (req, res) => {
 });
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1", ThemeRouter);
+app.use("/api/v1/reports",ReportsRouter)
+
 app.use("/api/v1/quiz", QuizRouter);
 const roomPins = {};
 const generatePin = () => {
@@ -696,22 +701,9 @@ io.on("connection", (socket) => {
       { status: "started" },
       { new: true }
     );
+    // const result = await ResultModel.create
     io.to(room._id.toString()).emit("started", { data: room });
-  });
-  // socket.on("question_playing", (data) => {
-  //   io.to(data.roomId).emit("question_playing_student_process", data);
-  // });
-  // socket.on("request_question_options_waiting", (data) => {
-  //   // console.log("request_question_options_waiting kkkkk",data)
-  //   io.to(data.roomId).emit("question_options_waiting", data);
-  // });
-  // socket.on("request_question_options_stop_waiting", (data) => {
-  //   io.to(data.roomId).emit("question_options_stop_waiting", data);
-  // });
-  // socket.on("ranking_redirection", (data) => {
-  //   io.to(data.roomId).emit("ranking_redirection_student_process");
-  // });
-
+  }); 
   socket.on("submit_answer", async (data) => {
     try {
       const room = await roomModel.findById(data.room).populate({
@@ -763,6 +755,7 @@ io.on("connection", (socket) => {
         });
         getScore = 0;
       } else {
+        student.attemptQuestions.push(question._id);
         isCorrect = question.answerIndex.every((index) =>
           data.options.includes(question.options[index])
         );
@@ -780,7 +773,6 @@ io.on("connection", (socket) => {
             totalScore: student.score,
             status: "correct",
           });
-          await student.save();
         } else {
           await questionResultModel.create({
             room: room._id,
@@ -792,6 +784,8 @@ io.on("connection", (socket) => {
             status: "wrong",
           });
         }
+        await student.save();
+
       }
       const assignRanks = (students) => {
         return students
@@ -846,13 +840,7 @@ io.on("connection", (socket) => {
   socket.on("next_question_redirect", (data) => {
     io.to(data.roomId).emit("next_question_redirection");
   });
-  const isUserInRoom = async (io, roomId, socketId) => {
-    const room = io.sockets.adapter.rooms.get(roomId);
-    const sockets = await io.in(roomId).fetchSockets();
-    return room && room.has(socketId);
-  };
-  socket.on(
-    "checkUserInRoom",
+  socket.on("checkUserInRoom",
     async ({ roomId, studentData, token, stage = 0 }) => {
       const room = await roomModel.findById(roomId);
       if (!room) {

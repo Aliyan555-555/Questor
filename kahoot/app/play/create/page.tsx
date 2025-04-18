@@ -357,7 +357,7 @@ const Create = () => {
   };
 
   return (
-    <div className="w-screen bg-white h-screen flex flex-col">
+    <div className="w-screen bg-white  overflow-x-hidden flex flex-col">
       <div
         style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 4px 0px" }}
         className="w-full py-6 px-10 bg-blue_1 gap-4 flex"
@@ -938,7 +938,7 @@ const Create = () => {
         <motion.div
           animate={{ width: customizableBarIsOpen ? "310px" : 0 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="w-[310px] h-full  bg-[#E9E2B6] relative"
+          className="w-[310px] h-screen  bg-[#E9E2B6] relative"
         >
           <motion.button
             animate={{ left: customizableBarIsOpen ? "-40px" : "-50px" }}

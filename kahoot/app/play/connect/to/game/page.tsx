@@ -130,14 +130,14 @@ const Student = () => {
       className="w-screen overflow-hidden bg-[#E9E2B6] px-4 h-screen relative flex-col bg-cover bg-center bg-no-repeat flex items-center justify-center"    >
     
 
-    <div className="bg-white px-8 py-10 flex items-center justify-start gap-10 flex-col rounded-[10px]">
+    <div className="bg-white max-sm:w-full px-4 md:px-8 py-10 flex items-center justify-start gap-10 flex-col rounded-[10px]">
       
       <Image src={'/images/UI/fullLogo.png'} alt="Quester" width={200} height={100}  />
-      <div className="md:w-[400px]  relative z-10 flex flex-col gap-4 bg-white">
+      <div className="md:w-[400px] w-full  relative z-10 flex flex-col gap-4 bg-white">
         {pinVerified ? (
           <>
             <input
-              type="text"
+              type=""
               maxLength={20}
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}

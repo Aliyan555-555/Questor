@@ -11,7 +11,7 @@ import { TbLogout } from "react-icons/tb";
 import { FaAngleRight, FaUser } from 'react-icons/fa';
 import { IoHelpOutline } from 'react-icons/io5';
 import { IoMdSettings } from 'react-icons/io';
-import Link from 'next/link';
+import { SiGoogleanalytics } from "react-icons/si";
 const ProfileAvatar = ({ user }: {
     user: {
         name: string;
@@ -71,6 +71,15 @@ const ProfileAvatar = ({ user }: {
                             <FaUser fontSize={23} />
                         </div>
                         Edit Profile
+                    </div>
+                    <FaAngleRight fontSize={20} />
+                </MenuItem>
+                <MenuItem onClick={() => router.push('/reports')} className='!flex !items-center !justify-between !px-4 !gap-3 !text-gray-700 !font-semibold' >
+                    <div className='flex gap-3 items-center py-1'>
+                        <div className='p-2 bg-[#BDBDBD] text-md rounded-full flex items-center justify-center text-white '>
+                        <SiGoogleanalytics fontSize={20} />
+                        </div>
+                        Reports
                     </div>
                     <FaAngleRight fontSize={20} />
                 </MenuItem>
