@@ -249,14 +249,14 @@ const Teacher = () => {
         </div>
       </div>
       <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: "100%", zIndex: 0 }}
+        initial={{ opacity: 0, scale: 0.8, y: "100%" }}
         animate={{
           opacity: studentListDrawer ? 1 : 0,
           scale: studentListDrawer ? 1 : 0.8,
           y: studentListDrawer ? 0 : '120%',
         }}
         transition={{ duration: 0.2, type: "keyframes", stiffness: 120 }}
-        className="w-[80%] h-[90%] bg-blue_1  fixed inset-0 m-auto rounded-[10px] p-10 gap-10 flex flex-wrap items-start justify-start z-50"
+        className="w-[80%] h-[90%] bg-blue_1 z-[100000] fixed inset-0 m-auto rounded-[10px] p-10 gap-10 flex flex-wrap items-start justify-start "
       >
         <IconButton
           className="!p-4 !bg-white !absolute !top-[-20px] !right-[-20px]"

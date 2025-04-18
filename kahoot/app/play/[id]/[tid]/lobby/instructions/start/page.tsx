@@ -274,6 +274,17 @@ const Page = () => {
   const student = useSelector((root: RootState) => root.student.currentGame);
   const [currentTime] = useState(new Date().toLocaleTimeString());
   const [index, setIndex] = useState(1);
+  // const a: string[] = student.student.quiz.questions.map(q => q._id);
+  // const b = student.student.room.currentStage.question;
+  // console.log(a);
+  // console.log(b);
+  // const questionIndex = a.findIndex(id => id === b);
+  // if (questionIndex !== -1) {
+  //   setIndex(questionIndex + 1);
+  // } else {
+  //   console.error("Question not found in the quiz questions list.");
+  // }
+  // console.log(student.student.quiz.questions.map((q) => (q._id)),student.student.room.currentStage.question);
   const [result, setResult] = useState(null);
   const dispatch = useDispatch();
   const navigation = useRouter();
@@ -286,6 +297,7 @@ const Page = () => {
       if (data.data.isLastStage) {
         setQuestion(data.data.question);
         setIndex(data.data.index + 1);
+
         setStage(4);
       } else {
         setQuestion(data.data.question);
