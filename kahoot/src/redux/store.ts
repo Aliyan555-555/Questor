@@ -8,8 +8,25 @@ import baseReducer from "./schema/baseSlice";
 // Create a persist config
 const persistConfig = {
   key: "root",
-  storage,
+  version: 1,
   whitelist: ["student", "teacher","base"], // Persist only these reducers
+  storage,
+  // migrate: async (state) => {
+  //   // If there's no previous state, just return undefined
+  //   if (!state) return undefined;
+
+  //   // Extract student.user safely
+  //   const preservedUser = state?.student?.user || null;
+
+  //   return {
+  //     student: {
+  //       user: preservedUser,
+  //     },
+      
+  //     // teacher: undefined, // reset
+  //     // base: undefined, // reset
+  //   };
+  // },
 };
 
 // Combine reducers

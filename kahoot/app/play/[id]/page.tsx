@@ -75,6 +75,7 @@ const Teacher = () => {
       socket.on("roomCreated", ({ roomId, pin, data }) => {
         setRoomId(roomId);
         setPin(pin);
+        console.log("Room Data",data)
         dispatch(created(data));
       });
       socket.on("changedStudentCharacter", (data) => {
