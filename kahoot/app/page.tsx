@@ -14,6 +14,7 @@ import ClientComponentSEO from '@/src/components/ClientComponentSEO';
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdOutlineDelete } from 'react-icons/md';
 import { FaStar } from 'react-icons/fa';
+import { deleteQuiz } from '@/src/redux/schema/baseSlice';
 
 interface QuizType {
   _id: string;
@@ -289,20 +290,22 @@ function TabPanel(props: TabPanelProps) {
 }
 
 
-const DeleteButton = ({ id }) => {
+const DeleteButton = ({id}) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const handleOpen = () => setOpen(true);
+  const dispatch = useDispatch()
   const handleClose = () => {
     if (!loading) setOpen(false); // Prevent closing while loading
   };
+
 
   const handleConfirmDelete = async () => {
     setLoading(true);
     try {
       const res = await DeleteQuizById(id);
       if (res?.status) {
-
+        dispatch(deleteQuiz(id))
         setLoading(false);
       }
     } catch (error) {

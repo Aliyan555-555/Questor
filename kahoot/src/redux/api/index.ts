@@ -317,7 +317,11 @@ export const RegisterWithCredentials = async (
 
 export const DeleteQuizById = async (id: string) => {
   try {
-    const res = await API_DOMAIN.delete(`/api/v1/quiz/delete/quiz/${id}`);
+    const res = await API_DOMAIN.delete(`/api/v1/quiz/delete/quiz/${id}`, {
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+    });
     return res.data;
   } catch (error) {
     toast.error("Something went wrong");

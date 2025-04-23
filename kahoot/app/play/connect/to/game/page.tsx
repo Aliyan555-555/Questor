@@ -96,14 +96,13 @@ const Student = () => {
     }
   });
 
-  // Handle Enter key press to trigger button action
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
         if (pinVerified) {
-          joinRoom(); // Trigger join room if PIN is verified
+          joinRoom();
         } else {
-          verifyPin(); // Trigger pin verification if not verified
+          verifyPin();
         }
       }
     };
@@ -119,7 +118,7 @@ const Student = () => {
 
   useEffect(() => {
    if (socket?.id){ 
-    socket?.disconnect();
+    // socket?.disconnect();
    }else {
     socket?.connect();
    }

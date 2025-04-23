@@ -12,6 +12,7 @@ import { FaAngleRight, FaUser } from 'react-icons/fa';
 import { IoHelpOutline } from 'react-icons/io5';
 import { IoMdSettings } from 'react-icons/io';
 import { SiGoogleanalytics } from "react-icons/si";
+import { logoutClearData } from '../redux/schema/baseSlice';
 const ProfileAvatar = ({ user }: {
     user: {
         name: string;
@@ -38,10 +39,11 @@ const ProfileAvatar = ({ user }: {
     };
 
     const handleLogout = async () => {
-        dispatch(logout()); // Dispatch logout action
+        dispatch(logout());
+        dispatch(logoutClearData());
         await signOut(auth)
         handleClose();
-        router.push('/auth/login'); // Redirect to login page after logout
+        router.push('/auth/login');
     };
 
     return (

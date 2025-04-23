@@ -21,6 +21,13 @@ export const GetAllPublicQuizzes = async (req, res) => {
 
 export const DeleteQuizBuyId = async (req, res) => {
   try {
+    // const authHeader = req.headers.authorization;
+
+    // if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    //   return res
+    //     .status(401)
+    //     .json({ message: "No token provided", status: false });
+    // }
     const { id } = req.params;
     await quizModel.findByIdAndDelete(id);
     res

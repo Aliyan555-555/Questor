@@ -45,7 +45,6 @@ const StudentSchema = new  mongoose.Schema({
   },
   socketId:{
     type: String,
-    unique: true,
     required: true,
   },
   isActive:{

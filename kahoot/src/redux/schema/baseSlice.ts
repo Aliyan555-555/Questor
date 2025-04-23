@@ -52,12 +52,25 @@ const baseSlice = createSlice({
         addUserPublishedQuiz(state, action: PayloadAction<QuizType>) {
             state.userPublishedQuizzes.push(action.payload);
         },
+        deleteQuiz(state, action: PayloadAction<string>) {
+            const quizId = action.payload;
+            state.publicQuizzes = state.publicQuizzes.filter(quiz => quiz._id !== quizId);
+            state.userDraftQuizzes = state.userDraftQuizzes.filter(quiz => quiz._id !== quizId);
+            state.userPublishedQuizzes = state.userPublishedQuizzes.filter(quiz => quiz._id !== quizId);
+        },
+        logoutClearData(state) {
+            state.userDraftQuizzes =[];
+            state.userPublishedQuizzes = [];
+            state.activeQuizzes = []
+        }
     },
 });
 
 export const {
+    logoutClearData,
     setPublicQuizzes,
     setUserDraftQuizzes,
+    deleteQuiz,
     setUserPublishedQuizzes,
     addPublicQuiz,
     addUserDraftQuiz,

@@ -1,20 +1,31 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+// import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { AlertCircle, Home } from "lucide-react";
 import { truncateString } from "@/src/lib/services";
+import { persistor } from "@/src/redux/store"; // make sure this path is correct
 
 export default function Error({
   error,
-  // reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const router = useRouter();
+  // const dispatch = useDispatch();
+
   useEffect(() => {
     console.error("Error caught by boundary:", error);
   }, [error]);
+
+  const handleResetAndRedirect = async () => {
+    await persistor.purge(); // Clear all persisted state
+    router.push("/"); // Redirect home
+  };
+
   return (
     <div
       className="w-screen h-screen flex flex-col items-center bg-cover bg-no-repeat bg-bottom justify-center bg-gray-100"
@@ -26,7 +37,6 @@ export default function Error({
         transition={{ duration: 0.3, ease: "easeOut" }}
         className="w-[350px] md:w-[420px] bg-white shadow-xl rounded-xl flex flex-col items-center p-6 text-center"
       >
-        {/* Error Icon */}
         <motion.div
           initial={{ rotate: -10 }}
           animate={{ rotate: 10 }}
@@ -42,32 +52,20 @@ export default function Error({
           An unexpected error occurred. Please try again or return home.
         </p>
 
-        {/* Error Message (For Debugging) */}
         {error.message && (
           <div className="bg-gray-200 p-3 rounded-md mt-4 text-sm text-gray-700 max-w-[320px] overflow-auto">
-            {truncateString(error.message,30)}
+            {truncateString(error.message, 30)}
           </div>
         )}
 
-        {/* Buttons */}
         <div className="flex gap-4 mt-6">
-          {/* Retry Button */}
-          {/* <motion.button
+          <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={() => reset()}
-            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition shadow-md"
-          >
-            <RotateCw className="w-5 h-5" /> Retry
-          </motion.button> */}
-
-          {/* Go Home Button */}
-          <motion.a
-          href="/"
-            whileTap={{ scale: 0.95 }}
+            onClick={handleResetAndRedirect}
             className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition shadow-md"
           >
             <Home className="w-5 h-5" /> Go Home
-          </motion.a>
+          </motion.button>
         </div>
       </motion.div>
     </div>
