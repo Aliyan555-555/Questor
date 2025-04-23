@@ -116,13 +116,13 @@ const Student = () => {
     };
   }, [pinVerified, pin, nickname]);
 
-  useEffect(() => {
-   if (socket?.id){ 
-    // socket?.disconnect();
-   }else {
-    socket?.connect();
-   }
-  },[])
+  // useEffect(() => {
+  //  if (socket?.id){ 
+  //   // socket?.disconnect();
+  //  }else {
+  //   socket?.connect();
+  //  }
+  // },[])
 
   return (
     <div
