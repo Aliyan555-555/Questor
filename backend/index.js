@@ -10,7 +10,7 @@ import quizModel from "./model/quiz.model.js";
 import ThemeRouter from "./routers/theme.route.js";
 import QuizRouter from "./routers/quiz.router.js";
 import compression from "compression";
-import os from "os";
+// import os from "os";
 import jwt from "jsonwebtoken";
 // import fs from "fs";
 import { avatarModel } from "./model/avatar.model.js";
@@ -25,19 +25,19 @@ import session from "express-session";
 import cluster from "cluster";
 import ReportsRouter from "./routers/reports.route.js";
 import MongoStore from "connect-mongo";
-const cpuCount = os.cpus().length;
+// const cpuCount = os.cpus().length;
 
-if (cluster.isPrimary) {
-  console.log(`🧠 Master ${process.pid} is running with ${cpuCount} CPUs`);
+// if (cluster.isPrimary) {
+//   console.log(`🧠 Master ${process.pid} is running with ${cpuCount} CPUs`);
 
-  for (let i = 0; i < cpuCount; i++) {
-    cluster.fork();
-  }
-  cluster.on("exit", (worker, code, signal) => {
-    console.log(`⚠️ Worker ${worker.process.pid} died. Restarting...`);
-    cluster.fork();
-  });
-} else{
+//   for (let i = 0; i < cpuCount; i++) {
+//     cluster.fork();
+//   }
+//   cluster.on("exit", (worker, code, signal) => {
+//     console.log(`⚠️ Worker ${worker.process.pid} died. Restarting...`);
+//     cluster.fork();
+//   });
+// } else{
 
 
 // import { ResultModel } from "./model/result.model.js";
@@ -59,7 +59,7 @@ const allowedOrigins = [
 
 
 
-console.log(cpuCount)
+// console.log(cpuCount)
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -1374,4 +1374,4 @@ server.listen(PORT, () => {
 });
 
 
-}
+// }
