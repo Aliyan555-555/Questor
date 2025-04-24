@@ -9,6 +9,8 @@ import dotenv from "dotenv";
 import quizModel from "./model/quiz.model.js";
 import ThemeRouter from "./routers/theme.route.js";
 import QuizRouter from "./routers/quiz.router.js";
+import compression from "compression";
+import os from "os";
 import jwt from "jsonwebtoken";
 // import fs from "fs";
 import { avatarModel } from "./model/avatar.model.js";
@@ -20,9 +22,26 @@ import { questionResultModel } from "./model/questionResult.model.js";
 // import cloudinary from "cloudinary";
 // import axios from "axios";
 import session from "express-session";
-import MongoStore from "connect-mongo";
-// import { ResultModel } from "./model/result.model.js";
+import cluster from "cluster";
 import ReportsRouter from "./routers/reports.route.js";
+import MongoStore from "connect-mongo";
+const cpuCount = os.cpus().length;
+
+if (cluster.isPrimary) {
+  console.log(`🧠 Master ${process.pid} is running with ${cpuCount} CPUs`);
+
+  for (let i = 0; i < cpuCount; i++) {
+    cluster.fork();
+  }
+  cluster.on("exit", (worker, code, signal) => {
+    console.log(`⚠️ Worker ${worker.process.pid} died. Restarting...`);
+    cluster.fork();
+  });
+} else{
+
+
+// import { ResultModel } from "./model/result.model.js";
+
 dotenv.config();
 const app = express();
 connectToMongodb();
@@ -37,6 +56,10 @@ const allowedOrigins = [
     "https://questor.meteoricsolutions.com",
   process.env.FRONTEND_URL,
 ];
+
+
+
+console.log(cpuCount)
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -49,6 +72,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type"],
   credentials: true,
 };
+app.use(compression());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -194,6 +218,8 @@ io.on("connection", (socket) => {
     try {
       // Verify the refresh token
       const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+      console.log("🚀 ~ socket.on ~ decoded:", decoded)
+      
       const room = await roomModel.findById(decoded.roomId);
       
       if (!room) {
@@ -1346,3 +1372,6 @@ const PORT = process.env.PORT || 9000;
 server.listen(PORT, () => {
   console.log(`Server is running on link http://localhost:${PORT}`);
 });
+
+
+}
