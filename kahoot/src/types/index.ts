@@ -28,6 +28,7 @@ export interface Student {
 
 export interface Teacher {
   teacher: string;
+  pin:number;
   quiz: {
     _id: string;
     name: string;

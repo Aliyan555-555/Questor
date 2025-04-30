@@ -3,7 +3,7 @@ import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase";
 import { AppDispatch } from "../store";
-import { login, setFavorites} from "../schema/student";
+import { login, setFavorites } from "../schema/student";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {
   setActiveQuizzes,
@@ -325,6 +325,15 @@ export const DeleteQuizById = async (id: string) => {
     return res.data;
   } catch (error) {
     toast.error("Something went wrong");
+    console.log(error);
+  }
+};
+
+export const fetchReportsData = async (id) => {
+  try {
+    const res = await API_DOMAIN.get(`/api/v1/reports/${id}`);
+    return res.data;
+  } catch (error) {
     console.log(error);
   }
 };

@@ -14,7 +14,7 @@ const RootLayout = ({children}) => {
     const user = useSelector((root: RootState) => root.student);
 
   return (
-    <div className='w-screen'>
+    <div className='w-screen h-screen overflow-y-auto'>
             <div className='w-full flex justify-between py-5 md:py-7 px-3 md:px-10 bg-white'>
         <Link href={'/'} className='flex gap-2 md:gap-4 items-center'>
           <Image src={'/images/UI/QuestorIcon.svg'} alt='Questor' width={35} height={35} />

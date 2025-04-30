@@ -10,13 +10,50 @@ interface QuizType {
     status: string;
   }
   
+interface QuestionStudentType {
+    answer:string;
+    student:{
+        nickname:string;
+    };
+    timeSpend:number;
+    score:number;
+}
+ export interface ReportQuestion {
+    _id:string;
+    question:string;
+    type:string;
+    correctAnswersPercentage:number;
+    answerIndex:number[];
+    studentAnswers:string[];
+    students:QuestionStudentType[];
+    options:string[];
+    media?:string;
+  }
 
-// Define the state interface
+  interface ReportType {
+    _id:string;
+    roomId:string;
+    status:string;
+    name:string;
+    endTime:string;
+    numberOfParticipants:number
+    students:{
+        nickname:string;
+        score:number
+        correctAnswers:number;
+        unansweredQuestions:number;
+        rank:number;
+    }[];
+    hostName:string;
+    questions:ReportQuestion[]
+  }
+
 interface BaseState {
     publicQuizzes: QuizType[];
     userDraftQuizzes: QuizType[];
     userPublishedQuizzes: QuizType[];
     activeQuizzes: string[];
+    reports:ReportType[]
 }
 
 // Initial state with type safety
@@ -25,6 +62,7 @@ const initialState: BaseState = {
     userDraftQuizzes: [],
     userPublishedQuizzes: [],
     activeQuizzes: [],
+    reports:[],
 };
 
 const baseSlice = createSlice({
@@ -61,12 +99,25 @@ const baseSlice = createSlice({
         logoutClearData(state) {
             state.userDraftQuizzes =[];
             state.userPublishedQuizzes = [];
-            state.activeQuizzes = []
+            state.activeQuizzes = [];
+            state.reports = [];
+        },
+        setReports(state,action){
+            state.reports = action.payload;
+        },
+        addReport(state,action){
+            state.reports.push(action.payload);
+        },
+        deleteReport(state,action){
+            state.reports = state.reports.filter(r => r._id !== action.payload);
         }
     },
 });
 
 export const {
+    setReports,
+    deleteReport,
+    addReport,
     logoutClearData,
     setPublicQuizzes,
     setUserDraftQuizzes,

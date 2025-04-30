@@ -63,19 +63,19 @@ const Teacher = () => {
         }
 
       });
-      socket.on("error",(data) =>{
-        if (data.isReturnToHome){
+      socket.on("error", (data) => {
+        if (data.isReturnToHome) {
           navigation.push("/")
           return
         }
       })
 
-      
+
 
       socket.on("roomCreated", ({ roomId, pin, data }) => {
         setRoomId(roomId);
         setPin(pin);
-        console.log("Room Data",data)
+        console.log("Room Data", data)
         dispatch(created(data));
       });
       socket.on("changedStudentCharacter", (data) => {
@@ -189,9 +189,9 @@ const Teacher = () => {
       navigation.push(`/play/${game?.quiz._id}/${game?.teacher}/lobby/start`);
     }
   };
-  console.log(game)
+
   return (
-    <div style={{ backgroundImage: `url(${game?.quiz.theme.image})` }} className="w-screen bg-opacity-65 h-screen bg-cover p-2 flex flex-col items-center justify-center  relative bg-no-repeat bg-top">
+    <div style={{ backgroundImage: `url(${game?.quiz?.theme?.image})` }} className="w-screen bg-opacity-65 h-screen bg-cover p-2 flex flex-col items-center justify-center  relative bg-no-repeat bg-top">
 
       <div className="md:w-[40%] lg:w-[40%] flex flex-col h-full max-h-[92%] overflow-hidden">
         <div className="w-full bg-blue_1 rounded-tl-[10px] rounded-tr-[10px] flex px-10 py-2 items-center justify-between">
@@ -274,7 +274,7 @@ const Teacher = () => {
               <h3>Waiting for students...</h3>
             </div>
           )
-        } 
+        }
         {/* hello */}
         {
           game?.students.map((student, index) => (

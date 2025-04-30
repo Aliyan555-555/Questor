@@ -28,7 +28,12 @@ const Forget = () => {
       setLoading(false);
       return;
     }
-
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
+      setLoading(false)
+      return;
+    }
     try {
 
       const res = await ForgetPassword(email);

@@ -13,7 +13,7 @@ const QuestionResultSchema = new mongoose.Schema({
   },
   student: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "students",
+    ref: "Student",
     required: true,
   },
   question: {
@@ -29,6 +29,14 @@ const QuestionResultSchema = new mongoose.Schema({
   totalScore: {
     type: Number,
     required: true,
+  },
+  timeSpend:{
+    type:String,
+    
+  },
+  answer:{
+    type:String,
+    default:"No answer"
   },
   status:{
     type: String,

@@ -25,6 +25,9 @@ import session from "express-session";
 import cluster from "cluster";
 import ReportsRouter from "./routers/reports.route.js";
 import MongoStore from "connect-mongo";
+import { GetReportDataWithId } from "./controller/reports.controller.js";
+import reportModel from "./model/report.model.js";
+import generateStyledExcel from "./lib/generateExcel.js";
 // const cpuCount = os.cpus().length;
 
 // if (cluster.isPrimary) {
@@ -716,6 +719,9 @@ io.on("connection", (socket) => {
         path: "teacher",
       },
     ]);
+    const report = await GetReportDataWithId(room._id);
+   const r = await reportModel.create(report);
+   console.log(r)
     io.to(room._id.toString()).emit("calculate_ranks_student", {
       students: room.students,
       data: room,
@@ -737,64 +743,70 @@ io.on("connection", (socket) => {
         path: "students",
         populate: [{ path: "avatar" }, { path: "item" }],
       });
-
+  
       if (!room) {
         console.error(`Room with ID ${data.room} not found.`);
         return;
       }
-
+  
       const question = await questionModel.findById(data.question);
       if (!question) {
         console.error(`Question with ID ${data.question} not found.`);
         return;
       }
-
+  
       const student = await studentModel.findById(data.student);
       if (!student) {
         console.error(`Student with ID ${data.student} not found.`);
         return;
       }
+  
       let getScore = 0;
       let isCorrect = false;
+  
       const isAttempted = await questionResultModel.findOne({
         room: room._id,
         student: data.student,
         question: data.question,
       });
+  
       if (isAttempted) {
-        console.log(
-          `Student ${student._id} has already attempted this question.`
-        );
+        console.log(`Student ${student._id} has already attempted this question.`);
         return;
       }
+  
       if (data.isTimeUp) {
-        console.log(
-          `Student ${student._id} ran out of time for question ${question._id}.`
-        );
+        console.log(`Student ${student._id} ran out of time for question ${question._id}.`);
         await questionResultModel.create({
           room: room._id,
           quiz: room.quiz,
           student: data.student,
           question: data.question,
           score: getScore,
+          timeSpend:data.timeSpent,
+          answer:"No answer",
           totalScore: student.score,
           status: "timeUp",
         });
-        getScore = 0;
       } else {
         student.attemptQuestions.push(question._id);
+  
         isCorrect = question.answerIndex.every((index) =>
           data.options.includes(question.options[index])
         );
+  
         if (isCorrect) {
           const totalMarks = question.maximumMarks;
           const perSecondMarks = totalMarks / question.duration;
           getScore = data.timeSpent * perSecondMarks;
           student.score += getScore;
+  
           await questionResultModel.create({
             room: room._id,
             quiz: room.quiz,
             student: data.student,
+            answer:data.options[0],
+            timeSpend:data.timeSpent,
             question: data.question,
             score: getScore,
             totalScore: student.score,
@@ -806,54 +818,64 @@ io.on("connection", (socket) => {
             quiz: room.quiz,
             student: data.student,
             question: data.question,
+            answer:data.options[0],
+            timeSpend:data.timeSpent,
             score: getScore,
             totalScore: student.score,
             status: "wrong",
           });
         }
+  
         await student.save();
-
       }
-      const assignRanks = (students) => {
-        return students
-          .sort((a, b) => b.score - a.score)
-          .map((student, index, sortedArray) => ({
-            ...student.toObject(),
-            rank:
-              index > 0 && student.score === sortedArray[index - 1].score
-                ? sortedArray[index - 1].rank
-                : index + 1,
-          }));
-      };
-
-      const rankedStudents = assignRanks(room.students);
-      console.log(
-        "🚀 ~ socket.on ~ rankedStudents:",
-        rankedStudents.map((s) => s.nickname + "__" + s.rank)
-      );
-      const currentStudentRank = rankedStudents.find(
-        (s) => s._id.toString() === student._id.toString()
-      )?.rank;
-      console.log("🚀 ~ socket.on ~ rankedStudents:", rankedStudents);
+  
+      // 🛠️ Update student ranks properly
+      const studentsInRoom = await studentModel.find({ _id: { $in: room.students.map(s => s._id) } })
+        .sort({ score: -1 });
+  
+      let currentRank = 1;
+      let previousScore = null;
+      let sameRankCount = 0;
+  
+      for (let i = 0; i < studentsInRoom.length; i++) {
+        const currentStudent = studentsInRoom[i];
+  
+        if (previousScore !== null && currentStudent.score === previousScore) {
+          sameRankCount++;
+        } else {
+          currentRank = i + 1;
+          sameRankCount = 0;
+        }
+  
+        currentStudent.rank = currentRank;
+        await currentStudent.save();
+        previousScore = currentStudent.score;
+      }
+  
+      // 🔥 Get current student's updated rank
+      const updatedStudent = await studentModel.findById(student._id);
+  
       io.to(room._id.toString()).emit("receiveStudentResult", {
-        student: student._id,
-        score: student.score,
+        student: updatedStudent._id,
+        score: updatedStudent.score,
         question: question._id,
-        rank: currentStudentRank,
+        rank: updatedStudent.rank,
       });
-
+  
       socket.emit("result", {
         question: question._id,
         isCorrect,
         isTimeUp: data.isTimeUp,
-        rank: currentStudentRank,
+        rank: updatedStudent.rank,
         currentScore: getScore,
-        score: student.score,
+        score: updatedStudent.score,
       });
+  
     } catch (error) {
       console.error("❌ Error processing answer submission:", error);
     }
   });
+  
   socket.on("student_waiting", () => {
     // console.log("student_waiting")
     io.emit("student_waiting");

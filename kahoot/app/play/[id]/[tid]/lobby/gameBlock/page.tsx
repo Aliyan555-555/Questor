@@ -134,30 +134,38 @@ const OptionsSection = React.memo(({
 
   useEffect(() => {
     if (!socket || !data) return;
-
+  
     let timer: NodeJS.Timeout;
-
+  
     if (!isTimesUp) {
       timer = setInterval(() => {
         setDuration((prev) => {
-          if (prev <= 0) {
+          if (prev <= 0.1) {
             clearInterval(timer);
             setIsTimesUp(true);
+            socket.emit("setCount", {
+              roomId: data._id,
+              count: 0,
+              duration: data?.quiz.questions[currentQuestionIndex].duration,
+            });
             return 0;
           }
-          const newCount = prev - 1;
+  
+          const newCount = parseFloat((prev - 0.1).toFixed(1));
           socket.emit("setCount", {
             roomId: data._id,
             count: newCount,
-            duration: data?.quiz.questions[currentQuestionIndex].duration
+            duration: data?.quiz.questions[currentQuestionIndex].duration,
           });
+  
           return newCount;
         });
-      }, 1000);
+      }, 100); // <-- 100ms interval
     }
-
+  
     return () => clearInterval(timer);
   }, [socket, data, isTimesUp]);
+  
   useEffect(() => {
     if (data?.students.filter((s) => s.isActive).length === submittedLength) {
       setIsTimesUp(true);

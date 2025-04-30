@@ -37,14 +37,27 @@ const Signup = () => {
   };
 
   const handleSignupWithCredentials = async () => {
-    if (!credentials.email || !credentials.password || !credentials.name) {
+    const { name, email, password } = credentials;
+  
+    if (!name || !email || !password) {
       setError("Please fill in all fields");
       return;
-    } else {
-      await RegisterWithCredentials(navigation, credentials, redirect, redirectUrl, setError)
     }
-
-  }
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+  
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+    setError(""); 
+    await RegisterWithCredentials(navigation, credentials, redirect, redirectUrl, setError);
+  };
+  
   return (
     <div style={{ backgroundImage: "url(/images/UI/authBG.png)" }} className="w-screen bg-cover bg-top h-screen flex items-center justify-center ">
       <div style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }} className="w-[90%] md:w-[450px] h-auto py-8 px-6 bg-white rounded-lg flex flex-col items-center gap-4">

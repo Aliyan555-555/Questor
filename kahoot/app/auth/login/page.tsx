@@ -34,13 +34,27 @@ const Login = () => {
 
   const handleLoginWithCredential = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!credentials.email || !credentials.password) {
-      toast.error("Please fill in all fields");
+    const { email, password } = credentials;
+    if (!email || !password) {
+      setError("All fields are required");
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password too short");
+      return;
+    }
+
+    setError(""); // Clear any previous error
     const isRedirect = redirect === "true";
     await LoginWithCredential(dispatch, navigation, credentials, isRedirect, redirectUrl, setError);
   };
+
   return (
     <div style={{ backgroundImage: "url(/images/UI/authBG.png)" }} className="w-screen bg-cover bg-top h-screen flex items-center justify-center ">
       <div style={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px" }} className="w-[90%] md:w-[450px] h-auto py-9 px-6 bg-white rounded-lg  flex flex-col items-center gap-5">
