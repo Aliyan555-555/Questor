@@ -3,7 +3,12 @@ import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase";
 import { AppDispatch } from "../store";
-import { login, setFavorites } from "../schema/student";
+import {
+  login,
+  setCurrentDraft,
+  setFavorites,
+  updateDraftQuestion,
+} from "../schema/student";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {
   setActiveQuizzes,
@@ -14,13 +19,24 @@ import {
 
 export const API_DOMAIN = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER,
+  headers: {
+    "Content-Type": "application/json",
+    // Add other default headers here if needed
+  },
   withCredentials: true,
 });
+
+const getAuthHeaders = (token:string) => {
+  if (token) {
+    return { Authorization: `Bearer ${token}` };
+  } else {
+    return {};
+  }
+};
+
 export const fetchAvatars = async () => {
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER}/api/v1/avatars`
-    );
+    const res = await API_DOMAIN.get(`/api/v1/avatars`);
     return res;
   } catch (error) {
     toast.error("Something went wrong");
@@ -82,6 +98,7 @@ export const GetAllThemes = async () => {
 
 const UNSPLASH_ACCESS_KEY = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
 const PEXELS_ACCESS_KEY = process.env.NEXT_PUBLIC_PEXELS_ACCESS_KEY;
+
 const imageCache = new Map();
 
 export const FetchUnsplashImages = async (
@@ -189,7 +206,7 @@ export const getAllQuizzesByUserId = async (
     toast.error("Something went wrong");
   }
 };
-export const getAllPublicQuizzes = async (dispatch) => {
+export const getAllPublicQuizzes = async (dispatch:AppDispatch) => {
   try {
     const res = await API_DOMAIN.get(`/api/v1/quiz/get/public/quizzes`);
     if (res.data.status) {
@@ -335,5 +352,105 @@ export const fetchReportsData = async (id) => {
     return res.data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const createInitialQuiz = async (token, data, dispatch) => {
+  try {
+    const res = await API_DOMAIN.post("/api/v1/quiz/create", data, {
+      headers: getAuthHeaders(token),
+    });
+    setCurrentDraft(res.data.data);
+    return res.data;
+  } catch (error) {
+    toast.error("Something went wrong");
+    console.log(error);
+  }
+};
+export const deleteQuestionInQuiz = async (token: string, quizId: string, questionId: string, dispatch: AppDispatch) => {
+  try {
+    const res = await API_DOMAIN.delete(`/api/v1/quiz/delete/question/${quizId}/${questionId}`, {
+      headers: getAuthHeaders(token),
+    });
+    if (res.data.status) {
+      dispatch(setCurrentDraft(res.data.data));
+      return res.data;
+    }
+  } catch (error) {
+    toast.error("Failed to delete question");
+    console.error(error);
+  }
+};
+
+export const addQuestionInQuiz = async (token: string, quizId: string, type: string = "quiz", dispatch: AppDispatch) => {
+  try {
+    const res = await API_DOMAIN.post(`/api/v1/quiz/add/question/${quizId}`, { type }, {
+      headers: getAuthHeaders(token),
+    });
+    if (res.data.status) {
+      dispatch(setCurrentDraft(res.data.data));
+      return res.data;
+    }
+  } catch (error) {
+    toast.error("Failed to add question");
+    console.error(error);
+  }
+};
+export const updateQuiz = async (token: string, data: any,dispatch) => {
+  try {
+    const res = await API_DOMAIN.put(`/api/v1/quiz/update/${data._id}`, data, {
+      headers: getAuthHeaders(token),
+    });
+    if (res.data.status){
+      dispatch(setCurrentDraft(res.data.data));
+      
+    }
+
+    return res.data;
+  } catch (error) {
+    toast.error("Failed to update quiz");
+    console.error(error);
+  }
+};
+export const updateQuestion = async (token: string, questionId: string, data: any, dispatch: AppDispatch) => {
+  try {
+    const res = await API_DOMAIN.put(`/api/v1/quiz/update/question/${questionId}`, data, {
+      headers: getAuthHeaders(token),
+    });
+    console.log(res)
+    if (res.data.status) {
+      dispatch(updateDraftQuestion(res.data.data));
+      return res.data;
+    }
+  } catch (error) {
+    toast.error("Failed to update question");
+    console.error(error);
+  }
+}
+
+export const getQuizById = async (id: string, dispatch: AppDispatch) => {
+  try {
+    const res = await API_DOMAIN.get(`/api/v1/quiz/get/quiz/${id}`);
+    if (res.data.status) {
+      dispatch(setCurrentDraft(res.data.data));
+      return res.data.data;
+    }
+  } catch (error) {
+    toast.error("Something went wrong");
+    console.log(error);
+  }
+}
+
+export const Logout = async () => {
+  try {
+    const res = await API_DOMAIN.post("/api/v1/auth/logout");
+
+    if (res.data) {
+      localStorage.clear();
+      return res.data;
+    }
+  } catch (error) {
+    console.log("🚀 ~ Logout ~ error:", error)
+    
   }
 };

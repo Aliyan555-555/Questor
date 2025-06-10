@@ -28,6 +28,7 @@ import MongoStore from "connect-mongo";
 import { GetReportDataWithId } from "./controller/reports.controller.js";
 import reportModel from "./model/report.model.js";
 import generateStyledExcel from "./lib/generateExcel.js";
+import { setupQuizSocket } from "./handler/setupQuizSocket.js";
 // const cpuCount = os.cpus().length;
 
 // if (cluster.isPrimary) {
@@ -42,7 +43,6 @@ import generateStyledExcel from "./lib/generateExcel.js";
 //   });
 // } else{
 
-
 // import { ResultModel } from "./model/result.model.js";
 
 dotenv.config();
@@ -56,11 +56,9 @@ const allowedOrigins = [
   "http://dev.meteoricsolutions.com:8000",
   "http://dev.meteoricsolutions.com:9000",
   "http://questor.meteoricsolutions.com",
-    "https://questor.meteoricsolutions.com",
+  "https://questor.meteoricsolutions.com",
   process.env.FRONTEND_URL,
 ];
-
-
 
 // console.log(cpuCount)
 const corsOptions = {
@@ -72,7 +70,7 @@ const corsOptions = {
     }
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
 app.use(compression());
@@ -106,7 +104,6 @@ const io = new Server(server, {
   pingTimeout: 50000,
 });
 
-
 app.get("/api/v1/avatars", async (req, res) => {
   try {
     const avatars = await avatarModel.find();
@@ -120,7 +117,7 @@ app.get("/api/v1/avatars", async (req, res) => {
 });
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1", ThemeRouter);
-app.use("/api/v1/reports",ReportsRouter)
+app.use("/api/v1/reports", ReportsRouter);
 
 app.use("/api/v1/quiz", QuizRouter);
 const roomPins = {};
@@ -167,11 +164,11 @@ io.on("connection", (socket) => {
         // host: socket.id,
         isActive: true,
       });
-      if (activeRooms.length ) {
+      if (activeRooms.length) {
         console.log(activeRooms);
         return socket.emit("error", {
           message: "This teacher is already hosting a room",
-          isReturnToHome:true
+          isReturnToHome: true,
         });
       }
       const selectedQuiz = await quizModel
@@ -221,23 +218,31 @@ io.on("connection", (socket) => {
     try {
       // Verify the refresh token
       const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
-      console.log("🚀 ~ socket.on ~ decoded:", decoded)
-      
+      console.log("🚀 ~ socket.on ~ decoded:", decoded);
+
       const room = await roomModel.findById(decoded.roomId);
-      
+
       if (!room) {
         console.error("Room not found", decoded);
         return socket.emit("error", { message: "Room not found" });
       }
 
       // Fetch the student and populate necessary fields
-      const student = await studentModel.findById(decoded.studentId).populate([
-        { path: "quiz", populate: [{ path: "theme" }, { path: "questions" }] },
-        { path: "room", populate: { path: "currentStage", populate: { path: "question" } } },
-        { path: "avatar" },
-        { path: "item" },
-        { path: "activeQuestion" },
-      ]);
+      const student = await studentModel
+        .findById(decoded.studentId)
+        .populate([
+          {
+            path: "quiz",
+            populate: [{ path: "theme" }, { path: "questions" }],
+          },
+          {
+            path: "room",
+            populate: { path: "currentStage", populate: { path: "question" } },
+          },
+          { path: "avatar" },
+          { path: "item" },
+          { path: "activeQuestion" },
+        ]);
 
       if (!student) {
         console.error("Student not found", decoded);
@@ -302,7 +307,10 @@ io.on("connection", (socket) => {
       console.log("Reconnected to the server");
     } catch (error) {
       console.error("Error during reconnection:", error);
-      socket.emit("error", { message: "Reconnection failed", error: error.message });
+      socket.emit("error", {
+        message: "Reconnection failed",
+        error: error.message,
+      });
     }
   });
   socket.on("joinRoom", async ({ pin, roomId, studentId, nickname }) => {
@@ -720,8 +728,8 @@ io.on("connection", (socket) => {
       },
     ]);
     const report = await GetReportDataWithId(room._id);
-   const r = await reportModel.create(report);
-   console.log(r)
+    const r = await reportModel.create(report);
+    console.log(r);
     io.to(room._id.toString()).emit("calculate_ranks_student", {
       students: room.students,
       data: room,
@@ -736,77 +744,81 @@ io.on("connection", (socket) => {
     );
     // const result = await ResultModel.create
     io.to(room._id.toString()).emit("started", { data: room });
-  }); 
+  });
   socket.on("submit_answer", async (data) => {
     try {
       const room = await roomModel.findById(data.room).populate({
         path: "students",
         populate: [{ path: "avatar" }, { path: "item" }],
       });
-  
+
       if (!room) {
         console.error(`Room with ID ${data.room} not found.`);
         return;
       }
-  
+
       const question = await questionModel.findById(data.question);
       if (!question) {
         console.error(`Question with ID ${data.question} not found.`);
         return;
       }
-  
+
       const student = await studentModel.findById(data.student);
       if (!student) {
         console.error(`Student with ID ${data.student} not found.`);
         return;
       }
-  
+
       let getScore = 0;
       let isCorrect = false;
-  
+
       const isAttempted = await questionResultModel.findOne({
         room: room._id,
         student: data.student,
         question: data.question,
       });
-  
+
       if (isAttempted) {
-        console.log(`Student ${student._id} has already attempted this question.`);
+        console.log(
+          `Student ${student._id} has already attempted this question.`
+        );
         return;
       }
-  
+
       if (data.isTimeUp) {
-        console.log(`Student ${student._id} ran out of time for question ${question._id}.`);
+        console.log(
+          `Student ${student._id} ran out of time for question ${question._id}.`
+        );
         await questionResultModel.create({
           room: room._id,
           quiz: room.quiz,
           student: data.student,
           question: data.question,
           score: getScore,
-          timeSpend:data.timeSpent,
-          answer:"No answer",
+          timeSpend: data.timeSpent,
+          answer: "No answer",
           totalScore: student.score,
           status: "timeUp",
         });
       } else {
         student.attemptQuestions.push(question._id);
-  
+
         isCorrect = question.answerIndex.every((index) =>
           data.options.includes(question.options[index])
         );
-  
+
         if (isCorrect) {
           const totalMarks = question.maximumMarks;
           const perSecondMarks = totalMarks / question.duration;
           getScore = data.timeSpent * perSecondMarks;
           student.score += getScore;
-  
+
           await questionResultModel.create({
             room: room._id,
             quiz: room.quiz,
             student: data.student,
-            answer:data.options[0],
-            timeSpend:data.timeSpent,
+            answer: data.options[0],
+            timeSpend: data.timeSpent,
             question: data.question,
             score: getScore,
             totalScore: student.score,
@@ -818,50 +830,51 @@ io.on("connection", (socket) => {
             quiz: room.quiz,
             student: data.student,
             question: data.question,
-            answer:data.options[0],
-            timeSpend:data.timeSpent,
+            answer: data.options[0],
+            timeSpend: data.timeSpent,
             score: getScore,
             totalScore: student.score,
             status: "wrong",
           });
         }
-  
+
         await student.save();
       }
-  
+
       // 🛠️ Update student ranks properly
-      const studentsInRoom = await studentModel.find({ _id: { $in: room.students.map(s => s._id) } })
+      const studentsInRoom = await studentModel
+        .find({ _id: { $in: room.students.map((s) => s._id) } })
         .sort({ score: -1 });
-  
+
       let currentRank = 1;
       let previousScore = null;
       let sameRankCount = 0;
-  
+
       for (let i = 0; i < studentsInRoom.length; i++) {
         const currentStudent = studentsInRoom[i];
-  
+
         if (previousScore !== null && currentStudent.score === previousScore) {
           sameRankCount++;
         } else {
           currentRank = i + 1;
           sameRankCount = 0;
         }
-  
+
         currentStudent.rank = currentRank;
         await currentStudent.save();
         previousScore = currentStudent.score;
       }
-  
+
       // 🔥 Get current student's updated rank
       const updatedStudent = await studentModel.findById(student._id);
-  
+
       io.to(room._id.toString()).emit("receiveStudentResult", {
         student: updatedStudent._id,
         score: updatedStudent.score,
         question: question._id,
         rank: updatedStudent.rank,
       });
-  
+
       socket.emit("result", {
         question: question._id,
         isCorrect,
@@ -870,12 +883,11 @@ io.on("connection", (socket) => {
         currentScore: getScore,
         score: updatedStudent.score,
       });
-  
     } catch (error) {
       console.error("❌ Error processing answer submission:", error);
     }
   });
-  
+
   socket.on("student_waiting", () => {
     // console.log("student_waiting")
     io.emit("student_waiting");
@@ -889,7 +901,8 @@ io.on("connection", (socket) => {
   socket.on("next_question_redirect", (data) => {
     io.to(data.roomId).emit("next_question_redirection");
   });
-  socket.on("checkUserInRoom",
+  socket.on(
+    "checkUserInRoom",
     async ({ roomId, studentData, token, stage = 0 }) => {
       const room = await roomModel.findById(roomId);
       if (!room) {
@@ -982,337 +995,342 @@ io.on("connection", (socket) => {
       room,
     });
   });
-  socket.on("add_question", async (data) => {
-    try {
-      const { id, type } = data;
-      const question = await questionModel.create({
-        duration: 30,
-        type: type,
-        showQuestionDuration: 2000,
-        media: "",
-        options: ["", "", "", ""],
-        answerIndex: [],
-        attemptStudents: [],
-        results: [],
-        maximumMarks: 1000,
-        question: "",
-      });
-      const updatedQuiz = await quizModel
-        .findByIdAndUpdate(
-          id,
-          { $push: { questions: question._id } },
-          { new: true }
-        )
-        .populate("questions")
-        .populate("theme");
 
-      socket.emit("question_added", {
-        data: updatedQuiz,
-        status: true,
-        message: "added question successfully",
-      });
-    } catch (error) {
-      console.error("Error adding question:", error);
-      socket.emit("question_added", {
-        message: "Failed to add question",
-        status: false,
-      });
-    }
-  });
-  socket.on("create_quiz", async (data) => {
-    try {
-      // Create a question
-      const question = await questionModel.create({
-        duration: 30,
-        type: "quiz",
-        showQuestionDuration: 2000,
-        media: "",
-        options: ["", "", "", ""],
-        answerIndex: [],
-        attemptStudents: [],
-        results: [],
-        maximumMarks: 1000,
-        question: "",
-      });
+  // socket.on("add_question", async (data) => {
 
-      if (!question) {
-        socket.emit("created_quiz", {
-          message: "Failed to create question",
-          status: false,
-        });
-        return;
-      }
-      const newQuiz = await quizModel.create({
-        ...data,
-        questions: [question._id],
-      });
+  //   try {
+  //     const { id, type } = data;
+  //     const question = await questionModel.create({
+  //       duration: 30,
+  //       type: type,
+  //       showQuestionDuration: 2000,
+  //       media: "",
+  //       options: ["", "", "", ""],
+  //       answerIndex: [],
+  //       attemptStudents: [],
+  //       results: [],
+  //       maximumMarks: 1000,
+  //       question: "",
+  //     });
+  //     const updatedQuiz = await quizModel
+  //       .findByIdAndUpdate(
+  //         id,
+  //         { $push: { questions: question._id } },
+  //         { new: true }
+  //       )
+  //       .populate("questions")
+  //       .populate("theme");
 
-      if (!newQuiz) {
-        socket.emit("created_quiz", {
-          message: "Failed to create quiz",
-          status: false,
-        });
-        return;
-      }
-      const populatedQuiz = await (
-        await newQuiz.populate("questions")
-      ).populate("theme");
-      socket.emit("created_quiz", {
-        data: populatedQuiz,
-        status: true,
-        message: "Quiz created successfully",
-      });
-    } catch (error) {
-      console.error("Error during quiz creation:", error);
-      socket.emit("created_quiz", {
-        message: "Something went wrong during quiz creation",
-        status: false,
-      });
-    }
-  });
-  socket.on("set_question_value", async (data) => {
-    try {
-      const quiz = await quizModel
-        .findOne({ _id: data._id })
-        .populate("questions")
-        .populate("theme");
+  //     socket.emit("question_added", {
+  //       data: updatedQuiz,
+  //       status: true,
+  //       message: "added question successfully",
+  //     });
+  //   } catch (error) {
+  //     console.error("Error adding question:", error);
+  //     socket.emit("question_added", {
+  //       message: "Failed to add question",
+  //       status: false,
+  //     });
+  //   }
+  // });
+  // socket.on("create_quiz", async (data) => {
+  //   try {
+  //     // Create a question
+  //     const question = await questionModel.create({
+  //       duration: 30,
+  //       type: "quiz",
+  //       showQuestionDuration: 2000,
+  //       media: "",
+  //       options: ["", "", "", ""],
+  //       answerIndex: [],
+  //       attemptStudents: [],
+  //       results: [],
+  //       maximumMarks: 1000,
+  //       question: "",
+  //     });
 
-      if (!quiz) {
-        socket.emit("set_question_value", {
-          status: false,
-          message: "Quiz not found",
-        });
-        return;
-      }
-      const question = await questionModel.findOneAndUpdate(
-        { _id: data.questionId },
-        { question: data.value },
-        { new: true }
-      );
+  //     if (!question) {
+  //       socket.emit("created_quiz", {
+  //         message: "Failed to create question",
+  //         status: false,
+  //       });
+  //       return;
+  //     }
+  //     const newQuiz = await quizModel.create({
+  //       ...data,
+  //       questions: [question._id],
+  //     });
 
-      if (!question) {
-        socket.emit("set_question_value", {
-          status: false,
-          message: "Question not found",
-        });
-        return;
-      }
+  //     if (!newQuiz) {
+  //       socket.emit("created_quiz", {
+  //         message: "Failed to create quiz",
+  //         status: false,
+  //       });
+  //       return;
+  //     }
+  //     const populatedQuiz = await (
+  //       await newQuiz.populate("questions")
+  //     ).populate("theme");
+  //     socket.emit("created_quiz", {
+  //       data: populatedQuiz,
+  //       status: true,
+  //       message: "Quiz created successfully",
+  //     });
+  //   } catch (error) {
+  //     console.error("Error during quiz creation:", error);
+  //     socket.emit("created_quiz", {
+  //       message: "Something went wrong during quiz creation",
+  //       status: false,
+  //     });
+  //   }
+  // });
+  // socket.on("set_question_value", async (data) => {
+  //   try {
+  //     const quiz = await quizModel
+  //       .findOne({ _id: data._id })
+  //       .populate("questions")
+  //       .populate("theme");
 
-      socket.emit("set_question_value", {
-        status: true,
-        message: "Question updated successfully",
-        data: quiz,
-        question
-      });
-    } catch (error) {
-      console.error("Error updating question:", error);
-      socket.emit("set_question_value", {
-        status: false,
-        message: "An error occurred while updating the question",
-      });
-    }
-  });
-  socket.on("fetch_quiz", async (data) => {
-    try {
-      console.log("works", data);
-      if (!data._id) {
-        socket.emit("fetched_quiz", {
-          status: false,
-          message: "Id is required",
-        });
-        return;
-      }
+  //     if (!quiz) {
+  //       socket.emit("set_question_value", {
+  //         status: false,
+  //         message: "Quiz not found",
+  //       });
+  //       return;
+  //     }
+  //     const question = await questionModel.findOneAndUpdate(
+  //       { _id: data.questionId },
+  //       { question: data.value },
+  //       { new: true }
+  //     );
 
-      const quiz = await quizModel
-        .findOne({ _id: data._id })
-        .populate("questions")
-        .populate("theme");
-      if (!quiz) {
-        socket.emit("feched_quiz", {
-          status: false,
-          message: "Quiz not found",
-        });
-        return;
-      }
-      socket.emit("feched_quiz", {
-        status: true,
-        message: "Quiz fetched successfully",
-        data: quiz,
-      });
-    } catch (error) {
-      socket.emit("feched_quiz", {
-        status: false,
-        message: "Something went wrong",
-      });
-    }
-  });
-  socket.on("delete_question_in_quiz", async (data) => {
-    try {
-      const quiz = await quizModel
-        .findById(data._id)
-        .populate("questions")
-        .populate("theme");
+  //     if (!question) {
+  //       socket.emit("set_question_value", {
+  //         status: false,
+  //         message: "Question not found",
+  //       });
+  //       return;
+  //     }
 
-      if (!quiz) {
-        socket.emit("deleted_question_in_quiz", {
-          message: "Quiz not found",
-          status: false,
-        });
-        return;
-      }
-      quiz.questions = quiz.questions.filter(
-        (question) => question._id.toString() !== data.questionId
-      );
-      await quiz.save();
-      const updatedQuiz = await quiz;
-      socket.emit("deleted_question_in_quiz", {
-        data: updatedQuiz,
-        message: "Question deleted successfully",
-        status: true,
-      });
-    } catch (error) {
-      console.error("Error deleting question from quiz:", error);
-      socket.emit("deleted_question_in_quiz", {
-        message: "Something went wrong",
-        status: false,
-      });
-    }
-  });
-  socket.on("update_question_media", async (data) => {
-    try {
-      // Update the question media and return the updated document
-      const question = await questionModel.findByIdAndUpdate(
-        data.questionId,
-        { media: data.media },
-        { new: true }
-      );
+  //     socket.emit("set_question_value", {
+  //       status: true,
+  //       message: "Question updated successfully",
+  //       data: quiz,
+  //       question
+  //     });
+  //   } catch (error) {
+  //     console.error("Error updating question:", error);
+  //     socket.emit("set_question_value", {
+  //       status: false,
+  //       message: "An error occurred while updating the question",
+  //     });
+  //   }
+  // });
+  // socket.on("fetch_quiz", async (data) => {
+  //   try {
+  //     console.log("works", data);
+  //     if (!data._id) {
+  //       socket.emit("fetched_quiz", {
+  //         status: false,
+  //         message: "Id is required",
+  //       });
+  //       return;
+  //     }
 
-      if (!question) {
-        socket.emit("updated_question_media", {
-          message: "Question not found",
-          status: false,
-        });
-        return;
-      }
+  //     const quiz = await quizModel
+  //       .findOne({ _id: data._id })
+  //       .populate("questions")
+  //       .populate("theme");
+  //     if (!quiz) {
+  //       socket.emit("feched_quiz", {
+  //         status: false,
+  //         message: "Quiz not found",
+  //       });
+  //       return;
+  //     }
+  //     socket.emit("feched_quiz", {
+  //       status: true,
+  //       message: "Quiz fetched successfully",
+  //       data: quiz,
+  //     });
+  //   } catch (error) {
+  //     socket.emit("feched_quiz", {
+  //       status: false,
+  //       message: "Something went wrong",
+  //     });
+  //   }
+  // });
+  // socket.on("delete_question_in_quiz", async (data) => {
+  //   try {
+  //     const quiz = await quizModel
+  //       .findById(data._id)
+  //       .populate("questions")
+  //       .populate("theme");
 
-      // Emit the updated question data
-      socket.emit("updated_question_media", {
-        data: question,
-        message: "Question media updated successfully",
-        status: true,
-      });
-    } catch (error) {
-      // Handle errors
-      socket.emit("updated_question_media", {
-        message: "Something went wrong",
-        status: false,
-        error: error.message, // Include error details for debugging
-      });
-    }
-  });
-  socket.on("update_question", async (data) => {
-    const question = await questionModel.findByIdAndUpdate(data._id, data, {
-      new: true,
-    });
-    if (!question) {
-      socket.emit("updated_question", {
-        message: "Something went wrong",
-        status: false,
-      });
-      return;
-    }
-    socket.emit("updated_question", {
-      data: question,
-      message: "Updated successfully",
-      status: true,
-    });
-  });
-  socket.on("update_theme", async (data) => {
-    const { id, theme } = data;
-    const updatedQuiz = await quizModel
-      .findByIdAndUpdate(id, { theme }, { new: true })
-      .populate("questions")
-      .populate("theme");
-    if (!updatedQuiz) {
-      socket.emit("updated_theme", {
-        message: "Something went wrong",
-        status: false,
-      });
-      return;
-    }
-    socket.emit("updated_theme", {
-      data: updatedQuiz,
-      message: "Updated successfully",
-      status: true,
-    });
-  });
-  socket.on("update_quiz_status", async (data) => {
-    const { id, status } = data;
-    const updatedQuiz = await quizModel
-      .findByIdAndUpdate(id, { status }, { new: true })
-      .populate("questions")
-      .populate("theme");
-    if (!updatedQuiz) {
-      socket.emit("updated_quiz_status", {
-        message: "Something went wrong",
-        status: false,
-      });
-      return;
-    }
-    socket.emit("updated_quiz", {
-      data: updatedQuiz,
-      message: "Updated successfully",
-      status: true,
-    });
-  });
-  socket.on("update_quiz", async (data) => {
-    try {
-      const updateQuiz = await quizModel
-        .findByIdAndUpdate(data._id, data, { new: true })
-        .populate("questions")
-        .populate("theme");
-      if (!updateQuiz) {
-        socket.emit("updated_quiz", {
-          message: "Something went wrong",
-          status: false,
-        });
-        return;
-      }
-      socket.emit("updated_quiz", {
-        data: updateQuiz,
-        status: true,
-        message: "updated successfully",
-      });
-    } catch (error) {
-      socket.emit("updated_quiz", {
-        message: "Something went wrong",
-        status: false,
-      });
-    }
-  });
-  socket.on("delete_quiz", async (data) => {
-    try {
-      const deleteQuiz = await quizModel.findByIdAndDelete(data._id);
-      if (!deleteQuiz) {
-        socket.emit("deleted_quiz", {
-          message: "Something went wrong",
-          status: false,
-        });
-        return;
-      }
-      socket.emit("deleted_quiz", {
-        data: deleteQuiz,
-        status: true,
-        message: "deleted successfully",
-      });
-    } catch (error) {
-      console.error(error);
-      socket.emit("deleted_quiz", {
-        message: "Something went wrong",
-        status: false,
-      });
-    }
-  });
+  //     if (!quiz) {
+  //       socket.emit("deleted_question_in_quiz", {
+  //         message: "Quiz not found",
+  //         status: false,
+  //       });
+  //       return;
+  //     }
+  //     quiz.questions = quiz.questions.filter(
+  //       (question) => question._id.toString() !== data.questionId
+  //     );
+  //     await quiz.save();
+  //     const updatedQuiz = await quiz;
+  //     socket.emit("deleted_question_in_quiz", {
+  //       data: updatedQuiz,
+  //       message: "Question deleted successfully",
+  //       status: true,
+  //     });
+  //   } catch (error) {
+  //     console.error("Error deleting question from quiz:", error);
+  //     socket.emit("deleted_question_in_quiz", {
+  //       message: "Something went wrong",
+  //       status: false,
+  //     });
+  //   }
+  // });
+  // socket.on("update_question_media", async (data) => {
+  //   try {
+  //     // Update the question media and return the updated document
+  //     const question = await questionModel.findByIdAndUpdate(
+  //       data.questionId,
+  //       { media: data.media },
+  //       { new: true }
+  //     );
+
+  //     if (!question) {
+  //       socket.emit("updated_question_media", {
+  //         message: "Question not found",
+  //         status: false,
+  //       });
+  //       return;
+  //     }
+
+  //     // Emit the updated question data
+  //     socket.emit("updated_question_media", {
+  //       data: question,
+  //       message: "Question media updated successfully",
+  //       status: true,
+  //     });
+  //   } catch (error) {
+  //     // Handle errors
+  //     socket.emit("updated_question_media", {
+  //       message: "Something went wrong",
+  //       status: false,
+  //       error: error.message, // Include error details for debugging
+  //     });
+  //   }
+  // });
+  // socket.on("update_question", async (data) => {
+  //   const question = await questionModel.findByIdAndUpdate(data._id, data, {
+  //     new: true,
+  //   });
+  //   if (!question) {
+  //     socket.emit("updated_question", {
+  //       message: "Something went wrong",
+  //       status: false,
+  //     });
+  //     return;
+  //   }
+  //   socket.emit("updated_question", {
+  //     data: question,
+  //     message: "Updated successfully",
+  //     status: true,
+  //   });
+  // });
+  // socket.on("update_theme", async (data) => {
+  //   const { id, theme } = data;
+  //   const updatedQuiz = await quizModel
+  //     .findByIdAndUpdate(id, { theme }, { new: true })
+  //     .populate("questions")
+  //     .populate("theme");
+  //   if (!updatedQuiz) {
+  //     socket.emit("updated_theme", {
+  //       message: "Something went wrong",
+  //       status: false,
+  //     });
+  //     return;
+  //   }
+  //   socket.emit("updated_theme", {
+  //     data: updatedQuiz,
+  //     message: "Updated successfully",
+  //     status: true,
+  //   });
+  // });
+  // socket.on("update_quiz_status", async (data) => {
+  //   const { id, status } = data;
+  //   const updatedQuiz = await quizModel
+  //     .findByIdAndUpdate(id, { status }, { new: true })
+  //     .populate("questions")
+  //     .populate("theme");
+  //   if (!updatedQuiz) {
+  //     socket.emit("updated_quiz_status", {
+  //       message: "Something went wrong",
+  //       status: false,
+  //     });
+  //     return;
+  //   }
+  //   socket.emit("updated_quiz", {
+  //     data: updatedQuiz,
+  //     message: "Updated successfully",
+  //     status: true,
+  //   });
+  // });
+  // socket.on("update_quiz", async (data) => {
+  //   try {
+  //     const updateQuiz = await quizModel
+  //       .findByIdAndUpdate(data._id, data, { new: true })
+  //       .populate("questions")
+  //       .populate("theme");
+  //     if (!updateQuiz) {
+  //       socket.emit("updated_quiz", {
+  //         message: "Something went wrong",
+  //         status: false,
+  //       });
+  //       return;
+  //     }
+  //     socket.emit("updated_quiz", {
+  //       data: updateQuiz,
+  //       status: true,
+  //       message: "updated successfully",
+  //     });
+  //   } catch (error) {
+  //     socket.emit("updated_quiz", {
+  //       message: "Something went wrong",
+  //       status: false,
+  //     });
+  //   }
+  // });
+  // socket.on("delete_quiz", async (data) => {s
+  //   try {
+  //     const deleteQuiz = await quizModel.findByIdAndDelete(data._id);
+  //     if (!deleteQuiz) {
+  //       socket.emit("deleted_quiz", {
+  //         message: "Something went wrong",
+  //         status: false,
+  //       });
+  //       return;
+  //     }
+  //     socket.emit("deleted_quiz", {
+  //       data: deleteQuiz,
+  //       status: true,
+  //       message: "deleted successfully",
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //     socket.emit("deleted_quiz", {
+  //       message: "Something went wrong",
+  //       status: false,
+  //     });
+  //   }
+  // });
+
+  setupQuizSocket(io);
+
   socket.on("disconnect", async (reason) => {
     if (socket.teacher) {
       const room = await roomModel.deleteMany({
@@ -1394,6 +1412,5 @@ const PORT = process.env.PORT || 9000;
 server.listen(PORT, () => {
   console.log(`Server is running on link http://localhost:${PORT}`);
 });
-
 
 // }

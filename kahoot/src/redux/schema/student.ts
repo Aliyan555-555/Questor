@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import { Question } from "@/src/types";
 
 interface Avatar {
   _id: string;
@@ -23,20 +24,6 @@ interface Accessory {
   _id: string;
   type: string;
   resource: string;
-}
-interface Question {
-  _id: string;
-  question: string;
-  options: string[];
-  answerIndex: number[];
-  duration: number;
-  showQuestionDuration: number;
-  isMultiSelect: boolean;
-  maximumMarks: number;
-  type: string;
-  media: string;
-  attemptStudents: string[];
-  results: string[];
 }
 
 interface CurrentGame {
@@ -88,23 +75,25 @@ export interface CurrentDraft {
   };
 }
 
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  authToken: string;
+  profileImage: string;
+  providerId: string;
+  providerName: string;
+  favorites: string[];
+}
+
 interface StudentState {
   currentGame: CurrentGame | null;
   avatars: Avatar[];
   accessories: Accessory[];
+  user: User | null;
   isAuthenticated: boolean;
-  currentDraft: null | CurrentDraft;
   themes: Theme[];
-  user: {
-    name: string;
-    _id: string;
-    profileImage: string;
-    providerId: string;
-    providerName: string;
-    email: string;
-    password: string;
-    favorites: [];
-  } | null;
+  currentDraft: null | CurrentDraft;
 }
 
 const initialState: StudentState = {
@@ -134,14 +123,14 @@ const studentSlice = createSlice({
       }
     },
 
-    updateDraftQuestion (state,action){
-      if (!state.currentDraft) return;
-      const questionIndex = state.currentDraft.questions.findIndex(
-        (question) => question._id === action.payload._id
-      );
-
-      if (questionIndex !== -1) {
-        state.currentDraft.questions[questionIndex] = action.payload;
+    updateDraftQuestion(state, action: PayloadAction<Question>) {
+      if (state.currentDraft) {
+        const questionIndex = state.currentDraft.questions.findIndex(
+          (q: Question) => q._id === action.payload._id
+        );
+        if (questionIndex !== -1) {
+          state.currentDraft.questions[questionIndex] = action.payload;
+        }
       }
     },
     setFavorites(state, action) {
@@ -210,7 +199,7 @@ const studentSlice = createSlice({
         (accessory) => accessory._id !== action.payload.id
       );
     },
-    login(state, action) {
+    login(state, action: PayloadAction<User>) {
       if (state.isAuthenticated) {
         toast.error("User is already logged in");
         return;
@@ -221,6 +210,7 @@ const studentSlice = createSlice({
     logout(state) {
       state.user = null;
       state.isAuthenticated = false;
+      state.currentDraft = null;
     },
     updateUser(state, action) {
       state.user = { ...state.user, ...action.payload };
@@ -231,10 +221,10 @@ const studentSlice = createSlice({
     clearCurrentDraft(state) {
       state.currentDraft = null;
     },
-    setThemes(state, actions) {
-      state.themes = actions.payload;
+    setThemes(state, action: PayloadAction<Theme[]>) {
+      state.themes = action.payload;
     },
-    setCurrentDraft(state, action) {
+    setCurrentDraft(state, action: PayloadAction<CurrentDraft>) {
       state.currentDraft = action.payload;
     },
     updateQuestion(state, action: PayloadAction<Question>) {
@@ -248,19 +238,18 @@ const studentSlice = createSlice({
     setQuestionsIndex(state, action) {
       state.currentDraft = { ...state.currentDraft, questions: action.payload };
     },
-    updateCurrentDraft(state, action) {
-      state.currentDraft = { ...action.payload };
+    updateCurrentDraft(state, action: PayloadAction<CurrentDraft>) {
+      state.currentDraft = { ...state.currentDraft, ...action.payload };
     },
-    updateQuestionMedia(state, actions) {
-      const updatedQuestion = actions.payload;
-
-      const updatedQuestions = state.currentDraft.questions.map((question) =>
-        question._id === actions.payload._id ? updatedQuestion : question
-      );
-      state.currentDraft = {
-        ...state.currentDraft,
-        questions: updatedQuestions,
-      };
+    updateQuestionMedia(state, action: PayloadAction<Question>) {
+      if (state.currentDraft) {
+        const questionIndex = state.currentDraft.questions.findIndex(
+          (q: Question) => q._id === action.payload._id
+        );
+        if (questionIndex !== -1) {
+          state.currentDraft.questions[questionIndex] = action.payload;
+        }
+      }
     },
   },
 });
@@ -293,7 +282,6 @@ export const {
   changeCharacters,
   removeAccessory,
   setScore,
-
 } = studentSlice.actions;
 
 export default studentSlice.reducer;

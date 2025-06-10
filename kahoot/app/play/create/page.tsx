@@ -7,16 +7,16 @@ import { RxCross2 } from "react-icons/rx";
 import { RootState } from "@/src/redux/store";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
-import { useSocket } from "@/src/hooks/useSocket";
+import ExitModel from "@/src/components/create/ExistModel"
+import QuestionOptionDropdown from "@/src/components/create/QuestionOptionDropdown"
+import RightSidebar from "@/src/components/create/RightSidebar"
+import AddQuestionTypesDropdown from "@/src/components/create/AddQuestionTypeDropdown"
+
 import {
   clearCurrentDraft,
   CurrentDraft,
   setCurrentDraft,
   setThemes,
-  updateCurrentDraft,
-  updateDraftQuestion,
-  updateQuestion,
-  updateQuestionMedia,
 } from "@/src/redux/schema/student";
 import SettingsModel from "@/src/components/create/SettingsModel";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
@@ -33,22 +33,31 @@ import {
   TriangleIcon,
 } from "@/src/lib/svg";
 import { Question } from "@/src/types";
-import { QuestionsTypes, TimeLimit } from "@/src/contents";
-import { GetAllThemes } from "@/src/redux/api";
+import { QuestionsTypes } from "@/src/contents";
+import { GetAllThemes, addQuestionInQuiz, createInitialQuiz, deleteQuestionInQuiz, updateQuiz, getQuizById, updateQuestion, } from "@/src/redux/api";
 import { SaveModel } from "@/src/components/create/SaveModel";
 import Loading from "../[id]/loading";
 import imageLoader from "@/src/components/ImageLoader";
-import useOutsideClick from "@/src/hooks/useClickoutside";
+
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  authToken: string;
+  profileImage: string;
+  providerId: string;
+  providerName: string;
+  favorites: string[];
+}
 
 const Create = () => {
-  const { socket } = useSocket();
+  // const { socket } = useSocket();
   const [isExist, setIsExist] = useState(false);
   const [isSettingModelOpen, setIsSettingModelOpen] = useState(false);
   const [savingErrors, setSavingErrors] = useState<ErrorType[]>([])
   const [isOpenGallery, setIsOpenGallery] = useState(false);
   const themes = useSelector((root: RootState) => root.student.themes);
   const [isSaveModelOpen, setIsSaveModelOpen] = useState(false);
-  // const [inputValue, setInputValue] = useState("");
   const [customizableBarIsOpen, setCustomizableBarIsOpen] = useState(true);
   const user = useSelector((root: RootState) => root.student.user);
   const [selectedQuestion, setSelectedQuestion] = useState<string | null>(null);
@@ -61,138 +70,69 @@ const Create = () => {
   const navigation = useRouter();
   const id = query.get("id");
   const [isThemeOpen, setIsThemeOpen] = useState(false);
+
+
+
+
   const fetch = async () => {
     const res = await GetAllThemes();
     if (res?.status) {
       dispatch(setThemes(res?.data));
     }
   };
-  useEffect(() => {
-    if (id && data?._id !== id) {
-      socket?.emit("fetch_quiz", { _id: id });
+
+  const fetchInitialQuiz = async () => {
+    if (id && data && id !== data._id) {
+      const res = await getQuizById(id, dispatch);
+      console.log("🚀 ~ fetchInitialQuiz ~ res:", res)
     }
-    return () => {
-      socket?.off("fetch_quiz");
-    }
-  });
+
+
+  }
+
   useEffect(() => {
-    fetch();
+    fetch(); fetchInitialQuiz();
   }, []);
+
   const createQuiz = async () => {
     try {
       dispatch(clearCurrentDraft());
-
       if (!user?._id) {
         navigation.push(
           `/auth/login?redirect_url=${window.location.origin}${path}&redirect=true`
         );
-        return toast.error("User not authenticated");
+        return;
       }
       if (!id) {
         dispatch(clearCurrentDraft());
       }
       if (data && data._id === id) return;
-      socket?.emit("create_quiz", {
+
+      const res = await createInitialQuiz(user.authToken, {
         name: "Untitled Quiz",
         description: "Add a description here.",
         creator: user._id,
         theme: "67d29d6e1586140c2c8f7966",
+
+
       });
+      if (res?.status) {
+        dispatch(setCurrentDraft(res.data));
+        navigation.push(`/play/create?id=${res.data._id}`);
+        setSelectedQuestion(res.data.questions?.[0]?._id || null);
+      } else {
+        toast.error("Failed to create quiz.");
+      }
     } catch (error) {
       console.error(error);
       toast.error("Failed to create quiz.");
     }
   };
   useEffect(() => {
-    if (!id && socket && dispatch) {
+    if (!id && dispatch) {
       createQuiz();
     }
-  }, [id, socket, dispatch]);
-  useEffect(() => {
-    if (socket) {
-      socket.on("feched_quiz", (quizData) => {
-        if (quizData.status) {
-          dispatch(setCurrentDraft(quizData.data));
-          setSelectedQuestion(quizData.data.questions?.[0]?._id || null);
-          setSelectedQuestionData(quizData.data.questions?.[0]);
-        } else {
-          toast.error("Failed to fetch quiz data.");
-        }
-      });
-      socket.on("created_quiz", (quizData) => {
-        if (quizData?.status) {
-          dispatch(setCurrentDraft(quizData.data));
-          navigation.push(`/play/create?id=${quizData.data._id}`);
-          setSelectedQuestion(quizData.data.questions?.[0]?._id || null);
-        } else {
-          toast.error("Failed to create quiz.");
-        }
-      });
-      socket.on("fetched_quiz", (quizData) => {
-        if (quizData.status) {
-          dispatch(setCurrentDraft(quizData.data));
-        } else {
-          toast.error("Failed to fetch quiz data.");
-        }
-      });
-      socket.on("deleted_question_in_quiz", (quizData) => {
-        dispatch(updateCurrentDraft({ ...quizData.data }));
-        setSelectedQuestion(
-          quizData.data.questions[quizData.data.questions.length - 1]._id
-        );
-        setSelectedQuestionData(
-          quizData.data.questions[quizData.data.questions.length - 1]
-        );
-      });
-
-      socket.on("set_question_value", (quizData) => {
-        setSelectedQuestionData(quizData.question);
-        dispatch(updateDraftQuestion(quizData.question));
-      });
-      socket.on("updated_question_media", (quizData) => {
-        if (quizData.status) {
-          dispatch(updateQuestionMedia({ ...quizData.data }));
-          setSelectedQuestionData(quizData.data)
-        }
-      });
-      socket.on("updated_question", (quizData) => {
-        if (quizData.status) {
-          console.log(quizData.data);
-          dispatch(updateQuestion({ ...quizData.data }));
-          setSelectedQuestionData(quizData.data);
-        }
-      });
-      socket.on("updated_theme", (quizData) => {
-        if (quizData.status) {
-          dispatch(updateCurrentDraft({ ...quizData.data }));
-        }
-      });
-      socket.on("updated_quiz", (quizData) => {
-        if (quizData.status) {
-          dispatch(updateCurrentDraft({ ...quizData.data }));
-        }
-      });
-      socket.on("question_added", (quizData) => {
-        if (quizData.status) {
-          dispatch(updateCurrentDraft({ ...quizData.data }));
-        }
-      });
-    }
-    if (id && !data) {
-      socket?.emit("fetch_quiz", { _id: id });
-    }
-    return () => {
-      if (socket) {
-        socket.off("updated_quiz");
-        socket.off("updated_question");
-        socket.off("updated_question_media");
-        socket.off("set_question_value");
-        socket.off("deleted_question_in_quiz");
-        socket.off("created_quiz");
-        socket.off("fetched_quiz");
-      }
-    };
-  }, [socket, id, data, dispatch]);
+  }, [id, dispatch]);
   useEffect(() => {
     if (data && data.questions?.length > 0) {
       setSelectedQuestion(data.questions[0]._id);
@@ -202,37 +142,47 @@ const Create = () => {
       setSelectedQuestion(null);
     }
   }, []);
-  const handleUpdateQuestion = (question) => {
-    if (question) {
-      socket?.emit("update_question", question);
+  const handleUpdateQuestion = async (question) => {
+    try {
+      const res = await updateQuestion(user.authToken, selectedQuestionData._id, question, dispatch);
+      console.log("🚀 ~ handleUpdateQuestion ~ res:", res)
+
+    } catch (error) {
+      console.log("🚀 ~ handleUpdateQuestion ~ error:", error)
+
     }
   };
-  const handleDeleteQuestion = (questionId: string) => {
-    if (!id || !questionId) {
-      return toast.error("Invalid question or quiz ID.");
+
+  const handleDeleteQuestion = async (questionId: string) => {
+    if (!id || !questionId || !user?.authToken) {
+      toast.error("Invalid question or quiz ID");
+      return;
     }
-    if (data?.questions.length > 1) {
-      socket?.emit("delete_question_in_quiz", { questionId, _id: id });
+    const res = await deleteQuestionInQuiz(user.authToken, id, questionId, dispatch);
+    if (res?.status) {
+      const lastQuestion = res.data.questions[res.data.questions.length - 1];
+      setSelectedQuestion(lastQuestion?._id || null);
+      setSelectedQuestionData(lastQuestion || null);
     }
   };
-  const handleUpdateQuiz = (quizData) => {
-    socket?.emit("update_quiz", quizData);
-  };
-  const handleSetQuestion = (value: string) => {
-    if (!selectedQuestion) {
-      return toast.error("Please select a question to set as the main one.");
+  const handleUpdateQuiz = async (quizData: any) => {
+    if (!user?.authToken) {
+      toast.error("User session expired");
+      return;
     }
-    socket?.emit("set_question_value", {
-      questionId: selectedQuestion,
-      _id: id,
-      value,
-    });
+    const res = await updateQuiz(user.authToken, quizData, dispatch);
+    if (res?.status) {
+      dispatch(setCurrentDraft(res.data));
+    }
   };
-  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === "Enter") {
-  //     handleSetQuestion(inputValue);
-  //   }
-  // };
+  const handleSetQuestion = async (value: string) => {
+    if (!selectedQuestion || !user?.authToken) {
+      toast.error("Please select a question to set as the main one");
+      return;
+    }
+
+    setSelectedQuestionData((prev) => ({ ...prev, question: value }));
+  };
   useEffect(() => {
     if (data && data.questions?.length > 0) {
       setSelectedQuestionData(
@@ -240,28 +190,32 @@ const Create = () => {
           (question) => question._id === selectedQuestion
         )[0]
       );
-      // setInputValue(data?.questions.filter((question) => question._id === selectedQuestion)[0]?.question ?? "")
+
     }
+
+    handleUpdateQuestion(selectedQuestionData)
+
   }, [selectedQuestion]);
   const handleChangeMedia = (qid: string | null, quizId: string, media: string) => {
-    socket?.emit("update_question_media", {
-      questionId: qid,
-      _id: quizId,
-      media,
-    });
+    handleUpdateQuestion({ ...selectedQuestionData, media })
   };
   const handleRemoveMedia = (qid: string, quizId: string | null, media: string) => {
-    socket?.emit("update_question_media", {
-      questionId: qid,
-      _id: quizId,
-      media: media,
-    });
+    handleUpdateQuestion({ ...selectedQuestionData, media })
   };
   const handleChangeTheme = (theme: string) => {
-    socket?.emit("update_theme", { id, theme });
+    // socket?.emit("update_theme", { id, theme });
+    handleUpdateQuiz({ ...data, theme })
   };
-  const handleAddQuestion = (type: string) => {
-    socket?.emit("add_question", { id, type });
+  const handleAddQuestion = async (type: string) => {
+    if (!id || !user?.authToken) {
+      toast.error("Invalid quiz or user session");
+      return;
+    }
+    const res = await addQuestionInQuiz(user.authToken, id, type, dispatch);
+    if (res?.status) {
+      setSelectedQuestion(res.data.questions[res.data.questions.length - 1]._id);
+      setSelectedQuestionData(res.data.questions[res.data.questions.length - 1]);
+    }
   };
   const handleSaveAnswerIndex = (questionIndex: string, optionIndex: number) => {
     if (!selectedQuestionData?.isMultiSelect) {
@@ -344,7 +298,7 @@ const Create = () => {
     }
   }, [data, id]);
   const handleChangeQuizStatus = () => {
-    socket?.emit("update_quiz_status", { status: 'active', _id: id });
+    // socket?.emit("update_quiz_status", { status: 'active', _id: id });
   }
   const ReturnToHome = (status) => {
     handleUpdateQuiz({ ...data, status: status });
@@ -355,6 +309,35 @@ const Create = () => {
       <Loading />
     )
   };
+
+
+  const saveQuiz = async () => {
+    try {
+      const res = await updateQuiz(user.authToken, data, dispatch);
+      if (res.status) {
+        toast.success("Quiz saved successfully.");
+        dispatch(setCurrentDraft(res.data));
+        setIsSaveModelOpen(false);
+        // console.log("Some thing went wrong")
+      }
+    } catch (error) {
+      console.error("Error saving quiz:", error);
+      toast.error("Failed to save quiz.");
+    }
+  }
+
+  useEffect(() => {
+    console.log("selected updateding...")
+    handleUpdateQuestion(selectedQuestionData);
+  }, [selectedQuestionData?._id]);
+
+  useEffect(() => {
+    console.log("question updateing")
+    const u = data.questions.find(q => q._id === selectedQuestionData?._id)
+    setSelectedQuestionData(u);
+  }, [data])
+
+
 
   return (
     <div className="w-screen bg-white  overflow-x-hidden flex flex-col">
@@ -564,7 +547,7 @@ const Create = () => {
                           alt="Media"
                           width={300}
                           height={300}
-                          loader={imageLoader}
+                          lazy
                           className="w-full h-full object-cover object-center"
                         />
                         <div className="w-full absolute bottom-0 flex justify-end p-2 text-gray-700">
@@ -603,7 +586,7 @@ const Create = () => {
             <input
               // onBlur={() => handleSetQuestion(inputValue)}
 
-              value={selectedQuestionData?.question ??""}
+              value={selectedQuestionData?.question ?? ""}
               onChange={(e) => { handleSetQuestion(e.target.value) }}
               style={{
                 boxShadow:
@@ -620,7 +603,7 @@ const Create = () => {
               <div className="w-full flex flex-wrap py-5 px-3 gap-3">
                 <div
                   onClick={() => document.getElementById('option1').focus()}
-                  className={`w-[49%] h-[100px] select-none flex rounded-[10px] transition-colors duration-300  ${selectedQuestionData?.options[0] ? "bg-[#9D069C]" : "bg-white"
+                  className={`w-[49%] h-[100px] select-none flex rounded-[10px] transition-colors duration-300  ${selectedQuestionData?.options[0].length > 0 ? "bg-[#9D069C]" : "bg-white"
                     }`}
                 >
                   <div className="h-full bg-[#9D069C] w-fit px-4 flex items-center rounded-[10px]">
@@ -935,101 +918,11 @@ const Create = () => {
             )
           }
         </div>
-        <motion.div
-          animate={{ width: customizableBarIsOpen ? "310px" : 0 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="w-[310px] h-screen  bg-[#E9E2B6] relative"
-        >
-          <motion.button
-            animate={{ left: customizableBarIsOpen ? "-40px" : "-50px" }}
-            onClick={() => setCustomizableBarIsOpen((p) => !p)}
-            className="absolute top-1/2 bg-[#E9E2B6] py-2 px-2 z-0 w-[80px] rounded-md"
-          >
-            {customizableBarIsOpen ? (
-              <FaChevronRight fontSize={23} />
-            ) : (
-              <FaChevronLeft fontSize={23} />
-            )}
-          </motion.button>
-          {isThemeOpen ? (
-            <div className="w-full h-full z-10 p-5 relative flex flex-col gap-6">
-              <div className="w-full flex justify-between">
-                <h3 className="text-lg font-semibold">Themes</h3>
-                <IconButton
-                  onClick={() => setIsThemeOpen(false)}
-                  className="!text-black"
-                >
-                  <RxCross2 />
-                </IconButton>
-              </div>
-              <div className="w-full flex flex-wrap h-[90vh] overflow-y-scroll justify-center gap-3">
-                {themes.map((theme, i) => (
-                  <div
-                    key={i}
-                    onClick={() => handleChangeTheme(theme._id)}
-                    className={`w-[110px]  border-[3px] rounded-md p-1 ${theme?._id === data?.theme?._id
-                      ? "border-blue-600"
-                      : "border-transparent"
-                      } hover:border-gray-400  h-[110px] `}
-                  >
-                    <Image
-                      className="w-full h-full object-cover rounded-md"
-                      src={theme.image}
-                      alt="Theme"
-                      width={100}
-                      // loader={imageLoader}
-                      height={100}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="w-full h-full z-10 p-5 relative flex flex-col gap-6">
-              <div className="w-full flex flex-col gap-2">
-                <h3 className="text-lg font-semibold">Question type</h3>
 
-                <TypesDropdown
-                  selectedQuestion={selectedQuestionData}
-                  setTypes={(value: string) =>
-                    handleUpdateQuestion({
-                      ...selectedQuestionData,
-                      type: value,
-                    })
-                  }
-                />
-              </div>
-              <div className="w-full flex flex-col gap-2">
-                <h3 className="text-lg font-semibold">Time limit</h3>
-                <TimeLimitDropdown
-                  duration={selectedQuestionData?.duration}
-                  setDuration={(value: number) =>
-                    handleUpdateQuestion({
-                      ...selectedQuestionData,
-                      duration: value,
-                    })
-                  }
-                />
-              </div>
-              {selectedQuestionData?.type === 'quiz' && <div className="w-full flex flex-col gap-2">
-                <h3 className="text-lg font-semibold">Answer options</h3>
-
-                <QuestionOptionDropdown
-                  isMultiSelect={selectedQuestionData?.isMultiSelect}
-                  onSelectOption={(value: boolean) => {
-                    handleUpdateQuestion({
-                      ...selectedQuestionData,
-                      isMultiSelect: value,
-                      answerIndex: [],
-                    });
-                  }}
-                />
-              </div>}
+  {/* Right side bar */}
+  <RightSidebar handleUpdateQuestion ={handleUpdateQuestion} customizableBarIsOpen={customizableBarIsOpen} isThemeOpen={isThemeOpen} themes={themes} selectedQuestionData={selectedQuestionData} setCustomizableBarIsOpen={setCustomizableBarIsOpen}/>
 
 
-            </div>
-          )}
-        </motion.div>
       </div>
       <GalleryModel
         open={isOpenGallery}
@@ -1054,249 +947,6 @@ const Create = () => {
 
 export default React.memo(Create);
 
-const TypesDropdown = ({
-  setTypes,
-  selectedQuestion,
-}: {
-  setTypes: (value: string) => void;
-  selectedQuestion: Question;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(dropdownRef, () => setIsOpen(false))
-  const handleSelect = (value: string) => {
-    setTypes(value);
-  };
-  return (
-    <div className="relative w-full" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full items-center bg-white !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md relative"
-      >
-        {QuestionsTypes.find((t) => t.type === selectedQuestion?.type)?.icon}{" "}
-        {QuestionsTypes.find((t) => t.type === selectedQuestion?.type)?.title}
-        {isOpen && (
-          <div
-            style={{
-              boxShadow:
-                "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
-            }}
-            className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
-          >
-            {QuestionsTypes.map((type) => (
-              <div
-                onClick={() => handleSelect(type.type)}
-                key={type.id}
-                className="w-full flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-              >
-                {type.icon} {/* Render the icon directly */}
-                <p className="text-sm font-medium">{type.title}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </button>
-    </div>
-  );
-};
-const TimeLimitDropdown = ({
-  duration,
-  setDuration,
-}: {
-  duration: number;
-  setDuration: (value: number) => void;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(dropdownRef, () => setIsOpen(false))
-  const handleSetDuration = (value: number) => {
-    setDuration(value);
-  };
-  return (
-    <div className="relative w-full" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full items-center bg-white !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md relative"
-      >
-        {TimeLimit.find((i) => i.value === duration)?.title}
-        {isOpen && (
-          <div
-            style={{
-              boxShadow:
-                "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
-            }}
-            className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
-          >
-            {TimeLimit.map((type) => (
-              <div
-                onClick={() => handleSetDuration(type.value)}
-                key={type.id}
-                className="w-full flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-              >
-                <p className="text-sm font-medium">{type.title}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </button>
-
-    </div>
-  );
-};
-
-const QuestionOptionDropdown = ({
-  isMultiSelect,
-  onSelectOption,
-}: {
-  isMultiSelect: boolean;
-  onSelectOption: (value: boolean) => void;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(dropdownRef, () => setIsOpen(false))
-  const handleSelectOption = (option: boolean) => {
-    onSelectOption(option);
-    setIsOpen(false);
-  };
-  // console.log("debug", isMultiSelect);
-
-  return (
-    <div className="relative w-full" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full bg-white items-center !capitalize gap-3 font-semibold justify-start flex border p-2 border-gray-400 rounded-md"
-      >
-        {isMultiSelect ? "Multi Select" : "Single Select"}
-      </button>
-
-      {isOpen && (
-        <div
-          style={{
-            boxShadow:
-              "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
-          }}
-          className="w-full left-0 absolute top-[110%] bg-white shadow-md z-10 p-2 rounded-md"
-        >
-          <div
-            onClick={() => handleSelectOption(false)}
-            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${!isMultiSelect ? "bg-gray-100" : ""
-              }`}
-          >
-            <h4 className="text-lg font-semibold">Single Select</h4>
-            <p className="text-xs text-gray-500">
-              Players can only select one of the answers.
-            </p>
-          </div>
-          <div
-            onClick={() => handleSelectOption(true)}
-            className={`hover:bg-[#0002] p-2 rounded-md cursor-pointer ${isMultiSelect ? "bg-gray-100" : ""
-              }`}
-          >
-            <h4 className="text-lg font-semibold">Multi Select</h4>
-            <p className="text-xs text-gray-500">
-              Players can select multiple answers.
-            </p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const AddQuestionTypesDropdown = ({
-  setType,
-}: {
-  setType: (type: string) => void;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-
-  const handleAddQuestion = (type: string) => {
-    setType(type);
-    setIsOpen(false);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  return (
-    <div className="relative">
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        className="!bg-[#FBA732] w-full !flex !gap-2 !text-white !rounded-[10px] !capitalize"
-      >
-        <svg width="20" height="20" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12.5 0C5.5957 0 0 5.5957 0 12.5C0 19.4043 5.5957 25 12.5 25C19.4043 25 25 19.4043 25 12.5C25 5.5957 19.4043 0 12.5 0ZM19.79 13.54C19.79 14.1162 19.3262 14.5801 18.75 14.5801H14.585V18.75C14.585 19.3262 14.1211 19.79 13.5449 19.79H11.46C10.8838 19.79 10.4199 19.3213 10.4199 18.75V14.585H6.25C5.67383 14.585 5.20996 14.1162 5.20996 13.5449V11.46C5.20996 10.8838 5.67383 10.4199 6.25 10.4199H10.415V6.25C10.415 5.67383 10.8789 5.20996 11.4551 5.20996H13.54C14.1162 5.20996 14.5801 5.67871 14.5801 6.25V10.415H18.75C19.3262 10.415 19.79 10.8838 19.79 11.4551V13.54Z" fill="#F8F4FB" />
-        </svg>
-
-        Add Question
-      </Button>
-
-      {isOpen && (
-        <div
-          ref={dropdownRef}
-          className="absolute left-full z-[1000000000000000] bottom-full mt-2 bg-white shadow-lg rounded-md w-[220px] p-2 "
-          style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px" }}
-        >
-          {QuestionsTypes.map((type) => (
-            <div
-              key={type.id}
-              onClick={() => handleAddQuestion(type.type)}
-              className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-            >
-              {type.icon}
-              <p className="text-sm font-medium">{type.title}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-
-
-};
-
-const ExitModel = ({ open, handleClose }) => {
-  const navigation = useRouter()
-  const handleExit = () => {
-    navigation.push("/")
-  }
-  return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle className="!font-bold">Confirm Exist</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Are you sure you want to exit? Any unsaved changes will be lost.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} className="!bg-[#002F49] !px-4 !text-white" >
-          Cancel
-        </Button>
-        <Button
-          onClick={handleExit}
-          className="!bg-red_1"
-          variant="contained"
-        >
-          Exit
-        </Button>
-      </DialogActions>
-    </Dialog>
-  )
-}
 
 interface ErrorType {
   index: number;

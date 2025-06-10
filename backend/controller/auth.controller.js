@@ -2,8 +2,9 @@ import nodemailer from "nodemailer";
 import { userModel } from "../model/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import streamifier from "streamifier"
+import streamifier from "streamifier";
 import { sendOTPEmail } from "../nodemilar.js";
+
 export const SocialAuth = async (req, res) => {
   try {
     const user = req.body;
@@ -26,6 +27,7 @@ export const SocialAuth = async (req, res) => {
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
     });
+
     res.status(200).json({
       status: true,
       message: existingUser.isNew
@@ -33,6 +35,7 @@ export const SocialAuth = async (req, res) => {
         : "User logged in successfully",
       data: {
         ...existingUser._doc,
+        authToken: token,
       },
     });
   } catch (error) {
@@ -113,19 +116,19 @@ export const Login = async (req, res) => {
         .json({ status: false, message: "Invalid email or password" });
     }
     const token = jwt.sign({ email: user.email, id: user._id }, JWT_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "7d",
     });
     user.populate("favorites");
     res.cookie("session", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge:7 * 24 * 60 * 60 * 1000,
     });
     res.status(200).json({
       status: true,
       message: "User logged in successfully",
-      data: user,
+      data: {...user,authToken: token},
     });
   } catch (error) {
     res.status(500).json({ status: false, message: error.message });
@@ -213,9 +216,8 @@ export const AddOrRemoveFromFavorites = async (req, res) => {
   }
 };
 
-
 // controllers/userController.js
-import cloudinary from '../config/cloudinary.js';
+import cloudinary from "../config/cloudinary.js";
 
 export const EditProfile = async (req, res) => {
   try {
@@ -224,16 +226,18 @@ export const EditProfile = async (req, res) => {
 
     const userExist = await userModel.findOne({ email: prevEmail });
     if (!userExist) {
-      return res.status(404).json({ message: 'Not found', status: false });
+      return res.status(404).json({ message: "Not found", status: false });
     }
 
     // If a new image is uploaded
     if (req.file) {
       const result = await cloudinary.uploader.upload_stream(
-        { folder: 'profile_pictures' },
+        { folder: "profile_pictures" },
         async (error, result) => {
           if (error) {
-            return res.status(500).json({ message: 'Upload failed', status: false });
+            return res
+              .status(500)
+              .json({ message: "Upload failed", status: false });
           }
 
           const updatedUser = await userModel.findByIdAndUpdate(
@@ -247,7 +251,7 @@ export const EditProfile = async (req, res) => {
           );
 
           return res.status(200).json({
-            message: 'User successfully updated',
+            message: "User successfully updated",
             status: true,
             user: updatedUser,
           });
@@ -264,12 +268,99 @@ export const EditProfile = async (req, res) => {
       );
 
       return res.status(200).json({
-        message: 'User successfully updated',
+        message: "User successfully updated",
         status: true,
         user: updatedUser,
       });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Something went wrong', status: false,error:error.message});
+    res
+      .status(500)
+      .json({
+        message: "Something went wrong",
+        status: false,
+        error: error.message,
+      });
+  }
+};
+
+
+export const AuthTokenVerification = async (req, res) => {
+  try {
+    // Extract the token from the cookies
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({
+        status: false,
+        message: "Unauthorized: No token provided",
+      });
+    }
+
+    // Verify the token
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({
+          status: false,
+          message: "Unauthorized: Invalid token",
+        });
+      }
+
+      console.log(decoded)
+
+      // If verification is successful, you can proceed to fetch the user details
+      // and send it back as a response.
+      userModel.findOne({ email: decoded.email })
+        .then(user => {
+          if (!user) {
+            return res.status(404).json({
+              status: false,
+              message: "User not found",
+            });
+          }
+
+          // User found, send the user data back
+          return res.status(200).json({
+            status: true,
+            message: "Token is valid",
+            user: {
+              id: user._id,
+              email: user.email,
+              name: user.name,
+              // Add any other user information you want to send
+            },
+          });
+        })
+        .catch(dbError => {
+          return res.status(500).json({
+            status: false,
+            message: "Error fetching user",
+            error: dbError.message,
+          });
+        });
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+export const Logout = async (req, res) => {
+  try {
+    res.cookie("session", null, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      expires: new Date(0),
+    });
+    res.status(200).json({
+      status: true,
+      message: "User logged out successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, message: error.message });
   }
 };
