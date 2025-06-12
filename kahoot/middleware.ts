@@ -29,17 +29,15 @@ export async function middleware(request: NextRequest) {
         }
       );
       if (!res.ok) {
-        const loginUrl = new URL("/auth/logout", request.url);
-        loginUrl.searchParams.set("redirect", pathname);
+        const loginUrl = new URL("/auth/logout");
+        // loginUrl.searchParams.set("redirect", pathname);
         return NextResponse.redirect(loginUrl);
       }
 
       const data = await res.json();
     } catch (err) {
-      return NextResponse.json(
-        { message: "Token verification failed" },
-        { status: 401 }
-      );
+         const loginUrl = new URL("/auth/logout");
+      return NextResponse.redirect(loginUrl)
     }
   }
 

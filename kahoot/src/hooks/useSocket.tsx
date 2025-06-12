@@ -34,11 +34,14 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const student = useSelector((root: RootState) => root.student.currentGame);
 
   useEffect(() => {
-    const newSocket: Socket = io(`${process.env.NEXT_PUBLIC_SERVER}/quiz` as string, {
+    const newSocket: Socket = io(`${process.env.NEXT_PUBLIC_SERVER}` as string, {
       transports: ["websocket", "long-polling", "callback-polling"],
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 3000,
+      auth:{
+        token:"hello"
+      },
       withCredentials: true,
     });
 

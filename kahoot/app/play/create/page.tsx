@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect,useState } from "react";
-import {  FaRegImage } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaRegImage } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -14,9 +14,9 @@ import {
   setCurrentDraft,
   setThemes,
 } from "@/src/redux/schema/student";
-import {SettingCreatePageSVG} from "@/src/lib/svg"
+import { SettingCreatePageSVG } from "@/src/lib/svg"
 import SettingsModel from "@/src/components/create/SettingsModel";
-import { Button,IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Image from "next/image";
 import { MdDeleteOutline, MdOutlineDeleteForever } from "react-icons/md";
 import { ReactSortable } from "react-sortablejs";
@@ -38,6 +38,7 @@ import imageLoader from "@/src/components/ImageLoader";
 
 const Create = () => {
   const [isExist, setIsExist] = useState(false);
+  const [loading,setLoading] = useState(true);
   const [isSettingModelOpen, setIsSettingModelOpen] = useState(false);
   const [savingErrors, setSavingErrors] = useState<ErrorType[]>([])
   const [isOpenGallery, setIsOpenGallery] = useState(false);
@@ -56,14 +57,17 @@ const Create = () => {
   const id = query.get("id");
   const [isThemeOpen, setIsThemeOpen] = useState(false);
 
-
-
-
   const fetch = async () => {
-    const res = await GetAllThemes();
+  try{
+      const res = await GetAllThemes();
     if (res?.status) {
       dispatch(setThemes(res?.data));
     }
+  }catch(error){
+    console.log(error)
+  } finally {
+    setLoading(false);
+  }
   };
 
   const fetchInitialQuiz = async () => {
@@ -71,12 +75,11 @@ const Create = () => {
       const res = await getQuizById(id, dispatch);
       console.log("🚀 ~ fetchInitialQuiz ~ res:", res)
     }
-
-
   }
 
   useEffect(() => {
-    fetch(); fetchInitialQuiz();
+    fetch();
+    fetchInitialQuiz();
   }, []);
 
   const createQuiz = async () => {
@@ -105,12 +108,15 @@ const Create = () => {
         dispatch(setCurrentDraft(res.data));
         navigation.push(`/play/create?id=${res.data._id}`);
         setSelectedQuestion(res.data.questions?.[0]?._id || null);
+
       } else {
         toast.error("Failed to create quiz.");
       }
     } catch (error) {
       console.error(error);
       toast.error("Failed to create quiz.");
+    } finally {
+      setLoading(false)
     }
   };
   useEffect(() => {
@@ -118,6 +124,17 @@ const Create = () => {
       createQuiz();
     }
   }, [id, dispatch]);
+  
+useEffect(() => {
+    handleUpdateQuestion(selectedQuestionData);
+}, [selectedQuestionData]);
+
+useEffect(() => {
+  if (selectedQuestionData?._id) {
+    const u = data.questions.find(q => q._id === selectedQuestionData._id);
+    setSelectedQuestionData(u);
+  }
+}, [data, selectedQuestionData]);
   useEffect(() => {
     if (data && data.questions?.length > 0) {
       setSelectedQuestion(data.questions[0]._id);
@@ -311,21 +328,18 @@ const Create = () => {
     }
   }
 
-  useEffect(() => {
-    console.log("selected updateding...")
-    handleUpdateQuestion(selectedQuestionData);
-  }, [selectedQuestionData?._id]);
 
-  useEffect(() => {
-    console.log("question updateing")
-    const u = data.questions.find(q => q._id === selectedQuestionData?._id)
-    setSelectedQuestionData(u);
-  }, [data])
+
+if (loading){
+  return (
+  <Loading />
+  )
+}
 
 
 
   return (
-    <div className="w-screen bg-white  overflow-x-hidden flex flex-col">
+    <div className="w-screen   bg-white  overflow-x-hidden flex flex-col">
       <div
         style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 4px 0px" }}
         className="w-full py-6 px-10 bg-blue_1 gap-4 flex"
@@ -348,7 +362,7 @@ const Create = () => {
             }}
             className="!bg-white !text-black  !font-semibold !px-4 !flex !gap-3 !py-2 !text-lg !text-md !rounded-[10px] !capitalize !tracking-wide"
           >
-           <SettingCreatePageSVG />
+            <SettingCreatePageSVG />
             Setting
           </Button>
           <Button
@@ -902,9 +916,9 @@ const Create = () => {
           }
         </div>
 
-  {/* Right side bar */}
-  <RightSidebar handleUpdateQuestion ={handleUpdateQuestion} customizableBarIsOpen={customizableBarIsOpen} isThemeOpen={isThemeOpen} themes={themes} selectedQuestionData={selectedQuestionData} setCustomizableBarIsOpen={setCustomizableBarIsOpen}
-  handleChangeTheme={handleChangeTheme}/>
+        {/* Right side bar */}
+        <RightSidebar handleUpdateQuestion={handleUpdateQuestion} customizableBarIsOpen={customizableBarIsOpen} isThemeOpen={isThemeOpen} themes={themes} selectedQuestionData={selectedQuestionData} setCustomizableBarIsOpen={setCustomizableBarIsOpen}
+          handleChangeTheme={handleChangeTheme} />
 
 
 
