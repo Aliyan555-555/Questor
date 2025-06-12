@@ -1,9 +1,9 @@
 "use client"
-import {useState,useEffect,useRef} from "react"
+import {useState,useRef} from "react"
 import useOutsideClick from "@/src/hooks/useClickoutside";
 
 
-const QuestionOptionDropdown = ({
+const QuestionOptionDropdown  = ({
     isMultiSelect,
     onSelectOption,
   }: {
@@ -64,5 +64,5 @@ const QuestionOptionDropdown = ({
     );
   };
 
-  export default QuestionOptionDropdown;
+  export default QuestionOptionDropdown ;
   

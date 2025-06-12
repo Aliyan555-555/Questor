@@ -1,21 +1,48 @@
+"use client"
 import React from 'react';
 import {motion} from "framer-motion";
-import { Button, IconButton } from "@mui/material";
-import { FaChevronLeft, FaChevronRight, FaRegImage } from "react-icons/fa";
+import { IconButton } from "@mui/material";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx";
+import {useSelector } from "react-redux";
+import { RootState } from "@/src/redux/store";
 import Image from "next/image";
 import TypesDropdown from "@/src/components/create/TypesDropdown";
 import TimeLimitDropdown from "@/src/components/create/TimeLimitDropdown";
+import QuestionOptionDropdown from "@/src/components/create/QuestionOptionDropdown"
+import { Question } from "@/src/types";
+interface RightSidebarProps {
+  customizableBarIsOpen: boolean;
+  setCustomizableBarIsOpen: (value: boolean) => void;
+  handleUpdateQuestion: (data: Partial<Question>) => void;
+  isThemeOpen: boolean;
+  setIsThemeOpen: (value: boolean) => void;
+  themes:{_id:string,image:string}[];
+  selectedQuestionData: Question;
+  handleChangeTheme: (theme:string) => void;
+}
 
-const RightSidebar = ({customizableBarIsOpen,setCustomizableBarIsOpen,handleUpdateQuestion,isThemeOpen,themes,selectedQuestionData}) => {
+const RightSidebar: React.FC<RightSidebarProps> = ({
+  customizableBarIsOpen,
+  setCustomizableBarIsOpen,
+  handleUpdateQuestion,
+  isThemeOpen,
+  setIsThemeOpen,
+  themes,
+  selectedQuestionData,
+  handleChangeTheme
+}) => {
+  const data = useSelector((root: RootState) => root.student.currentDraft);
   return (
+     
     <motion.div
           animate={{ width: customizableBarIsOpen ? "310px" : 0 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="w-[310px] h-screen  bg-[#E9E2B6] relative"
+          className="w-[310px] h-[calc(100vh-90px)]  bg-[#E9E2B6] relative"
         >
           <motion.button
             animate={{ left: customizableBarIsOpen ? "-40px" : "-50px" }}
-            onClick={() => setCustomizableBarIsOpen((p) => !p)}
+            onClick={() => setCustomizableBarIsOpen(!customizableBarIsOpen)}
             className="absolute top-1/2 bg-[#E9E2B6] py-2 px-2 z-0 w-[80px] rounded-md"
           >
             {customizableBarIsOpen ? (

@@ -1,25 +1,22 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { FaChevronLeft, FaChevronRight, FaRegImage } from "react-icons/fa";
-import { motion } from "framer-motion";
+import React, { useEffect,useState } from "react";
+import {  FaRegImage } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { RxCross2 } from "react-icons/rx";
 import { RootState } from "@/src/redux/store";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import ExitModel from "@/src/components/create/ExistModel"
-import QuestionOptionDropdown from "@/src/components/create/QuestionOptionDropdown"
 import RightSidebar from "@/src/components/create/RightSidebar"
 import AddQuestionTypesDropdown from "@/src/components/create/AddQuestionTypeDropdown"
-
 import {
   clearCurrentDraft,
   CurrentDraft,
   setCurrentDraft,
   setThemes,
 } from "@/src/redux/schema/student";
+import {SettingCreatePageSVG} from "@/src/lib/svg"
 import SettingsModel from "@/src/components/create/SettingsModel";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
+import { Button,IconButton } from "@mui/material";
 import Image from "next/image";
 import { MdDeleteOutline, MdOutlineDeleteForever } from "react-icons/md";
 import { ReactSortable } from "react-sortablejs";
@@ -33,25 +30,13 @@ import {
   TriangleIcon,
 } from "@/src/lib/svg";
 import { Question } from "@/src/types";
-import { QuestionsTypes } from "@/src/contents";
-import { GetAllThemes, addQuestionInQuiz, createInitialQuiz, deleteQuestionInQuiz, updateQuiz, getQuizById, updateQuestion, } from "@/src/redux/api";
+import { GetAllThemes, addQuestionInQuiz, createInitialQuiz, deleteQuestionInQuiz, updateQuiz, getQuizById, updateQuestion, QuizUpdateData } from "@/src/redux/api";
 import { SaveModel } from "@/src/components/create/SaveModel";
 import Loading from "../[id]/loading";
 import imageLoader from "@/src/components/ImageLoader";
 
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  authToken: string;
-  profileImage: string;
-  providerId: string;
-  providerName: string;
-  favorites: string[];
-}
 
 const Create = () => {
-  // const { socket } = useSocket();
   const [isExist, setIsExist] = useState(false);
   const [isSettingModelOpen, setIsSettingModelOpen] = useState(false);
   const [savingErrors, setSavingErrors] = useState<ErrorType[]>([])
@@ -142,14 +127,13 @@ const Create = () => {
       setSelectedQuestion(null);
     }
   }, []);
-  const handleUpdateQuestion = async (question) => {
+  const handleUpdateQuestion = async (question: Question) => {
     try {
+      if (!user || !selectedQuestionData) return;
       const res = await updateQuestion(user.authToken, selectedQuestionData._id, question, dispatch);
       console.log("🚀 ~ handleUpdateQuestion ~ res:", res)
-
     } catch (error) {
       console.log("🚀 ~ handleUpdateQuestion ~ error:", error)
-
     }
   };
 
@@ -165,7 +149,7 @@ const Create = () => {
       setSelectedQuestionData(lastQuestion || null);
     }
   };
-  const handleUpdateQuiz = async (quizData: any) => {
+  const handleUpdateQuiz = async (quizData: QuizUpdateData) => {
     if (!user?.authToken) {
       toast.error("User session expired");
       return;
@@ -300,8 +284,9 @@ const Create = () => {
   const handleChangeQuizStatus = () => {
     // socket?.emit("update_quiz_status", { status: 'active', _id: id });
   }
-  const ReturnToHome = (status) => {
-    handleUpdateQuiz({ ...data, status: status });
+  const ReturnToHome = (status: 'active' | 'inactive' | 'draft') => {
+    if (!data?._id) return;
+    handleUpdateQuiz({ _id: data._id, status });
     navigation.push('/')
   }
   if (id !== data?._id) {
@@ -363,9 +348,7 @@ const Create = () => {
             }}
             className="!bg-white !text-black  !font-semibold !px-4 !flex !gap-3 !py-2 !text-lg !text-md !rounded-[10px] !capitalize !tracking-wide"
           >
-            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.4312 25C9.86875 25 9.38458 24.8125 8.97875 24.4375C8.57292 24.0625 8.32792 23.6042 8.24375 23.0625L7.9625 21C7.69167 20.8958 7.43667 20.7708 7.1975 20.625C6.95833 20.4792 6.72375 20.3229 6.49375 20.1562L4.55625 20.9688C4.03542 21.1979 3.51458 21.2188 2.99375 21.0312C2.47292 20.8438 2.06667 20.5104 1.775 20.0312L0.30625 17.4688C0.0145832 16.9896 -0.0687499 16.4792 0.0562501 15.9375C0.18125 15.3958 0.4625 14.9479 0.9 14.5938L2.55625 13.3438C2.53542 13.1979 2.525 13.0571 2.525 12.9212V12.0775C2.525 11.9425 2.53542 11.8021 2.55625 11.6562L0.9 10.4062C0.4625 10.0521 0.18125 9.60417 0.0562501 9.0625C-0.0687499 8.52083 0.0145832 8.01042 0.30625 7.53125L1.775 4.96875C2.06667 4.48958 2.47292 4.15625 2.99375 3.96875C3.51458 3.78125 4.03542 3.80208 4.55625 4.03125L6.49375 4.84375C6.72292 4.67708 6.9625 4.52083 7.2125 4.375C7.4625 4.22917 7.7125 4.10417 7.9625 4L8.24375 1.9375C8.32708 1.39583 8.57208 0.9375 8.97875 0.5625C9.38542 0.1875 9.86958 0 10.4312 0H13.3687C13.9312 0 14.4158 0.1875 14.8225 0.5625C15.2292 0.9375 15.4737 1.39583 15.5562 1.9375L15.8375 4C16.1083 4.10417 16.3637 4.22917 16.6037 4.375C16.8437 4.52083 17.0779 4.67708 17.3062 4.84375L19.2437 4.03125C19.7646 3.80208 20.2854 3.78125 20.8063 3.96875C21.3271 4.15625 21.7333 4.48958 22.025 4.96875L23.4937 7.53125C23.7854 8.01042 23.8688 8.52083 23.7438 9.0625C23.6188 9.60417 23.3375 10.0521 22.9 10.4062L21.2438 11.6562C21.2646 11.8021 21.275 11.9429 21.275 12.0788V12.9212C21.275 13.0571 21.2542 13.1979 21.2125 13.3438L22.8687 14.5938C23.3062 14.9479 23.5875 15.3958 23.7125 15.9375C23.8375 16.4792 23.7542 16.9896 23.4625 17.4688L21.9625 20.0312C21.6708 20.5104 21.2646 20.8438 20.7438 21.0312C20.2229 21.2188 19.7021 21.1979 19.1812 20.9688L17.3062 20.1562C17.0771 20.3229 16.8375 20.4792 16.5875 20.625C16.3375 20.7708 16.0875 20.8958 15.8375 21L15.5562 23.0625C15.4729 23.6042 15.2283 24.0625 14.8225 24.4375C14.4167 24.8125 13.9321 25 13.3687 25H10.4312ZM11.9625 16.875C13.1708 16.875 14.2021 16.4479 15.0562 15.5938C15.9104 14.7396 16.3375 13.7083 16.3375 12.5C16.3375 11.2917 15.9104 10.2604 15.0562 9.40625C14.2021 8.55208 13.1708 8.125 11.9625 8.125C10.7333 8.125 9.69667 8.55208 8.8525 9.40625C8.00833 10.2604 7.58667 11.2917 7.5875 12.5C7.58833 13.7083 8.01042 14.7396 8.85375 15.5938C9.69708 16.4479 10.7333 16.875 11.9625 16.875Z" fill="black" />
-            </svg>
+           <SettingCreatePageSVG />
             Setting
           </Button>
           <Button
@@ -375,7 +358,7 @@ const Create = () => {
             }}
             className="!bg-white !text-black  !font-semibold !px-4 !flex !gap-3 !py-2 !text-lg !text-md !rounded-[10px] !capitalize !tracking-wide"          >
             <svg width="20" height="25" viewBox="0 0 20 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8205 0.320513C12.8205 0.235508 12.7867 0.153984 12.7266 0.0938761C12.6665 0.0337683 12.585 0 12.5 0H3.52564C2.59058 0 1.69382 0.371451 1.03264 1.03264C0.37145 1.69382 0 2.59058 0 3.52564V21.4744C0 22.4094 0.37145 23.3062 1.03264 23.9674C1.69382 24.6286 2.59058 25 3.52564 25H16.3462C17.2812 25 18.178 24.6286 18.8392 23.9674C19.5003 23.3062 19.8718 22.4094 19.8718 21.4744V8.84231C19.8718 8.7573 19.838 8.67578 19.7779 8.61567C19.7178 8.55556 19.6363 8.5218 19.5513 8.5218H13.7821C13.527 8.5218 13.2825 8.42049 13.1021 8.24017C12.9218 8.05984 12.8205 7.81527 12.8205 7.56026V0.320513ZM11.2179 11.859C11.2179 11.3489 11.4206 10.8598 11.7812 10.4992C12.1419 10.1385 12.631 9.9359 13.141 9.9359C13.6511 9.9359 14.1402 10.1385 14.5008 10.4992C14.8615 10.8598 15.0641 11.3489 15.0641 11.859C15.0641 12.369 14.8615 12.8581 14.5008 13.2188C14.1402 13.5794 13.6511 13.7821 13.141 13.7821C12.631 13.7821 12.1419 13.5794 11.7812 13.2188C11.4206 12.8581 11.2179 12.369 11.2179 11.859ZM8.82821 13.9128C8.74177 13.7745 8.62158 13.6605 8.47895 13.5814C8.33631 13.5024 8.1759 13.4609 8.01282 13.4609C7.84974 13.4609 7.68933 13.5024 7.5467 13.5814C7.40406 13.6605 7.28387 13.7745 7.19744 13.9128L3.99231 19.041C3.90117 19.1866 3.85069 19.3539 3.84609 19.5256C3.8415 19.6973 3.88298 19.867 3.9662 20.0173C4.04943 20.1675 4.17137 20.2927 4.31935 20.3798C4.46733 20.467 4.63595 20.5129 4.80769 20.5128H15.0641C15.2427 20.5128 15.4177 20.4631 15.5696 20.3692C15.7215 20.2753 15.8443 20.141 15.9241 19.9813C16.004 19.8216 16.0378 19.6428 16.0218 19.4649C16.0057 19.2871 15.9405 19.1172 15.8333 18.9744L13.9103 16.4103C13.8207 16.2908 13.7046 16.1939 13.571 16.1272C13.4375 16.0604 13.2903 16.0256 13.141 16.0256C12.9918 16.0256 12.8445 16.0604 12.711 16.1272C12.5775 16.1939 12.4614 16.2908 12.3718 16.4103L11.2897 17.8526L8.82821 13.9128Z" fill="black" />
+              <path fillRule="evenodd" clipRule="evenodd" d="M12.8205 0.320513C12.8205 0.235508 12.7867 0.153984 12.7266 0.0938761C12.6665 0.0337683 12.585 0 12.5 0H3.52564C2.59058 0 1.69382 0.371451 1.03264 1.03264C0.37145 1.69382 0 2.59058 0 3.52564V21.4744C0 22.4094 0.37145 23.3062 1.03264 23.9674C1.69382 24.6286 2.59058 25 3.52564 25H16.3462C17.2812 25 18.178 24.6286 18.8392 23.9674C19.5003 23.3062 19.8718 22.4094 19.8718 21.4744V8.84231C19.8718 8.7573 19.838 8.67578 19.7779 8.61567C19.7178 8.55556 19.6363 8.5218 19.5513 8.5218H13.7821C13.527 8.5218 13.2825 8.42049 13.1021 8.24017C12.9218 8.05984 12.8205 7.81527 12.8205 7.56026V0.320513ZM11.2179 11.859C11.2179 11.3489 11.4206 10.8598 11.7812 10.4992C12.1419 10.1385 12.631 9.9359 13.141 9.9359C13.6511 9.9359 14.1402 10.1385 14.5008 10.4992C14.8615 10.8598 15.0641 11.3489 15.0641 11.859C15.0641 12.369 14.8615 12.8581 14.5008 13.2188C14.1402 13.5794 13.6511 13.7821 13.141 13.7821C12.631 13.7821 12.1419 13.5794 11.7812 13.2188C11.4206 12.8581 11.2179 12.369 11.2179 11.859ZM8.82821 13.9128C8.74177 13.7745 8.62158 13.6605 8.47895 13.5814C8.33631 13.5024 8.1759 13.4609 8.01282 13.4609C7.84974 13.4609 7.68933 13.5024 7.5467 13.5814C7.40406 13.6605 7.28387 13.7745 7.19744 13.9128L3.99231 19.041C3.90117 19.1866 3.85069 19.3539 3.84609 19.5256C3.8415 19.6973 3.88298 19.867 3.9662 20.0173C4.04943 20.1675 4.17137 20.2927 4.31935 20.3798C4.46733 20.467 4.63595 20.5129 4.80769 20.5128H15.0641C15.2427 20.5128 15.4177 20.4631 15.5696 20.3692C15.7215 20.2753 15.8443 20.141 15.9241 19.9813C16.004 19.8216 16.0378 19.6428 16.0218 19.4649C16.0057 19.2871 15.9405 19.1172 15.8333 18.9744L13.9103 16.4103C13.8207 16.2908 13.7046 16.1939 13.571 16.1272C13.4375 16.0604 13.2903 16.0256 13.141 16.0256C12.9918 16.0256 12.8445 16.0604 12.711 16.1272C12.5775 16.1939 12.4614 16.2908 12.3718 16.4103L11.2897 17.8526L8.82821 13.9128Z" fill="black" />
               <path d="M14.7437 0.735735C14.7437 0.499838 14.9911 0.349838 15.1744 0.497274C15.33 0.622915 15.468 0.769069 15.5885 0.935736L19.4513 6.3165C19.5385 6.43958 19.4437 6.59856 19.2924 6.59856H15.0642C14.9792 6.59856 14.8976 6.56479 14.8375 6.50468C14.7774 6.44457 14.7437 6.36305 14.7437 6.27804V0.735735Z" fill="black" />
             </svg>
 
@@ -399,8 +382,8 @@ const Create = () => {
         </div>
       </div>
       <div className="w-full flex-1 flex">
-        <div className="w-[180px] bg-[#E9E2B6]">
-          <div className="w-full  overflow-y-auto h-[80vh]">
+        <div className="w-[180px] max-h-[calc(100vh-100px)] flex flex-col bg-[#E9E2B6]">
+          <div className="w-full  overflow-y-auto flex-1">
             <ReactSortable
               list={
                 data && data.questions ? data?.questions?.map((question, index) => ({
@@ -920,7 +903,9 @@ const Create = () => {
         </div>
 
   {/* Right side bar */}
-  <RightSidebar handleUpdateQuestion ={handleUpdateQuestion} customizableBarIsOpen={customizableBarIsOpen} isThemeOpen={isThemeOpen} themes={themes} selectedQuestionData={selectedQuestionData} setCustomizableBarIsOpen={setCustomizableBarIsOpen}/>
+  <RightSidebar handleUpdateQuestion ={handleUpdateQuestion} customizableBarIsOpen={customizableBarIsOpen} isThemeOpen={isThemeOpen} themes={themes} selectedQuestionData={selectedQuestionData} setCustomizableBarIsOpen={setCustomizableBarIsOpen}
+  handleChangeTheme={handleChangeTheme}/>
+
 
 
       </div>
@@ -945,7 +930,7 @@ const Create = () => {
   );
 };
 
-export default React.memo(Create);
+export default Create
 
 
 interface ErrorType {

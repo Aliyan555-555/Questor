@@ -14,7 +14,6 @@ export default function RootLayout({
   const fetch = async () => {
     const res = await GetAllThemes();
     if (res?.status) {
-      console.log("themes:",res.data)
       dispatch(setThemes(res?.data));
     }
   }
